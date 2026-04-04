@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wendel Andrady | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+  <script src="https://unpkg.com/three@0.132.2/build/three.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config={theme:{extend:{colors:{accent:'#00ffd5','accent-dim':'#00b396','accent-purple':'#a855f7','accent-pink':'#ec4899',dark:'#050505','dark-card':'#0a0a0a','dark-border':'#1a1a1a','dark-muted':'#737373','dark-subtle':'#525252'},fontFamily:{heading:['"Space Grotesk"','sans-serif'],body:['"Inter"','sans-serif']}}}}
+  </script>
+  <style>
+    *{cursor:none}
+    body{background:#050505;color:#e5e5e5;font-family:'Inter',sans-serif;overflow-x:hidden}
+    ::-webkit-scrollbar{width:3px}
+    ::-webkit-scrollbar-track{background:#050505}
+    ::-webkit-scrollbar-thumb{background:#00ffd5;border-radius:2px}
+    ::selection{background:rgba(0,255,213,.3);color:#fff}
+    .noise::after{content:'';position:fixed;inset:-50%;width:200%;height:200%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.5}
+    .grid-bg{background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:64px 64px}
+    .text-gradient{background:linear-gradient(135deg,#00ffd5 0%,#a855f7 50%,#00ffd5 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 5s ease-in-out infinite}
+    @keyframes shimmer{0%,100%{background-position:0% center}50%{background-position:200% center}}
+    .marquee-track{animation:marquee 28s linear infinite}
+    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .glow-accent{box-shadow:0 0 40px rgba(0,255,213,.1),0 0 80px rgba(0,255,213,.03)}
+    .glow-accent-strong{box-shadow:0 0 30px rgba(0,255,213,.2),0 0 60px rgba(0,255,213,.08)}
+    .glow-text{text-shadow:0 0 30px rgba(0,255,213,.35)}
+    .input-glow:focus{box-shadow:0 0 0 1px #00ffd5,0 0 20px rgba(0,255,213,.1)}
+    .expertise-line{position:relative;padding-left:24px}
+    .expertise-line::before{content:'';position:absolute;left:0;top:10px;width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor;opacity:.5}
+    .expertise-line:hover::before{opacity:1;box-shadow:0 0 8px currentColor}
+    .cat-glow-cyan{--glow:0 0 30px rgba(0,255,213,.06)}
+    .cat-glow-purple{--glow:0 0 30px rgba(168,85,247,.06)}
+    .cat-glow-pink{--glow:0 0 30px rgba(236,72,153,.06)}
+    .cat-glow-emerald{--glow:0 0 30px rgba(52,211,153,.06)}
+    .cat-glow-amber{--glow:0 0 30px rgba(251,191,36,.06)}
+    .cat-glow-blue{--glow:0 0 30px rgba(96,165,250,.06)}
+    @media(hover:none){*{cursor:auto!important}.custom-cursor{display:none!important}a,button,input,textarea{cursor:auto}}
+  </style>
+</head>
+<body class="noise grid-bg">
+<div id="root"></div>
+<script type="text/babel">
+const{useState,useRef,useEffect}=React;
+const{motion,AnimatePresence}=window.Motion;
+
+/* ═══ CUSTOM CURSOR ═══ */
+function CustomCursor(){
+  const dot=useRef(null),ring=useRef(null);
+  useEffect(()=>{
+    let mx=0,my=0,rx=0,ry=0;
+    const move=e=>{mx=e.clientX;my=e.clientY;
+      if(dot.current)dot.current.style.transform=`translate(${mx-4}px,${my-4}px)`;
+      const t=e.target.closest('a,button,input,textarea,[data-hover]');
+      if(ring.current){const s=t?'56px':'40px',o=t?-28:-20;
+        ring.current.style.width=s;ring.current.style.height=s;
+        ring.current.style.left=o+'px';ring.current.style.top=o+'px';
+        ring.current.style.borderColor=t?'#00ffd5':'rgba(0,255,213,0.3)';
+        ring.current.style.opacity=t?'1':'0.5'}};
+    const loop=()=>{rx+=(mx-rx)*.11;ry+=(my-ry)*.11;
+      if(ring.current)ring.current.style.transform=`translate(${rx}px,${ry}px)`;
+      requestAnimationFrame(loop)};
+    window.addEventListener('mousemove',move);loop();
+    return()=>window.removeEventListener('mousemove',move)},[]);
+  return(<><div ref={dot} className="custom-cursor fixed w-2 h-2 bg-accent rounded-full pointer-events-none z-[10000] mix-blend-difference"/>
+    <div ref={ring} className="custom-cursor fixed w-[40px] h-[40px] border border-accent/30 rounded-full pointer-events-none z-[10000] transition-[width,height,left,top,border-color,opacity] duration-200 ease-out"/></>);
+}
+
+/* ═══ SCROLL PROGRESS ═══ */
+function ScrollProgress(){
+  const[p,setP]=useState(0);
+  useEffect(()=>{const h=()=>{const t=document.documentElement.scrollHeight-window.innerHeight;setP(window.scrollY/t*100)};
+    window.addEventListener('scroll',h);return()=>window.removeEventListener('scroll',h)},[]);
+  return<motion.div className="fixed top-0 left-0 h-[2px] bg-accent z-[9997]" style={{width:`${p}%`}}/>;
+}
+
+/* ═══ SPLIT TEXT ═══ */
+function SplitText({text,className='',delay=0}){
+  return<span className={className}>{text.split('').map((c,i)=>
+    <motion.span key={i} initial={{opacity:0,y:55,rotateX:-35}} animate={{opacity:1,y:0,rotateX:0}}
+      transition={{duration:.55,delay:delay+i*.022,ease:[.215,.61,.355,1]}} className="inline-block" style={{transformOrigin:'bottom'}}>{c===' '?'\u00A0':c}</motion.span>
+  )}</span>;
+}
+
+/* ═══ REVEAL ═══ */
+function Reveal({children,delay=0,className='',y=45}){
+  return<motion.div initial={{opacity:0,y}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:'-60px'}}
+    transition={{duration:.7,delay,ease:[.215,.61,.355,1]}} className={className}>{children}</motion.div>;
+}
+
+/* ═══ MAGNETIC BTN ═══ */
+function MagneticButton({children,className='',...props}){
+  const ref=useRef(null);
+  const move=e=>{const r=ref.current.getBoundingClientRect(),x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-r.height/2;
+    ref.current.style.transform=`translate(${x*.2}px,${y*.2}px)`};
+  const leave=()=>{ref.current.style.transform='translate(0,0)'};
+  return<motion.button ref={ref} onMouseMove={move} onMouseLeave={leave} whileTap={{scale:.95}}
+    className={`transition-transform duration-300 ease-out ${className}`} {...props}>{children}</motion.button>;
+}
+
+/* ═══ TILT CARD ═══ */
+function TiltCard({children,className='',glow=true}){
+  const ref=useRef(null);
+  const move=e=>{const r=ref.current.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+    ref.current.style.transition='transform .1s ease-out';
+    ref.current.style.transform=`perspective(800px) rotateX(${(y-.5)*12}deg) rotateY(${(x-.5)*-12}deg) scale3d(1.02,1.02,1.02)`};
+  const leave=()=>{ref.current.style.transition='transform .5s cubic-bezier(.215,.61,.355,1)';
+    ref.current.style.transform='perspective(800px) rotateX(0) rotateY(0) scale3d(1,1,1)'};
+  return<div ref={ref} onMouseMove={move} onMouseLeave={leave}
+    className={`${glow?'hover:glow-accent':''} ${className}`}>{children}</div>;
+}
+
+/* ═══ SECTION HEADER ═══ */
+function SectionHeader({num,label,title,desc}){
+  return<div className="mb-14 md:mb-18">
+    <Reveal><span className="text-accent/40 text-[11px] font-heading tracking-[.3em] uppercase mb-4 block">{num} — {label}</span></Reveal>
+    <Reveal delay={.1}><h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-heading font-bold leading-[1.08] mb-4">{title}</h2></Reveal>
+    {desc&&<Reveal delay={.2}><p className="text-dark-muted max-w-xl text-base md:text-lg leading-relaxed">{desc}</p></Reveal>}
+  </div>;
+}
+
+/* ═══ MARQUEE ═══ */
+function Marquee({text,reverse=false}){
+  const t=`${text}  ·  ${text}  ·  ${text}  ·  ${text}  ·  `;
+  return<div className="overflow-hidden py-5 md:py-7 border-y border-dark-border/40 select-none">
+    <div className="whitespace-nowrap" style={{animation:`marquee ${reverse?32:28}s linear infinite ${reverse?'reverse':''}`}}>
+      <span className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-dark-border/40">{t}</span></div></div>;
+}
+
+/* ═══ COUNTER ═══ */
+function useCounter(end,dur=2){
+  const[count,setCount]=useState(0),[go,setGo]=useState(false),ref=useRef(null);
+  useEffect(()=>{const o=new IntersectionObserver(([e])=>{if(e.isIntersecting)setGo(true)},{threshold:.5});
+    if(ref.current)o.observe(ref.current);return()=>o.disconnect()},[]);
+  useEffect(()=>{if(!go)return;let st;const step=ts=>{if(!st)st=ts;const p=Math.min((ts-st)/(dur*1000),1);
+    setCount(Math.floor(p*end));if(p<1)requestAnimationFrame(step)};requestAnimationFrame(step)},[go,end,dur]);
+  return[count,ref];
+}
+
+/* ═══ THREE.JS ═══ */
+function ThreeScene(){
+  const mount=useRef(null);
+  useEffect(()=>{
+    const mob=window.innerWidth<768,scene=new THREE.Scene(),w=window.innerWidth,h=window.innerHeight;
+    const cam=new THREE.PerspectiveCamera(60,w/h,.1,100);cam.position.z=5;
+    const ren=new THREE.WebGLRenderer({alpha:true,antialias:true});ren.setSize(w,h);
+    ren.setPixelRatio(Math.min(window.devicePixelRatio,mob?1.5:2));mount.current.appendChild(ren.domElement);
+    const outer=new THREE.Mesh(new THREE.IcosahedronGeometry(2.2,1),new THREE.MeshBasicMaterial({color:0x00ffd5,wireframe:true,transparent:true,opacity:.05}));
+    const inner=new THREE.Mesh(new THREE.IcosahedronGeometry(1.3,1),new THREE.MeshBasicMaterial({color:0xa855f7,wireframe:true,transparent:true,opacity:.07}));
+    const core=new THREE.Mesh(new THREE.SphereGeometry(.3,32,32),new THREE.MeshBasicMaterial({color:0x00ffd5,transparent:true,opacity:.03}));
+    scene.add(outer,inner,core);
+    const mkTex=(c)=>{const cv=document.createElement('canvas');cv.width=cv.height=64;const x=cv.getContext('2d');
+      const g=x.createRadialGradient(32,32,0,32,32,32);g.addColorStop(0,c);g.addColorStop(.4,c.replace(',1)',',0.4)'));g.addColorStop(1,c.replace(',1)',',0)'));
+      x.fillStyle=g;x.fillRect(0,0,64,64);return new THREE.CanvasTexture(cv)};
+    const mkPts=(n,col,sz,op,rad1,rad2)=>{const pos=new Float32Array(n*3);
+      for(let i=0;i<n;i++){const r=rad1+Math.random()*rad2,th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1);
+        pos[i*3]=r*Math.sin(ph)*Math.cos(th);pos[i*3+1]=r*Math.sin(ph)*Math.sin(th);pos[i*3+2]=r*Math.cos(ph)}
+      const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));
+      return new THREE.Points(g,new THREE.PointsMaterial({map:mkTex(col),size:sz,transparent:true,opacity:op,blending:THREE.AdditiveBlending,depthWrite:false,sizeAttenuation:true}))};
+    const p1=mkPts(mob?200:800,'rgba(0,255,213,1)',mob?.05:.035,.45,2.5,5);
+    const p2=mkPts(mob?60:250,'rgba(168,85,247,1)',mob?.04:.025,.3,3,4);
+    const p3=mkPts(mob?40:150,'rgba(236,72,153,1)',mob?.04:.025,.2,4,3);
+    scene.add(p1,p2,p3);
+    let mx=0,my=0;const onM=e=>{mx=(e.clientX/window.innerWidth)*2-1;my=-(e.clientY/window.innerHeight)*2+1};
+    window.addEventListener('mousemove',onM);
+    const animate=()=>{requestAnimationFrame(animate);const t=performance.now()*.001;
+      outer.rotation.x=t*.04+my*.2;outer.rotation.y=t*.06+mx*.2;
+      inner.rotation.x=-t*.03+my*.12;inner.rotation.y=-t*.05+mx*.12;
+      const b=1+Math.sin(t*.4)*.08;core.scale.set(b,b,b);
+      p1.rotation.y=t*.01;p1.rotation.x=Math.sin(t*.007)*.06;
+      p2.rotation.y=-t*.007;p2.rotation.z=Math.cos(t*.005)*.05;
+      p3.rotation.x=t*.005;p3.rotation.z=-t*.004;
+      ren.render(scene,cam)};animate();
+    const onR=()=>{cam.aspect=window.innerWidth/window.innerHeight;cam.updateProjectionMatrix();ren.setSize(window.innerWidth,window.innerHeight)};
+    window.addEventListener('resize',onR);
+    return()=>{window.removeEventListener('resize',onR);window.removeEventListener('mousemove',onM);mount.current.removeChild(ren.domElement)}},[]);
+  return<div ref={mount} className="fixed inset-0 -z-10"/>;
+}
+
+/* ═══ PRELOADER ═══ */
+function Preloader({onDone}){
+  const[c,setC]=useState(0);
+  useEffect(()=>{const iv=setInterval(()=>setC(p=>{if(p>=100){clearInterval(iv);setTimeout(onDone,500);return 100}return p+1}),16);return()=>clearInterval(iv)},[]);
+  return<motion.div exit={{y:'-100%'}} transition={{duration:.8,ease:[.76,0,.24,1]}}
+    className="fixed inset-0 bg-dark z-[9998] flex flex-col items-center justify-center">
+    <motion.span className="text-7xl md:text-9xl font-heading font-bold text-accent glow-text" style={{fontVariantNumeric:'tabular-nums'}}>{c}</motion.span>
+    <div className="mt-6 w-48 h-[2px] bg-dark-border overflow-hidden rounded">
+      <motion.div className="h-full bg-accent" initial={{width:'0%'}} animate={{width:`${c}%`}} transition={{duration:.08}}/></div>
+    <span className="mt-4 text-dark-muted text-[10px] tracking-[.35em] uppercase font-heading">Loading Experience</span>
+  </motion.div>;
+}
+
+/* ═══ NAVBAR ═══ */
+function Navbar({refs}){
+  const[sc,setSc]=useState(false),[op,setOp]=useState(false);
+  useEffect(()=>{const h=()=>setSc(window.scrollY>50);window.addEventListener('scroll',h);return()=>window.removeEventListener('scroll',h)},[]);
+  const go=r=>{r.current.scrollIntoView({behavior:'smooth'});setOp(false)};
+  const items=[{n:'About',r:refs.aboutRef},{n:'Expertise',r:refs.skillsRef},{n:'Services',r:refs.servicesRef},{n:'Work',r:refs.projectsRef},{n:'Team',r:refs.teamRef},{n:'Contact',r:refs.contactRef}];
+  return<motion.nav initial={{opacity:0,y:-20}} animate={{opacity:1,y:0}} transition={{duration:.6,delay:1.6}}
+    className={`fixed w-full z-50 transition-all duration-500 ${sc?'bg-dark/80 backdrop-blur-xl border-b border-dark-border/40 py-3':'bg-transparent py-5'}`}>
+    <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+      <motion.button whileHover={{scale:1.05}} onClick={()=>go(refs.aboutRef)} className="font-heading font-bold text-lg tracking-tight text-white" data-hover>WA<span className="text-accent">.</span></motion.button>
+      <div className="hidden md:flex items-center gap-1">
+        {items.map(it=><motion.button key={it.n} whileHover={{scale:1.05}} whileTap={{scale:.95}} onClick={()=>go(it.r)}
+          className="px-3 py-2 text-[13px] text-dark-muted hover:text-accent transition-colors duration-300 font-heading relative group" data-hover>{it.n}
+          <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1px] bg-accent group-hover:w-3/4 transition-all duration-300"/></motion.button>)}
+      </div>
+      <motion.button whileTap={{scale:.9}} onClick={()=>setOp(!op)} className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5" data-hover>
+        <motion.span animate={op?{rotate:45,y:6}:{rotate:0,y:0}} className="w-5 h-[1.5px] bg-accent block origin-center"/>
+        <motion.span animate={op?{opacity:0}:{opacity:1}} className="w-5 h-[1.5px] bg-accent block"/>
+        <motion.span animate={op?{rotate:-45,y:-6}:{rotate:0,y:0}} className="w-5 h-[1.5px] bg-accent block origin-center"/>
+      </motion.button>
+    </div>
+    <AnimatePresence>{op&&<motion.div initial={{opacity:0,height:0}} animate={{opacity:1,height:'auto'}} exit={{opacity:0,height:0}} transition={{duration:.3}}
+      className="md:hidden bg-dark/95 backdrop-blur-xl border-b border-dark-border/50 overflow-hidden">
+      <div className="px-6 py-4 space-y-1">{items.map((it,i)=><motion.button key={it.n} initial={{opacity:0,x:-20}} animate={{opacity:1,x:0}} transition={{delay:i*.04}}
+        onClick={()=>go(it.r)} className="block w-full text-left py-3 text-lg font-heading text-dark-muted hover:text-accent transition-colors">{it.n}</motion.button>)}</div>
+    </motion.div>}</AnimatePresence>
+  </motion.nav>;
+}
+
+/* ═══ HERO ═══ */
+function Hero({refs}){
+  return<section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <ThreeScene/>
+    <div className="absolute inset-0 bg-gradient-to-b from-dark via-dark/50 to-dark pointer-events-none"/>
+    <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-dark to-transparent pointer-events-none"/>
+    <div className="relative z-10 text-center px-6 max-w-5xl">
+      <Reveal delay={1.8}><p className="text-accent/50 text-[11px] md:text-xs font-heading tracking-[.35em] uppercase mb-6">Full-Stack Developer & SaaS Builder</p></Reveal>
+      <SplitText text="WENDEL ANDRADY" className="text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] font-heading font-bold leading-[.88] mb-7 text-gradient" delay={2}/>
+      <Reveal delay={3.3}><p className="text-dark-muted text-base md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+        18-year-old developer building <span className="text-white/80">fast, scalable SaaS products</span> and <span className="text-white/80">AI-powered tools</span> — from idea to launch.
+      </p></Reveal>
+      <Reveal delay={3.6} className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <MagneticButton onClick={()=>refs.contactRef.current.scrollIntoView({behavior:'smooth'})} className="bg-accent text-dark font-heading font-semibold py-3.5 px-8 rounded-full text-sm tracking-wide hover:bg-accent-dim transition-colors glow-accent-strong" data-hover>Let's Talk</MagneticButton>
+        <MagneticButton onClick={()=>refs.projectsRef.current.scrollIntoView({behavior:'smooth'})} className="border border-dark-border text-white/70 font-heading font-medium py-3.5 px-8 rounded-full text-sm tracking-wide hover:border-accent/30 hover:text-accent transition-all" data-hover>View Work →</MagneticButton>
+      </Reveal>
+    </div>
+    <motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10" animate={{y:[0,8,0]}} transition={{duration:2.5,repeat:Infinity,ease:'easeInOut'}}>
+      <div className="w-5 h-8 border border-dark-muted/30 rounded-full flex justify-center pt-1.5">
+        <motion.div className="w-1 h-2 bg-accent/50 rounded-full" animate={{y:[0,8,0],opacity:[1,.2,1]}} transition={{duration:2.5,repeat:Infinity,ease:'easeInOut'}}/>
+      </div>
+    </motion.div>
+  </section>;
+}
+
+/* ═══ ABOUT ═══ */
+function AboutSection(){
+  return<section className="py-24 md:py-32 relative" ref={useRef(null)}>
+    <div className="max-w-7xl mx-auto px-6">
+      <SectionHeader num="01" label="ABOUT" title="Building the future, one commit at a time."/>
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-center">
+        <Reveal delay={.2} className="lg:col-span-2 flex justify-center">
+          <div className="relative group">
+            <div className="w-56 h-56 md:w-72 md:h-72 rounded-2xl overflow-hidden border border-dark-border relative z-10 group-hover:border-accent/25 transition-colors duration-700">
+              <img src="/WhatsApp Image 2025-07-06 at 16.44.03_97e492a0.jpg" alt="Wendel Andrady" className="w-full h-full object-cover"/></div>
+            <div className="absolute -inset-3 border border-accent/8 rounded-2xl -z-10 group-hover:border-accent/15 transition-colors duration-700"/>
+            <div className="absolute -inset-6 border border-accent/4 rounded-2xl -z-10 group-hover:border-accent/8 transition-colors duration-700"/>
+          </div>
+        </Reveal>
+        <div className="lg:col-span-3 space-y-5">
+          <Reveal delay={.3}><p className="text-lg md:text-xl text-white/80 leading-relaxed">
+            I'm <span className="text-accent font-medium">Wendel Andrady</span> — an 18-year-old full-stack developer who ships production-ready SaaS products and AI tools used by real people.
+          </p></Reveal>
+          <Reveal delay={.4}><p className="text-dark-muted leading-relaxed">
+            I don't just write code. I build complete products — from database design and authentication to payment integration and deployment. Every project is built to scale, monetize, and solve real problems.
+          </p></Reveal>
+          <Reveal delay={.5}><p className="text-dark-muted leading-relaxed">
+            My stack spans Next.js, React, Supabase, PayPal APIs, and OpenAI integrations. I think in systems — credit logic, subscription flows, user workflows — not just components.
+          </p></Reveal>
+          <Reveal delay={.6} className="flex flex-wrap gap-3 pt-3">
+            {['SaaS Builder','AI-Focused','Fast Shipper','Systems Thinker','Full-Stack'].map(t=>
+              <span key={t} className="px-4 py-1.5 text-[11px] font-heading tracking-wider border border-dark-border rounded-full text-dark-muted hover:border-accent/25 hover:text-accent transition-all duration-300">{t}</span>)}
+          </Reveal>
+        </div>
+      </div>
+    </div>
+  </section>;
+}
+
+/* ═══ STATS ═══ */
+function Stats(){
+  const s=[{n:10,label:'Projects Shipped'},{n:5,label:'Happy Clients'},{n:1,label:'Year of Production Code'},{n:18,label:'Years Old'}];
+  return<section className="py-14 border-y border-dark-border/40">
+    <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+      {s.map((st,i)=>{const[c,ref]=useCounter(st.n,1.6);
+        return<div key={i} ref={ref} className="text-center">
+          <div className="text-3xl md:text-5xl font-heading font-bold text-accent mb-1" style={{fontVariantNumeric:'tabular-nums'}}>{c}<span className="text-accent/30">+</span></div>
+          <div className="text-dark-muted text-[11px] md:text-xs font-heading tracking-wider uppercase">{st.label}</div>
+        </div>})}
+    </div>
+  </section>;
+}
+
+/* ═══ EXPERTISE (THE BIG ONE) ═══ */
+function ExpertiseSection(){
+  const cats=[
+    {title:'Frontend Development',color:'accent',glowCls:'cat-glow-cyan',icon:<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>,
+      items:[
+        {main:'Next.js',sub:'App Router, layouts, dynamic routing, server components'},
+        {main:'React',sub:'Component-based architecture, hooks, state handling, context'},
+        {main:'Tailwind CSS',sub:'Responsive, modern UI design, utility-first approach'},
+        {main:'Interfaces',sub:'Landing pages, dashboards, SaaS interfaces, admin panels'},
+      ]},
+    {title:'Backend & Database',color:'accent-purple',glowCls:'cat-glow-purple',icon:<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg>,
+      items:[
+        {main:'Supabase',sub:'Authentication, database design, real-time data, row-level security'},
+        {main:'User Systems',sub:'Signup/login flows, session handling, protected routes, auth middleware'},
+        {main:'SaaS Databases',sub:'Users, subscriptions, credits, usage tracking — built to scale'},
+      ]},
+    {title:'API Integration',color:'accent-pink',glowCls:'cat-glow-pink',icon:<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>,
+      items:[
+        {main:'AI APIs',sub:'OpenAI, DeepSeek — chat completions, streaming, function calling'},
+        {main:'Async Data',sub:'Fetching, caching, error handling, loading states, optimistic updates'},
+        {main:'Product Features',sub:'Turning raw APIs into real product features — AI tools, automation, smart workflows'},
+      ]},
+    {title:'Payment Integration',color:'accent-amber',glowCls:'cat-glow-amber',icon:<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>,
+      items:[
+        {main:'PayPal',sub:'Subscriptions, one-time payments, webhooks, sandbox testing'},
+        {main:'Security',sub:'Client ID / secret handling, token management, secure API patterns'},
+        {main:'Feature Gating',sub:'Linking payments to user accounts, credit systems, access control'},
+      ]},
+    {title:'SaaS & Product Development',color:'accent',glowCls:'cat-glow-cyan',icon:<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>,
+      items:[
+        {main:'Full SaaS Build',sub:'From idea to launch — architecture, development, deployment, iteration'},
+        {main:'Credit Systems',sub:'Token-based usage, credit tracking, refill flows, usage limits'},
+        {main:'Subscription Logic',sub:'Plans, tiered access, upgrade/downgrade flows, billing cycles'},
+        {main:'Dashboards',sub:'User dashboards, analytics views, admin panels, workflow systems'},
+      ]},
+    {title:'Tools & Technologies',color:'accent-purple',glowCls:'cat-glow-purple',icon:<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>,
+      items:[
+        {main:'Core Stack',sub:'Next.js, React, Supabase, PayPal APIs'},
+        {main:'Styling',sub:'HTML, Tailwind CSS, JavaScript, responsive design'},
+        {main:'Infra',sub:'Environment variables, API routes, Vercel deployment, webhook handling'},
+      ]},
+  ];
+  const colorMap={accent:{dot:'bg-accent',text:'text-accent',border:'border-accent/20',hover:'hover:text-accent',sub:'text-accent/50',glowBg:'bg-accent/[.03]'},
+    'accent-purple':{dot:'bg-accent-purple',text:'text-accent-purple',border:'border-accent-purple/20',hover:'hover:text-accent-purple',sub:'text-accent-purple/50',glowBg:'bg-accent-purple/[.03]'},
+    'accent-pink':{dot:'bg-accent-pink',text:'text-accent-pink',border:'border-accent-pink/20',hover:'hover:text-accent-pink',sub:'text-accent-pink/50',glowBg:'bg-accent-pink/[.03]'},
+    'accent-amber':{dot:'bg-amber-400',text:'text-amber-400',border:'border-amber-400/20',hover:'hover:text-amber-400',sub:'text-amber-400/50',glowBg:'bg-amber-400/[.03]'}};
+  return<section className="py-24 md:py-32 relative bg-dark-card/40">
+    <div className="absolute top-1/3 left-0 w-[600px] h-[600px] bg-accent/[.012] rounded-full blur-[200px] -z-10"/>
+    <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-accent-purple/[.015] rounded-full blur-[180px] -z-10"/>
+    <div className="max-w-7xl mx-auto px-6">
+      <SectionHeader num="02" label="EXPERTISE" title="What I actually build with." desc="Not just a list of buzzwords — here's how each skill maps to real product features."/>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {cats.map((cat,ci)=>{
+          const cm=colorMap[cat.color]||colorMap.accent;
+          return<Reveal key={ci} delay={ci*.07}>
+            <TiltCard className={`bg-dark-card border border-dark-border rounded-2xl p-6 h-full group hover:${cm.border} transition-all duration-500 ${cat.glowCls}`} style={{boxShadow:'var(--glow, none)'}}>
+              <div className="flex items-center gap-3 mb-5">
+                <div className={`p-2.5 rounded-xl ${cm.glowBg} ${cm.text} group-hover:scale-110 transition-transform duration-500`}>{cat.icon}</div>
+                <h3 className={`text-base font-heading font-semibold ${cm.text}`}>{cat.title}</h3>
+              </div>
+              <div className="space-y-4">
+                {cat.items.map((item,ii)=>
+                  <div key={ii} className="group/item">
+                    <div className="flex items-start gap-3">
+                      <div className={`w-1.5 h-1.5 rounded-full ${cm.dot} mt-[7px] opacity-40 group-hover/item:opacity-100 shrink-0 transition-opacity duration-300`}/>
+                      <div>
+                        <p className={`text-sm font-medium text-white/90 ${cm.hover} transition-colors duration-300`}>{item.main}</p>
+                        <p className="text-[12px] text-dark-muted leading-relaxed mt-0.5">{item.sub}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </TiltCard>
+          </Reveal>;
+        })}
+      </div>
+      {/* What I Deliver Banner */}
+      <Reveal delay={.5} className="mt-12">
+        <div className="relative rounded-2xl border border-accent/15 bg-accent/[.02] p-8 md:p-10 overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-accent/[.04] rounded-full blur-[100px] -z-0"/>
+          <div className="relative z-10">
+            <h3 className="text-xl md:text-2xl font-heading font-bold text-white mb-5">What I Deliver</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                {t:'Fast, responsive, modern web apps',d:'Optimized for speed, mobile-first, clean UI'},
+                {t:'Scalable SaaS products',d:'Ready for monetization with credit & subscription systems'},
+                {t:'Clean UI + strong backend logic',d:'Not just pretty — built to handle real users and real data'},
+                {t:'Real-world solutions',d:'Production tools, not just designs or prototypes'},
+              ].map((it,i)=><div key={i} className="flex items-start gap-3">
+                <svg className="w-5 h-5 text-accent mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg>
+                <div><p className="text-sm font-medium text-white/90">{it.t}</p><p className="text-[12px] text-dark-muted mt-0.5">{it.d}</p></div>
+              </div>)}
+            </div>
+          </div>
+        </div>
+      </Reveal>
+    </div>
+  </section>;
+}
+
+/* ═══ SERVICES ═══ */
+function ServicesSection(){
+  const svcs=[
+    {title:'AI Chatbots & Assistants',desc:'Smart AI bots for support, lead generation, or FAQs — fully customized to your business needs.',price:'From $300',
+      icon:<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>},
+    {title:'WhatsApp Booking Systems',desc:'Get clients on autopilot — bookings, reminders, Q&A, all through WhatsApp.',price:'From $250',
+      icon:<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>},
+    {title:'SaaS Platforms',desc:'Full SaaS from scratch — auth, payments, credits, dashboards, deployment.',price:'From $1,500',
+      icon:<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>},
+    {title:'Modern Websites',desc:'Mobile-first, responsive, lightning-fast sites that convert visitors into clients.',price:'From $400',
+      icon:<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>},
+    {title:'All-in-One Business System',desc:'Website + AI Bot + WhatsApp System + Payments — everything under one roof.',price:'From $950',
+      icon:<svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>},
+  ];
+  return<section className="py-24 md:py-32 relative">
+    <div className="max-w-7xl mx-auto px-6">
+      <SectionHeader num="03" label="SERVICES" title="Packages & pricing." desc="Every project is tailored to your exact needs — no templates, no shortcuts."/>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {svcs.map((s,i)=><Reveal key={i} delay={i*.07}>
+          <TiltCard className="bg-dark-card border border-dark-border rounded-2xl p-6 h-full group hover:border-accent/20 transition-colors duration-500">
+            <div className="flex items-start justify-between mb-5">
+              <div className="p-3 rounded-xl bg-accent/5 text-accent group-hover:bg-accent/10 transition-colors duration-500">{s.icon}</div>
+              <span className="text-accent/50 text-[11px] font-heading tracking-wider">{s.price}</span>
+            </div>
+            <h3 className="text-base font-heading font-semibold text-white mb-2 group-hover:text-accent transition-colors duration-300">{s.title}</h3>
+            <p className="text-dark-muted text-sm leading-relaxed">{s.desc}</p>
+          </TiltCard>
+        </Reveal>)}
+      </div>
+    </div>
+  </section>;
+}
+
+/* ═══ PROJECTS ═══ */
+function ProjectsSection(){
+  const projects=[
+    {title:'DoveWhisper',desc:'A web app helping families create and share heartfelt eulogies for their loved ones.',url:'https://dovewhisper.org',tech:['Next.js','Supabase','TailwindCSS'],num:'01'},
+    {title:'Therapathy',desc:'Mental health app focused on self-care, journaling, and AI-powered emotional support.',url:'http://therapathy.life',tech:['React','Firebase','ChatGPT API'],num:'02'},
+    {title:'MealPlan AI',desc:'AI-based meal planning with dynamic filtering, smart suggestions, and chat interface.',url:'https://mealplan-azure.vercel.app/',tech:['React','Supabase','OpenAI'],num:'03'},
+  ];
+  return<section className="py-24 md:py-32 relative bg-dark-card/40">
+    <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-accent-purple/[.02] rounded-full blur-[180px] -z-10"/>
+    <div className="max-w-7xl mx-auto px-6">
+      <SectionHeader num="04" label="WORK" title="Selected projects." desc="Real tools, real users, real impact."/>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {projects.map((p,i)=><Reveal key={i} delay={i*.1}>
+          <TiltCard className="bg-dark-card border border-dark-border rounded-2xl overflow-hidden group hover:border-accent/20 transition-colors duration-500 h-full flex flex-col">
+            <div className="relative h-44 bg-gradient-to-br from-dark-border/20 to-dark-card overflow-hidden">
+              <span className="absolute top-4 left-5 text-6xl font-heading font-bold text-dark-border/25 group-hover:text-accent/8 transition-colors duration-700">{p.num}</span>
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-card via-transparent to-transparent"/>
+              <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
+                <div className="w-9 h-9 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center">
+                  <svg className="w-3.5 h-3.5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </div>
+              </div>
+            </div>
+            <a href={p.url} target="_blank" rel="noopener noreferrer" className="p-6 flex flex-col flex-1">
+              <h3 className="text-lg font-heading font-semibold text-white mb-2 group-hover:text-accent transition-colors duration-300">{p.title}</h3>
+              <p className="text-dark-muted text-sm leading-relaxed mb-4 flex-1">{p.desc}</p>
+              <div className="flex flex-wrap gap-2">
+                {p.tech.map((t,ti)=><span key={ti} className="text-[10px] font-heading tracking-wider px-3 py-1 rounded-full border border-dark-border text-dark-muted group-hover:border-accent/15 group-hover:text-accent/60 transition-all duration-300">{t}</span>)}
+              </div>
+            </a>
+          </TiltCard>
+        </Reveal>)}
+      </div>
+    </div>
+  </section>;
+}
+
+/* ═══ TEAM ═══ */
+function TeamSection(){
+  return<section className="py-24 md:py-32 relative">
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent-purple/[.02] rounded-full blur-[200px] -z-10"/>
+    <div className="max-w-7xl mx-auto px-6">
+      <SectionHeader num="05" label="TEAM" title="The people behind the products."/>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        {/* Wendel */}
+        <Reveal delay={.1}>
+          <TiltCard className="bg-dark-card border border-dark-border rounded-2xl p-7 group hover:border-accent/20 transition-colors duration-500 h-full">
+            <div className="flex items-start gap-5 mb-5">
+              <div className="w-16 h-16 rounded-xl overflow-hidden border border-dark-border shrink-0 group-hover:border-accent/20 transition-colors duration-500">
+                <img src="/WhatsApp Image 2025-07-06 at 16.44.03_97e492a0.jpg" alt="Wendel" className="w-full h-full object-cover"/>
+              </div>
+              <div>
+                <h3 className="text-lg font-heading font-semibold text-white group-hover:text-accent transition-colors duration-300">Wendel Andrady</h3>
+                <p className="text-accent/60 text-xs font-heading tracking-wider uppercase mt-0.5">Founder & Lead Developer</p>
+              </div>
+            </div>
+            <p className="text-dark-muted text-sm leading-relaxed mb-4">
+              Full-stack developer specializing in SaaS products, AI integrations, and payment systems. Handles everything from architecture to deployment.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {['Next.js','Supabase','AI APIs','PayPal'].map(t=><span key={t} className="text-[10px] font-heading tracking-wider px-2.5 py-1 rounded-full border border-dark-border text-dark-muted">{t}</span>)}
+            </div>
+          </TiltCard>
+        </Reveal>
+        {/* Business Partner */}
+        <Reveal delay={.2}>
+          <TiltCard className="bg-dark-card border border-dark-border rounded-2xl p-7 group hover:border-accent-purple/20 transition-colors duration-500 h-full">
+            <div className="flex items-start gap-5 mb-5">
+              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-accent-purple/10 to-accent-pink/10 border border-accent-purple/15 shrink-0 flex items-center justify-center group-hover:border-accent-purple/30 transition-colors duration-500">
+                <svg className="w-7 h-7 text-accent-purple/50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+              </div>
+              <div>
+                <h3 className="text-lg font-heading font-semibold text-white group-hover:text-accent-purple transition-colors duration-300">Mabel Andrady</h3>
+                <p className="text-accent-purple/60 text-xs font-heading tracking-wider uppercase mt-0.5">Head of Communications</p>
+              </div>
+            </div>
+            <p className="text-dark-muted text-sm leading-relaxed mb-4">
+              Leads client relations, project scoping, and strategic communications. Ensures every project is aligned with business goals and delivers clear value.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {['Strategy','Client Relations','Project Scoping','Brand'].map(t=><span key={t} className="text-[10px] font-heading tracking-wider px-2.5 py-1 rounded-full border border-accent-purple/10 text-accent-purple/40">{t}</span>)}
+            </div>
+          </TiltCard>
+        </Reveal>
+      </div>
+    </div>
+  </section>;
+}
+
+/* ═══ CONTACT ═══ */
+function ContactSection(){
+  const[f,setF]=useState({name:'',email:'',message:''});
+  const ch=e=>setF({...f,[e.target.name]:e.target.value});
+  const sub=e=>{e.preventDefault();alert(`Thanks ${f.name}! I'll get back to you soon.`);setF({name:'',email:'',message:''})};
+  const ic='w-full px-5 py-3.5 bg-dark-card border border-dark-border rounded-xl text-white placeholder-dark-muted/40 text-sm outline-none input-glow transition-all duration-300 focus:border-accent/40 hover:border-dark-subtle/30';
+  return<section className="py-24 md:py-32 relative bg-dark-card/40">
+    <div className="absolute bottom-0 left-1/3 w-[500px] h-[500px] bg-accent/[.015] rounded-full blur-[150px] -z-10"/>
+    <div className="max-w-3xl mx-auto px-6">
+      <div className="text-center mb-14">
+        <SectionHeader num="06" label="CONTACT" title="Let's build something great." desc="Got a project, SaaS idea, or need AI integrated? I'd love to hear about it."/>
+      </div>
+      <Reveal delay={.2}>
+        <form onSubmit={sub} className="space-y-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <input type="text" name="name" value={f.name} onChange={ch} placeholder="Your name" required className={ic}/>
+            <input type="email" name="email" value={f.email} onChange={ch} placeholder="your@email.com" required className={ic}/>
+          </div>
+          <textarea name="message" rows="5" value={f.message} onChange={ch} placeholder="Tell me about your project, idea, or what you need built..." required className={ic+' resize-none'}/>
+          <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
+            <MagneticButton type="submit" className="bg-accent text-dark font-heading font-semibold py-3.5 px-10 rounded-full text-sm tracking-wide hover:bg-accent-dim transition-colors glow-accent-strong flex items-center gap-2" data-hover>
+              Send Message
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+            </MagneticButton>
+            <span className="text-dark-subtle text-sm">or</span>
+            <MagneticButton onClick={()=>window.open('https://wa.me/27715165243','_blank')}
+              className="border border-green-500/25 text-green-400 font-heading font-medium py-3.5 px-8 rounded-full text-sm tracking-wide hover:bg-green-500/8 hover:border-green-500/40 transition-all flex items-center gap-2" data-hover>
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+              WhatsApp Me
+            </MagneticButton>
+          </div>
+        </form>
+      </Reveal>
+    </div>
+  </section>;
+}
+
+/* ═══ FOOTER ═══ */
+function Footer(){
+  return<footer className="py-10 border-t border-dark-border/40">
+    <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <span className="font-heading font-bold text-sm text-white/50">WA<span className="text-accent/50">.</span></span>
+      <span className="text-dark-muted/50 text-[11px] font-heading tracking-wider">© {new Date().getFullYear()} Wendel Andrady. All rights reserved.</span>
+      <span className="text-dark-muted/30 text-[11px] font-heading tracking-wider">React · Three.js · Tailwind</span>
+    </div>
+  </footer>;
+}
+
+/* ═══ WHATSAPP FLOAT ═══ */
+function WhatsAppFloat(){
+  return<motion.a href="https://wa.me/27715165243" target="_blank" rel="noopener noreferrer" data-hover
+    initial={{opacity:0,scale:0}} animate={{opacity:1,scale:1}} transition={{delay:2.2,type:'spring',stiffness:200}}
+    whileHover={{scale:1.1,boxShadow:'0 0 25px rgba(74,222,128,.25)'}} whileTap={{scale:.9}}
+    className="fixed bottom-6 right-6 z-40 bg-green-500 rounded-full p-3 shadow-lg shadow-green-500/15 hover:shadow-green-500/30 transition-shadow duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+  </motion.a>;
+}
+
+/* ═══ APP ═══ */
+function App(){
+  const[loading,setLoading]=useState(true);
+  const aboutRef=useRef(null),skillsRef=useRef(null),servicesRef=useRef(null),projectsRef=useRef(null),teamRef=useRef(null),contactRef=useRef(null);
+  return<div className="bg-dark text-gray-100 min-h-screen">
+    <AnimatePresence>{loading&&<Preloader onDone={()=>setLoading(false)}/>}</AnimatePresence>
+    <CustomCursor/><ScrollProgress/>
+    <Navbar refs={{aboutRef,skillsRef,servicesRef,projectsRef,teamRef,contactRef}}/>
+    <Hero refs={{contactRef,projectsRef}}/>
+    <Marquee text="SaaS DEVELOPMENT  ·  AI INTEGRATION  ·  PAYMENT SYSTEMS  ·  FULL-STACK"/>
+    <div ref={aboutRef}><AboutSection/></div>
+    <Stats/>
+    <Marquee text="NEXT.JS  ·  SUPABASE  ·  OPENAI  ·  PAYPAL  ·  TAILWIND" reverse/>
+    <div ref={skillsRef}><ExpertiseSection/></div>
+    <div ref={servicesRef}><ServicesSection/></div>
+    <div ref={projectsRef}><ProjectsSection/></div>
+    <div ref={teamRef}><TeamSection/></div>
+    <div ref={contactRef}><ContactSection/></div>
+    <Footer/><WhatsAppFloat/>
+  </div>;
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
