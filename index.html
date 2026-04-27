@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wendel Andrady | AI Systems & Business Automation</title>
+  <title>Wendel Andrady — AI Systems & Business Automation</title>
+  <meta name="description" content="I build AI-powered systems that generate leads, automate operations, and create recurring revenue. Delivered in 5–7 days.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -15,640 +16,732 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config={theme:{extend:{colors:{
-      accent:'#C8F04B',
-      'accent-dim':'#a8cc35',
-      'accent-warm':'#F0B429',
-      dark:'#080808',
-      'dark-card':'#0d0d0d',
-      'dark-border':'#1c1c1c',
-      'dark-muted':'#666666',
-      'dark-subtle':'#444444'
+      ink:'#0C0C0E',
+      'ink-card':'#111114',
+      'ink-border':'#1E1E24',
+      'ink-muted':'#5A5A6E',
+      'ink-subtle':'#38383F',
+      lime:'#D4F544',
+      'lime-dim':'#AECB32',
+      amber:'#F5A623',
+      rose:'#FF6B6B',
     },fontFamily:{
-      heading:['"Bebas Neue"','sans-serif'],
-      body:['"DM Sans"','sans-serif'],
-      mono:['"DM Mono"','monospace']
+      display:['"Instrument Serif"','serif'],
+      sans:['"Syne"','sans-serif'],
+      mono:['"DM Mono"','monospace'],
     }}}}
   </script>
   <style>
-    *{cursor:none}
-    body{background:#080808;color:#e8e8e8;font-family:'DM Sans',sans-serif;overflow-x:hidden}
+    :root{
+      --lime:#D4F544;--lime-dim:#AECB32;--ink:#0C0C0E;--ink-card:#111114;
+      --ink-border:#1E1E24;--ink-muted:#5A5A6E;--ink-subtle:#38383F;
+    }
+    *,*::before,*::after{box-sizing:border-box;cursor:none;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--ink);color:#E8E8F0;font-family:'Syne',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
     ::-webkit-scrollbar{width:2px}
-    ::-webkit-scrollbar-track{background:#080808}
-    ::-webkit-scrollbar-thumb{background:#C8F04B;border-radius:2px}
-    ::selection{background:rgba(200,240,75,.2);color:#fff}
-    .dot-bg{background-image:radial-gradient(circle,rgba(255,255,255,.04) 1px,transparent 1px);background-size:28px 28px}
-    .text-lime{color:#C8F04B}
-    .bg-lime{background:#C8F04B}
-    .border-lime{border-color:#C8F04B}
-    .glow-lime{box-shadow:0 0 40px rgba(200,240,75,.12),0 0 80px rgba(200,240,75,.04)}
-    .glow-lime-strong{box-shadow:0 0 30px rgba(200,240,75,.22),0 0 60px rgba(200,240,75,.08)}
-    .tag{display:inline-flex;align-items:center;padding:4px 12px;border:1px solid #1c1c1c;border-radius:999px;font-size:11px;font-family:'DM Mono',monospace;color:#666;letter-spacing:.08em;text-transform:uppercase}
-    .tag:hover{border-color:rgba(200,240,75,.3);color:#C8F04B;transition:all .3s}
-    .card{background:#0d0d0d;border:1px solid #1c1c1c;border-radius:16px;padding:28px;transition:border-color .4s,box-shadow .4s}
-    .card:hover{border-color:rgba(200,240,75,.2);box-shadow:0 0 40px rgba(200,240,75,.06)}
-    .pill{background:rgba(200,240,75,.08);color:#C8F04B;border:1px solid rgba(200,240,75,.15);border-radius:999px;padding:5px 14px;font-size:11px;font-family:'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
-    .marquee-wrap{overflow:hidden}
-    .marquee-inner{display:inline-flex;animation:marquee 30s linear infinite;white-space:nowrap}
-    .marquee-inner-rev{animation-direction:reverse;animation-duration:36s}
-    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-    .number-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,8vw,96px);line-height:1;color:#C8F04B}
-    .section-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#444;margin-bottom:16px;display:block}
-    .step-num{font-family:'Bebas Neue',sans-serif;font-size:64px;line-height:1;color:rgba(200,240,75,.15);position:absolute;top:-10px;left:-6px}
-    .input-field{width:100%;padding:14px 18px;background:#0d0d0d;border:1px solid #1c1c1c;border-radius:12px;color:#e8e8e8;font-family:'DM Sans',sans-serif;font-size:15px;outline:none;transition:border-color .3s,box-shadow .3s}
-    .input-field:focus{border-color:rgba(200,240,75,.4);box-shadow:0 0 0 1px rgba(200,240,75,.1)}
-    .input-field::placeholder{color:#444}
-    .btn-primary{background:#C8F04B;color:#080808;font-family:'DM Sans',sans-serif;font-weight:600;padding:15px 32px;border-radius:999px;font-size:15px;letter-spacing:.01em;transition:background .25s,box-shadow .25s;box-shadow:0 0 30px rgba(200,240,75,.2)}
-    .btn-primary:hover{background:#a8cc35;box-shadow:0 0 50px rgba(200,240,75,.35)}
-    .btn-secondary{background:transparent;color:#e8e8e8;font-family:'DM Sans',sans-serif;font-weight:500;padding:15px 32px;border-radius:999px;font-size:15px;border:1px solid #1c1c1c;transition:border-color .25s,color .25s}
-    .btn-secondary:hover{border-color:rgba(200,240,75,.3);color:#C8F04B}
-    .problem-item{display:flex;gap:16px;align-items:flex-start;padding:20px 0;border-bottom:1px solid #1c1c1c}
-    .problem-item:last-child{border-bottom:none}
-    .x-icon{width:20px;height:20px;border-radius:50%;background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
-    .check-icon{width:20px;height:20px;border-radius:50%;background:rgba(200,240,75,.1);border:1px solid rgba(200,240,75,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
-    @media(hover:none){*{cursor:auto!important}.custom-cursor{display:none!important}a,button,input,textarea{cursor:auto}}
-    @media(max-width:768px){
-      .hero-headline{font-size:clamp(52px,14vw,80px)!important}
-      .hide-mobile{display:none!important}
+    ::-webkit-scrollbar-track{background:var(--ink)}
+    ::-webkit-scrollbar-thumb{background:var(--lime);border-radius:99px}
+    ::selection{background:rgba(212,245,68,.18);color:#fff}
+
+    /* grid texture */
+    .grid-tex{background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:48px 48px}
+    /* glow helpers */
+    .glow-lime{box-shadow:0 0 60px rgba(212,245,68,.1),0 0 120px rgba(212,245,68,.04)}
+    .glow-lime-btn{box-shadow:0 0 30px rgba(212,245,68,.25),0 4px 24px rgba(212,245,68,.1)}
+    /* text styles */
+    .display{font-family:'Instrument Serif',serif;line-height:1;letter-spacing:-.02em}
+    .mono-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-muted)}
+    /* card */
+    .card{background:var(--ink-card);border:1px solid var(--ink-border);border-radius:20px;padding:32px;transition:border-color .4s,box-shadow .4s}
+    .card:hover{border-color:rgba(212,245,68,.18);box-shadow:0 0 50px rgba(212,245,68,.05)}
+    /* pill */
+    .pill{display:inline-flex;align-items:center;padding:5px 14px;border-radius:999px;background:rgba(212,245,68,.08);border:1px solid rgba(212,245,68,.14);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime)}
+    /* inputs */
+    .field{width:100%;padding:15px 20px;background:var(--ink-card);border:1px solid var(--ink-border);border-radius:14px;color:#E8E8F0;font-family:'Syne',sans-serif;font-size:15px;outline:none;transition:border-color .3s,box-shadow .3s}
+    .field:focus{border-color:rgba(212,245,68,.4);box-shadow:0 0 0 2px rgba(212,245,68,.07)}
+    .field::placeholder{color:var(--ink-muted)}
+    /* buttons */
+    .btn-lime{background:var(--lime);color:var(--ink);font-family:'Syne',sans-serif;font-weight:700;padding:16px 36px;border-radius:999px;font-size:15px;letter-spacing:.01em;border:none;transition:background .25s,box-shadow .25s;box-shadow:0 0 30px rgba(212,245,68,.2)}
+    .btn-lime:hover{background:var(--lime-dim);box-shadow:0 0 50px rgba(212,245,68,.4)}
+    .btn-ghost{background:transparent;color:#E8E8F0;font-family:'Syne',sans-serif;font-weight:500;padding:16px 36px;border-radius:999px;font-size:15px;border:1px solid var(--ink-border);transition:border-color .25s,color .25s}
+    .btn-ghost:hover{border-color:rgba(212,245,68,.3);color:var(--lime)}
+    /* check + cross */
+    .chk{width:22px;height:22px;border-radius:50%;background:rgba(212,245,68,.09);border:1px solid rgba(212,245,68,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .xmk{width:22px;height:22px;border-radius:50%;background:rgba(255,107,107,.08);border:1px solid rgba(255,107,107,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    /* number big */
+    .num-xl{font-family:'Instrument Serif',serif;font-size:clamp(52px,8vw,88px);line-height:1;color:var(--lime)}
+    /* scrollbar */
+    .marquee-track{display:inline-flex;animation:mq 32s linear infinite;white-space:nowrap}
+    .marquee-track-rev{animation-direction:reverse;animation-duration:38s}
+    @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    /* step big number */
+    .step-ghost{font-family:'Instrument Serif',serif;font-size:120px;line-height:1;color:rgba(212,245,68,.06);position:absolute;top:-20px;right:20px;pointer-events:none;user-select:none}
+    /* service accent bar */
+    .svc-bar{width:3px;height:40px;border-radius:99px;background:var(--lime);flex-shrink:0;opacity:.5;transition:opacity .3s}
+    .card:hover .svc-bar{opacity:1}
+    @media(hover:none){*{cursor:auto!important}.cc,.cr{display:none!important}a,button,input,textarea,select{cursor:auto!important}}
+    @media(max-width:640px){
+      .sm-full{width:100%!important}
+      .sm-center{text-align:center!important}
     }
   </style>
 </head>
-<body class="dot-bg">
+<body class="grid-tex">
 <div id="root"></div>
 <script type="text/babel">
-const{useState,useRef,useEffect,useCallback}=React;
-const{motion,AnimatePresence,useInView}=window.Motion;
+const{useState,useRef,useEffect}=React;
+const{motion,AnimatePresence}=window.Motion;
 
-/* ── CURSOR ── */
-function CustomCursor(){
+/* ══ CURSOR ══ */
+function Cursor(){
   const dot=useRef(null),ring=useRef(null);
   useEffect(()=>{
     let mx=0,my=0,rx=0,ry=0;
-    const move=e=>{mx=e.clientX;my=e.clientY;
+    const mv=e=>{
+      mx=e.clientX;my=e.clientY;
       if(dot.current)dot.current.style.transform=`translate(${mx-4}px,${my-4}px)`;
-      const t=e.target.closest('a,button,input,textarea,[data-hover]');
-      if(ring.current){const s=t?'52px':'38px',o=t?-26:-19;
+      const t=e.target.closest('a,button,input,textarea,select,[data-h]');
+      if(ring.current){
+        const s=t?'54px':'38px',o=t?-27:-19;
         ring.current.style.width=s;ring.current.style.height=s;
         ring.current.style.left=o+'px';ring.current.style.top=o+'px';
-        ring.current.style.borderColor=t?'#C8F04B':'rgba(200,240,75,0.3)';
-        ring.current.style.opacity=t?'1':'0.5'}};
-    const loop=()=>{rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+        ring.current.style.borderColor=t?'#D4F544':'rgba(212,245,68,.28)';
+        ring.current.style.opacity=t?'1':'0.6'}
+    };
+    const lp=()=>{rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
       if(ring.current)ring.current.style.transform=`translate(${rx}px,${ry}px)`;
-      requestAnimationFrame(loop)};
-    window.addEventListener('mousemove',move);loop();
-    return()=>window.removeEventListener('mousemove',move)},[]);
-  return(<>
-    <div ref={dot} className="custom-cursor fixed w-2 h-2 rounded-full pointer-events-none z-[10000]" style={{background:'#C8F04B',mixBlendMode:'difference'}}/>
-    <div ref={ring} className="custom-cursor fixed w-[38px] h-[38px] border rounded-full pointer-events-none z-[10000] transition-[width,height,left,top,border-color,opacity] duration-200 ease-out" style={{borderColor:'rgba(200,240,75,0.3)'}}/>
-  </>);
+      requestAnimationFrame(lp)};
+    window.addEventListener('mousemove',mv);lp();
+    return()=>window.removeEventListener('mousemove',mv)
+  },[]);
+  return<>
+    <div ref={dot} className="cc fixed w-2 h-2 rounded-full pointer-events-none z-[10000]" style={{background:'#D4F544',mixBlendMode:'difference'}}/>
+    <div ref={ring} className="cr fixed w-[38px] h-[38px] border rounded-full pointer-events-none z-[10000]" style={{borderColor:'rgba(212,245,68,.28)',transition:'width .2s,height .2s,left .2s,top .2s,border-color .2s,opacity .2s'}}/>
+  </>;
 }
 
-/* ── SCROLL PROGRESS ── */
-function ScrollProgress(){
+/* ══ SCROLL BAR ══ */
+function ProgressBar(){
   const[p,setP]=useState(0);
-  useEffect(()=>{const h=()=>{const t=document.documentElement.scrollHeight-window.innerHeight;setP(window.scrollY/t*100)};
-    window.addEventListener('scroll',h);return()=>window.removeEventListener('scroll',h)},[]);
-  return<div className="fixed top-0 left-0 h-[2px] z-[9997]" style={{width:`${p}%`,background:'#C8F04B'}}/>;
-}
-
-/* ── REVEAL ── */
-function Reveal({children,delay=0,className='',y=30}){
-  return<motion.div initial={{opacity:0,y}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:'-50px'}}
-    transition={{duration:.65,delay,ease:[.215,.61,.355,1]}} className={className}>{children}</motion.div>;
-}
-
-/* ── THREE SCENE ── */
-function ThreeScene(){
-  const mount=useRef(null);
   useEffect(()=>{
-    const mob=window.innerWidth<768,scene=new THREE.Scene(),w=window.innerWidth,h=window.innerHeight;
-    const cam=new THREE.PerspectiveCamera(60,w/h,.1,100);cam.position.z=5;
-    const ren=new THREE.WebGLRenderer({alpha:true,antialias:true});ren.setSize(w,h);
-    ren.setPixelRatio(Math.min(window.devicePixelRatio,mob?1.5:2));mount.current.appendChild(ren.domElement);
-    const outer=new THREE.Mesh(new THREE.IcosahedronGeometry(2,1),new THREE.MeshBasicMaterial({color:0xC8F04B,wireframe:true,transparent:true,opacity:.04}));
-    const inner=new THREE.Mesh(new THREE.IcosahedronGeometry(1.2,1),new THREE.MeshBasicMaterial({color:0xF0B429,wireframe:true,transparent:true,opacity:.05}));
-    scene.add(outer,inner);
-    const mkTex=c=>{const cv=document.createElement('canvas');cv.width=cv.height=64;const x=cv.getContext('2d');
-      const g=x.createRadialGradient(32,32,0,32,32,32);g.addColorStop(0,c);g.addColorStop(.4,c.replace(',1)',',0.4)'));g.addColorStop(1,c.replace(',1)',',0)'));
+    const h=()=>{const t=document.documentElement.scrollHeight-window.innerHeight;setP(window.scrollY/t*100)};
+    window.addEventListener('scroll',h);return()=>window.removeEventListener('scroll',h)
+  },[]);
+  return<div className="fixed top-0 left-0 h-[2px] z-[9998]" style={{width:`${p}%`,background:'#D4F544'}}/>;
+}
+
+/* ══ REVEAL ══ */
+function R({children,d=0,className='',y=28}){
+  return<motion.div initial={{opacity:0,y}} whileInView={{opacity:1,y:0}}
+    viewport={{once:true,margin:'-40px'}} transition={{duration:.68,delay:d,ease:[.215,.61,.355,1]}}
+    className={className}>{children}</motion.div>;
+}
+
+/* ══ THREE ══ */
+function ThreeBG(){
+  const m=useRef(null);
+  useEffect(()=>{
+    const mob=window.innerWidth<768,W=window.innerWidth,H=window.innerHeight;
+    const s=new THREE.Scene(),cam=new THREE.PerspectiveCamera(60,W/H,.1,100);cam.position.z=5;
+    const ren=new THREE.WebGLRenderer({alpha:true,antialias:true});
+    ren.setSize(W,H);ren.setPixelRatio(Math.min(window.devicePixelRatio,mob?1.5:2));
+    m.current.appendChild(ren.domElement);
+    const geo1=new THREE.IcosahedronGeometry(2.1,1),mat1=new THREE.MeshBasicMaterial({color:0xD4F544,wireframe:true,transparent:true,opacity:.04});
+    const geo2=new THREE.IcosahedronGeometry(1.25,1),mat2=new THREE.MeshBasicMaterial({color:0xF5A623,wireframe:true,transparent:true,opacity:.04});
+    const o1=new THREE.Mesh(geo1,mat1),o2=new THREE.Mesh(geo2,mat2);
+    s.add(o1,o2);
+    const mkT=c=>{const cv=document.createElement('canvas');cv.width=cv.height=64;const x=cv.getContext('2d');
+      const g=x.createRadialGradient(32,32,0,32,32,32);g.addColorStop(0,c);g.addColorStop(.4,c.replace(',1)',',0.35)'));g.addColorStop(1,c.replace(',1)',',0)'));
       x.fillStyle=g;x.fillRect(0,0,64,64);return new THREE.CanvasTexture(cv)};
-    const mkPts=(n,col,sz,op,rad1,rad2)=>{const pos=new Float32Array(n*3);
-      for(let i=0;i<n;i++){const r=rad1+Math.random()*rad2,th=Math.random()*Math.PI*2,ph=Math.acos(2*Math.random()-1);
-        pos[i*3]=r*Math.sin(ph)*Math.cos(th);pos[i*3+1]=r*Math.sin(ph)*Math.sin(th);pos[i*3+2]=r*Math.cos(ph)}
+    const mkP=(n,col,sz,op,r1,r2)=>{
+      const pos=new Float32Array(n*3);
+      for(let i=0;i<n;i++){const r=r1+Math.random()*r2,t=Math.random()*Math.PI*2,p=Math.acos(2*Math.random()-1);
+        pos[i*3]=r*Math.sin(p)*Math.cos(t);pos[i*3+1]=r*Math.sin(p)*Math.sin(t);pos[i*3+2]=r*Math.cos(p)}
       const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));
-      return new THREE.Points(g,new THREE.PointsMaterial({map:mkTex(col),size:sz,transparent:true,opacity:op,blending:THREE.AdditiveBlending,depthWrite:false,sizeAttenuation:true}))};
-    const p1=mkPts(mob?180:700,'rgba(200,240,75,1)',mob?.05:.035,.4,2.5,5);
-    const p2=mkPts(mob?50:200,'rgba(240,180,41,1)',mob?.04:.025,.25,3,4);
-    scene.add(p1,p2);
-    let mx=0,my=0;const onM=e=>{mx=(e.clientX/window.innerWidth)*2-1;my=-(e.clientY/window.innerHeight)*2+1};
+      return new THREE.Points(g,new THREE.PointsMaterial({map:mkT(col),size:sz,transparent:true,opacity:op,blending:THREE.AdditiveBlending,depthWrite:false,sizeAttenuation:true}))};
+    const p1=mkP(mob?150:600,'rgba(212,245,68,1)',mob?.05:.03,.4,2.5,5);
+    const p2=mkP(mob?40:160,'rgba(245,166,35,1)',mob?.04:.025,.25,3,4);
+    s.add(p1,p2);
+    let mx=0,my=0;const onM=e=>{mx=(e.clientX/W)*2-1;my=-(e.clientY/H)*2+1};
     window.addEventListener('mousemove',onM);
-    const animate=()=>{requestAnimationFrame(animate);const t=performance.now()*.001;
-      outer.rotation.x=t*.03+my*.15;outer.rotation.y=t*.05+mx*.15;
-      inner.rotation.x=-t*.025+my*.1;inner.rotation.y=-t*.04+mx*.1;
-      p1.rotation.y=t*.008;p1.rotation.x=Math.sin(t*.006)*.05;
-      p2.rotation.y=-t*.006;p2.rotation.z=Math.cos(t*.004)*.04;
-      ren.render(scene,cam)};animate();
+    const tick=()=>{requestAnimationFrame(tick);const t=performance.now()*.001;
+      o1.rotation.x=t*.035+my*.18;o1.rotation.y=t*.055+mx*.18;
+      o2.rotation.x=-t*.028+my*.1;o2.rotation.y=-t*.04+mx*.1;
+      p1.rotation.y=t*.009;p2.rotation.y=-t*.006;ren.render(s,cam)};
+    tick();
     const onR=()=>{cam.aspect=window.innerWidth/window.innerHeight;cam.updateProjectionMatrix();ren.setSize(window.innerWidth,window.innerHeight)};
     window.addEventListener('resize',onR);
-    return()=>{try{window.removeEventListener('resize',onR);window.removeEventListener('mousemove',onM);if(mount.current&&ren.domElement.parentNode===mount.current)mount.current.removeChild(ren.domElement)}catch(e){}}
+    return()=>{try{window.removeEventListener('resize',onR);window.removeEventListener('mousemove',onM);if(m.current)m.current.removeChild(ren.domElement)}catch(e){}};
   },[]);
-  return<div ref={mount} className="fixed inset-0 -z-10"/>;
+  return<div ref={m} className="fixed inset-0 -z-10"/>;
 }
 
-/* ── PRELOADER ── */
-function Preloader({onDone}){
+/* ══ PRELOADER ══ */
+function Preloader({done}){
   const[c,setC]=useState(0);
-  useEffect(()=>{const iv=setInterval(()=>setC(p=>{if(p>=100){clearInterval(iv);setTimeout(onDone,400);return 100}return p+2}),20);return()=>clearInterval(iv)},[]);
+  useEffect(()=>{
+    const iv=setInterval(()=>setC(p=>{if(p>=100){clearInterval(iv);setTimeout(done,350);return 100}return p+2}),18);
+    return()=>clearInterval(iv)
+  },[]);
   return<motion.div exit={{y:'-100%'}} transition={{duration:.75,ease:[.76,0,.24,1]}}
-    className="fixed inset-0 z-[9998] flex flex-col items-center justify-center" style={{background:'#080808'}}>
-    <motion.span style={{fontFamily:'Bebas Neue',fontSize:'clamp(80px,12vw,140px)',color:'#C8F04B',fontVariantNumeric:'tabular-nums',lineHeight:1}}>{c}</motion.span>
-    <div className="mt-5 w-40 h-[1px] overflow-hidden" style={{background:'#1c1c1c'}}>
-      <motion.div className="h-full" initial={{width:'0%'}} animate={{width:`${c}%`}} style={{background:'#C8F04B'}}/></div>
-    <span className="mt-4 text-xs font-mono" style={{color:'#333',letterSpacing:'.25em'}}>LOADING</span>
+    className="fixed inset-0 z-[9999] flex flex-col items-center justify-center" style={{background:'#0C0C0E'}}>
+    <div style={{fontFamily:'Instrument Serif',fontSize:'clamp(80px,14vw,140px)',color:'#D4F544',lineHeight:1}}>{c}</div>
+    <div className="mt-5 w-36 h-[1px] overflow-hidden" style={{background:'#1E1E24'}}>
+      <motion.div className="h-full" initial={{width:'0%'}} animate={{width:`${c}%`}} style={{background:'#D4F544'}}/></div>
+    <div style={{fontFamily:'DM Mono',fontSize:'11px',color:'#2a2a30',letterSpacing:'.25em',marginTop:'14px'}}>LOADING</div>
   </motion.div>;
 }
 
-/* ── NAVBAR ── */
-function Navbar({refs}){
-  const[sc,setSc]=useState(false),[op,setOp]=useState(false);
+/* ══ NAVBAR ══ */
+function Nav({refs}){
+  const[sc,setSc]=useState(false),[mo,setMo]=useState(false);
   useEffect(()=>{const h=()=>setSc(window.scrollY>50);window.addEventListener('scroll',h);return()=>window.removeEventListener('scroll',h)},[]);
-  const go=r=>{r.current.scrollIntoView({behavior:'smooth'});setOp(false)};
-  const items=[{n:'Problem',r:refs.problemRef},{n:'Services',r:refs.servicesRef},{n:'Work',r:refs.projectsRef},{n:'Process',r:refs.processRef},{n:'Contact',r:refs.contactRef}];
+  const go=r=>{r.current.scrollIntoView({behavior:'smooth'});setMo(false)};
+  const links=[{l:'Problem',r:refs.prob},{l:'Services',r:refs.svc},{l:'Work',r:refs.work},{l:'Process',r:refs.proc},{l:'Contact',r:refs.ctRef}];
   return<motion.nav initial={{opacity:0,y:-20}} animate={{opacity:1,y:0}} transition={{duration:.6,delay:1.5}}
-    className="fixed w-full z-50 transition-all duration-500"
-    style={{background:sc?'rgba(8,8,8,0.85)':'transparent',backdropFilter:sc?'blur(20px)':'none',borderBottom:sc?'1px solid #1c1c1c':'none',padding:sc?'12px 0':'20px 0'}}>
-    <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
-      <motion.button whileHover={{scale:1.05}} onClick={()=>refs.heroRef.current.scrollIntoView({behavior:'smooth'})}
-        className="font-heading text-xl tracking-wider text-white" data-hover>
-        WA<span style={{color:'#C8F04B'}}>.</span>
-      </motion.button>
+    className="fixed w-full z-50"
+    style={{background:sc?'rgba(12,12,14,.88)':'transparent',backdropFilter:sc?'blur(22px)':'none',borderBottom:sc?'1px solid #1E1E24':'none',padding:sc?'12px 0':'22px 0',transition:'all .4s'}}>
+    <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
+      <button onClick={()=>refs.hero.current.scrollIntoView({behavior:'smooth'})} data-h
+        style={{fontFamily:'Syne',fontWeight:800,fontSize:'18px',letterSpacing:'-.01em',color:'#E8E8F0'}}>
+        Wendel<span style={{color:'#D4F544'}}>.</span>
+      </button>
       <div className="hidden md:flex items-center gap-1">
-        {items.map(it=><motion.button key={it.n} whileTap={{scale:.95}} onClick={()=>go(it.r)}
-          className="px-4 py-2 text-sm font-body transition-colors duration-300 relative group" style={{color:'#666'}}
-          onMouseEnter={e=>e.target.style.color='#C8F04B'} onMouseLeave={e=>e.target.style.color='#666'} data-hover>
-          {it.n}
-        </motion.button>)}
-        <motion.button whileTap={{scale:.95}} onClick={()=>go(refs.contactRef)} className="btn-primary ml-3 text-sm py-2.5 px-6" data-hover>
-          Book a Call
-        </motion.button>
+        {links.map(l=><button key={l.l} onClick={()=>go(l.r)} data-h
+          className="px-4 py-2 text-sm font-sans transition-colors duration-300"
+          style={{color:'#5A5A6E'}}
+          onMouseEnter={e=>e.currentTarget.style.color='#D4F544'}
+          onMouseLeave={e=>e.currentTarget.style.color='#5A5A6E'}>{l.l}</button>)}
+        <button onClick={()=>go(refs.ctRef)} data-h className="btn-lime ml-3 py-2.5 px-6 text-sm">Book a Call</button>
       </div>
-      <motion.button whileTap={{scale:.9}} onClick={()=>setOp(!op)} className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5" data-hover>
-        <motion.span animate={op?{rotate:45,y:6}:{rotate:0,y:0}} className="w-5 h-[1.5px] block origin-center" style={{background:'#C8F04B'}}/>
-        <motion.span animate={op?{opacity:0}:{opacity:1}} className="w-5 h-[1.5px] block" style={{background:'#C8F04B'}}/>
-        <motion.span animate={op?{rotate:-45,y:-6}:{rotate:0,y:0}} className="w-5 h-[1.5px] block origin-center" style={{background:'#C8F04B'}}/>
-      </motion.button>
+      <button onClick={()=>setMo(!mo)} data-h className="md:hidden flex flex-col items-center justify-center gap-1.5 w-10 h-10">
+        <motion.span animate={mo?{rotate:45,y:6}:{rotate:0,y:0}} className="w-5 h-[1.5px] block origin-center" style={{background:'#D4F544'}}/>
+        <motion.span animate={mo?{opacity:0}:{opacity:1}} className="w-5 h-[1.5px] block" style={{background:'#D4F544'}}/>
+        <motion.span animate={mo?{rotate:-45,y:-6}:{rotate:0,y:0}} className="w-5 h-[1.5px] block origin-center" style={{background:'#D4F544'}}/>
+      </button>
     </div>
-    <AnimatePresence>{op&&<motion.div initial={{opacity:0,height:0}} animate={{opacity:1,height:'auto'}} exit={{opacity:0,height:0}} transition={{duration:.3}}
-      className="md:hidden overflow-hidden" style={{background:'rgba(8,8,8,.96)',backdropFilter:'blur(20px)',borderTop:'1px solid #1c1c1c'}}>
-      <div className="px-6 py-4 space-y-1">
-        {items.map((it,i)=><motion.button key={it.n} initial={{opacity:0,x:-16}} animate={{opacity:1,x:0}} transition={{delay:i*.04}}
-          onClick={()=>go(it.r)} className="block w-full text-left py-3 text-lg font-body" style={{color:'#666'}}>{it.n}</motion.button>)}
-        <motion.button initial={{opacity:0,x:-16}} animate={{opacity:1,x:0}} transition={{delay:.25}}
-          onClick={()=>go(refs.contactRef)} className="btn-primary w-full mt-4 text-center block">Book a Call</motion.button>
-      </div>
-    </motion.div>}</AnimatePresence>
+    <AnimatePresence>{mo&&
+      <motion.div initial={{opacity:0,height:0}} animate={{opacity:1,height:'auto'}} exit={{opacity:0,height:0}} transition={{duration:.28}}
+        className="md:hidden overflow-hidden" style={{background:'rgba(12,12,14,.96)',backdropFilter:'blur(20px)',borderTop:'1px solid #1E1E24'}}>
+        <div className="px-6 py-5 space-y-1">
+          {links.map((l,i)=><motion.button key={l.l} initial={{opacity:0,x:-14}} animate={{opacity:1,x:0}} transition={{delay:i*.04}}
+            onClick={()=>go(l.r)} className="block w-full text-left py-3 text-lg" style={{color:'#5A5A6E'}}>{l.l}</motion.button>)}
+          <button onClick={()=>go(refs.ctRef)} className="btn-lime w-full mt-4 text-center block">Book a Call</button>
+        </div>
+      </motion.div>}
+    </AnimatePresence>
   </motion.nav>;
 }
 
-/* ── HERO ── */
+/* ══ HERO ══ */
 function Hero({refs}){
-  return<section ref={refs.heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{paddingTop:'80px'}}>
-    <ThreeScene/>
-    <div className="absolute inset-0 pointer-events-none" style={{background:'linear-gradient(to bottom,#080808 0%,transparent 20%,transparent 80%,#080808 100%)'}}/>
+  return<section ref={refs.hero} className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{paddingTop:'80px'}}>
+    <ThreeBG/>
+    <div className="absolute inset-0 pointer-events-none" style={{background:'linear-gradient(to bottom,#0C0C0E 0%,transparent 15%,transparent 82%,#0C0C0E 100%)'}}/>
     <div className="relative z-10 text-center px-6 max-w-5xl w-full">
-      <Reveal delay={1.7}>
-        <span className="pill mb-6 inline-block">AI Systems & Business Automation</span>
-      </Reveal>
+
+      {/* Label */}
+      <R d={1.7}><div className="pill mx-auto mb-7 inline-block">AI Systems &amp; Business Automation</div></R>
+
+      {/* Headline */}
       <div className="overflow-hidden mb-6">
-        <motion.h1 initial={{y:120,opacity:0}} animate={{y:0,opacity:1}} transition={{duration:.8,delay:1.9,ease:[.215,.61,.355,1]}}
-          className="hero-headline font-heading leading-none uppercase"
-          style={{fontSize:'clamp(52px,10vw,120px)',letterSpacing:'-.01em'}}>
-          Stop Losing<br/><span style={{color:'#C8F04B'}}>Clients & Time</span><br/>to Bad Systems
+        <motion.h1 initial={{y:110,opacity:0}} animate={{y:0,opacity:1}} transition={{duration:.85,delay:1.9,ease:[.215,.61,.355,1]}}
+          className="display" style={{fontSize:'clamp(46px,9.5vw,110px)',color:'#E8E8F0'}}>
+          Your business deserves<br/>
+          <em style={{color:'#D4F544',fontStyle:'italic'}}>systems that sell.</em>
         </motion.h1>
       </div>
-      <Reveal delay={2.3}>
-        <p className="text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-light" style={{color:'#888'}}>
-          I build AI-powered systems that <span style={{color:'#e8e8e8'}}>generate leads automatically</span>, <span style={{color:'#e8e8e8'}}>cut manual work by 80%</span>, and <span style={{color:'#e8e8e8'}}>give your business the infrastructure to scale</span> — delivered in 5–7 days.
+
+      {/* Sub */}
+      <R d={2.3}>
+        <p className="text-base md:text-lg max-w-xl mx-auto leading-relaxed mb-10" style={{color:'#5A5A6E'}}>
+          I'm <strong style={{color:'#E8E8F0',fontWeight:600}}>Wendel Andrady</strong> — I build AI-powered systems that capture leads, automate your operations, and generate recurring revenue. Delivered in <strong style={{color:'#D4F544',fontWeight:600}}>5–7 days.</strong>
         </p>
-      </Reveal>
-      <Reveal delay={2.5} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <motion.button whileHover={{scale:1.04}} whileTap={{scale:.97}} onClick={()=>refs.contactRef.current.scrollIntoView({behavior:'smooth'})}
-          className="btn-primary glow-lime-strong" data-hover>
-          Book a Free Call →
-        </motion.button>
-        <motion.button whileHover={{scale:1.04}} whileTap={{scale:.97}} onClick={()=>refs.projectsRef.current.scrollIntoView({behavior:'smooth'})}
-          className="btn-secondary" data-hover>
-          See Real Results
-        </motion.button>
-      </Reveal>
-      <Reveal delay={2.8} className="mt-12 flex flex-wrap items-center justify-center gap-6">
-        {[{n:'10+',l:'Systems Built'},{n:'5–7',l:'Days to Launch'},{n:'$0',l:'Wasted on Guesswork'}].map((s,i)=>
+      </R>
+
+      {/* CTAs */}
+      <R d={2.5} className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <motion.button whileHover={{scale:1.04}} whileTap={{scale:.96}} data-h
+          onClick={()=>refs.ctRef.current.scrollIntoView({behavior:'smooth'})}
+          className="btn-lime glow-lime-btn sm-full">Book a Free Call →</motion.button>
+        <motion.button whileHover={{scale:1.04}} whileTap={{scale:.96}} data-h
+          onClick={()=>refs.work.current.scrollIntoView({behavior:'smooth'})}
+          className="btn-ghost sm-full">See My Work</motion.button>
+      </R>
+
+      {/* Mini stats */}
+      <R d={2.8} className="mt-14 flex flex-wrap items-center justify-center gap-10">
+        {[{n:'10+',l:'Systems Built'},{n:'$1K–$5K',l:'Project Range'},{n:'5–7 Days',l:'Average Delivery'},{n:'18 y/o',l:'Builder'}].map((s,i)=>
           <div key={i} className="text-center">
-            <div className="font-heading text-3xl md:text-4xl" style={{color:'#C8F04B'}}>{s.n}</div>
-            <div className="text-xs font-mono mt-1" style={{color:'#444',letterSpacing:'.1em'}}>{s.l}</div>
+            <div className="num-xl">{s.n}</div>
+            <div className="mono-label mt-1">{s.l}</div>
           </div>)}
-      </Reveal>
+      </R>
     </div>
-    <motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10" animate={{y:[0,8,0]}} transition={{duration:2.5,repeat:Infinity,ease:'easeInOut'}}>
-      <div className="w-5 h-8 border rounded-full flex justify-center pt-1.5" style={{borderColor:'#1c1c1c'}}>
-        <motion.div className="w-1 h-2 rounded-full" style={{background:'rgba(200,240,75,.4)'}} animate={{y:[0,8,0],opacity:[1,.2,1]}} transition={{duration:2.5,repeat:Infinity,ease:'easeInOut'}}/>
+
+    {/* Scroll indicator */}
+    <motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10" animate={{y:[0,7,0]}} transition={{duration:2.4,repeat:Infinity,ease:'easeInOut'}}>
+      <div className="w-5 h-8 rounded-full flex justify-center pt-2" style={{border:'1px solid #1E1E24'}}>
+        <motion.div className="w-1 h-2 rounded-full" style={{background:'rgba(212,245,68,.4)'}} animate={{y:[0,8,0],opacity:[1,.2,1]}} transition={{duration:2.4,repeat:Infinity,ease:'easeInOut'}}/>
       </div>
     </motion.div>
   </section>;
 }
 
-/* ── MARQUEE ── */
-function Marquee({text,reverse=false}){
-  const t=`${text}  —  ${text}  —  ${text}  —  ${text}  —  `;
-  return<div className="marquee-wrap py-5 md:py-6 border-y" style={{borderColor:'#1c1c1c'}}>
-    <div className={`marquee-inner ${reverse?'marquee-inner-rev':''}`}>
-      <span className="font-heading text-5xl md:text-7xl" style={{color:'rgba(255,255,255,.06)'}}>{t}</span>
+/* ══ MARQUEE ══ */
+function Marquee({t,rev}){
+  const txt=`${t}  ·  ${t}  ·  ${t}  ·  ${t}  ·  `;
+  return<div className="overflow-hidden py-5 md:py-6" style={{borderTop:'1px solid #1E1E24',borderBottom:'1px solid #1E1E24'}}>
+    <div className={`marquee-track ${rev?'marquee-track-rev':''}`}>
+      <span style={{fontFamily:'Instrument Serif',fontSize:'clamp(42px,7vw,80px)',color:'rgba(255,255,255,.05)',whiteSpace:'nowrap'}}>{txt}</span>
     </div>
   </div>;
 }
 
-/* ── PROBLEM ── */
-function ProblemSection({sectionRef}){
-  const problems=[
-    {text:'You\'re losing potential clients because your follow-up is slow or nonexistent',detail:'Every hour without a response costs you deals'},
-    {text:'Your team spends hours every week on tasks a computer could handle in seconds',detail:'Scheduling, data entry, lead sorting — all unnecessary manual work'},
-    {text:'Your website looks good but doesn\'t actually convert visitors into paying clients',detail:'Pretty isn\'t profitable. Systems are.'},
-    {text:'You don\'t have a central system — just a pile of apps that don\'t talk to each other',detail:'Fragmented tools = missed revenue and exhausted teams'},
+/* ══ PROBLEM ══ */
+function Problem({sRef}){
+  const pains=[
+    {t:'You\'re not getting enough leads',d:'Your pipeline is dry. You\'re relying on referrals and hoping the phone rings.'},
+    {t:'Too much time lost to manual work',d:'Your team is buried in tasks that should take seconds — scheduling, follow-ups, data entry.'},
+    {t:'Your systems are outdated or nonexistent',d:'No lead tracking, no client portal, no automation. Just scattered spreadsheets and missed opportunities.'},
+    {t:'Revenue isn\'t predictable',d:'You have no recurring income. Every month starts at zero.'},
   ];
-  return<section ref={sectionRef} className="py-24 md:py-32 relative" style={{background:'#080808'}}>
+  return<section ref={sRef} className="py-24 md:py-32">
     <div className="max-w-6xl mx-auto px-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         <div>
-          <Reveal><span className="section-label">01 — the problem</span></Reveal>
-          <Reveal delay={.1}>
-            <h2 className="font-heading uppercase leading-none mb-6" style={{fontSize:'clamp(42px,6vw,72px)',letterSpacing:'-.01em'}}>
-              Your business is<br/>leaking money<br/><span style={{color:'#C8F04B'}}>every single day</span>
+          <R><span className="mono-label block mb-5">01 — the problem</span></R>
+          <R d={.1}>
+            <h2 className="display mb-5" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>
+              Most service businesses are<br/><em style={{color:'#D4F544'}}>bleeding revenue</em><br/>they don't even see.
             </h2>
-          </Reveal>
-          <Reveal delay={.2}>
-            <p className="text-base leading-relaxed mb-8" style={{color:'#666'}}>
-              Most service businesses are running on broken systems — slow follow-up, manual processes, and no automation. The result? Revenue left on the table, time wasted, and growth stalled.
+          </R>
+          <R d={.2}>
+            <p className="leading-relaxed mb-8" style={{fontSize:'16px',color:'#5A5A6E'}}>
+              Bad systems don't feel urgent — until you realise how much money walked out the door while you were doing everything manually.
             </p>
-          </Reveal>
-          <Reveal delay={.3}>
-            <motion.button whileHover={{scale:1.04}} whileTap={{scale:.97}}
-              className="btn-primary" data-hover onClick={()=>document.getElementById('contact-section').scrollIntoView({behavior:'smooth'})}>
-              Fix My Systems →
-            </motion.button>
-          </Reveal>
+          </R>
+          <R d={.3}>
+            <button className="btn-lime glow-lime-btn" data-h
+              onClick={()=>document.getElementById('cta').scrollIntoView({behavior:'smooth'})}>Fix My Business →</button>
+          </R>
         </div>
-        <div>
-          {problems.map((p,i)=>
-            <Reveal key={i} delay={i*.08}>
-              <div className="problem-item">
-                <div className="x-icon">
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke="rgba(255,80,80,.7)" strokeWidth="1.5" strokeLinecap="round"/></svg>
+        <div className="space-y-0">
+          {pains.map((p,i)=>
+            <R key={i} d={i*.07}>
+              <div className="flex gap-4 py-5" style={{borderBottom:'1px solid #1E1E24'}}>
+                <div className="xmk mt-1">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke="rgba(255,107,107,.7)" strokeWidth="1.5" strokeLinecap="round"/></svg>
                 </div>
                 <div>
-                  <p className="text-sm font-medium mb-1" style={{color:'#e8e8e8'}}>{p.text}</p>
-                  <p className="text-xs leading-relaxed" style={{color:'#555'}}>{p.detail}</p>
+                  <p className="font-sans font-600 text-sm mb-1" style={{color:'#E8E8F0',fontWeight:600}}>{p.t}</p>
+                  <p className="text-sm leading-relaxed" style={{color:'#5A5A6E'}}>{p.d}</p>
                 </div>
               </div>
-            </Reveal>)}
+            </R>)}
         </div>
       </div>
     </div>
   </section>;
 }
 
-/* ── SERVICES ── */
-function ServicesSection({sectionRef}){
+/* ══ SERVICES ══ */
+function Services({sRef}){
   const svcs=[
-    {num:'01',title:'AI Lead Generation Systems',outcome:'More qualified leads. Less manual outreach.',desc:'An AI-powered system that captures, qualifies, and follows up with leads automatically — while you focus on running your business. Works 24/7. No team needed.',results:['Respond to every inquiry in seconds','Qualify leads before they hit your inbox','Follow up automatically until they book'],price:'From $800'},
-    {num:'02',title:'Business Automation Systems',outcome:'Cut 20+ hours of manual work per week.',desc:'I map your most time-consuming processes and automate them end-to-end. Scheduling, reminders, onboarding, reporting — done automatically without lifting a finger.',results:['Eliminate repetitive admin tasks','Reduce errors and missed follow-ups','Free your team to do high-value work'],price:'From $600'},
-    {num:'03',title:'Client Portals & SaaS Platforms',outcome:'A professional product your clients pay for.',desc:'Full platforms with user accounts, dashboards, payments, and subscription logic. Whether you\'re launching a SaaS product or building a client-facing portal, I build it production-ready.',results:['Charge clients monthly or one-time','Give clients a branded experience','Scale without hiring more staff'],price:'From $1,500'},
-    {num:'04',title:'AI Chatbots & Smart Assistants',outcome:'Never miss a lead or support request again.',desc:'A custom AI assistant trained on your business — answering questions, booking appointments, and handling support. Deployed on your website or WhatsApp in days.',results:['24/7 instant responses to every visitor','Handles FAQs so your team doesn\'t have to','Books appointments directly in your calendar'],price:'From $300'},
+    {
+      n:'01',
+      title:'AI Lead Generation Systems',
+      tag:'More customers automatically',
+      desc:'An automated system that captures visitors, qualifies them using AI, and delivers hot leads straight to your WhatsApp or email — while you sleep.',
+      outcomes:['Capture every lead, 24/7, no staff needed','AI qualifies leads before they reach you','Get notified only when someone is ready to buy','Stop relying on referrals and cold outreach'],
+      price:'From $1,000'
+    },
+    {
+      n:'02',
+      title:'Business Automation Systems',
+      tag:'Save 20+ hours every week',
+      desc:'I map your most time-consuming processes and automate them end to end. Scheduling, reminders, onboarding, reporting — all handled without human input.',
+      outcomes:['Eliminate repetitive manual tasks','Connect your tools so they work together','Internal dashboards for instant visibility','Your team focuses on high-value work only'],
+      price:'From $1,200'
+    },
+    {
+      n:'03',
+      title:'Client Portals & Dashboards',
+      tag:'Better experience, more retention',
+      desc:'A professional, branded portal where your clients log in, track their progress, submit requests, and stay fully informed — without chasing you by email.',
+      outcomes:['Secure client login and profile system','Real-time status and progress tracking','Custom workflows built for your process','Scale your client base without losing quality'],
+      price:'From $1,500'
+    },
+    {
+      n:'04',
+      title:'Subscription & SaaS Systems',
+      tag:'Turn your service into recurring revenue',
+      desc:'I build full monetisation systems — subscription plans, payment processing, user accounts, and feature access control — so your product bills itself.',
+      outcomes:['Monthly or annual billing, fully automated','Different tiers with different feature access','User dashboards, invoices, upgrade flows','Predictable revenue that grows while you sleep'],
+      price:'From $2,000'
+    },
   ];
-  return<section ref={sectionRef} className="py-24 md:py-32 relative" style={{background:'#0a0a0a'}}>
-    <div className="absolute top-0 right-0 w-96 h-96 rounded-full -z-10" style={{background:'rgba(200,240,75,.02)',filter:'blur(150px)'}}/>
+  return<section ref={sRef} className="py-24 md:py-32" style={{background:'rgba(17,17,20,.6)'}}>
+    <div className="absolute w-[500px] h-[500px] rounded-full -z-10 right-0 top-1/3" style={{background:'rgba(212,245,68,.015)',filter:'blur(160px)'}}/>
     <div className="max-w-6xl mx-auto px-6">
-      <div className="mb-16">
-        <Reveal><span className="section-label">02 — services</span></Reveal>
-        <Reveal delay={.1}>
-          <h2 className="font-heading uppercase leading-none" style={{fontSize:'clamp(42px,6vw,72px)'}}>
-            Four ways I<br/><span style={{color:'#C8F04B'}}>grow your revenue</span>
-          </h2>
-        </Reveal>
-      </div>
+      <R><span className="mono-label block mb-5">02 — services</span></R>
+      <R d={.1}>
+        <h2 className="display mb-14" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>
+          Four ways I grow your business.<br/><em style={{color:'#D4F544'}}>One clear outcome each.</em>
+        </h2>
+      </R>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {svcs.map((s,i)=>
-          <Reveal key={i} delay={i*.07}>
-            <div className="card h-full group">
+          <R key={i} d={i*.07}>
+            <div className="card h-full group relative overflow-hidden">
               <div className="flex items-start justify-between mb-5">
-                <span className="font-mono text-xs" style={{color:'#C8F04B',letterSpacing:'.1em'}}>{s.num}</span>
-                <span className="font-mono text-xs" style={{color:'#555'}}>{s.price}</span>
+                <span className="mono-label">{s.n}</span>
+                <span className="mono-label">{s.price}</span>
               </div>
-              <h3 className="font-heading uppercase text-2xl md:text-3xl mb-2 leading-none" style={{color:'#e8e8e8'}}>{s.title}</h3>
-              <p className="text-sm font-medium mb-4" style={{color:'#C8F04B'}}>{s.outcome}</p>
-              <p className="text-sm leading-relaxed mb-5" style={{color:'#666'}}>{s.desc}</p>
-              <div className="space-y-2">
-                {s.results.map((r,ri)=><div key={ri} className="flex items-start gap-2.5">
-                  <div className="check-icon mt-0.5">
-                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#C8F04B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </div>
-                  <span className="text-xs leading-relaxed" style={{color:'#888'}}>{r}</span>
-                </div>)}
+              <div className="flex items-start gap-3 mb-4">
+                <div className="svc-bar mt-1"/>
+                <div>
+                  <h3 className="font-sans font-bold text-xl md:text-2xl mb-1" style={{color:'#E8E8F0',fontWeight:700}}>{s.title}</h3>
+                  <p className="text-sm font-sans" style={{color:'#D4F544',fontWeight:500}}>{s.tag}</p>
+                </div>
+              </div>
+              <p className="text-sm leading-relaxed mb-5" style={{color:'#5A5A6E'}}>{s.desc}</p>
+              <div className="space-y-2.5">
+                {s.outcomes.map((o,oi)=>
+                  <div key={oi} className="flex items-start gap-2.5">
+                    <div className="chk mt-0.5">
+                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#D4F544" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    </div>
+                    <span className="text-xs leading-relaxed" style={{color:'#888'}}>{o}</span>
+                  </div>)}
               </div>
             </div>
-          </Reveal>)}
+          </R>)}
       </div>
-      {/* Combo offer */}
-      <Reveal delay={.4} className="mt-6">
-        <div className="card" style={{borderColor:'rgba(200,240,75,.2)',background:'rgba(200,240,75,.02)'}}>
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      {/* Bundle */}
+      <R d={.4} className="mt-5">
+        <div className="card" style={{borderColor:'rgba(212,245,68,.2)',background:'rgba(212,245,68,.02)'}}>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
-              <span className="pill mb-3 inline-block">Most Popular</span>
-              <h3 className="font-heading uppercase text-3xl md:text-4xl mb-2" style={{color:'#e8e8e8'}}>All-in-One Business System</h3>
-              <p className="text-sm" style={{color:'#888'}}>Website + AI Chatbot + Lead Generation + Payment System — everything you need to get and keep clients, built together from scratch.</p>
+              <div className="pill mb-4 inline-block">Most Popular</div>
+              <h3 className="font-sans font-bold text-2xl md:text-3xl mb-2" style={{color:'#E8E8F0',fontWeight:700}}>Full Business System Bundle</h3>
+              <p className="text-sm leading-relaxed max-w-lg" style={{color:'#5A5A6E'}}>
+                Lead generation + automation + client portal built together as one integrated system. The fastest way to go from scattered tools to a business that runs itself.
+              </p>
             </div>
-            <div className="shrink-0 text-center md:text-right">
-              <div className="font-heading text-4xl" style={{color:'#C8F04B'}}>From $950</div>
-              <p className="text-xs mt-1" style={{color:'#555'}}>Save 35% vs. separate builds</p>
-              <motion.button whileHover={{scale:1.04}} whileTap={{scale:.97}}
-                className="btn-primary mt-4 text-sm py-3 px-6" data-hover
-                onClick={()=>document.getElementById('contact-section').scrollIntoView({behavior:'smooth'})}>
-                I Want This →
-              </motion.button>
+            <div className="shrink-0 text-right">
+              <div className="display text-5xl" style={{color:'#D4F544'}}>From $2,500</div>
+              <p className="mono-label mt-1 mb-4">Full system, 7–10 days</p>
+              <button className="btn-lime glow-lime-btn" data-h
+                onClick={()=>document.getElementById('cta').scrollIntoView({behavior:'smooth'})}>Get This →</button>
             </div>
           </div>
         </div>
-      </Reveal>
+      </R>
     </div>
   </section>;
 }
 
-/* ── PROJECTS (CASE STUDY STYLE) ── */
-function ProjectsSection({sectionRef}){
-  const projects=[
-    {num:'01',title:'DoveWhisper',category:'Web App / SaaS',problem:'Families needed help writing heartfelt eulogies for their loved ones — an emotional, time-sensitive moment with no good digital solution.',solution:'Built a complete web platform where users can create, personalize, and share eulogies — with AI assistance to handle the hardest part: finding the words.',result:'A live, monetizable product with a real user base, serving people in some of their most vulnerable moments.',url:'https://dovewhisper.org',outcome:'Product live and generating users'},
-    {num:'02',title:'Therapathy',category:'Mental Health Platform',problem:'Mental health support is either expensive, inaccessible, or generic. People needed a judgment-free tool for daily emotional wellbeing.',solution:'Designed and built a full mental health app with AI-powered emotional support, daily journaling, self-care tools, and personalized insights.',result:'A functioning product that merges emotional wellness with AI — giving users real support at any time of day.',url:'http://therapathy.life',outcome:'AI-powered, launched & accessible'},
-    {num:'03',title:'MealPlan AI',category:'AI-Powered Tool',problem:'Meal planning is time-consuming. People burn hours figuring out what to eat, what to shop for, and what fits their diet.',solution:'Built an AI meal planner that generates personalized weekly plans based on dietary needs, auto-generates shopping lists, and lets users chat to adjust their plan.',result:'A fully functional AI tool ready for subscription monetization — saving users hours every week.',url:'https://mealplan-azure.vercel.app/',outcome:'Subscription-ready AI product'},
+/* ══ WORK ══ */
+function Work({sRef}){
+  const cases=[
+    {
+      n:'01',cat:'SaaS Web App',
+      title:'DoveWhisper',
+      problem:'Families had no simple, guided way to write eulogies during one of the most stressful moments of their lives.',
+      solution:'Built a full web app with AI assistance, user accounts, and a guided writing flow — from blank page to finished eulogy in minutes.',
+      result:'A live, monetised product serving real users. Built end-to-end: design, backend, AI integration, deployment.',
+      badge:'Live & Monetised',url:'https://dovewhisper.org'
+    },
+    {
+      n:'02',cat:'Mental Health Platform',
+      title:'Therapathy',
+      problem:'People needed accessible mental health support outside expensive therapy — but every existing app felt generic and cold.',
+      solution:'Built a full mental health platform with AI-powered support, journaling tools, daily check-ins, and personalised insights.',
+      result:'A production-ready app combining emotional wellness with AI — available to users 24/7 at zero cost to access.',
+      badge:'AI-Powered & Live',url:'http://therapathy.life'
+    },
+    {
+      n:'03',cat:'AI Tool',
+      title:'MealPlan AI',
+      problem:'Meal planning wastes hours every week. Most people give up and order food they can\'t afford.',
+      solution:'Built an AI-powered planner that generates weekly meal plans, auto-creates shopping lists, and lets users adjust via chat.',
+      result:'A subscription-ready AI product. Users save 3–4 hours per week. Fully built for monetisation.',
+      badge:'Subscription-Ready',url:'https://mealplan-azure.vercel.app/'
+    },
   ];
-  return<section ref={sectionRef} className="py-24 md:py-32 relative" style={{background:'#080808'}}>
+  return<section ref={sRef} className="py-24 md:py-32">
     <div className="max-w-6xl mx-auto px-6">
-      <div className="mb-16">
-        <Reveal><span className="section-label">03 — results</span></Reveal>
-        <Reveal delay={.1}>
-          <h2 className="font-heading uppercase leading-none" style={{fontSize:'clamp(42px,6vw,72px)'}}>
-            Real products.<br/><span style={{color:'#C8F04B'}}>Real results.</span>
-          </h2>
-        </Reveal>
-      </div>
+      <R><span className="mono-label block mb-5">03 — work</span></R>
+      <R d={.1}>
+        <h2 className="display mb-14" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>
+          Real projects.<br/><em style={{color:'#D4F544'}}>Real results.</em>
+        </h2>
+      </R>
       <div className="space-y-5">
-        {projects.map((p,i)=>
-          <Reveal key={i} delay={i*.1}>
+        {cases.map((c,i)=>
+          <R key={i} d={i*.08}>
             <div className="card group">
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
-                <div className="md:col-span-1">
-                  <span className="font-mono text-xs" style={{color:'#C8F04B'}}>{p.num}</span>
+              <div className="flex items-start gap-3 mb-5 flex-wrap">
+                <span className="mono-label">{c.n}</span>
+                <span className="mono-label">·</span>
+                <span className="mono-label">{c.cat}</span>
+                <div className="pill ml-auto">{c.badge}</div>
+              </div>
+              <h3 className="display mb-5" style={{fontSize:'clamp(32px,4.5vw,52px)',color:'#E8E8F0'}}>{c.title}</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div>
+                  <p className="mono-label block mb-2">Problem</p>
+                  <p className="text-sm leading-relaxed" style={{color:'#5A5A6E'}}>{c.problem}</p>
                 </div>
-                <div className="md:col-span-4">
-                  <span className="font-mono text-xs mb-2 block" style={{color:'#444'}}>{p.category}</span>
-                  <h3 className="font-heading uppercase text-3xl md:text-4xl mb-1" style={{color:'#e8e8e8'}}>{p.title}</h3>
-                  <span className="pill mt-2 inline-block">{p.outcome}</span>
+                <div>
+                  <p className="mono-label block mb-2">Solution</p>
+                  <p className="text-sm leading-relaxed" style={{color:'#5A5A6E'}}>{c.solution}</p>
                 </div>
-                <div className="md:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div>
-                    <p className="font-mono text-xs mb-2" style={{color:'#444',letterSpacing:'.08em',textTransform:'uppercase'}}>Problem</p>
-                    <p className="text-sm leading-relaxed" style={{color:'#888'}}>{p.problem}</p>
-                  </div>
-                  <div>
-                    <p className="font-mono text-xs mb-2" style={{color:'#444',letterSpacing:'.08em',textTransform:'uppercase'}}>Solution</p>
-                    <p className="text-sm leading-relaxed" style={{color:'#888'}}>{p.solution}</p>
-                  </div>
-                  <div>
-                    <p className="font-mono text-xs mb-2" style={{color:'#444',letterSpacing:'.08em',textTransform:'uppercase'}}>Result</p>
-                    <p className="text-sm leading-relaxed" style={{color:'#e8e8e8'}}>{p.result}</p>
-                    <a href={p.url} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 mt-3 text-xs font-mono transition-colors" style={{color:'#C8F04B'}} data-hover>
-                      View Live
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                    </a>
-                  </div>
+                <div>
+                  <p className="mono-label block mb-2">Result</p>
+                  <p className="text-sm leading-relaxed" style={{color:'#E8E8F0'}}>{c.result}</p>
+                  <a href={c.url} target="_blank" rel="noopener noreferrer" data-h
+                    className="inline-flex items-center gap-1.5 mt-3 text-xs font-mono transition-colors" style={{color:'#D4F544'}}>
+                    View Live Project
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </a>
                 </div>
               </div>
             </div>
-          </Reveal>)}
+          </R>)}
       </div>
     </div>
   </section>;
 }
 
-/* ── PROCESS ── */
-function ProcessSection({sectionRef}){
+/* ══ DIFFERENTIATORS ══ */
+function Diff(){
+  const pts=[
+    {t:'Delivered in 5–7 days',d:'No six-week timelines. No endless meetings. You get a working system fast.'},
+    {t:'Built for business outcomes',d:'I don\'t just write code. I build systems designed to make or save you money.'},
+    {t:'One point of contact',d:'No agencies, no middlemen, no delays. You talk to the builder directly.'},
+    {t:'Fixed scope, clear pricing',d:'$1,000–$5,000 depending on scope. No hidden extras, no scope creep.'},
+  ];
+  return<section className="py-16 md:py-20" style={{background:'rgba(17,17,20,.5)',borderTop:'1px solid #1E1E24',borderBottom:'1px solid #1E1E24'}}>
+    <div className="max-w-6xl mx-auto px-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {pts.map((p,i)=>
+          <R key={i} d={i*.07}>
+            <div className="text-center px-4">
+              <div className="w-2 h-2 rounded-full mx-auto mb-4" style={{background:'#D4F544'}}/>
+              <p className="font-sans font-bold text-base mb-2" style={{color:'#E8E8F0',fontWeight:700}}>{p.t}</p>
+              <p className="text-sm leading-relaxed" style={{color:'#5A5A6E'}}>{p.d}</p>
+            </div>
+          </R>)}
+      </div>
+    </div>
+  </section>;
+}
+
+/* ══ PROCESS ══ */
+function Process({sRef}){
   const steps=[
-    {num:'01',title:'Quick Call',sub:'30 minutes',desc:'We talk about your business, your goals, and your biggest bottleneck right now. You walk away with clarity — even if you don\'t hire me.'},
-    {num:'02',title:'I Build Your System',sub:'5–7 days',desc:'No back-and-forth, no lengthy planning phase. I design and build your system, keeping you updated with daily progress. You stay focused on your business.'},
-    {num:'03',title:'Launch & Scale',sub:'Day 7+',desc:'Your system goes live. I train you on how it works, hand over everything, and support the launch. Most clients see measurable results within the first week.'},
+    {n:'01',t:'Quick Call',dur:'30 minutes',d:'We talk about your business, the biggest problem slowing you down, and what result you want. No pitch, no pressure. Just clarity.'},
+    {n:'02',t:'I Build Your System',dur:'5–7 days',d:'I design and build your system without back and forth. You get daily progress updates and a working product at the end — not a quote or a proposal.'},
+    {n:'03',t:'Launch & Get Results',dur:'Day 7+',d:'Your system goes live. I walk you through it, hand over everything, and support your launch. Most clients see measurable results within the first week.'},
   ];
-  return<section ref={sectionRef} className="py-24 md:py-32 relative" style={{background:'#0a0a0a'}}>
-    <div className="absolute bottom-0 left-1/4 w-96 h-96 rounded-full -z-10" style={{background:'rgba(200,240,75,.015)',filter:'blur(150px)'}}/>
+  return<section ref={sRef} className="py-24 md:py-32" style={{background:'rgba(17,17,20,.5)'}}>
+    <div className="absolute w-96 h-96 rounded-full -z-10 left-1/4 bottom-0" style={{background:'rgba(212,245,68,.012)',filter:'blur(140px)'}}/>
     <div className="max-w-6xl mx-auto px-6">
-      <div className="mb-16">
-        <Reveal><span className="section-label">04 — how it works</span></Reveal>
-        <Reveal delay={.1}>
-          <h2 className="font-heading uppercase leading-none" style={{fontSize:'clamp(42px,6vw,72px)'}}>
-            From call to launch<br/><span style={{color:'#C8F04B'}}>in 7 days flat</span>
-          </h2>
-        </Reveal>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <R><span className="mono-label block mb-5">04 — process</span></R>
+      <R d={.1}>
+        <h2 className="display mb-14" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>
+          From call to launch<br/><em style={{color:'#D4F544'}}>in 7 days.</em>
+        </h2>
+      </R>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {steps.map((s,i)=>
-          <Reveal key={i} delay={i*.1}>
+          <R key={i} d={i*.1}>
             <div className="card h-full relative overflow-hidden">
-              <div className="step-num" style={{fontFamily:'Bebas Neue'}}>{s.num}</div>
+              <div className="step-ghost">{s.n}</div>
               <div className="relative z-10">
-                <div className="flex items-center justify-between mb-6">
-                  <span className="font-mono text-xs" style={{color:'#C8F04B'}}>{s.num}</span>
-                  <span className="pill">{s.sub}</span>
+                <div className="flex items-center justify-between mb-8">
+                  <span className="mono-label">{s.n}</span>
+                  <div className="pill">{s.dur}</div>
                 </div>
-                <h3 className="font-heading uppercase text-3xl mb-3" style={{color:'#e8e8e8'}}>{s.title}</h3>
-                <p className="text-sm leading-relaxed" style={{color:'#666'}}>{s.desc}</p>
+                <h3 className="font-sans font-bold text-2xl md:text-3xl mb-4" style={{color:'#E8E8F0',fontWeight:700}}>{s.t}</h3>
+                <p className="text-sm leading-relaxed" style={{color:'#5A5A6E'}}>{s.d}</p>
               </div>
             </div>
-          </Reveal>)}
+          </R>)}
       </div>
-      <Reveal delay={.4} className="mt-8">
-        <div className="card text-center py-12" style={{borderColor:'rgba(200,240,75,.15)',background:'rgba(200,240,75,.015)'}}>
-          <p className="font-heading uppercase text-2xl md:text-4xl mb-2" style={{color:'#e8e8e8'}}>No bloated timelines. No tech jargon.</p>
-          <p className="text-base mb-8" style={{color:'#666'}}>You get a working system — not a slide deck about one.</p>
-          <motion.button whileHover={{scale:1.04}} whileTap={{scale:.97}}
-            className="btn-primary glow-lime-strong" data-hover
-            onClick={()=>document.getElementById('contact-section').scrollIntoView({behavior:'smooth'})}>
-            Start the Process →
-          </motion.button>
+      <R d={.4} className="mt-5">
+        <div className="card text-center py-12" style={{borderColor:'rgba(212,245,68,.15)',background:'rgba(212,245,68,.012)'}}>
+          <h3 className="display mb-3" style={{fontSize:'clamp(28px,4vw,48px)',color:'#E8E8F0'}}>
+            No bloated timelines.<br/>No technical jargon.<br/><em style={{color:'#D4F544'}}>Just a system that works.</em>
+          </h3>
+          <p className="text-sm mb-8 max-w-md mx-auto" style={{color:'#5A5A6E'}}>Most agencies quote you 8 weeks and $15K for what I deliver in 7 days.</p>
+          <button className="btn-lime glow-lime-btn" data-h
+            onClick={()=>document.getElementById('cta').scrollIntoView({behavior:'smooth'})}>Start the Process →</button>
         </div>
-      </Reveal>
+      </R>
     </div>
   </section>;
 }
 
-/* ── CAPABILITIES ── */
-function CapabilitiesSection(){
-  const caps=[
+/* ══ CAPABILITIES ══ */
+function Caps(){
+  const list=[
     'Build complete SaaS platforms from scratch',
-    'Create AI tools and automation workflows',
-    'Design dashboards and client-facing portals',
-    'Integrate subscription billing and payments',
-    'Connect APIs and third-party services',
-    'Deploy and maintain production applications',
+    'Create AI lead generation and automation tools',
+    'Design client portals and admin dashboards',
+    'Integrate subscription billing and payment systems',
+    'Connect APIs, tools, and third-party services',
+    'Deploy and maintain production-ready applications',
   ];
-  return<section className="py-20 border-y" style={{borderColor:'#1c1c1c',background:'#080808'}}>
+  return<section className="py-20" style={{borderTop:'1px solid #1E1E24',borderBottom:'1px solid #1E1E24'}}>
     <div className="max-w-6xl mx-auto px-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <Reveal>
-          <span className="section-label">capabilities</span>
-          <h2 className="font-heading uppercase leading-none" style={{fontSize:'clamp(36px,5vw,60px)'}}>
-            Everything under<br/><span style={{color:'#C8F04B'}}>one roof</span>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+        <R>
+          <span className="mono-label block mb-5">capabilities</span>
+          <h2 className="display" style={{fontSize:'clamp(36px,5vw,56px)',color:'#E8E8F0'}}>
+            Everything built<br/><em style={{color:'#D4F544'}}>by one person.</em>
           </h2>
-        </Reveal>
-        <div className="grid grid-cols-1 gap-0">
-          {caps.map((c,i)=>
-            <Reveal key={i} delay={i*.05}>
-              <div className="flex items-center gap-3 py-3 border-b" style={{borderColor:'#1c1c1c'}}>
-                <div className="w-1 h-1 rounded-full shrink-0" style={{background:'#C8F04B'}}/>
+          <p className="text-sm leading-relaxed mt-5" style={{color:'#5A5A6E'}}>
+            No agency overhead. No junior developer handoffs. You get a senior-level builder who owns the full stack — from database to interface.
+          </p>
+        </R>
+        <div>
+          {list.map((c,i)=>
+            <R key={i} d={i*.05}>
+              <div className="flex items-center gap-3 py-3.5" style={{borderBottom:'1px solid #1E1E24'}}>
+                <div className="w-1 h-1 rounded-full shrink-0" style={{background:'#D4F544'}}/>
                 <span className="text-sm" style={{color:'#888'}}>{c}</span>
               </div>
-            </Reveal>)}
+            </R>)}
         </div>
       </div>
     </div>
   </section>;
 }
 
-/* ── SOCIAL PROOF ── */
-function SocialProof(){
-  const stats=[
-    {n:'10+',l:'Systems Built & Live'},
-    {n:'5–7',l:'Days Average Delivery'},
-    {n:'3',l:'Products Generating Revenue'},
-    {n:'$0',l:'Wasted on Unused Features'},
-  ];
-  return<section className="py-16" style={{background:'#0a0a0a'}}>
-    <div className="max-w-6xl mx-auto px-6">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-        {stats.map((s,i)=>
-          <Reveal key={i} delay={i*.07} className="text-center">
-            <div className="number-big">{s.n}</div>
-            <div className="text-xs font-mono mt-2" style={{color:'#444',letterSpacing:'.08em',textTransform:'uppercase'}}>{s.l}</div>
-          </Reveal>)}
-      </div>
-    </div>
-  </section>;
-}
-
-/* ── CONTACT ── */
-function ContactSection({sectionRef}){
-  const[f,setF]=useState({name:'',email:'',budget:'',message:''});
+/* ══ CTA / CONTACT ══ */
+function Contact({sRef}){
+  const[f,setF]=useState({name:'',email:'',service:'',budget:'',msg:''});
   const ch=e=>setF({...f,[e.target.name]:e.target.value});
-  const sub=e=>{e.preventDefault();alert(`Thanks ${f.name}! I'll reach out within 24 hours.`);setF({name:'',email:'',budget:'',message:''})};
-  return<section ref={sectionRef} id="contact-section" className="py-24 md:py-32 relative" style={{background:'#080808'}}>
-    <div className="absolute bottom-0 right-1/3 w-96 h-96 rounded-full -z-10" style={{background:'rgba(200,240,75,.015)',filter:'blur(150px)'}}/>
-    <div className="max-w-3xl mx-auto px-6">
+  const sub=e=>{
+    e.preventDefault();
+    alert(`Got it, ${f.name}. I'll reply within 24 hours with a clear plan.`);
+    setF({name:'',email:'',service:'',budget:'',msg:''});
+  };
+  return<section ref={sRef} id="cta" className="py-24 md:py-32">
+    <div className="absolute w-96 h-96 rounded-full -z-10 right-1/3 bottom-0" style={{background:'rgba(212,245,68,.013)',filter:'blur(130px)'}}/>
+    <div className="max-w-2xl mx-auto px-6">
       <div className="text-center mb-14">
-        <Reveal><span className="section-label">05 — contact</span></Reveal>
-        <Reveal delay={.1}>
-          <h2 className="font-heading uppercase leading-none mb-4" style={{fontSize:'clamp(42px,7vw,80px)'}}>
-            Ready to stop<br/>leaving money<br/><span style={{color:'#C8F04B'}}>on the table?</span>
+        <R><span className="mono-label block mb-5">05 — contact</span></R>
+        <R d={.1}>
+          <h2 className="display mb-4" style={{fontSize:'clamp(40px,7vw,80px)',color:'#E8E8F0'}}>
+            Ready to build a<br/><em style={{color:'#D4F544'}}>system that works?</em>
           </h2>
-        </Reveal>
-        <Reveal delay={.2}>
-          <p className="text-base" style={{color:'#666'}}>Tell me about your business. I'll reply within 24 hours with a clear plan — no fluff, no obligation.</p>
-        </Reveal>
+        </R>
+        <R d={.2}>
+          <p className="text-base" style={{color:'#5A5A6E'}}>
+            Tell me what you need. I'll reply within 24 hours with a clear breakdown — no sales pitch, no obligation.
+          </p>
+        </R>
       </div>
-      <Reveal delay={.3}>
+      <R d={.3}>
         <form onSubmit={sub} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <input type="text" name="name" value={f.name} onChange={ch} placeholder="Your name" required className="input-field"/>
-            <input type="email" name="email" value={f.email} onChange={ch} placeholder="your@email.com" required className="input-field"/>
+            <input name="name" value={f.name} onChange={ch} placeholder="Your name" required className="field"/>
+            <input name="email" type="email" value={f.email} onChange={ch} placeholder="your@email.com" required className="field"/>
           </div>
-          <select name="budget" value={f.budget} onChange={ch} className="input-field" style={{appearance:'none'}}>
-            <option value="" disabled>What's your budget range?</option>
-            <option value="300-600">$300–$600 (Chatbot or Automation)</option>
-            <option value="600-1000">$600–$1,000 (Full System or Portal)</option>
-            <option value="1000-2000">$1,000–$2,000 (SaaS Platform)</option>
-            <option value="2000+">$2,000+ (Custom Build)</option>
+          <select name="service" value={f.service} onChange={ch} required className="field" style={{appearance:'none'}}>
+            <option value="" disabled>What do you need built?</option>
+            <option value="leads">AI Lead Generation System</option>
+            <option value="automation">Business Automation System</option>
+            <option value="portal">Client Portal & Dashboard</option>
+            <option value="saas">Subscription / SaaS System</option>
+            <option value="bundle">Full Business System Bundle</option>
+            <option value="unsure">Not sure yet — let's talk</option>
           </select>
-          <textarea name="message" rows="5" value={f.message} onChange={ch}
-            placeholder="What's the #1 problem in your business right now? (leads, time, systems, revenue...)" required
-            className="input-field" style={{resize:'none'}}/>
-          <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
-            <motion.button type="submit" whileHover={{scale:1.04}} whileTap={{scale:.97}}
-              className="btn-primary glow-lime-strong flex items-center gap-2 w-full sm:w-auto justify-center" data-hover>
-              Send & Let's Talk
+          <select name="budget" value={f.budget} onChange={ch} required className="field" style={{appearance:'none'}}>
+            <option value="" disabled>Your budget range</option>
+            <option value="1k-2k">$1,000–$2,000</option>
+            <option value="2k-3k">$2,000–$3,000</option>
+            <option value="3k-5k">$3,000–$5,000</option>
+            <option value="5k+">$5,000+</option>
+          </select>
+          <textarea name="msg" rows="5" value={f.msg} onChange={ch} required
+            placeholder="What's the #1 problem costing you the most time or money right now?"
+            className="field" style={{resize:'none'}}/>
+          <div className="flex flex-col sm:flex-row items-center gap-4 pt-1">
+            <motion.button type="submit" whileHover={{scale:1.04}} whileTap={{scale:.96}} data-h
+              className="btn-lime glow-lime-btn flex items-center gap-2 sm-full justify-center">
+              Send My Brief
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M8 3l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </motion.button>
-            <span className="text-sm" style={{color:'#444'}}>or</span>
-            <motion.button type="button" whileHover={{scale:1.04}} whileTap={{scale:.97}}
+            <span className="text-sm" style={{color:'#38383F'}}>or</span>
+            <motion.button type="button" whileHover={{scale:1.04}} whileTap={{scale:.96}} data-h
               onClick={()=>window.open('https://wa.me/27715165243','_blank')}
-              className="btn-secondary flex items-center gap-2 w-full sm:w-auto justify-center" style={{borderColor:'rgba(74,222,128,.2)',color:'#4ade80'}} data-hover>
+              className="btn-ghost flex items-center gap-2 sm-full justify-center" style={{borderColor:'rgba(37,211,102,.2)',color:'#4ade80'}}>
               <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
               WhatsApp Me
             </motion.button>
           </div>
         </form>
-      </Reveal>
-      <Reveal delay={.5} className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {[
-          {icon:'⚡','title':'Fast Reply','sub':'Within 24 hours'},
-          {icon:'📋','title':'Free Consultation','sub':'No obligation'},
-          {icon:'🚀','title':'Live in 7 Days','sub':'Or sooner'},
-        ].map((r,i)=>
-          <div key={i} className="text-center p-4 rounded-xl" style={{background:'#0d0d0d',border:'1px solid #1c1c1c'}}>
-            <div className="text-2xl mb-2">{r.icon}</div>
-            <p className="text-sm font-medium" style={{color:'#e8e8e8'}}>{r.title}</p>
-            <p className="text-xs mt-1" style={{color:'#555'}}>{r.sub}</p>
+      </R>
+      {/* trust row */}
+      <R d={.5} className="mt-10 grid grid-cols-3 gap-4 text-center">
+        {[{e:'⚡',t:'Reply in 24h'},{e:'📋',t:'Free Consultation'},{e:'🚀',t:'Live in 7 Days'}].map((r,i)=>
+          <div key={i} className="py-4 px-2 rounded-xl" style={{background:'#111114',border:'1px solid #1E1E24'}}>
+            <div style={{fontSize:'22px',marginBottom:'6px'}}>{r.e}</div>
+            <p className="text-xs font-sans" style={{color:'#E8E8F0',fontWeight:500}}>{r.t}</p>
           </div>)}
-      </Reveal>
+      </R>
     </div>
   </section>;
 }
 
-/* ── FOOTER ── */
+/* ══ FOOTER ══ */
 function Footer(){
-  return<footer className="py-8 border-t" style={{borderColor:'#1c1c1c'}}>
+  return<footer className="py-8" style={{borderTop:'1px solid #1E1E24'}}>
     <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-      <span className="font-heading text-sm" style={{color:'rgba(255,255,255,.3)'}}>WA<span style={{color:'rgba(200,240,75,.4)'}}>.</span></span>
-      <span className="font-mono text-xs" style={{color:'#333',letterSpacing:'.05em'}}>© {new Date().getFullYear()} Wendel Andrady. All systems go.</span>
-      <span className="font-mono text-xs" style={{color:'#2a2a2a'}}>Built to convert</span>
+      <span style={{fontFamily:'Syne',fontWeight:800,fontSize:'15px',color:'rgba(232,232,240,.25)'}}>Wendel<span style={{color:'rgba(212,245,68,.3)'}}>.</span></span>
+      <span style={{fontFamily:'DM Mono',fontSize:'11px',color:'#2a2a30',letterSpacing:'.05em'}}>© {new Date().getFullYear()} Wendel Andrady · All rights reserved</span>
+      <span style={{fontFamily:'DM Mono',fontSize:'11px',color:'#1e1e24'}}>Built to convert</span>
     </div>
   </footer>;
 }
 
-/* ── WHATSAPP FLOAT ── */
-function WhatsAppFloat(){
-  return<motion.a href="https://wa.me/27715165243" target="_blank" rel="noopener noreferrer" data-hover
-    initial={{opacity:0,scale:0}} animate={{opacity:1,scale:1}} transition={{delay:2.2,type:'spring',stiffness:200}}
-    whileHover={{scale:1.1}} whileTap={{scale:.9}}
-    className="fixed bottom-6 right-6 z-40 rounded-full p-3 shadow-lg"
-    style={{background:'#25d366',boxShadow:'0 0 25px rgba(37,211,102,.2)'}}>
-    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+/* ══ FLOAT WA ══ */
+function WA(){
+  return<motion.a href="https://wa.me/27715165243" target="_blank" rel="noopener noreferrer" data-h
+    initial={{opacity:0,scale:0}} animate={{opacity:1,scale:1}} transition={{delay:2.2,type:'spring',stiffness:180}}
+    whileHover={{scale:1.12}} whileTap={{scale:.9}}
+    className="fixed bottom-6 right-6 z-40 rounded-full p-3"
+    style={{background:'#25d366',boxShadow:'0 0 30px rgba(37,211,102,.22)'}}>
+    <svg width="26" height="26" fill="white" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
   </motion.a>;
 }
 
-/* ── APP ── */
+/* ══ APP ══ */
 function App(){
-  const[loading,setLoading]=useState(true);
-  const heroRef=useRef(null),problemRef=useRef(null),servicesRef=useRef(null),projectsRef=useRef(null),processRef=useRef(null),contactRef=useRef(null);
-  const refs={heroRef,problemRef,servicesRef,projectsRef,processRef,contactRef};
-  return<div style={{background:'#080808',color:'#e8e8e8',minHeight:'100vh'}}>
-    <AnimatePresence>{loading&&<Preloader onDone={()=>setLoading(false)}/>}</AnimatePresence>
-    <CustomCursor/><ScrollProgress/>
-    <Navbar refs={refs}/>
+  const[ld,setLd]=useState(true);
+  const hero=useRef(null),prob=useRef(null),svc=useRef(null),work=useRef(null),proc=useRef(null),ctRef=useRef(null);
+  const refs={hero,prob,svc,work,proc,ctRef};
+  return<div style={{background:'#0C0C0E',color:'#E8E8F0',minHeight:'100vh'}}>
+    <AnimatePresence>{ld&&<Preloader done={()=>setLd(false)}/>}</AnimatePresence>
+    <Cursor/><ProgressBar/>
+    <Nav refs={refs}/>
     <Hero refs={refs}/>
-    <Marquee text="AI SYSTEMS  ·  LEAD GENERATION  ·  AUTOMATION  ·  SAAS PLATFORMS  ·  RESULTS IN 7 DAYS"/>
-    <ProblemSection sectionRef={problemRef}/>
-    <SocialProof/>
-    <Marquee text="CHATBOTS  ·  CLIENT PORTALS  ·  PAYMENT SYSTEMS  ·  BUSINESS AUTOMATION" reverse/>
-    <ServicesSection sectionRef={servicesRef}/>
-    <ProjectsSection sectionRef={projectsRef}/>
-    <ProcessSection sectionRef={processRef}/>
-    <CapabilitiesSection/>
-    <ContactSection sectionRef={contactRef}/>
-    <Footer/><WhatsAppFloat/>
+    <Marquee t="AI LEAD GENERATION  ·  BUSINESS AUTOMATION  ·  CLIENT PORTALS  ·  SAAS SYSTEMS"/>
+    <Problem sRef={prob}/>
+    <Services sRef={svc}/>
+    <Marquee t="DELIVERED IN 7 DAYS  ·  $1K–$5K  ·  NO TECH JARGON  ·  REAL RESULTS" rev={true}/>
+    <Work sRef={work}/>
+    <Diff/>
+    <Process sRef={proc}/>
+    <Caps/>
+    <Contact sRef={ctRef}/>
+    <Footer/><WA/>
   </div>;
 }
 
