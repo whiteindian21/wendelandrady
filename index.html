@@ -272,7 +272,7 @@ function Hero({refs}){
 
       {/* Mini stats */}
       <R d={2.8} className="mt-14 flex flex-wrap items-center justify-center gap-10">
-        {[{n:'10+',l:'Systems Built'},{n:'$1K–$5K',l:'Project Range'},{n:'5–7 Days',l:'Average Delivery'},{n:'18 y/o',l:'Builder'}].map((s,i)=>
+        {[{n:'15K+',l:'Users Across Products'},{n:'$1K–$5K',l:'Project Range'},{n:'5–7 Days',l:'Average Delivery'},{n:'18 y/o',l:'Builder'}].map((s,i)=>
           <div key={i} className="text-center">
             <div className="num-xl">{s.n}</div>
             <div className="mono-label mt-1">{s.l}</div>
@@ -447,28 +447,28 @@ function Services({sRef}){
 function Work({sRef}){
   const cases=[
     {
-      n:'01',cat:'SaaS Web App',
+      n:'01',cat:'AI SaaS Product',
+      title:'SubText AI',
+      problem:'People waste time overthinking text messages, second-guessing tone and intent — with no fast, reliable way to decode what someone really means.',
+      solution:'Built a full AI-powered web app that decodes any message in seconds, reveals hidden psychology, and generates the perfect reply. Credit-based monetisation, instant access, no subscription required.',
+      result:'10,000+ active users. Over 1 million messages decoded. Live, monetised, and growing with a pay-as-you-go model that converts on first visit.',
+      badge:'10K+ Active Users',url:'https://www.trysubtext.online/'
+    },
+    {
+      n:'02',cat:'SaaS Invoicing Platform',
+      title:'Snapbill',
+      problem:'Freelancers and small businesses lose hours every month creating invoices manually — with no tracking, no reminders, and no professional presentation.',
+      solution:'Built a complete invoicing SaaS with customisable templates, client management, PayPal/Stripe/bank transfer payment links, automated reminders, and a full analytics dashboard.',
+      result:'5,000+ users on the platform. A subscription-based product with free and Pro tiers generating recurring revenue — fully self-serve from signup to paid invoice.',
+      badge:'5K+ Users · Recurring Revenue',url:'https://snapbill.online/'
+    },
+    {
+      n:'03',cat:'SaaS Web App',
       title:'DoveWhisper',
-      problem:'Families had no simple, guided way to write eulogies during one of the most stressful moments of their lives.',
-      solution:'Built a full web app with AI assistance, user accounts, and a guided writing flow — from blank page to finished eulogy in minutes.',
-      result:'A live, monetised product serving real users. Built end-to-end: design, backend, AI integration, deployment.',
+      problem:'Families had no simple, guided way to write eulogies during one of the most emotionally difficult moments of their lives.',
+      solution:'Built a complete web app with AI writing assistance, user accounts, and a guided creation flow — from blank page to finished, shareable eulogy in minutes.',
+      result:'A live, monetised product serving real users at their most vulnerable. Built end-to-end: design, backend, AI integration, deployment.',
       badge:'Live & Monetised',url:'https://dovewhisper.org'
-    },
-    {
-      n:'02',cat:'Mental Health Platform',
-      title:'Therapathy',
-      problem:'People needed accessible mental health support outside expensive therapy — but every existing app felt generic and cold.',
-      solution:'Built a full mental health platform with AI-powered support, journaling tools, daily check-ins, and personalised insights.',
-      result:'A production-ready app combining emotional wellness with AI — available to users 24/7 at zero cost to access.',
-      badge:'AI-Powered & Live',url:'http://therapathy.life'
-    },
-    {
-      n:'03',cat:'AI Tool',
-      title:'MealPlan AI',
-      problem:'Meal planning wastes hours every week. Most people give up and order food they can\'t afford.',
-      solution:'Built an AI-powered planner that generates weekly meal plans, auto-creates shopping lists, and lets users adjust via chat.',
-      result:'A subscription-ready AI product. Users save 3–4 hours per week. Fully built for monetisation.',
-      badge:'Subscription-Ready',url:'https://mealplan-azure.vercel.app/'
     },
   ];
   return<section ref={sRef} className="py-24 md:py-32">
