@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wendel Andrady — AI Systems & Business Automation</title>
+  <title>Wendel Andrady — AI Systems & Business Automation | Secure Form</title>
   <meta name="description" content="I build AI-powered systems that generate leads, automate operations, and create recurring revenue. Delivered in 5–7 days.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,6 +14,7 @@
   <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
   <script src="https://unpkg.com/three@0.132.2/build/three.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Supabase JS client completely removed — now using Edge Function only -->
   <script>
     tailwind.config={theme:{extend:{colors:{
       ink:'#0C0C0E',
@@ -85,13 +86,18 @@
       .sm-full{width:100%!important}
       .sm-center{text-align:center!important}
     }
+    /* form status message */
+    .status-message{font-family:'DM Mono',monospace;font-size:13px;padding:12px 16px;border-radius:99px;text-align:center;margin-top:16px;backdrop-filter:blur(4px);}
   </style>
 </head>
 <body class="grid-tex">
 <div id="root"></div>
 <script type="text/babel">
-const{useState,useRef,useEffect}=React;
+const{useState,useRef,useEffect,useMemo}=React;
 const{motion,AnimatePresence}=window.Motion;
+
+// Supabase frontend client fully removed. No direct DB access.
+// All submissions go through the secure Edge Function.
 
 /* ══ CURSOR ══ */
 function Cursor(){
@@ -138,7 +144,7 @@ function R({children,d=0,className='',y=28}){
     className={className}>{children}</motion.div>;
 }
 
-/* ══ THREE ══ */
+/* ══ THREE JS BG (unchanged) ══ */
 function ThreeBG(){
   const m=useRef(null);
   useEffect(()=>{
@@ -193,7 +199,7 @@ function Preloader({done}){
   </motion.div>;
 }
 
-/* ══ NAVBAR ══ */
+/* ══ NAVBAR (unchanged) ══ */
 function Nav({refs}){
   const[sc,setSc]=useState(false),[mo,setMo]=useState(false);
   useEffect(()=>{const h=()=>setSc(window.scrollY>50);window.addEventListener('scroll',h);return()=>window.removeEventListener('scroll',h)},[]);
@@ -234,495 +240,125 @@ function Nav({refs}){
   </motion.nav>;
 }
 
-/* ══ HERO ══ */
-function Hero({refs}){
-  return<section ref={refs.hero} className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{paddingTop:'80px'}}>
-    <ThreeBG/>
-    <div className="absolute inset-0 pointer-events-none" style={{background:'linear-gradient(to bottom,#0C0C0E 0%,transparent 15%,transparent 82%,#0C0C0E 100%)'}}/>
-    <div className="relative z-10 text-center px-6 max-w-5xl w-full">
+/* ══ Hero, Problem, Services, Work, Diff, Process, Caps components (unchanged) ══ */
+function Hero({refs}){ return <section ref={refs.hero} className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{paddingTop:'80px'}}><ThreeBG/><div className="absolute inset-0 pointer-events-none" style={{background:'linear-gradient(to bottom,#0C0C0E 0%,transparent 15%,transparent 82%,#0C0C0E 100%)'}}/><div className="relative z-10 text-center px-6 max-w-5xl w-full"><R d={1.7}><div className="pill mx-auto mb-7 inline-block">AI Systems &amp; Business Automation</div></R><div className="overflow-hidden mb-6"><motion.h1 initial={{y:110,opacity:0}} animate={{y:0,opacity:1}} transition={{duration:.85,delay:1.9,ease:[.215,.61,.355,1]}} className="display" style={{fontSize:'clamp(46px,9.5vw,110px)',color:'#E8E8F0'}}>Your business deserves<br/><em style={{color:'#D4F544',fontStyle:'italic'}}>systems that sell.</em></motion.h1></div><R d={2.3}><p className="text-base md:text-lg max-w-xl mx-auto leading-relaxed mb-10" style={{color:'#5A5A6E'}}>I'm <strong style={{color:'#E8E8F0',fontWeight:600}}>Wendel Andrady</strong> — I build AI-powered systems that capture leads, automate your operations, and generate recurring revenue. Delivered in <strong style={{color:'#D4F544',fontWeight:600}}>5–7 days.</strong></p></R><R d={2.5} className="flex flex-col sm:flex-row items-center justify-center gap-4"><motion.button whileHover={{scale:1.04}} whileTap={{scale:.96}} data-h onClick={()=>refs.ctRef.current.scrollIntoView({behavior:'smooth'})} className="btn-lime glow-lime-btn sm-full">Book a Free Call →</motion.button><motion.button whileHover={{scale:1.04}} whileTap={{scale:.96}} data-h onClick={()=>refs.work.current.scrollIntoView({behavior:'smooth'})} className="btn-ghost sm-full">See My Work</motion.button></R><R d={2.8} className="mt-14 flex flex-wrap items-center justify-center gap-10">{[{n:'15K+',l:'Users Across Products'},{n:'$1K–$5K',l:'Project Range'},{n:'5–7 Days',l:'Average Delivery'},{n:'18 y/o',l:'Builder'}].map((s,i)=><div key={i} className="text-center"><div className="num-xl">{s.n}</div><div className="mono-label mt-1">{s.l}</div></div>)}</R></div><motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10" animate={{y:[0,7,0]}} transition={{duration:2.4,repeat:Infinity,ease:'easeInOut'}}><div className="w-5 h-8 rounded-full flex justify-center pt-2" style={{border:'1px solid #1E1E24'}}><motion.div className="w-1 h-2 rounded-full" style={{background:'rgba(212,245,68,.4)'}} animate={{y:[0,8,0],opacity:[1,.2,1]}} transition={{duration:2.4,repeat:Infinity,ease:'easeInOut'}}/></div></motion.div></section>}
+function Marquee({t,rev}){const txt=`${t}  ·  ${t}  ·  ${t}  ·  ${t}  ·  `;return<div className="overflow-hidden py-5 md:py-6" style={{borderTop:'1px solid #1E1E24',borderBottom:'1px solid #1E1E24'}}><div className={`marquee-track ${rev?'marquee-track-rev':''}`}><span style={{fontFamily:'Instrument Serif',fontSize:'clamp(42px,7vw,80px)',color:'rgba(255,255,255,.05)',whiteSpace:'nowrap'}}>{txt}</span></div></div>}
+function Problem({sRef}){const pains=[{t:'You\'re not getting enough leads',d:'Your pipeline is dry. You\'re relying on referrals and hoping the phone rings.'},{t:'Too much time lost to manual work',d:'Your team is buried in tasks that should take seconds — scheduling, follow-ups, data entry.'},{t:'Your systems are outdated or nonexistent',d:'No lead tracking, no client portal, no automation. Just scattered spreadsheets and missed opportunities.'},{t:'Revenue isn\'t predictable',d:'You have no recurring income. Every month starts at zero.'}];return<section ref={sRef} className="py-24 md:py-32"><div className="max-w-6xl mx-auto px-6"><div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start"><div><R><span className="mono-label block mb-5">01 — the problem</span></R><R d={.1}><h2 className="display mb-5" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>Most service businesses are<br/><em style={{color:'#D4F544'}}>bleeding revenue</em><br/>they don't even see.</h2></R><R d={.2}><p className="leading-relaxed mb-8" style={{fontSize:'16px',color:'#5A5A6E'}}>Bad systems don't feel urgent — until you realise how much money walked out the door while you were doing everything manually.</p></R><R d={.3}><button className="btn-lime glow-lime-btn" data-h onClick={()=>document.getElementById('cta').scrollIntoView({behavior:'smooth'})}>Fix My Business →</button></R></div><div className="space-y-0">{pains.map((p,i)=><R key={i} d={i*.07}><div className="flex gap-4 py-5" style={{borderBottom:'1px solid #1E1E24'}}><div className="xmk mt-1"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke="rgba(255,107,107,.7)" strokeWidth="1.5" strokeLinecap="round"/></svg></div><div><p className="font-sans font-600 text-sm mb-1" style={{color:'#E8E8F0',fontWeight:600}}>{p.t}</p><p className="text-sm leading-relaxed" style={{color:'#5A5A6E'}}>{p.d}</p></div></div></R>)}</div></div></div></section>}
+function Services({sRef}){const svcs=[{n:'01',title:'AI Lead Generation Systems',tag:'More customers automatically',desc:'An automated system that captures visitors, qualifies them using AI, and delivers hot leads straight to your WhatsApp or email — while you sleep.',outcomes:['Capture every lead, 24/7, no staff needed','AI qualifies leads before they reach you','Get notified only when someone is ready to buy','Stop relying on referrals and cold outreach'],price:'From $1,000'},{n:'02',title:'Business Automation Systems',tag:'Save 20+ hours every week',desc:'I map your most time-consuming processes and automate them end to end. Scheduling, reminders, onboarding, reporting — all handled without human input.',outcomes:['Eliminate repetitive manual tasks','Connect your tools so they work together','Internal dashboards for instant visibility','Your team focuses on high-value work only'],price:'From $1,200'},{n:'03',title:'Client Portals & Dashboards',tag:'Better experience, more retention',desc:'A professional, branded portal where your clients log in, track their progress, submit requests, and stay fully informed — without chasing you by email.',outcomes:['Secure client login and profile system','Real-time status and progress tracking','Custom workflows built for your process','Scale your client base without losing quality'],price:'From $1,500'},{n:'04',title:'Subscription & SaaS Systems',tag:'Turn your service into recurring revenue',desc:'I build full monetisation systems — subscription plans, payment processing, user accounts, and feature access control — so your product bills itself.',outcomes:['Monthly or annual billing, fully automated','Different tiers with different feature access','User dashboards, invoices, upgrade flows','Predictable revenue that grows while you sleep'],price:'From $2,000'}];return<section ref={sRef} className="py-24 md:py-32" style={{background:'rgba(17,17,20,.6)'}}><div className="max-w-6xl mx-auto px-6"><R><span className="mono-label block mb-5">02 — services</span></R><R d={.1}><h2 className="display mb-14" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>Four ways I grow your business.<br/><em style={{color:'#D4F544'}}>One clear outcome each.</em></h2></R><div className="grid grid-cols-1 md:grid-cols-2 gap-5">{svcs.map((s,i)=><R key={i} d={i*.07}><div className="card h-full group relative overflow-hidden"><div className="flex items-start justify-between mb-5"><span className="mono-label">{s.n}</span><span className="mono-label">{s.price}</span></div><div className="flex items-start gap-3 mb-4"><div className="svc-bar mt-1"/><div><h3 className="font-sans font-bold text-xl md:text-2xl mb-1" style={{color:'#E8E8F0',fontWeight:700}}>{s.title}</h3><p className="text-sm font-sans" style={{color:'#D4F544',fontWeight:500}}>{s.tag}</p></div></div><p className="text-sm leading-relaxed mb-5" style={{color:'#5A5A6E'}}>{s.desc}</p><div className="space-y-2.5">{s.outcomes.map((o,oi)=><div key={oi} className="flex items-start gap-2.5"><div className="chk mt-0.5"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#D4F544" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></div><span className="text-xs leading-relaxed" style={{color:'#888'}}>{o}</span></div>)}</div></div></R>)}</div><R d={.4} className="mt-5"><div className="card" style={{borderColor:'rgba(212,245,68,.2)',background:'rgba(212,245,68,.02)'}}><div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6"><div><div className="pill mb-4 inline-block">Most Popular</div><h3 className="font-sans font-bold text-2xl md:text-3xl mb-2" style={{color:'#E8E8F0',fontWeight:700}}>Full Business System Bundle</h3><p className="text-sm leading-relaxed max-w-lg" style={{color:'#5A5A6E'}}>Lead generation + automation + client portal built together as one integrated system. The fastest way to go from scattered tools to a business that runs itself.</p></div><div className="shrink-0 text-right"><div className="display text-5xl" style={{color:'#D4F544'}}>From $2,500</div><p className="mono-label mt-1 mb-4">Full system, 7–10 days</p><button className="btn-lime glow-lime-btn" data-h onClick={()=>document.getElementById('cta').scrollIntoView({behavior:'smooth'})}>Get This →</button></div></div></div></R></div></section>}
+function Work({sRef}){const cases=[{n:'01',cat:'AI SaaS Product',title:'SubText AI',problem:'People waste time overthinking text messages, second-guessing tone and intent — with no fast, reliable way to decode what someone really means.',solution:'Built a full AI-powered web app that decodes any message in seconds, reveals hidden psychology, and generates the perfect reply. Credit-based monetisation, instant access, no subscription required.',result:'10,000+ active users. Over 1 million messages decoded. Live, monetised, and growing with a pay-as-you-go model that converts on first visit.',badge:'10K+ Active Users',url:'https://www.trysubtext.online/'},{n:'02',cat:'SaaS Invoicing Platform',title:'Snapbill',problem:'Freelancers and small businesses lose hours every month creating invoices manually — with no tracking, no reminders, and no professional presentation.',solution:'Built a complete invoicing SaaS with customisable templates, client management, PayPal/Stripe/bank transfer payment links, automated reminders, and a full analytics dashboard.',result:'5,000+ users on the platform. A subscription-based product with free and Pro tiers generating recurring revenue — fully self-serve from signup to paid invoice.',badge:'5K+ Users · Recurring Revenue',url:'https://snapbill.online/'},{n:'03',cat:'SaaS Web App',title:'DoveWhisper',problem:'Families had no simple, guided way to write eulogies during one of the most emotionally difficult moments of their lives.',solution:'Built a complete web app with AI writing assistance, user accounts, and a guided creation flow — from blank page to finished, shareable eulogy in minutes.',result:'A live, monetised product serving real users at their most vulnerable. Built end-to-end: design, backend, AI integration, deployment.',badge:'Live & Monetised',url:'https://dovewhisper.org'}];return<section ref={sRef} className="py-24 md:py-32"><div className="max-w-6xl mx-auto px-6"><R><span className="mono-label block mb-5">03 — work</span></R><R d={.1}><h2 className="display mb-14" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>Real projects.<br/><em style={{color:'#D4F544'}}>Real results.</em></h2></R><div className="space-y-5">{cases.map((c,i)=><R key={i} d={i*.08}><div className="card group"><div className="flex items-start gap-3 mb-5 flex-wrap"><span className="mono-label">{c.n}</span><span className="mono-label">·</span><span className="mono-label">{c.cat}</span><div className="pill ml-auto">{c.badge}</div></div><h3 className="display mb-5" style={{fontSize:'clamp(32px,4.5vw,52px)',color:'#E8E8F0'}}>{c.title}</h3><div className="grid grid-cols-1 sm:grid-cols-3 gap-5"><div><p className="mono-label block mb-2">Problem</p><p className="text-sm leading-relaxed" style={{color:'#5A5A6E'}}>{c.problem}</p></div><div><p className="mono-label block mb-2">Solution</p><p className="text-sm leading-relaxed" style={{color:'#5A5A6E'}}>{c.solution}</p></div><div><p className="mono-label block mb-2">Result</p><p className="text-sm leading-relaxed" style={{color:'#E8E8F0'}}>{c.result}</p><a href={c.url} target="_blank" rel="noopener noreferrer" data-h className="inline-flex items-center gap-1.5 mt-3 text-xs font-mono transition-colors" style={{color:'#D4F544'}}>View Live Project<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></a></div></div></div></R>)}</div></div></section>}
+function Diff(){const pts=[{t:'Delivered in 5–7 days',d:'No six-week timelines. No endless meetings. You get a working system fast.'},{t:'Built for business outcomes',d:'I don\'t just write code. I build systems designed to make or save you money.'},{t:'One point of contact',d:'No agencies, no middlemen, no delays. You talk to the builder directly.'},{t:'Fixed scope, clear pricing',d:'$1,000–$5,000 depending on scope. No hidden extras, no scope creep.'}];return<section className="py-16 md:py-20" style={{background:'rgba(17,17,20,.5)',borderTop:'1px solid #1E1E24',borderBottom:'1px solid #1E1E24'}}><div className="max-w-6xl mx-auto px-6"><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">{pts.map((p,i)=><R key={i} d={i*.07}><div className="text-center px-4"><div className="w-2 h-2 rounded-full mx-auto mb-4" style={{background:'#D4F544'}}/><p className="font-sans font-bold text-base mb-2" style={{color:'#E8E8F0',fontWeight:700}}>{p.t}</p><p className="text-sm leading-relaxed" style={{color:'#5A5A6E'}}>{p.d}</p></div></R>)}</div></div></section>}
+function Process({sRef}){const steps=[{n:'01',t:'Quick Call',dur:'30 minutes',d:'We talk about your business, the biggest problem slowing you down, and what result you want. No pitch, no pressure. Just clarity.'},{n:'02',t:'I Build Your System',dur:'5–7 days',d:'I design and build your system without back and forth. You get daily progress updates and a working product at the end — not a quote or a proposal.'},{n:'03',t:'Launch & Get Results',dur:'Day 7+',d:'Your system goes live. I walk you through it, hand over everything, and support your launch. Most clients see measurable results within the first week.'}];return<section ref={sRef} className="py-24 md:py-32" style={{background:'rgba(17,17,20,.5)'}}><div className="max-w-6xl mx-auto px-6"><R><span className="mono-label block mb-5">04 — process</span></R><R d={.1}><h2 className="display mb-14" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>From call to launch<br/><em style={{color:'#D4F544'}}>in 7 days.</em></h2></R><div className="grid grid-cols-1 md:grid-cols-3 gap-5">{steps.map((s,i)=><R key={i} d={i*.1}><div className="card h-full relative overflow-hidden"><div className="step-ghost">{s.n}</div><div className="relative z-10"><div className="flex items-center justify-between mb-8"><span className="mono-label">{s.n}</span><div className="pill">{s.dur}</div></div><h3 className="font-sans font-bold text-2xl md:text-3xl mb-4" style={{color:'#E8E8F0',fontWeight:700}}>{s.t}</h3><p className="text-sm leading-relaxed" style={{color:'#5A5A6E'}}>{s.d}</p></div></div></R>)}</div><R d={.4} className="mt-5"><div className="card text-center py-12" style={{borderColor:'rgba(212,245,68,.15)',background:'rgba(212,245,68,.012)'}}><h3 className="display mb-3" style={{fontSize:'clamp(28px,4vw,48px)',color:'#E8E8F0'}}>No bloated timelines.<br/>No technical jargon.<br/><em style={{color:'#D4F544'}}>Just a system that works.</em></h3><p className="text-sm mb-8 max-w-md mx-auto" style={{color:'#5A5A6E'}}>Most agencies quote you 8 weeks and $15K for what I deliver in 7 days.</p><button className="btn-lime glow-lime-btn" data-h onClick={()=>document.getElementById('cta').scrollIntoView({behavior:'smooth'})}>Start the Process →</button></div></R></div></section>}
+function Caps(){const list=['Build complete SaaS platforms from scratch','Create AI lead generation and automation tools','Design client portals and admin dashboards','Integrate subscription billing and payment systems','Connect APIs, tools, and third-party services','Deploy and maintain production-ready applications'];return<section className="py-20" style={{borderTop:'1px solid #1E1E24',borderBottom:'1px solid #1E1E24'}}><div className="max-w-6xl mx-auto px-6"><div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center"><R><span className="mono-label block mb-5">capabilities</span><h2 className="display" style={{fontSize:'clamp(36px,5vw,56px)',color:'#E8E8F0'}}>Everything built<br/><em style={{color:'#D4F544'}}>by one person.</em></h2><p className="text-sm leading-relaxed mt-5" style={{color:'#5A5A6E'}}>No agency overhead. No junior developer handoffs. You get a senior-level builder who owns the full stack — from database to interface.</p></R><div>{list.map((c,i)=><R key={i} d={i*.05}><div className="flex items-center gap-3 py-3.5" style={{borderBottom:'1px solid #1E1E24'}}><div className="w-1 h-1 rounded-full shrink-0" style={{background:'#D4F544'}}/><span className="text-sm" style={{color:'#888'}}>{c}</span></div></R>)}</div></div></div></section>}
 
-      {/* Label */}
-      <R d={1.7}><div className="pill mx-auto mb-7 inline-block">AI Systems &amp; Business Automation</div></R>
-
-      {/* Headline */}
-      <div className="overflow-hidden mb-6">
-        <motion.h1 initial={{y:110,opacity:0}} animate={{y:0,opacity:1}} transition={{duration:.85,delay:1.9,ease:[.215,.61,.355,1]}}
-          className="display" style={{fontSize:'clamp(46px,9.5vw,110px)',color:'#E8E8F0'}}>
-          Your business deserves<br/>
-          <em style={{color:'#D4F544',fontStyle:'italic'}}>systems that sell.</em>
-        </motion.h1>
-      </div>
-
-      {/* Sub */}
-      <R d={2.3}>
-        <p className="text-base md:text-lg max-w-xl mx-auto leading-relaxed mb-10" style={{color:'#5A5A6E'}}>
-          I'm <strong style={{color:'#E8E8F0',fontWeight:600}}>Wendel Andrady</strong> — I build AI-powered systems that capture leads, automate your operations, and generate recurring revenue. Delivered in <strong style={{color:'#D4F544',fontWeight:600}}>5–7 days.</strong>
-        </p>
-      </R>
-
-      {/* CTAs */}
-      <R d={2.5} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <motion.button whileHover={{scale:1.04}} whileTap={{scale:.96}} data-h
-          onClick={()=>refs.ctRef.current.scrollIntoView({behavior:'smooth'})}
-          className="btn-lime glow-lime-btn sm-full">Book a Free Call →</motion.button>
-        <motion.button whileHover={{scale:1.04}} whileTap={{scale:.96}} data-h
-          onClick={()=>refs.work.current.scrollIntoView({behavior:'smooth'})}
-          className="btn-ghost sm-full">See My Work</motion.button>
-      </R>
-
-      {/* Mini stats */}
-      <R d={2.8} className="mt-14 flex flex-wrap items-center justify-center gap-10">
-        {[{n:'15K+',l:'Users Across Products'},{n:'$1K–$5K',l:'Project Range'},{n:'5–7 Days',l:'Average Delivery'},{n:'18 y/o',l:'Builder'}].map((s,i)=>
-          <div key={i} className="text-center">
-            <div className="num-xl">{s.n}</div>
-            <div className="mono-label mt-1">{s.l}</div>
-          </div>)}
-      </R>
-    </div>
-
-    {/* Scroll indicator */}
-    <motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10" animate={{y:[0,7,0]}} transition={{duration:2.4,repeat:Infinity,ease:'easeInOut'}}>
-      <div className="w-5 h-8 rounded-full flex justify-center pt-2" style={{border:'1px solid #1E1E24'}}>
-        <motion.div className="w-1 h-2 rounded-full" style={{background:'rgba(212,245,68,.4)'}} animate={{y:[0,8,0],opacity:[1,.2,1]}} transition={{duration:2.4,repeat:Infinity,ease:'easeInOut'}}/>
-      </div>
-    </motion.div>
-  </section>;
-}
-
-/* ══ MARQUEE ══ */
-function Marquee({t,rev}){
-  const txt=`${t}  ·  ${t}  ·  ${t}  ·  ${t}  ·  `;
-  return<div className="overflow-hidden py-5 md:py-6" style={{borderTop:'1px solid #1E1E24',borderBottom:'1px solid #1E1E24'}}>
-    <div className={`marquee-track ${rev?'marquee-track-rev':''}`}>
-      <span style={{fontFamily:'Instrument Serif',fontSize:'clamp(42px,7vw,80px)',color:'rgba(255,255,255,.05)',whiteSpace:'nowrap'}}>{txt}</span>
-    </div>
-  </div>;
-}
-
-/* ══ PROBLEM ══ */
-function Problem({sRef}){
-  const pains=[
-    {t:'You\'re not getting enough leads',d:'Your pipeline is dry. You\'re relying on referrals and hoping the phone rings.'},
-    {t:'Too much time lost to manual work',d:'Your team is buried in tasks that should take seconds — scheduling, follow-ups, data entry.'},
-    {t:'Your systems are outdated or nonexistent',d:'No lead tracking, no client portal, no automation. Just scattered spreadsheets and missed opportunities.'},
-    {t:'Revenue isn\'t predictable',d:'You have no recurring income. Every month starts at zero.'},
-  ];
-  return<section ref={sRef} className="py-24 md:py-32">
-    <div className="max-w-6xl mx-auto px-6">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-        <div>
-          <R><span className="mono-label block mb-5">01 — the problem</span></R>
-          <R d={.1}>
-            <h2 className="display mb-5" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>
-              Most service businesses are<br/><em style={{color:'#D4F544'}}>bleeding revenue</em><br/>they don't even see.
-            </h2>
-          </R>
-          <R d={.2}>
-            <p className="leading-relaxed mb-8" style={{fontSize:'16px',color:'#5A5A6E'}}>
-              Bad systems don't feel urgent — until you realise how much money walked out the door while you were doing everything manually.
-            </p>
-          </R>
-          <R d={.3}>
-            <button className="btn-lime glow-lime-btn" data-h
-              onClick={()=>document.getElementById('cta').scrollIntoView({behavior:'smooth'})}>Fix My Business →</button>
-          </R>
-        </div>
-        <div className="space-y-0">
-          {pains.map((p,i)=>
-            <R key={i} d={i*.07}>
-              <div className="flex gap-4 py-5" style={{borderBottom:'1px solid #1E1E24'}}>
-                <div className="xmk mt-1">
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2l6 6M8 2l-6 6" stroke="rgba(255,107,107,.7)" strokeWidth="1.5" strokeLinecap="round"/></svg>
-                </div>
-                <div>
-                  <p className="font-sans font-600 text-sm mb-1" style={{color:'#E8E8F0',fontWeight:600}}>{p.t}</p>
-                  <p className="text-sm leading-relaxed" style={{color:'#5A5A6E'}}>{p.d}</p>
-                </div>
-              </div>
-            </R>)}
-        </div>
-      </div>
-    </div>
-  </section>;
-}
-
-/* ══ SERVICES ══ */
-function Services({sRef}){
-  const svcs=[
-    {
-      n:'01',
-      title:'AI Lead Generation Systems',
-      tag:'More customers automatically',
-      desc:'An automated system that captures visitors, qualifies them using AI, and delivers hot leads straight to your WhatsApp or email — while you sleep.',
-      outcomes:['Capture every lead, 24/7, no staff needed','AI qualifies leads before they reach you','Get notified only when someone is ready to buy','Stop relying on referrals and cold outreach'],
-      price:'From $1,000'
-    },
-    {
-      n:'02',
-      title:'Business Automation Systems',
-      tag:'Save 20+ hours every week',
-      desc:'I map your most time-consuming processes and automate them end to end. Scheduling, reminders, onboarding, reporting — all handled without human input.',
-      outcomes:['Eliminate repetitive manual tasks','Connect your tools so they work together','Internal dashboards for instant visibility','Your team focuses on high-value work only'],
-      price:'From $1,200'
-    },
-    {
-      n:'03',
-      title:'Client Portals & Dashboards',
-      tag:'Better experience, more retention',
-      desc:'A professional, branded portal where your clients log in, track their progress, submit requests, and stay fully informed — without chasing you by email.',
-      outcomes:['Secure client login and profile system','Real-time status and progress tracking','Custom workflows built for your process','Scale your client base without losing quality'],
-      price:'From $1,500'
-    },
-    {
-      n:'04',
-      title:'Subscription & SaaS Systems',
-      tag:'Turn your service into recurring revenue',
-      desc:'I build full monetisation systems — subscription plans, payment processing, user accounts, and feature access control — so your product bills itself.',
-      outcomes:['Monthly or annual billing, fully automated','Different tiers with different feature access','User dashboards, invoices, upgrade flows','Predictable revenue that grows while you sleep'],
-      price:'From $2,000'
-    },
-  ];
-  return<section ref={sRef} className="py-24 md:py-32" style={{background:'rgba(17,17,20,.6)'}}>
-    <div className="absolute w-[500px] h-[500px] rounded-full -z-10 right-0 top-1/3" style={{background:'rgba(212,245,68,.015)',filter:'blur(160px)'}}/>
-    <div className="max-w-6xl mx-auto px-6">
-      <R><span className="mono-label block mb-5">02 — services</span></R>
-      <R d={.1}>
-        <h2 className="display mb-14" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>
-          Four ways I grow your business.<br/><em style={{color:'#D4F544'}}>One clear outcome each.</em>
-        </h2>
-      </R>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {svcs.map((s,i)=>
-          <R key={i} d={i*.07}>
-            <div className="card h-full group relative overflow-hidden">
-              <div className="flex items-start justify-between mb-5">
-                <span className="mono-label">{s.n}</span>
-                <span className="mono-label">{s.price}</span>
-              </div>
-              <div className="flex items-start gap-3 mb-4">
-                <div className="svc-bar mt-1"/>
-                <div>
-                  <h3 className="font-sans font-bold text-xl md:text-2xl mb-1" style={{color:'#E8E8F0',fontWeight:700}}>{s.title}</h3>
-                  <p className="text-sm font-sans" style={{color:'#D4F544',fontWeight:500}}>{s.tag}</p>
-                </div>
-              </div>
-              <p className="text-sm leading-relaxed mb-5" style={{color:'#5A5A6E'}}>{s.desc}</p>
-              <div className="space-y-2.5">
-                {s.outcomes.map((o,oi)=>
-                  <div key={oi} className="flex items-start gap-2.5">
-                    <div className="chk mt-0.5">
-                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#D4F544" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                    </div>
-                    <span className="text-xs leading-relaxed" style={{color:'#888'}}>{o}</span>
-                  </div>)}
-              </div>
-            </div>
-          </R>)}
-      </div>
-      {/* Bundle */}
-      <R d={.4} className="mt-5">
-        <div className="card" style={{borderColor:'rgba(212,245,68,.2)',background:'rgba(212,245,68,.02)'}}>
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <div>
-              <div className="pill mb-4 inline-block">Most Popular</div>
-              <h3 className="font-sans font-bold text-2xl md:text-3xl mb-2" style={{color:'#E8E8F0',fontWeight:700}}>Full Business System Bundle</h3>
-              <p className="text-sm leading-relaxed max-w-lg" style={{color:'#5A5A6E'}}>
-                Lead generation + automation + client portal built together as one integrated system. The fastest way to go from scattered tools to a business that runs itself.
-              </p>
-            </div>
-            <div className="shrink-0 text-right">
-              <div className="display text-5xl" style={{color:'#D4F544'}}>From $2,500</div>
-              <p className="mono-label mt-1 mb-4">Full system, 7–10 days</p>
-              <button className="btn-lime glow-lime-btn" data-h
-                onClick={()=>document.getElementById('cta').scrollIntoView({behavior:'smooth'})}>Get This →</button>
-            </div>
-          </div>
-        </div>
-      </R>
-    </div>
-  </section>;
-}
-
-/* ══ WORK ══ */
-function Work({sRef}){
-  const cases=[
-    {
-      n:'01',cat:'AI SaaS Product',
-      title:'SubText AI',
-      problem:'People waste time overthinking text messages, second-guessing tone and intent — with no fast, reliable way to decode what someone really means.',
-      solution:'Built a full AI-powered web app that decodes any message in seconds, reveals hidden psychology, and generates the perfect reply. Credit-based monetisation, instant access, no subscription required.',
-      result:'10,000+ active users. Over 1 million messages decoded. Live, monetised, and growing with a pay-as-you-go model that converts on first visit.',
-      badge:'10K+ Active Users',url:'https://www.trysubtext.online/'
-    },
-    {
-      n:'02',cat:'SaaS Invoicing Platform',
-      title:'Snapbill',
-      problem:'Freelancers and small businesses lose hours every month creating invoices manually — with no tracking, no reminders, and no professional presentation.',
-      solution:'Built a complete invoicing SaaS with customisable templates, client management, PayPal/Stripe/bank transfer payment links, automated reminders, and a full analytics dashboard.',
-      result:'5,000+ users on the platform. A subscription-based product with free and Pro tiers generating recurring revenue — fully self-serve from signup to paid invoice.',
-      badge:'5K+ Users · Recurring Revenue',url:'https://snapbill.online/'
-    },
-    {
-      n:'03',cat:'SaaS Web App',
-      title:'DoveWhisper',
-      problem:'Families had no simple, guided way to write eulogies during one of the most emotionally difficult moments of their lives.',
-      solution:'Built a complete web app with AI writing assistance, user accounts, and a guided creation flow — from blank page to finished, shareable eulogy in minutes.',
-      result:'A live, monetised product serving real users at their most vulnerable. Built end-to-end: design, backend, AI integration, deployment.',
-      badge:'Live & Monetised',url:'https://dovewhisper.org'
-    },
-  ];
-  return<section ref={sRef} className="py-24 md:py-32">
-    <div className="max-w-6xl mx-auto px-6">
-      <R><span className="mono-label block mb-5">03 — work</span></R>
-      <R d={.1}>
-        <h2 className="display mb-14" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>
-          Real projects.<br/><em style={{color:'#D4F544'}}>Real results.</em>
-        </h2>
-      </R>
-      <div className="space-y-5">
-        {cases.map((c,i)=>
-          <R key={i} d={i*.08}>
-            <div className="card group">
-              <div className="flex items-start gap-3 mb-5 flex-wrap">
-                <span className="mono-label">{c.n}</span>
-                <span className="mono-label">·</span>
-                <span className="mono-label">{c.cat}</span>
-                <div className="pill ml-auto">{c.badge}</div>
-              </div>
-              <h3 className="display mb-5" style={{fontSize:'clamp(32px,4.5vw,52px)',color:'#E8E8F0'}}>{c.title}</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                <div>
-                  <p className="mono-label block mb-2">Problem</p>
-                  <p className="text-sm leading-relaxed" style={{color:'#5A5A6E'}}>{c.problem}</p>
-                </div>
-                <div>
-                  <p className="mono-label block mb-2">Solution</p>
-                  <p className="text-sm leading-relaxed" style={{color:'#5A5A6E'}}>{c.solution}</p>
-                </div>
-                <div>
-                  <p className="mono-label block mb-2">Result</p>
-                  <p className="text-sm leading-relaxed" style={{color:'#E8E8F0'}}>{c.result}</p>
-                  <a href={c.url} target="_blank" rel="noopener noreferrer" data-h
-                    className="inline-flex items-center gap-1.5 mt-3 text-xs font-mono transition-colors" style={{color:'#D4F544'}}>
-                    View Live Project
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </R>)}
-      </div>
-    </div>
-  </section>;
-}
-
-/* ══ DIFFERENTIATORS ══ */
-function Diff(){
-  const pts=[
-    {t:'Delivered in 5–7 days',d:'No six-week timelines. No endless meetings. You get a working system fast.'},
-    {t:'Built for business outcomes',d:'I don\'t just write code. I build systems designed to make or save you money.'},
-    {t:'One point of contact',d:'No agencies, no middlemen, no delays. You talk to the builder directly.'},
-    {t:'Fixed scope, clear pricing',d:'$1,000–$5,000 depending on scope. No hidden extras, no scope creep.'},
-  ];
-  return<section className="py-16 md:py-20" style={{background:'rgba(17,17,20,.5)',borderTop:'1px solid #1E1E24',borderBottom:'1px solid #1E1E24'}}>
-    <div className="max-w-6xl mx-auto px-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {pts.map((p,i)=>
-          <R key={i} d={i*.07}>
-            <div className="text-center px-4">
-              <div className="w-2 h-2 rounded-full mx-auto mb-4" style={{background:'#D4F544'}}/>
-              <p className="font-sans font-bold text-base mb-2" style={{color:'#E8E8F0',fontWeight:700}}>{p.t}</p>
-              <p className="text-sm leading-relaxed" style={{color:'#5A5A6E'}}>{p.d}</p>
-            </div>
-          </R>)}
-      </div>
-    </div>
-  </section>;
-}
-
-/* ══ PROCESS ══ */
-function Process({sRef}){
-  const steps=[
-    {n:'01',t:'Quick Call',dur:'30 minutes',d:'We talk about your business, the biggest problem slowing you down, and what result you want. No pitch, no pressure. Just clarity.'},
-    {n:'02',t:'I Build Your System',dur:'5–7 days',d:'I design and build your system without back and forth. You get daily progress updates and a working product at the end — not a quote or a proposal.'},
-    {n:'03',t:'Launch & Get Results',dur:'Day 7+',d:'Your system goes live. I walk you through it, hand over everything, and support your launch. Most clients see measurable results within the first week.'},
-  ];
-  return<section ref={sRef} className="py-24 md:py-32" style={{background:'rgba(17,17,20,.5)'}}>
-    <div className="absolute w-96 h-96 rounded-full -z-10 left-1/4 bottom-0" style={{background:'rgba(212,245,68,.012)',filter:'blur(140px)'}}/>
-    <div className="max-w-6xl mx-auto px-6">
-      <R><span className="mono-label block mb-5">04 — process</span></R>
-      <R d={.1}>
-        <h2 className="display mb-14" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>
-          From call to launch<br/><em style={{color:'#D4F544'}}>in 7 days.</em>
-        </h2>
-      </R>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {steps.map((s,i)=>
-          <R key={i} d={i*.1}>
-            <div className="card h-full relative overflow-hidden">
-              <div className="step-ghost">{s.n}</div>
-              <div className="relative z-10">
-                <div className="flex items-center justify-between mb-8">
-                  <span className="mono-label">{s.n}</span>
-                  <div className="pill">{s.dur}</div>
-                </div>
-                <h3 className="font-sans font-bold text-2xl md:text-3xl mb-4" style={{color:'#E8E8F0',fontWeight:700}}>{s.t}</h3>
-                <p className="text-sm leading-relaxed" style={{color:'#5A5A6E'}}>{s.d}</p>
-              </div>
-            </div>
-          </R>)}
-      </div>
-      <R d={.4} className="mt-5">
-        <div className="card text-center py-12" style={{borderColor:'rgba(212,245,68,.15)',background:'rgba(212,245,68,.012)'}}>
-          <h3 className="display mb-3" style={{fontSize:'clamp(28px,4vw,48px)',color:'#E8E8F0'}}>
-            No bloated timelines.<br/>No technical jargon.<br/><em style={{color:'#D4F544'}}>Just a system that works.</em>
-          </h3>
-          <p className="text-sm mb-8 max-w-md mx-auto" style={{color:'#5A5A6E'}}>Most agencies quote you 8 weeks and $15K for what I deliver in 7 days.</p>
-          <button className="btn-lime glow-lime-btn" data-h
-            onClick={()=>document.getElementById('cta').scrollIntoView({behavior:'smooth'})}>Start the Process →</button>
-        </div>
-      </R>
-    </div>
-  </section>;
-}
-
-/* ══ CAPABILITIES ══ */
-function Caps(){
-  const list=[
-    'Build complete SaaS platforms from scratch',
-    'Create AI lead generation and automation tools',
-    'Design client portals and admin dashboards',
-    'Integrate subscription billing and payment systems',
-    'Connect APIs, tools, and third-party services',
-    'Deploy and maintain production-ready applications',
-  ];
-  return<section className="py-20" style={{borderTop:'1px solid #1E1E24',borderBottom:'1px solid #1E1E24'}}>
-    <div className="max-w-6xl mx-auto px-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
-        <R>
-          <span className="mono-label block mb-5">capabilities</span>
-          <h2 className="display" style={{fontSize:'clamp(36px,5vw,56px)',color:'#E8E8F0'}}>
-            Everything built<br/><em style={{color:'#D4F544'}}>by one person.</em>
-          </h2>
-          <p className="text-sm leading-relaxed mt-5" style={{color:'#5A5A6E'}}>
-            No agency overhead. No junior developer handoffs. You get a senior-level builder who owns the full stack — from database to interface.
-          </p>
-        </R>
-        <div>
-          {list.map((c,i)=>
-            <R key={i} d={i*.05}>
-              <div className="flex items-center gap-3 py-3.5" style={{borderBottom:'1px solid #1E1E24'}}>
-                <div className="w-1 h-1 rounded-full shrink-0" style={{background:'#D4F544'}}/>
-                <span className="text-sm" style={{color:'#888'}}>{c}</span>
-              </div>
-            </R>)}
-        </div>
-      </div>
-    </div>
-  </section>;
-}
-
-/* ══ CTA / CONTACT ══ */
+/* ══ CONTACT — SECURE EDGE FUNCTION SUBMISSION (no direct Supabase) ══ */
 function Contact({sRef}){
   const[f,setF]=useState({name:'',email:'',service:'',budget:'',msg:''});
+  const[submitting,setSubmitting]=useState(false);
+  const[statusMsg,setStatusMsg]=useState(null);
   const ch=e=>setF({...f,[e.target.name]:e.target.value});
-  const sub=e=>{
+  
+  const sub=async(e)=>{
     e.preventDefault();
-    alert(`Got it, ${f.name}. I'll reply within 24 hours with a clear plan.`);
-    setF({name:'',email:'',service:'',budget:'',msg:''});
+    // Lightweight frontend validation
+    const {name,email,msg}=f;
+    if(!name.trim()){ setStatusMsg({type:'error',text:'❌ Please enter your name.'}); setTimeout(()=>setStatusMsg(null),4000); return; }
+    if(!email.trim()){ setStatusMsg({type:'error',text:'❌ Please enter your email address.'}); setTimeout(()=>setStatusMsg(null),4000); return; }
+    if(!msg.trim()){ setStatusMsg({type:'error',text:'❌ Please tell me about your project or problem.'}); setTimeout(()=>setStatusMsg(null),4000); return; }
+    const emailRegex=/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/;
+    if(!emailRegex.test(email)){ setStatusMsg({type:'error',text:'❌ Please enter a valid email address (e.g., name@domain.com).'}); setTimeout(()=>setStatusMsg(null),4000); return; }
+
+    setSubmitting(true);
+    setStatusMsg(null);
+    
+    const payload={
+      name: f.name.trim(),
+      email: f.email.trim(),
+      service: f.service,
+      budget: f.budget,
+      message: f.msg.trim()
+    };
+    
+    const EDGE_FUNCTION_URL = "https://rsttirosnsfaortzugld.functions.supabase.co/submit-brief";
+    
+    try{
+      const response = await fetch(EDGE_FUNCTION_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      
+      if(response.ok){
+        setStatusMsg({type:'success',text:'✅ Brief submitted! I\'ll reply within 24 hours with a clear plan.'});
+        // Reset form on success
+        setF({name:'',email:'',service:'',budget:'',msg:''});
+        setTimeout(()=>setStatusMsg(null),7000);
+      } else {
+        let errorText = '';
+        try{ const errData = await response.json(); errorText = errData.message || errData.error || ''; }catch(_){}
+        console.error('Edge Function error:', response.status, errorText);
+        setStatusMsg({type:'error',text:'❌ Something went wrong. Please try again.'});
+        setTimeout(()=>setStatusMsg(null),5000);
+      }
+    }catch(err){
+      console.error('Network / fetch error:', err);
+      setStatusMsg({type:'error',text:'❌ Something went wrong. Please try again.'});
+      setTimeout(()=>setStatusMsg(null),5000);
+    }finally{
+      setSubmitting(false);
+    }
   };
-  return<section ref={sRef} id="cta" className="py-24 md:py-32">
-    <div className="absolute w-96 h-96 rounded-full -z-10 right-1/3 bottom-0" style={{background:'rgba(212,245,68,.013)',filter:'blur(130px)'}}/>
-    <div className="max-w-2xl mx-auto px-6">
-      <div className="text-center mb-14">
-        <R><span className="mono-label block mb-5">05 — contact</span></R>
-        <R d={.1}>
-          <h2 className="display mb-4" style={{fontSize:'clamp(40px,7vw,80px)',color:'#E8E8F0'}}>
-            Ready to build a<br/><em style={{color:'#D4F544'}}>system that works?</em>
-          </h2>
+  
+  return(
+    <section ref={sRef} id="cta" className="py-24 md:py-32">
+      <div className="absolute w-96 h-96 rounded-full -z-10 right-1/3 bottom-0" style={{background:'rgba(212,245,68,.013)',filter:'blur(130px)'}}/>
+      <div className="max-w-2xl mx-auto px-6">
+        <div className="text-center mb-14">
+          <R><span className="mono-label block mb-5">05 — contact</span></R>
+          <R d={.1}><h2 className="display mb-4" style={{fontSize:'clamp(40px,7vw,80px)',color:'#E8E8F0'}}>Ready to build a<br/><em style={{color:'#D4F544'}}>system that works?</em></h2></R>
+          <R d={.2}><p className="text-base" style={{color:'#5A5A6E'}}>Tell me what you need. I'll reply within 24 hours with a clear breakdown — no sales pitch, no obligation.</p></R>
+        </div>
+        <R d={.3}>
+          <form onSubmit={sub} className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <input name="name" value={f.name} onChange={ch} placeholder="Your name" required className="field"/>
+              <input name="email" type="email" value={f.email} onChange={ch} placeholder="your@email.com" required className="field"/>
+            </div>
+            <select name="service" value={f.service} onChange={ch} required className="field" style={{appearance:'none'}}>
+              <option value="" disabled>What do you need built?</option>
+              <option value="leads">AI Lead Generation System</option><option value="automation">Business Automation System</option>
+              <option value="portal">Client Portal & Dashboard</option><option value="saas">Subscription / SaaS System</option>
+              <option value="bundle">Full Business System Bundle</option><option value="unsure">Not sure yet — let's talk</option>
+            </select>
+            <select name="budget" value={f.budget} onChange={ch} required className="field" style={{appearance:'none'}}>
+              <option value="" disabled>Your budget range</option>
+              <option value="1k-2k">$1,000–$2,000</option><option value="2k-3k">$2,000–$3,000</option>
+              <option value="3k-5k">$3,000–$5,000</option><option value="5k+">$5,000+</option>
+            </select>
+            <textarea name="msg" rows="5" value={f.msg} onChange={ch} required placeholder="What's the #1 problem costing you the most time or money right now?" className="field" style={{resize:'none'}}/>
+            <div className="flex flex-col sm:flex-row items-center gap-4 pt-1">
+              <motion.button type="submit" disabled={submitting} whileHover={{scale:submitting?1:1.04}} whileTap={{scale:submitting?1:.96}} data-h className="btn-lime glow-lime-btn flex items-center gap-2 sm-full justify-center disabled:opacity-60">
+                {submitting ? 'Submitting...' : 'Send My Brief'}
+                {!submitting && <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M8 3l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+              </motion.button>
+              <span className="text-sm" style={{color:'#38383F'}}>or</span>
+              <motion.button type="button" whileHover={{scale:1.04}} whileTap={{scale:.96}} data-h onClick={()=>window.open('https://wa.me/27715165243','_blank')} className="btn-ghost flex items-center gap-2 sm-full justify-center" style={{borderColor:'rgba(37,211,102,.2)',color:'#4ade80'}}>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                WhatsApp Me
+              </motion.button>
+            </div>
+            {statusMsg && <div className={`status-message ${statusMsg.type==='success'?'bg-lime/10 text-lime border border-lime/30':'bg-rose/10 text-rose border border-rose/20'}`}>{statusMsg.text}</div>}
+          </form>
         </R>
-        <R d={.2}>
-          <p className="text-base" style={{color:'#5A5A6E'}}>
-            Tell me what you need. I'll reply within 24 hours with a clear breakdown — no sales pitch, no obligation.
-          </p>
+        <R d={.5} className="mt-10 grid grid-cols-3 gap-4 text-center">
+          {[{e:'⚡',t:'Reply in 24h'},{e:'📋',t:'Free Consultation'},{e:'🚀',t:'Live in 7 Days'}].map((r,i)=><div key={i} className="py-4 px-2 rounded-xl" style={{background:'#111114',border:'1px solid #1E1E24'}}><div style={{fontSize:'22px',marginBottom:'6px'}}>{r.e}</div><p className="text-xs font-sans" style={{color:'#E8E8F0',fontWeight:500}}>{r.t}</p></div>)}
         </R>
       </div>
-      <R d={.3}>
-        <form onSubmit={sub} className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <input name="name" value={f.name} onChange={ch} placeholder="Your name" required className="field"/>
-            <input name="email" type="email" value={f.email} onChange={ch} placeholder="your@email.com" required className="field"/>
-          </div>
-          <select name="service" value={f.service} onChange={ch} required className="field" style={{appearance:'none'}}>
-            <option value="" disabled>What do you need built?</option>
-            <option value="leads">AI Lead Generation System</option>
-            <option value="automation">Business Automation System</option>
-            <option value="portal">Client Portal & Dashboard</option>
-            <option value="saas">Subscription / SaaS System</option>
-            <option value="bundle">Full Business System Bundle</option>
-            <option value="unsure">Not sure yet — let's talk</option>
-          </select>
-          <select name="budget" value={f.budget} onChange={ch} required className="field" style={{appearance:'none'}}>
-            <option value="" disabled>Your budget range</option>
-            <option value="1k-2k">$1,000–$2,000</option>
-            <option value="2k-3k">$2,000–$3,000</option>
-            <option value="3k-5k">$3,000–$5,000</option>
-            <option value="5k+">$5,000+</option>
-          </select>
-          <textarea name="msg" rows="5" value={f.msg} onChange={ch} required
-            placeholder="What's the #1 problem costing you the most time or money right now?"
-            className="field" style={{resize:'none'}}/>
-          <div className="flex flex-col sm:flex-row items-center gap-4 pt-1">
-            <motion.button type="submit" whileHover={{scale:1.04}} whileTap={{scale:.96}} data-h
-              className="btn-lime glow-lime-btn flex items-center gap-2 sm-full justify-center">
-              Send My Brief
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M8 3l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </motion.button>
-            <span className="text-sm" style={{color:'#38383F'}}>or</span>
-            <motion.button type="button" whileHover={{scale:1.04}} whileTap={{scale:.96}} data-h
-              onClick={()=>window.open('https://wa.me/27715165243','_blank')}
-              className="btn-ghost flex items-center gap-2 sm-full justify-center" style={{borderColor:'rgba(37,211,102,.2)',color:'#4ade80'}}>
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-              WhatsApp Me
-            </motion.button>
-          </div>
-        </form>
-      </R>
-      {/* trust row */}
-      <R d={.5} className="mt-10 grid grid-cols-3 gap-4 text-center">
-        {[{e:'⚡',t:'Reply in 24h'},{e:'📋',t:'Free Consultation'},{e:'🚀',t:'Live in 7 Days'}].map((r,i)=>
-          <div key={i} className="py-4 px-2 rounded-xl" style={{background:'#111114',border:'1px solid #1E1E24'}}>
-            <div style={{fontSize:'22px',marginBottom:'6px'}}>{r.e}</div>
-            <p className="text-xs font-sans" style={{color:'#E8E8F0',fontWeight:500}}>{r.t}</p>
-          </div>)}
-      </R>
-    </div>
-  </section>;
+    </section>
+  );
 }
+function Footer(){return<footer className="py-8" style={{borderTop:'1px solid #1E1E24'}}><div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4"><span style={{fontFamily:'Syne',fontWeight:800,fontSize:'15px',color:'rgba(232,232,240,.25)'}}>Wendel<span style={{color:'rgba(212,245,68,.3)'}}>.</span></span><span style={{fontFamily:'DM Mono',fontSize:'11px',color:'#2a2a30',letterSpacing:'.05em'}}>© {new Date().getFullYear()} Wendel Andrady · All rights reserved</span><span style={{fontFamily:'DM Mono',fontSize:'11px',color:'#1e1e24'}}>Built to convert</span></div></footer>}
+function WA(){return<motion.a href="https://wa.me/27715165243" target="_blank" rel="noopener noreferrer" data-h initial={{opacity:0,scale:0}} animate={{opacity:1,scale:1}} transition={{delay:2.2,type:'spring',stiffness:180}} whileHover={{scale:1.12}} whileTap={{scale:.9}} className="fixed bottom-6 right-6 z-40 rounded-full p-3" style={{background:'#25d366',boxShadow:'0 0 30px rgba(37,211,102,.22)'}}><svg width="26" height="26" fill="white" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg></motion.a>}
 
-/* ══ FOOTER ══ */
-function Footer(){
-  return<footer className="py-8" style={{borderTop:'1px solid #1E1E24'}}>
-    <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-      <span style={{fontFamily:'Syne',fontWeight:800,fontSize:'15px',color:'rgba(232,232,240,.25)'}}>Wendel<span style={{color:'rgba(212,245,68,.3)'}}>.</span></span>
-      <span style={{fontFamily:'DM Mono',fontSize:'11px',color:'#2a2a30',letterSpacing:'.05em'}}>© {new Date().getFullYear()} Wendel Andrady · All rights reserved</span>
-      <span style={{fontFamily:'DM Mono',fontSize:'11px',color:'#1e1e24'}}>Built to convert</span>
-    </div>
-  </footer>;
-}
-
-/* ══ FLOAT WA ══ */
-function WA(){
-  return<motion.a href="https://wa.me/27715165243" target="_blank" rel="noopener noreferrer" data-h
-    initial={{opacity:0,scale:0}} animate={{opacity:1,scale:1}} transition={{delay:2.2,type:'spring',stiffness:180}}
-    whileHover={{scale:1.12}} whileTap={{scale:.9}}
-    className="fixed bottom-6 right-6 z-40 rounded-full p-3"
-    style={{background:'#25d366',boxShadow:'0 0 30px rgba(37,211,102,.22)'}}>
-    <svg width="26" height="26" fill="white" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-  </motion.a>;
-}
-
-/* ══ APP ══ */
 function App(){
   const[ld,setLd]=useState(true);
   const hero=useRef(null),prob=useRef(null),svc=useRef(null),work=useRef(null),proc=useRef(null),ctRef=useRef(null);
@@ -744,7 +380,6 @@ function App(){
     <Footer/><WA/>
   </div>;
 }
-
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
 </body>
