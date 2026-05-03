@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wendel Andrady — AI Systems & Business Automation | Secure Form</title>
+  <title>Wendel Andrady — AI Systems & Business Automation</title>
   <meta name="description" content="I build AI-powered systems that generate leads, automate operations, and create recurring revenue. Delivered in 5–7 days.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -73,6 +73,8 @@
       .sm-center{text-align:center!important}
     }
     .status-message{font-family:'DM Mono',monospace;font-size:13px;padding:12px 16px;border-radius:99px;text-align:center;margin-top:16px;backdrop-filter:blur(4px);}
+    .strikethrough{text-decoration:line-through;color:var(--ink-muted)}
+    .saving-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;background:rgba(212,245,68,.12);border:1px solid rgba(212,245,68,.2);font-family:'DM Mono',monospace;font-size:11px;color:var(--lime);letter-spacing:.08em}
   </style>
 </head>
 <body class="grid-tex">
@@ -230,12 +232,12 @@ function Hero({refs}){
       <R d={1.7}><div className="pill mx-auto mb-7 inline-block">AI Systems &amp; Business Automation</div></R>
       <div className="overflow-hidden mb-6">
         <motion.h1 initial={{y:110,opacity:0}} animate={{y:0,opacity:1}} transition={{duration:.85,delay:1.9,ease:[.215,.61,.355,1]}} className="display" style={{fontSize:'clamp(46px,9.5vw,110px)',color:'#E8E8F0'}}>
-          Your business deserves<br/><em style={{color:'#D4F544',fontStyle:'italic'}}>systems that sell.</em>
+          More leads. Less work.<br/><em style={{color:'#D4F544',fontStyle:'italic'}}>Fully automated.</em>
         </motion.h1>
       </div>
       <R d={2.3}>
         <p className="text-base md:text-lg max-w-xl mx-auto leading-relaxed mb-10" style={{color:'#5A5A6E'}}>
-          I'm <strong style={{color:'#E8E8F0',fontWeight:600}}>Wendel Andrady</strong> — I build AI-powered systems that capture leads, automate your operations, and generate recurring revenue. Delivered in <strong style={{color:'#D4F544',fontWeight:600}}>5–7 days.</strong>
+          I'm <strong style={{color:'#E8E8F0',fontWeight:600}}>Wendel Andrady</strong> — I build AI-powered systems that capture leads, qualify them automatically, and put ready-to-buy customers straight to your phone. No extra staff. No waiting months. Delivered in <strong style={{color:'#D4F544',fontWeight:600}}>5–7 days.</strong>
         </p>
       </R>
       <R d={2.5} className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -243,7 +245,7 @@ function Hero({refs}){
         <motion.button whileHover={{scale:1.04}} whileTap={{scale:.96}} data-h onClick={()=>refs.work.current.scrollIntoView({behavior:'smooth'})} className="btn-ghost sm-full">See My Work</motion.button>
       </R>
       <R d={2.8} className="mt-14 flex flex-wrap items-center justify-center gap-10">
-        {[{n:'15K+',l:'Users Across Products'},{n:'$2.5K–$8K',l:'Project Range'},{n:'5–7 Days',l:'Average Delivery'},{n:'18 y/o',l:'Builder'}].map((s,i)=>(
+        {[{n:'15K+',l:'Users Across Products'},{n:'$800–$8K',l:'Project Range'},{n:'5–7 Days',l:'Average Delivery'},{n:'100%',l:'Remote & Global'}].map((s,i)=>(
           <div key={i} className="text-center"><div className="num-xl">{s.n}</div><div className="mono-label mt-1">{s.l}</div></div>
         ))}
       </R>
@@ -267,19 +269,20 @@ function Marquee({t,rev}){
 
 function Problem({sRef}){
   const pains=[
-    {t:'You\'re not getting enough leads',d:'Your pipeline is dry. You\'re relying on referrals and hoping the phone rings.'},
-    {t:'Too much time lost to manual work',d:'Your team is buried in tasks that should take seconds — scheduling, follow-ups, data entry.'},
-    {t:'Your systems are outdated or nonexistent',d:'No lead tracking, no client portal, no automation. Just scattered spreadsheets and missed opportunities.'},
-    {t:'Revenue isn\'t predictable',d:'You have no recurring income. Every month starts at zero.'}
+    {t:'You\'re relying on referrals that dry up',d:'Word of mouth is unpredictable. When it slows down, your whole pipeline dries up with it — and you have no system to fall back on.'},
+    {t:'You\'re losing leads you don\'t even know about',d:'Someone visits your site at 9pm. No one responds until morning. By then they\'ve already called your competitor.'},
+    {t:'You\'re doing manually what should take seconds',d:'Scheduling, follow-ups, onboarding, reminders — your team wastes hours every week on tasks a system could handle in milliseconds.'},
+    {t:'Every month starts at zero',d:'No recurring revenue. No predictable pipeline. You\'re constantly chasing the next client instead of building something that compounds.'}
   ];
   return<section ref={sRef} className="py-24 md:py-32">
     <div className="max-w-6xl mx-auto px-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         <div>
           <R><span className="mono-label block mb-5">01 — the problem</span></R>
-          <R d={.1}><h2 className="display mb-5" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>Most service businesses are<br/><em style={{color:'#D4F544'}}>bleeding revenue</em><br/>they don't even see.</h2></R>
-          <R d={.2}><p className="leading-relaxed mb-8" style={{fontSize:'16px',color:'#5A5A6E'}}>Bad systems don't feel urgent — until you realise how much money walked out the door while you were doing everything manually.</p></R>
-          <R d={.3}><button className="btn-lime glow-lime-btn" data-h onClick={()=>document.getElementById('cta').scrollIntoView({behavior:'smooth'})}>Fix My Business →</button></R>
+          <R d={.1}><h2 className="display mb-5" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>Most businesses are losing<br/><em style={{color:'#D4F544'}}>money they can't see.</em></h2></R>
+          <R d={.2}><p className="leading-relaxed mb-4" style={{fontSize:'16px',color:'#5A5A6E'}}>It doesn't feel urgent — until you realise how many leads walked out the door while you were doing everything manually.</p>
+          <p className="leading-relaxed mb-8" style={{fontSize:'16px',color:'#5A5A6E'}}>Agencies quote you 8 weeks and $15,000 to fix this. I do it in 7 days.</p></R>
+          <R d={.3}><button className="btn-lime glow-lime-btn" data-h onClick={()=>document.getElementById('cta').scrollIntoView({behavior:'smooth'})}>Fix This For Me →</button></R>
         </div>
         <div className="space-y-0">
           {pains.map((p,i)=>(
@@ -297,18 +300,20 @@ function Problem({sRef}){
 }
 
 function Services({sRef}){
+  // Reordered: entry-level first, then mid, then high-ticket
   const svcs=[
-    {n:'01',title:'AI Lead Generation Systems',tag:'More customers automatically',desc:'An automated system that captures visitors, qualifies them using AI, and delivers hot leads straight to your WhatsApp or email — while you sleep.',outcomes:['Capture every lead, 24/7, no staff needed','AI qualifies leads before they reach you','Get notified only when someone is ready to buy','Stop relying on referrals and cold outreach'],price:'From $2,500'},
-    {n:'02',title:'Business Automation Systems',tag:'Save 20+ hours every week',desc:'I map your most time-consuming processes and automate them end to end. Scheduling, reminders, onboarding, reporting — all handled without human input.',outcomes:['Eliminate repetitive manual tasks','Connect your tools so they work together','Internal dashboards for instant visibility','Your team focuses on high-value work only'],price:'From $3,000'},
-    {n:'03',title:'Client Portals & Dashboards',tag:'Better experience, more retention',desc:'A professional, branded portal where your clients log in, track their progress, submit requests, and stay fully informed — without chasing you by email.',outcomes:['Secure client login and profile system','Real-time status and progress tracking','Custom workflows built for your process','Scale your client base without losing quality'],price:'From $3,500'},
-    {n:'04',title:'Subscription & SaaS Systems',tag:'Turn your service into recurring revenue',desc:'I build full monetisation systems — subscription plans, payment processing, user accounts, and feature access control — so your product bills itself.',outcomes:['Monthly or annual billing, fully automated','Different tiers with different feature access','User dashboards, invoices, upgrade flows','Predictable revenue that grows while you sleep'],price:'From $5,000'},
-    {n:'05',title:'Website Design & Rebuild',tag:'First impressions that convert',desc:'A fast, conversion-focused website built from scratch. Clean design, mobile-optimised, and built to turn visitors into paying customers. No templates, no page builders — every pixel intentional.',outcomes:['Custom design built around your brand','Mobile-optimised and fast on every device','Built to capture leads from day one','No bloated builders — clean, performant code'],price:'From $800'},
-    {n:'06',title:'AI Chatbot & WhatsApp Automation',tag:'Answer, qualify, book — automatically',desc:'A custom AI assistant trained on your business that handles enquiries, qualifies leads, books appointments, and follows up — 24/7, without a single staff member involved.',outcomes:['Handles customer questions around the clock','Qualifies and routes leads before they reach you','Books appointments without back-and-forth','Integrates directly with WhatsApp or your website'],price:'From $900'},
+    {n:'01',title:'Website Design & Rebuild',tag:'First impressions that convert',desc:'A fast, conversion-focused website built from scratch. Clean design, mobile-optimised, and built to turn visitors into paying customers. No templates, no page builders — every pixel intentional.',outcomes:['Custom design built around your brand','Mobile-optimised and fast on every device','Built to capture leads from day one','No bloated builders — clean, performant code'],price:'From $800'},
+    {n:'02',title:'AI Chatbot & WhatsApp Automation',tag:'Answer, qualify, book — automatically',desc:'A custom AI assistant trained on your business that handles enquiries, qualifies leads, books appointments, and follows up — 24/7, without a single staff member involved.',outcomes:['Handles customer questions around the clock','Qualifies and routes leads before they reach you','Books appointments without back-and-forth','Integrates directly with WhatsApp or your website'],price:'From $900'},
+    {n:'03',title:'AI Lead Generation Systems',tag:'More customers automatically',desc:'An automated system that captures visitors, qualifies them using AI, and delivers hot leads straight to your WhatsApp or email — while you sleep.',outcomes:['Capture every lead, 24/7, no staff needed','AI qualifies leads before they reach you','Get notified only when someone is ready to buy','Stop relying on referrals and cold outreach'],price:'From $3,000'},
+    {n:'04',title:'Business Automation Systems',tag:'Save 20+ hours every week',desc:'I map your most time-consuming processes and automate them end to end. Scheduling, reminders, onboarding, reporting — all handled without human input.',outcomes:['Eliminate repetitive manual tasks','Connect your tools so they work together','Internal dashboards for instant visibility','Your team focuses on high-value work only'],price:'From $3,500'},
+    {n:'05',title:'Client Portals & Dashboards',tag:'Better experience, more retention',desc:'A professional, branded portal where your clients log in, track their progress, submit requests, and stay fully informed — without chasing you by email.',outcomes:['Secure client login and profile system','Real-time status and progress tracking','Custom workflows built for your process','Scale your client base without losing quality'],price:'From $5,000'},
+    {n:'06',title:'Subscription & SaaS Systems',tag:'Turn your service into recurring revenue',desc:'I build full monetisation systems — subscription plans, payment processing, user accounts, and feature access control — so your product bills itself.',outcomes:['Monthly or annual billing, fully automated','Different tiers with different feature access','User dashboards, invoices, upgrade flows','Predictable revenue that grows while you sleep'],price:'From $5,000'},
   ];
   return<section ref={sRef} className="py-24 md:py-32" style={{background:'rgba(17,17,20,.6)'}}>
     <div className="max-w-6xl mx-auto px-6">
       <R><span className="mono-label block mb-5">02 — services</span></R>
-      <R d={.1}><h2 className="display mb-14" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>Six ways I grow your business.<br/><em style={{color:'#D4F544'}}>One clear outcome each.</em></h2></R>
+      <R d={.1}><h2 className="display mb-4" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>Six ways I grow your business.<br/><em style={{color:'#D4F544'}}>One clear outcome each.</em></h2></R>
+      <R d={.15}><p className="text-sm mb-14 max-w-xl" style={{color:'#5A5A6E'}}>Start with one system, or combine them all. Every service is built to work on its own — and works even better together.</p></R>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {svcs.map((s,i)=>(
           <R key={i} d={i*.07}>
@@ -334,18 +339,45 @@ function Services({sRef}){
           </R>
         ))}
       </div>
+
+      {/* Bundle Section — improved positioning */}
       <R d={.4} className="mt-5">
         <div className="card" style={{borderColor:'rgba(212,245,68,.2)',background:'rgba(212,245,68,.02)'}}>
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <div>
-              <div className="pill mb-4 inline-block">Most Popular</div>
-              <h3 className="font-sans font-bold text-2xl md:text-3xl mb-2" style={{color:'#E8E8F0',fontWeight:700}}>Full Business System Bundle</h3>
-              <p className="text-sm leading-relaxed max-w-lg" style={{color:'#5A5A6E'}}>Lead generation + automation + client portal + AI chatbot built together as one integrated system. The fastest way to go from scattered tools to a business that runs itself.</p>
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-4 flex-wrap">
+                <div className="pill">Most Popular</div>
+                <div className="saving-badge">Save $200 — built as one integrated system</div>
+              </div>
+              <h3 className="font-sans font-bold text-2xl md:text-3xl mb-3" style={{color:'#E8E8F0',fontWeight:700}}>Full Business System Bundle</h3>
+              <p className="text-sm leading-relaxed mb-5" style={{color:'#5A5A6E',maxWidth:'480px'}}>Website + AI chatbot + lead generation + business automation — designed and built together as a single integrated system. Not four tools stitched together. One machine that runs your acquisition, qualification, and operations end to end.</p>
+              {/* Comparison table */}
+              <div className="rounded-xl overflow-hidden" style={{border:'1px solid #1E1E24'}}>
+                <div className="grid grid-cols-3 text-xs py-2.5 px-4" style={{background:'#0C0C0E',borderBottom:'1px solid #1E1E24'}}>
+                  <span className="mono-label"></span>
+                  <span className="mono-label text-center">Separately</span>
+                  <span className="mono-label text-center" style={{color:'#D4F544'}}>Bundle</span>
+                </div>
+                {[
+                  ['Total cost','$8,200','$8,000'],
+                  ['Build time','Slower','Faster'],
+                  ['Integration','Manual','Seamless'],
+                  ['Strategy included','—','✓'],
+                ].map(([label,sep,bun],i)=>(
+                  <div key={i} className="grid grid-cols-3 py-2.5 px-4 text-xs" style={{borderBottom:i<3?'1px solid #1E1E24':'none'}}>
+                    <span style={{color:'#5A5A6E'}}>{label}</span>
+                    <span className="text-center" style={{color:'#38383F'}}>{sep}</span>
+                    <span className="text-center font-bold" style={{color:'#D4F544'}}>{bun}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="shrink-0 text-right">
-              <div className="display text-5xl" style={{color:'#D4F544'}}>From $8,000</div>
-              <p className="mono-label mt-1 mb-4">Full system, 5–7 days</p>
-              <button className="btn-lime glow-lime-btn" data-h onClick={()=>document.getElementById('cta').scrollIntoView({behavior:'smooth'})}>Get This →</button>
+            <div className="shrink-0 md:text-right flex flex-col md:items-end justify-between gap-6">
+              <div>
+                <div className="display text-5xl md:text-6xl" style={{color:'#D4F544'}}>$8,000</div>
+                <p className="mono-label mt-2">Full system · 5–7 days</p>
+              </div>
+              <button className="btn-lime glow-lime-btn" data-h onClick={()=>document.getElementById('cta').scrollIntoView({behavior:'smooth'})}>Get the Bundle →</button>
             </div>
           </div>
         </div>
@@ -363,7 +395,8 @@ function Work({sRef}){
   return<section ref={sRef} className="py-24 md:py-32">
     <div className="max-w-6xl mx-auto px-6">
       <R><span className="mono-label block mb-5">03 — work</span></R>
-      <R d={.1}><h2 className="display mb-14" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>Real projects.<br/><em style={{color:'#D4F544'}}>Real results.</em></h2></R>
+      <R d={.1}><h2 className="display mb-4" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>Real projects.<br/><em style={{color:'#D4F544'}}>Real results.</em></h2></R>
+      <R d={.15}><p className="text-sm mb-14 max-w-xl" style={{color:'#5A5A6E'}}>These aren't mockups or concepts. Every project below is live, used by real people, and generating real outcomes.</p></R>
       <div className="space-y-5">
         {cases.map((c,i)=>(
           <R key={i} d={i*.08}>
@@ -397,10 +430,10 @@ function Work({sRef}){
 
 function Diff(){
   const pts=[
-    {t:'Delivered in 5–7 days',d:'No six-week timelines. No endless meetings. You get a working system fast.'},
-    {t:'Built for business outcomes',d:'I don\'t just write code. I build systems designed to make or save you money.'},
-    {t:'One point of contact',d:'No agencies, no middlemen, no delays. You talk to the builder directly.'},
-    {t:'Fixed scope, clear pricing',d:'$2,500–$8,000 depending on scope. No hidden extras, no scope creep.'}
+    {t:'Delivered in 5–7 days',d:'No six-week timelines. No endless meetings. You get a working system fast — while competitors are still writing proposals.'},
+    {t:'Built for business outcomes',d:'I don\'t just write code. I build systems designed to make or save you money. Every decision ties back to your results.'},
+    {t:'One person, full stack',d:'No agencies, no junior handoffs, no delays. You talk directly to the builder. What you brief is what gets built.'},
+    {t:'Fixed scope, clear pricing',d:'$800–$8,000 depending on scope. You know the cost before I start. No hidden extras, no scope creep, no surprises.'}
   ];
   return<section className="py-16 md:py-20" style={{background:'rgba(17,17,20,.5)',borderTop:'1px solid #1E1E24',borderBottom:'1px solid #1E1E24'}}>
     <div className="max-w-6xl mx-auto px-6">
@@ -421,14 +454,15 @@ function Diff(){
 
 function Process({sRef}){
   const steps=[
-    {n:'01',t:'Quick Call',dur:'30 minutes',d:'We talk about your business, the biggest problem slowing you down, and what result you want. No pitch, no pressure. Just clarity.'},
-    {n:'02',t:'I Build Your System',dur:'5–7 days',d:'I design and build your system without back and forth. You get daily progress updates and a working product at the end — not a quote or a proposal.'},
-    {n:'03',t:'Launch & Get Results',dur:'Day 7+',d:'Your system goes live. I walk you through it, hand over everything, and support your launch. Most clients see measurable results within the first week.'}
+    {n:'01',t:'Quick Call',dur:'30 minutes',d:'We talk about your business, the biggest problem slowing you down, and what result you want. No pitch, no pressure — just clarity on what to build and what it will cost.'},
+    {n:'02',t:'I Build Your System',dur:'5–7 days',d:'I design and build your system — no back and forth, no meetings. You get daily progress updates. At the end of the week you have a working product, not a quote.'},
+    {n:'03',t:'Launch & Get Results',dur:'Day 7+',d:'Your system goes live. I walk you through it, hand over everything, and support your launch. Most clients see measurable results within the first 7 days of going live.'}
   ];
   return<section ref={sRef} className="py-24 md:py-32" style={{background:'rgba(17,17,20,.5)'}}>
     <div className="max-w-6xl mx-auto px-6">
       <R><span className="mono-label block mb-5">04 — process</span></R>
-      <R d={.1}><h2 className="display mb-14" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>From call to launch<br/><em style={{color:'#D4F544'}}>in 7 days.</em></h2></R>
+      <R d={.1}><h2 className="display mb-4" style={{fontSize:'clamp(38px,5.5vw,64px)',color:'#E8E8F0'}}>From call to launch<br/><em style={{color:'#D4F544'}}>in 7 days.</em></h2></R>
+      <R d={.15}><p className="text-sm mb-14 max-w-lg" style={{color:'#5A5A6E'}}>Three steps. No complexity. No agency overhead. You talk to the builder, the builder builds, you get results.</p></R>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {steps.map((s,i)=>(
           <R key={i} d={i*.1}>
@@ -446,8 +480,9 @@ function Process({sRef}){
       <R d={.4} className="mt-5">
         <div className="card text-center py-12" style={{borderColor:'rgba(212,245,68,.15)',background:'rgba(212,245,68,.012)'}}>
           <h3 className="display mb-3" style={{fontSize:'clamp(28px,4vw,48px)',color:'#E8E8F0'}}>No bloated timelines.<br/>No technical jargon.<br/><em style={{color:'#D4F544'}}>Just a system that works.</em></h3>
-          <p className="text-sm mb-8 max-w-md mx-auto" style={{color:'#5A5A6E'}}>Most agencies quote you 8 weeks and $15K for what I deliver in 7 days.</p>
-          <button className="btn-lime glow-lime-btn" data-h onClick={()=>document.getElementById('cta').scrollIntoView({behavior:'smooth'})}>Start the Process →</button>
+          <p className="text-sm mb-2 max-w-md mx-auto" style={{color:'#5A5A6E'}}>Most agencies quote you 8 weeks and $15,000 for what I deliver in 7 days.</p>
+          <p className="text-sm mb-8 max-w-md mx-auto" style={{color:'#5A5A6E'}}>Every week you wait is another week of leads you're not capturing.</p>
+          <button className="btn-lime glow-lime-btn" data-h onClick={()=>document.getElementById('cta').scrollIntoView({behavior:'smooth'})}>Book Your Free Call →</button>
         </div>
       </R>
     </div>
@@ -471,7 +506,8 @@ function Caps(){
         <R>
           <span className="mono-label block mb-5">capabilities</span>
           <h2 className="display" style={{fontSize:'clamp(36px,5vw,56px)',color:'#E8E8F0'}}>Everything built<br/><em style={{color:'#D4F544'}}>by one person.</em></h2>
-          <p className="text-sm leading-relaxed mt-5" style={{color:'#5A5A6E'}}>No agency overhead. No junior developer handoffs. You get a senior-level builder who owns the full stack — from database to interface.</p>
+          <p className="text-sm leading-relaxed mt-5 mb-6" style={{color:'#5A5A6E'}}>No agency overhead. No junior developer handoffs. You get a senior-level builder who owns the full stack — from database to interface.</p>
+          <button className="btn-lime glow-lime-btn" data-h onClick={()=>document.getElementById('cta').scrollIntoView({behavior:'smooth'})}>See What I Can Build For You →</button>
         </R>
         <div>
           {list.map((c,i)=>(
@@ -535,8 +571,9 @@ function Contact({sRef}){
       <div className="max-w-2xl mx-auto px-6">
         <div className="text-center mb-14">
           <R><span className="mono-label block mb-5">05 — contact</span></R>
-          <R d={.1}><h2 className="display mb-4" style={{fontSize:'clamp(40px,7vw,80px)',color:'#E8E8F0'}}>Ready to build a<br/><em style={{color:'#D4F544'}}>system that works?</em></h2></R>
-          <R d={.2}><p className="text-base" style={{color:'#5A5A6E'}}>Tell me what you need. I'll reply within 24 hours with a clear breakdown — no sales pitch, no obligation.</p></R>
+          <R d={.1}><h2 className="display mb-4" style={{fontSize:'clamp(40px,7vw,80px)',color:'#E8E8F0'}}>Let's build your<br/><em style={{color:'#D4F544'}}>system this week.</em></h2></R>
+          <R d={.2}><p className="text-base mb-2" style={{color:'#5A5A6E'}}>Tell me what you need. I'll reply within 24 hours with a clear breakdown of exactly what I'd build, how long it takes, and what it costs.</p>
+          <p className="text-sm" style={{color:'#38383F'}}>No sales pitch. No obligation. Just a straight answer.</p></R>
         </div>
         <R d={.3}>
           <form onSubmit={sub} className="space-y-4">
@@ -546,13 +583,13 @@ function Contact({sRef}){
             </div>
             <select name="service" value={f.service} onChange={ch} required className="field" style={{appearance:'none'}}>
               <option value="" disabled>What do you need built?</option>
-              <option value="leads">AI Lead Generation System</option>
-              <option value="automation">Business Automation System</option>
-              <option value="portal">Client Portal & Dashboard</option>
-              <option value="saas">Subscription / SaaS System</option>
-              <option value="website">Website Design & Rebuild</option>
-              <option value="chatbot">AI Chatbot & WhatsApp Automation</option>
-              <option value="bundle">Full Business System Bundle</option>
+              <option value="website">Website Design & Rebuild — From $800</option>
+              <option value="chatbot">AI Chatbot & WhatsApp Automation — From $900</option>
+              <option value="leads">AI Lead Generation System — From $3,000</option>
+              <option value="automation">Business Automation System — From $3,500</option>
+              <option value="portal">Client Portal & Dashboard — From $5,000</option>
+              <option value="saas">Subscription / SaaS System — From $5,000</option>
+              <option value="bundle">Full Business System Bundle — $8,000</option>
               <option value="unsure">Not sure yet — let's talk</option>
             </select>
             <select name="budget" value={f.budget} onChange={ch} required className="field" style={{appearance:'none'}}>
@@ -622,7 +659,7 @@ function App(){
     <Marquee t="AI LEAD GENERATION  ·  BUSINESS AUTOMATION  ·  CLIENT PORTALS  ·  SAAS SYSTEMS"/>
     <Problem sRef={prob}/>
     <Services sRef={svc}/>
-    <Marquee t="DELIVERED IN 7 DAYS  ·  $2.5K–$8K  ·  NO TECH JARGON  ·  REAL RESULTS" rev={true}/>
+    <Marquee t="DELIVERED IN 7 DAYS  ·  $800–$8K  ·  NO TECH JARGON  ·  REAL RESULTS" rev={true}/>
     <Work sRef={work}/>
     <Diff/>
     <Process sRef={proc}/>
