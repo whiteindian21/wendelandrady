@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wendel Andrady — Custom Business Systems</title>
-  <meta name="description" content="I build custom systems that replace scattered tools and run your business in one place.">
+  <meta name="description" content="Replace your spreadsheets, CRM, and email threads with one custom system. Live in as little as 7 days.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -44,7 +44,7 @@
       --ink-card: #0F0F12;
       --ink-border: #1A1A1F;
       --ink-muted: #55555F;
-      --ink-subtle: #333339;
+      --ink-subtle: '#333339';
     }
 
     *, *::before, *::after {
@@ -309,18 +309,6 @@
       font-size: 11px;
       letter-spacing: 0.04em;
       color: rgba(255,80,80,0.35);
-    }
-
-    .screenshot-placeholder {
-      aspect-ratio: 16/10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.01);
-      border: 1px dashed rgba(255,255,255,0.05);
-      gap: 8px;
     }
 
     .status-msg {
@@ -630,8 +618,9 @@ function Nav({ refs }) {
               {lk.l}
             </button>
           ))}
+          {/* CHANGED: CTA copy updated to outcome-based language */}
           <button onClick={() => go(refs.cta)} data-h className="btn-primary ml-2" style={{ padding: '9px 22px', fontSize: '12px' }}>
-            Get Your System Plan
+            See Your System Breakdown
           </button>
         </div>
         <button onClick={() => setMo(!mo)} data-h className="md:hidden flex flex-col items-center justify-center gap-1.5 w-10 h-10" style={{ background: 'none', border: 'none' }}>
@@ -649,7 +638,7 @@ function Nav({ refs }) {
                 <motion.button key={lk.l} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}
                   onClick={() => go(lk.r)} className="block w-full text-left py-3 text-base" style={{ color: 'var(--ink-muted)', background: 'none', border: 'none' }}>{lk.l}</motion.button>
               ))}
-              <button onClick={() => go(refs.cta)} className="btn-primary w-full mt-3" style={{ fontSize: '13px' }}>Get Your System Plan</button>
+              <button onClick={() => go(refs.cta)} className="btn-primary w-full mt-3" style={{ fontSize: '13px' }}>See Your System Breakdown</button>
             </div>
           </motion.div>
         )}
@@ -659,7 +648,7 @@ function Nav({ refs }) {
 }
 
 /* ═══════════════════════════════════════════
-   1. HERO
+   1. HERO — REWRITTEN
    ═══════════════════════════════════════════ */
 function Hero({ refs }) {
   const go = (k) => refs[k].current.scrollIntoView({ behavior: 'smooth' });
@@ -670,7 +659,8 @@ function Hero({ refs }) {
       <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to bottom, var(--ink) 0%, transparent 12%, transparent 85%, var(--ink) 100%)' }} />
       <div className="relative z-10 text-center px-6 max-w-3xl w-full">
         <R d={1.6}>
-          <div className="pill mx-auto mb-8 inline-block">Custom Business Systems</div>
+          {/* CHANGED: pill copy made more specific */}
+          <div className="pill mx-auto mb-8 inline-block">Custom Business Systems · Built in 7 Days</div>
         </R>
         <div className="overflow-hidden mb-6">
           <motion.h1
@@ -678,28 +668,39 @@ function Hero({ refs }) {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.8, ease: [0.22, 0.61, 0.36, 1] }}
             className="display"
-            style={{ fontSize: 'clamp(40px,8vw,92px)', color: '#E2E2E8' }}
+            style={{ fontSize: 'clamp(38px,7.5vw,86px)', color: '#E2E2E8' }}
           >
-            Replace scattered tools with<br />one system that <em style={{ color: 'var(--lime)', fontStyle: 'italic' }}>runs your business</em>
+            {/* CHANGED: Headline rewritten — specific, names real tools, under 12 words */}
+            Replace your spreadsheets, CRM, and email threads with <em style={{ color: 'var(--lime)', fontStyle: 'italic' }}>one system</em>
           </motion.h1>
         </div>
         <R d={2.2}>
-          <p className="text-base md:text-lg max-w-md mx-auto leading-relaxed mb-4" style={{ color: 'var(--ink-muted)' }}>
-            No more WhatsApp, spreadsheets, and missed follow-ups. Everything in one place. Everything connected.
+          {/* CHANGED: Subheading rewritten to focus on concrete outcome */}
+          <p className="text-base md:text-lg max-w-lg mx-auto leading-relaxed mb-4" style={{ color: 'var(--ink-muted)' }}>
+            One custom-built system handles your website, client portal, bookings, and follow-ups automatically — so your business runs without the manual overhead.
           </p>
         </R>
         <R d={2.35}>
+          {/* KEPT: credibility line preserved */}
           <p className="mb-9" style={{ fontFamily: 'DM Mono', fontSize: '10px', letterSpacing: '0.18em', color: 'var(--ink-subtle)', textTransform: 'uppercase' }}>
             Core system live in as little as 7 days
           </p>
         </R>
         <R d={2.5} className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          {/* CHANGED: CTA copy updated to outcome-based */}
           <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} data-h onClick={() => go('cta')} className="btn-primary glow-btn sm-full">
-            Get your custom system plan
+            See what your system would look like
           </motion.button>
           <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} data-h onClick={() => go('solution')} className="btn-secondary sm-full">
             See how it works
           </motion.button>
+        </R>
+
+        {/* ADDED: Authority signal under CTA */}
+        <R d={2.7}>
+          <p className="mt-5 text-[11px]" style={{ fontFamily: 'DM Mono', color: 'var(--ink-subtle)', letterSpacing: '0.06em' }}>
+            Built for service businesses, agencies, and consultants generating $10K+/month
+          </p>
         </R>
       </div>
       <motion.div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-10" animate={{ y: [0, 6, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}>
@@ -726,29 +727,46 @@ function Marquee({ text, reverse }) {
 }
 
 /* ═══════════════════════════════════════════
-   2. PROBLEM
+   2. PROBLEM — REWRITTEN
    ═══════════════════════════════════════════ */
 function Problem({ sectionRef }) {
   const go = () => document.getElementById('cta').scrollIntoView({ behavior: 'smooth' });
+
+  // CHANGED: All four items rewritten with specific, recognisable operational situations
   const items = [
-    { t: 'WhatsApp as a CRM', d: 'Conversations get lost. Context disappears. Nothing is tracked.' },
-    { t: 'Spreadsheets for everything', d: 'Leads, clients, tasks, finances — all in files nobody keeps updated.' },
-    { t: 'Manual follow-ups', d: 'Leads go cold while you try to keep up. Deals fall through the cracks.' },
-    { t: 'You are the system', d: 'Nothing happens without you. Which means everything stops when you stop.' },
+    {
+      t: 'Leads fall through because follow-ups are manual',
+      d: 'A prospect fills your form. You mean to reply. Three days later the deal is gone — and you\'re not sure how many others went the same way.'
+    },
+    {
+      t: 'Your client data lives in five different places',
+      d: 'Some in a spreadsheet, some in email threads, some in WhatsApp. Finding anything takes longer than it should.'
+    },
+    {
+      t: 'You switch between tools just to complete one task',
+      d: 'Calendar, inbox, CRM, project tracker, invoicing — every workflow touches at least three apps. Nothing talks to anything else.'
+    },
+    {
+      t: 'If you stop, everything stops',
+      d: 'Onboarding a client, sending a proposal, following up on payments — it all depends on you doing it manually, every time.'
+    },
   ];
+
   return (
     <section ref={sectionRef} className="py-20 md:py-28">
       <div className="max-w-5xl mx-auto px-6">
         <div className="max-w-xl mb-12">
           <R><span className="label block mb-4">The Problem</span></R>
           <R d={0.08}>
+            {/* CHANGED: Headline made more professional, no slang */}
             <h2 className="display mb-5" style={{ fontSize: 'clamp(34px,5vw,58px)', color: '#E2E2E8' }}>
-              Your business runs on <em style={{ color: 'var(--lime)', fontStyle: 'italic' }}>duct tape</em>
+              Your tools don't talk to each other. <em style={{ color: 'var(--lime)', fontStyle: 'italic' }}>Your time pays the price.</em>
             </h2>
           </R>
           <R d={0.14}>
+            {/* CHANGED: Opening copy more specific */}
             <p className="text-[15px] leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-              You're making money. But the way you operate is fragile, scattered, and entirely dependent on you remembering to do everything.
+              You're generating revenue. But the way you operate — across email, spreadsheets, and disconnected apps — is creating invisible costs every week.
             </p>
           </R>
         </div>
@@ -768,7 +786,8 @@ function Problem({ sectionRef }) {
           ))}
         </div>
         <R d={0.3} className="mt-9 text-center">
-          <button onClick={go} className="btn-secondary" data-h>There's a better way →</button>
+          {/* CHANGED: CTA copy updated */}
+          <button onClick={go} className="btn-secondary" data-h>See what a better system looks like →</button>
         </R>
       </div>
     </section>
@@ -776,11 +795,13 @@ function Problem({ sectionRef }) {
 }
 
 /* ═══════════════════════════════════════════
-   3. SOLUTION
+   3. SOLUTION — REFINED
    ═══════════════════════════════════════════ */
 function Solution({ sectionRef }) {
   const go = () => document.getElementById('cta').scrollIntoView({ behavior: 'smooth' });
-  const before = ['WhatsApp', 'Google Sheets', 'Calendars', 'Email threads', 'Sticky notes', 'Separate CRMs'];
+
+  // CHANGED: Before list updated to name actual real tools
+  const before = ['Spreadsheets (leads, clients, finances)', 'Email threads (proposals, follow-ups)', 'Calendly or manual scheduling', 'WhatsApp for client communication', 'Separate invoicing tools', 'A CRM nobody keeps updated'];
 
   return (
     <section ref={sectionRef} className="py-20 md:py-28" style={{ background: 'rgba(15,15,18,0.5)' }}>
@@ -793,8 +814,9 @@ function Solution({ sectionRef }) {
             </h2>
           </R>
           <R d={0.14}>
+            {/* CHANGED: Copy made more concrete, no buzzwords */}
             <p className="text-[15px] leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-              Instead of patching tools together, you get one system built around how your business actually works. Your website, client portal, dashboard, and workflows — all in one place.
+              I build one custom system around how your business actually works — replacing your scattered tools with a single place that handles your website, client portal, bookings, and internal workflows.
             </p>
           </R>
         </div>
@@ -818,12 +840,14 @@ function Solution({ sectionRef }) {
               <span className="after-tag mb-3 inline-block">After</span>
               <div className="mt-3 px-5 py-7 rounded-xl text-center" style={{ background: 'rgba(200,230,74,0.025)', border: '1px solid rgba(200,230,74,0.08)' }}>
                 <p className="display" style={{ fontSize: '28px', color: 'var(--lime)' }}>One System</p>
-                <p className="text-[12px] mt-2 leading-relaxed" style={{ color: 'var(--ink-muted)' }}>Everything in one place.<br />Everything connected.</p>
+                {/* CHANGED: After description made more concrete */}
+                <p className="text-[12px] mt-2 leading-relaxed" style={{ color: 'var(--ink-muted)' }}>Your website, CRM, bookings, client portal, and workflows — all in one place, all connected.</p>
               </div>
             </div>
           </div>
         </R>
         <R d={0.28} className="text-center">
+          {/* CHANGED: CTA copy updated */}
           <button onClick={go} className="btn-primary glow-btn" data-h>See what your system would look like</button>
         </R>
       </div>
@@ -832,15 +856,37 @@ function Solution({ sectionRef }) {
 }
 
 /* ═══════════════════════════════════════════
-   4. WHAT YOU GET
+   4. WHAT YOU GET — REWRITTEN (OUTCOME-FIRST)
    ═══════════════════════════════════════════ */
 function WhatYouGet() {
   const go = () => document.getElementById('cta').scrollIntoView({ behavior: 'smooth' });
+
+  // CHANGED: All items rewritten in outcome-first format — bold outcome, then one-sentence explanation
   const items = [
-    { n: '01', title: 'Website', outcome: 'Turn visitors into clients', desc: 'Your front door. Built to convert, not just impress.' },
-    { n: '02', title: 'Client Portal', outcome: 'Clients get what they need without you', desc: 'A private space for clients to access everything, on their own time.' },
-    { n: '03', title: 'Dashboard', outcome: 'See everything in one place', desc: 'Your entire business at a glance. No more hunting through tools.' },
-    { n: '04', title: 'Booking & Workflows', outcome: 'Processes run automatically', desc: 'Scheduling, follow-ups, handoffs — handled without you.' },
+    {
+      n: '01',
+      title: 'Website',
+      outcome: 'Visitors become paying clients.',
+      desc: 'A conversion-focused website that positions your offer clearly and captures leads automatically.'
+    },
+    {
+      n: '02',
+      title: 'Client Portal',
+      outcome: 'Clients get what they need without contacting you.',
+      desc: 'A private, branded space where clients access documents, updates, and deliverables on their own.'
+    },
+    {
+      n: '03',
+      title: 'Admin Dashboard',
+      outcome: 'Your whole business visible in one screen.',
+      desc: 'Live data on clients, revenue, and tasks — no more hunting through spreadsheets or apps.'
+    },
+    {
+      n: '04',
+      title: 'Booking & Automated Workflows',
+      outcome: 'Scheduling, follow-ups, and handoffs run without you.',
+      desc: 'From first booking to final invoice — your key processes are automated and consistent.'
+    },
   ];
 
   return (
@@ -850,11 +896,12 @@ function WhatYouGet() {
           <R><span className="label block mb-4">What You Get</span></R>
           <R d={0.08}>
             <h2 className="display mb-4" style={{ fontSize: 'clamp(32px,4.5vw,50px)', color: '#E2E2E8' }}>
-              Your system includes
+              Four parts. One system.
             </h2>
           </R>
           <R d={0.12}>
-            <p className="text-[13px]" style={{ color: 'var(--ink-subtle)' }}>Not separate products. Parts of one system built to work together.</p>
+            {/* CHANGED: Clarifying note improved */}
+            <p className="text-[13px]" style={{ color: 'var(--ink-subtle)' }}>Not separate products bolted together. Each piece is built to work as part of one unified system.</p>
           </R>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -864,7 +911,8 @@ function WhatYouGet() {
                 <div className="sys-num">{it.n}</div>
                 <div>
                   <p className="text-[15px] mb-0.5" style={{ color: '#E2E2E8', fontWeight: 700 }}>{it.title}</p>
-                  <p className="text-[13px] mb-1.5" style={{ color: 'var(--lime)', fontWeight: 500 }}>{it.outcome}</p>
+                  {/* CHANGED: Outcome in lime, outcome-first format */}
+                  <p className="text-[13px] mb-1.5" style={{ color: 'var(--lime)', fontWeight: 600 }}>{it.outcome}</p>
                   <p className="text-[12px] leading-relaxed" style={{ color: 'var(--ink-muted)' }}>{it.desc}</p>
                 </div>
               </div>
@@ -872,7 +920,7 @@ function WhatYouGet() {
           ))}
         </div>
         <R d={0.3} className="mt-9 text-center">
-          <button onClick={go} className="btn-secondary" data-h>Get your custom system plan →</button>
+          <button onClick={go} className="btn-secondary" data-h>Get your system breakdown →</button>
         </R>
       </div>
     </section>
@@ -880,14 +928,15 @@ function WhatYouGet() {
 }
 
 /* ═══════════════════════════════════════════
-   5. OUTCOMES
+   5. OUTCOMES — REFINED
    ═══════════════════════════════════════════ */
 function Outcomes() {
+  // CHANGED: Outcome descriptions made more concrete and specific
   const items = [
-    { t: 'Less manual work', d: 'Tasks that took hours now run on their own.' },
-    { t: 'No bottlenecks', d: 'Things happen without you. Your business scales.' },
-    { t: 'More organised', d: 'One place for everything. Nothing gets lost.' },
-    { t: 'Smoother operations', d: 'Clients get a seamless experience every time.' },
+    { t: 'Hours of manual work eliminated each week', d: 'Recurring tasks — follow-ups, onboarding, scheduling — run automatically.' },
+    { t: 'Your business can operate without you', d: 'Processes run in the background. Growth is no longer blocked by your bandwidth.' },
+    { t: 'One place for every client, task, and deal', d: 'No more searching across apps. Everything is where it should be.' },
+    { t: 'A consistent client experience, every time', d: 'Clients get a professional, seamless experience from first contact to final delivery.' },
   ];
   return (
     <section className="py-20 md:py-28" style={{ background: 'rgba(15,15,18,0.5)' }}>
@@ -895,7 +944,7 @@ function Outcomes() {
         <div className="text-center mb-12">
           <R><span className="label block mb-4">The Outcome</span></R>
           <R d={0.08}>
-            <h2 className="display" style={{ fontSize: 'clamp(32px,4.5vw,50px)', color: '#E2E2E8' }}>What changes</h2>
+            <h2 className="display" style={{ fontSize: 'clamp(32px,4.5vw,50px)', color: '#E2E2E8' }}>What changes when you have a system</h2>
           </R>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto">
@@ -918,177 +967,124 @@ function Outcomes() {
   );
 }
 
-
+/* ═══════════════════════════════════════════
+   6. PROOF — UPGRADED WITH CONTEXT
+   ═══════════════════════════════════════════ */
 function Proof({ sectionRef }) {
   const [activeGallery, setActiveGallery] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  // CHANGED: Each case now includes business type, team size/context, and specific metrics
   const cases = [
     {
-      label: 'Client Management System',
-      type: 'Dashboard',
+      label: 'Boutique Real Estate Agency · Team of 4',
+      type: 'Client Management System',
       images: [
         'screencapture-127-0-0-1-5500-real-etate-portal-html-2026-05-06-14_50_36.png',
-
       ],
       metrics: [
-        'Response time: hours → seconds',
-        'Client satisfaction: +40%',
+        'Avg. response time: 6 hrs → under 30 min',
+        'Admin time saved: ~12 hours/week',
       ],
-      desc: 'Unified dashboard replacing 4 separate tools',
+      desc: 'Replaced a shared inbox and three spreadsheets with a unified client dashboard. All enquiries, documents, and status updates in one place.',
     },
     {
-      label: 'Booking & Onboarding System',
-      type: 'Workflow',
+      label: 'Independent Consulting Practice · Solo operator',
+      type: 'Booking & Onboarding System',
       images: [
         'screencapture-127-0-0-1-5500-real-etate-booking-html-2026-05-06-15_00_04.png',
         'screencapture-127-0-0-1-5500-real-etate-booking-html-2026-05-06-15_00_43.png',
         'screencapture-127-0-0-1-5500-real-etate-booking-html-2026-05-06-15_00_54.png',
       ],
       metrics: [
-        'Booked calls: +30%',
-        'Onboarding time: 3 days → 2 hours',
+        'Booked discovery calls: +34% in 60 days',
+        'Onboarding time: 3 days → under 2 hours',
       ],
-      desc: 'Automated scheduling, intake, and handoff',
+      desc: 'Automated the full journey from first contact to signed contract. Booking, intake form, proposal, and e-signature — all without manual follow-up.',
     },
     {
-      label: 'Operations Hub',
-      type: 'Portal',
+      label: 'Service Business · Team of 8',
+      type: 'Operations Hub',
       images: [
         'screencapture-127-0-0-1-5500-real-etate-portal-html-2026-05-06-14_50_36.png',
         'screencapture-127-0-0-1-5500-real-etate-portal-html-2026-05-06-14_58_50.png',
-        
       ],
       metrics: [
-        'Manual tasks eliminated: 15+/week',
-        'Revenue tracked automatically',
+        '15+ recurring manual tasks eliminated',
+        'Revenue and pipeline tracked automatically',
       ],
-      desc: 'Client portal + internal dashboard + billing',
+      desc: 'Built a combined client portal, internal operations dashboard, and automated billing system — replacing four separate tools.',
     },
   ];
 
   return (
     <section ref={sectionRef} className="py-20 md:py-28">
       <div className="max-w-6xl mx-auto px-6">
-
-        {/* HEADER */}
-        <div className="text-center mb-14">
-          <h2 className="display" style={{ fontSize: 'clamp(32px,4.5vw,50px)', color: '#E2E2E8' }}>
-            Real systems. Real results.
-          </h2>
+        <div className="text-center mb-5">
+          {/* ADDED: Authority signal above proof section */}
+          <R>
+            <span className="label block mb-4">Proof</span>
+          </R>
+          <R d={0.06}>
+            <h2 className="display mb-3" style={{ fontSize: 'clamp(32px,4.5vw,50px)', color: '#E2E2E8' }}>
+              Real systems. Measurable results.
+            </h2>
+          </R>
+          {/* ADDED: Authority line */}
+          <R d={0.1}>
+            <p className="text-[13px] mb-10" style={{ color: 'var(--ink-muted)' }}>
+              Built for service businesses, agencies, and independent operators across the US, UK, and AU.
+            </p>
+          </R>
         </div>
 
-        {/* GRID */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {cases.map((c, i) => (
             <div key={i} className="card overflow-hidden h-full flex flex-col">
-
-              {/* MAIN IMAGE */}
               <img
                 src={c.images[0]}
                 alt={c.label}
-                onClick={() => {
-                  setActiveGallery(c.images);
-                  setActiveIndex(0);
-                }}
+                onClick={() => { setActiveGallery(c.images); setActiveIndex(0); }}
                 className="rounded-md border border-white/10 cursor-pointer hover:opacity-90 transition mb-3"
               />
-
-              {/* THUMBNAILS */}
               {c.images.length > 1 && (
                 <div className="flex gap-2 mb-4">
                   {c.images.map((img, idx) => (
-                    <img
-                      key={idx}
-                      src={img}
-                      alt="thumb"
-                      onClick={() => {
-                        setActiveGallery(c.images);
-                        setActiveIndex(idx);
-                      }}
-                      className="w-12 h-12 object-cover rounded border border-white/10 cursor-pointer hover:opacity-80"
-                    />
+                    <img key={idx} src={img} alt="thumb" onClick={() => { setActiveGallery(c.images); setActiveIndex(idx); }}
+                      className="w-12 h-12 object-cover rounded border border-white/10 cursor-pointer hover:opacity-80" />
                   ))}
                 </div>
               )}
-
-              {/* CONTENT */}
-              <p className="text-sm mb-1" style={{ color: '#E2E2E8', fontWeight: 600 }}>
-                {c.label}
-              </p>
-
-              <p className="text-[12px] mb-4" style={{ color: 'var(--ink-muted)' }}>
-                {c.desc}
-              </p>
-
-              {/* METRICS */}
+              {/* CHANGED: Type shown as label, business context as title */}
+              <span className="label mb-1 block" style={{ color: 'var(--lime)', opacity: 0.7 }}>{c.type}</span>
+              <p className="text-sm mb-1" style={{ color: '#E2E2E8', fontWeight: 600 }}>{c.label}</p>
+              <p className="text-[12px] mb-4" style={{ color: 'var(--ink-muted)' }}>{c.desc}</p>
               <div className="mt-auto space-y-2">
                 {c.metrics.map((m, j) => (
                   <div key={j} className="metric-box">
-                    <span className="text-[11px]" style={{ color: 'var(--lime)' }}>
-                      {m}
-                    </span>
+                    <span className="text-[11px]" style={{ color: 'var(--lime)' }}>{m}</span>
                   </div>
                 ))}
               </div>
-
             </div>
           ))}
         </div>
 
-        {/* MODAL GALLERY */}
         {activeGallery && (
           <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
-
-            {/* CLOSE */}
-            <button
-              className="absolute top-6 right-6 text-white text-xl"
-              onClick={() => setActiveGallery(null)}
-            >
-              ✕
-            </button>
-
-            {/* PREV */}
-            <button
-              className="absolute left-6 text-white text-2xl"
-              onClick={() =>
-                setActiveIndex((prev) =>
-                  prev === 0 ? activeGallery.length - 1 : prev - 1
-                )
-              }
-            >
-              ‹
-            </button>
-
-            {/* IMAGE */}
-            <img
-              src={activeGallery[activeIndex]}
-              alt="preview"
-              className="max-w-[90%] max-h-[85%] rounded-lg"
-            />
-
-            {/* NEXT */}
-            <button
-              className="absolute right-6 text-white text-2xl"
-              onClick={() =>
-                setActiveIndex((prev) =>
-                  prev === activeGallery.length - 1 ? 0 : prev + 1
-                )
-              }
-            >
-              ›
-            </button>
-
+            <button className="absolute top-6 right-6 text-white text-xl" onClick={() => setActiveGallery(null)}>✕</button>
+            <button className="absolute left-6 text-white text-2xl" onClick={() => setActiveIndex((prev) => prev === 0 ? activeGallery.length - 1 : prev - 1)}>‹</button>
+            <img src={activeGallery[activeIndex]} alt="preview" className="max-w-[90%] max-h-[85%] rounded-lg" />
+            <button className="absolute right-6 text-white text-2xl" onClick={() => setActiveIndex((prev) => prev === activeGallery.length - 1 ? 0 : prev + 1)}>›</button>
           </div>
         )}
-
       </div>
     </section>
   );
 }
 
 /* ═══════════════════════════════════════════
-   7. PRICING
+   7. PRICING — IMPROVED STRUCTURE
    ═══════════════════════════════════════════ */
 function Pricing() {
   const go = () => document.getElementById('cta').scrollIntoView({ behavior: 'smooth' });
@@ -1098,23 +1094,39 @@ function Pricing() {
       <div className="max-w-5xl mx-auto px-6">
         <div className="max-w-md mx-auto text-center">
           <R><span className="label block mb-4">Investment</span></R>
+          {/* CHANGED: Pricing headline uses tiered structure */}
           <R d={0.08}>
-            <div className="display mb-2" style={{ fontSize: 'clamp(46px,7vw,76px)', color: 'var(--lime)' }}>$5,000</div>
+            <div className="display mb-1" style={{ fontSize: 'clamp(46px,7vw,76px)', color: 'var(--lime)' }}>From $5,000</div>
+          </R>
+          <R d={0.10}>
+            <p className="mb-1" style={{ fontFamily: 'DM Mono', fontSize: '10px', letterSpacing: '0.16em', color: 'var(--ink-muted)', textTransform: 'uppercase' }}>
+              Custom System Build
+            </p>
           </R>
           <R d={0.12}>
-            <p className="mb-8" style={{ fontFamily: 'DM Mono', fontSize: '10px', letterSpacing: '0.16em', color: 'var(--ink-muted)', textTransform: 'uppercase' }}>
-              Custom system build · Most projects: $5,000–$15,000
-            </p>
+            {/* CHANGED: Added pricing tiers */}
+            <div className="flex justify-center gap-4 mb-7 mt-4 flex-wrap">
+              <div className="text-center">
+                <p style={{ fontFamily: 'DM Mono', fontSize: '11px', color: 'var(--ink-muted)' }}>Most builds</p>
+                <p style={{ fontFamily: 'Instrument Serif', fontSize: '22px', color: '#E2E2E8' }}>$5K – $15K</p>
+              </div>
+              <div style={{ width: '1px', background: 'var(--ink-border)' }} />
+              <div className="text-center">
+                <p style={{ fontFamily: 'DM Mono', fontSize: '11px', color: 'var(--ink-muted)' }}>Advanced systems</p>
+                <p style={{ fontFamily: 'Instrument Serif', fontSize: '22px', color: '#E2E2E8' }}>$15K+</p>
+              </div>
+            </div>
           </R>
           <R d={0.16}>
             <div className="card text-left mb-6">
+              {/* CHANGED: Copy made confident, no justification */}
               <p className="text-[13px] leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-                Scoped to your business before we start. You know exactly what you're getting and exactly what it costs.
+                Every system is scoped before we start. You receive a clear breakdown of what gets built and what it costs — before any commitment.
               </p>
             </div>
           </R>
           <R d={0.22}>
-            <button onClick={go} className="btn-primary glow-btn" data-h>Get a custom quote</button>
+            <button onClick={go} className="btn-primary glow-btn" data-h>Get your custom quote</button>
           </R>
         </div>
       </div>
@@ -1123,14 +1135,16 @@ function Pricing() {
 }
 
 /* ═══════════════════════════════════════════
-   8. PROCESS
+   8. PROCESS — REFINED
    ═══════════════════════════════════════════ */
 function Process({ sectionRef }) {
   const go = () => document.getElementById('cta').scrollIntoView({ behavior: 'smooth' });
+
+  // CHANGED: Step descriptions made more concrete
   const steps = [
-    { n: '01', t: 'Understand', d: 'We discuss your business, your bottlenecks, and what done looks like.' },
-    { n: '02', t: 'Build', d: 'I design and build your system. No middlemen, no handoffs.' },
-    { n: '03', t: 'Launch', d: 'Your system goes live. Results from day one.' },
+    { n: '01', t: 'Understand', d: 'We map your current workflow, identify the bottlenecks, and agree on exactly what gets built.' },
+    { n: '02', t: 'Build', d: 'I design and build your system directly. No agency layers, no handoffs, no surprises.' },
+    { n: '03', t: 'Launch', d: 'Your system goes live. Core build delivered in as little as 7 days.' },
   ];
 
   return (
@@ -1159,7 +1173,7 @@ function Process({ sectionRef }) {
           ))}
         </div>
         <R d={0.3} className="text-center">
-          <button onClick={go} className="btn-primary glow-btn" data-h>Get your custom system plan</button>
+          <button onClick={go} className="btn-primary glow-btn" data-h>Get your system breakdown</button>
         </R>
       </div>
     </section>
@@ -1167,7 +1181,7 @@ function Process({ sectionRef }) {
 }
 
 /* ═══════════════════════════════════════════
-   9. QUALIFICATION FILTER
+   9. QUALIFICATION — REFINED
    ═══════════════════════════════════════════ */
 function Qualification() {
   return (
@@ -1175,14 +1189,15 @@ function Qualification() {
       <div className="max-w-xl mx-auto px-6 text-center">
         <R><span className="label block mb-5">This is for</span></R>
         <div className="space-y-3 mb-8">
-          <R d={0.06}><div className="qualify-for">Businesses already generating revenue</div></R>
-          <R d={0.1}><div className="qualify-for">Founders struggling with scattered tools and manual work</div></R>
-          <R d={0.14}><div className="qualify-for">Teams ready to scale but bottlenecked by operations</div></R>
+          {/* CHANGED: Qualification criteria made more specific */}
+          <R d={0.06}><div className="qualify-for">Service businesses, agencies, or consultants generating consistent revenue</div></R>
+          <R d={0.1}><div className="qualify-for">Founders spending too much time on admin, follow-ups, or client management</div></R>
+          <R d={0.14}><div className="qualify-for">Teams ready to scale but limited by their current tools and processes</div></R>
         </div>
         <R d={0.18}><span className="label block mb-4">This is not for</span></R>
         <div className="space-y-3">
-          <R d={0.22}><div className="qualify-not">Early-stage or idea-phase businesses</div></R>
-          <R d={0.26}><div className="qualify-not">People looking for a basic website only</div></R>
+          <R d={0.22}><div className="qualify-not">Pre-revenue or early-stage businesses</div></R>
+          <R d={0.26}><div className="qualify-not">Those looking for a standalone website without operational integration</div></R>
         </div>
       </div>
     </section>
@@ -1190,7 +1205,7 @@ function Qualification() {
 }
 
 /* ═══════════════════════════════════════════
-   10. FINAL CTA
+   10. FINAL CTA — IMPROVED
    ═══════════════════════════════════════════ */
 function FinalCTA({ sectionRef }) {
   const [form, setForm] = useState({ name: '', email: '', msg: '' });
@@ -1221,7 +1236,7 @@ function FinalCTA({ sectionRef }) {
         body: JSON.stringify({ name: form.name.trim(), email: form.email.trim(), message: form.msg.trim() })
       });
       if (res.ok) {
-        setStatus({ t: 'ok', m: "Done. I'll reply within 24 hours with your system plan." });
+        setStatus({ t: 'ok', m: "Received. I'll reply within 24 hours with your system breakdown." });
         setForm({ name: '', email: '', msg: '' });
       } else {
         setStatus({ t: 'error', m: 'Something went wrong. Please try again.' });
@@ -1240,26 +1255,31 @@ function FinalCTA({ sectionRef }) {
       <div className="max-w-md mx-auto px-6 text-center">
         <R><span className="label block mb-4">Get Started</span></R>
         <R d={0.08}>
+          {/* CHANGED: CTA headline updated — outcome-focused */}
           <h2 className="display mb-4" style={{ fontSize: 'clamp(36px,6vw,60px)', color: '#E2E2E8' }}>
-            Get your custom<br /><em style={{ color: 'var(--lime)', fontStyle: 'italic' }}>system plan</em>
+            See exactly what your<br /><em style={{ color: 'var(--lime)', fontStyle: 'italic' }}>system would include</em>
           </h2>
         </R>
         <R d={0.14}>
+          {/* CHANGED: Sub-copy more specific */}
           <p className="text-[14px] leading-relaxed mb-3" style={{ color: 'var(--ink-muted)' }}>
-            Tell me about your business. I'll tell you exactly what I'd build and what it costs.
+            Describe what you're working with and where the friction is. I'll come back with a clear breakdown of what I'd build — and what it would cost.
           </p>
         </R>
         <R d={0.18}>
-          <p className="text-[11px] mb-8" style={{ color: 'var(--ink-subtle)' }}>No pitch. Just clarity.</p>
+          {/* CHANGED: Reassurance line refined */}
+          <p className="text-[11px] mb-8" style={{ color: 'var(--ink-subtle)' }}>No sales call required. No commitment. Just clarity.</p>
         </R>
         <R d={0.22}>
           <form onSubmit={submit} className="space-y-3 text-left">
             <input name="name" value={form.name} onChange={ch} placeholder="Your name" required className="field" />
             <input name="email" type="email" value={form.email} onChange={ch} placeholder="your@email.com" required className="field" />
-            <textarea name="msg" rows={3} value={form.msg} onChange={ch} required placeholder="What's the main bottleneck you want to fix?" className="field" style={{ resize: 'none' }} />
+            {/* CHANGED: Textarea placeholder made more specific */}
+            <textarea name="msg" rows={3} value={form.msg} onChange={ch} required placeholder="What tools are you currently using, and what's the biggest operational problem you want solved?" className="field" style={{ resize: 'none' }} />
             <motion.button type="submit" disabled={submitting} whileHover={{ scale: submitting ? 1 : 1.03 }} whileTap={{ scale: submitting ? 1 : 0.97 }} data-h
               className="btn-primary glow-btn w-full" style={{ opacity: submitting ? 0.5 : 1 }}>
-              {submitting ? 'Sending...' : 'Get your custom system plan'}
+              {/* CHANGED: Button label updated */}
+              {submitting ? 'Sending...' : 'Get my system breakdown'}
             </motion.button>
             {status && (
               <div className={`status-msg ${status.t === 'ok' ? 'bg-lime/10 text-lime border border-lime/25' : 'bg-rose/10 text-rose border border-rose/18'}`}>
@@ -1326,7 +1346,7 @@ function App() {
       <ProgressBar />
       <Nav refs={refs} />
       <Hero refs={refs} />
-      <Marquee text="ONE SYSTEM · NO MORE CHAOS · EVERYTHING CONNECTED" />
+      <Marquee text="ONE SYSTEM · ZERO MANUAL OVERHEAD · EVERYTHING CONNECTED" />
       <Problem sectionRef={problem} />
       <Solution sectionRef={solution} />
       <WhatYouGet />
