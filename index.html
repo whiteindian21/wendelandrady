@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Andrady — Operational Systems Studio</title>
-  <meta name="description" content="Andrady designs and builds custom operational systems for service businesses — unifying websites, client portals, bookings, workflows, and internal operations into one connected platform.">
+  <title>Andrady — Custom Business Operating Systems</title>
+  <meta name="description" content="Andrady builds custom software systems for agencies and service businesses — replacing scattered tools and manual admin with one connected platform that runs your operations automatically.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -47,347 +47,96 @@
       --ink-subtle: #333339;
     }
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-      cursor: none;
-      margin: 0;
-      padding: 0;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; cursor: none; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--ink);
-      color: #E2E2E8;
-      font-family: 'Syne', sans-serif;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
+    body { background: var(--ink); color: #E2E2E8; font-family: 'Syne', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 
     ::-webkit-scrollbar { width: 2px; }
     ::-webkit-scrollbar-track { background: var(--ink); }
     ::-webkit-scrollbar-thumb { background: var(--lime); border-radius: 99px; }
-    ::selection { background: rgba(200, 230, 74, 0.15); color: #fff; }
+    ::selection { background: rgba(200,230,74,0.15); color: #fff; }
 
     .grid-bg {
-      background-image:
-        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-image: linear-gradient(rgba(255,255,255,0.016) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.016) 1px, transparent 1px);
       background-size: 52px 52px;
     }
 
-    .glow-btn {
-      box-shadow: 0 0 25px rgba(200,230,74,0.2), 0 2px 20px rgba(200,230,74,0.08);
-    }
+    .display { font-family: 'Instrument Serif', serif; line-height: 1.02; letter-spacing: -0.015em; }
+    .label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-muted); }
 
-    .display {
-      font-family: 'Instrument Serif', serif;
-      line-height: 1.02;
-      letter-spacing: -0.015em;
-    }
+    .card { background: var(--ink-card); border: 1px solid var(--ink-border); border-radius: 18px; padding: 28px; transition: border-color 0.4s, box-shadow 0.4s; }
+    .card:hover { border-color: rgba(200,230,74,0.12); box-shadow: 0 0 35px rgba(200,230,74,0.03); }
 
-    .label {
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-muted);
-    }
+    .card-accent { background: var(--ink-card); border: 1px solid rgba(200,230,74,0.1); border-radius: 18px; padding: 28px; position: relative; overflow: hidden; transition: border-color 0.4s; }
+    .card-accent::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,230,74,0.16), transparent); }
+    .card-accent:hover { border-color: rgba(200,230,74,0.22); }
 
-    .card {
-      background: var(--ink-card);
-      border: 1px solid var(--ink-border);
-      border-radius: 18px;
-      padding: 28px;
-      transition: border-color 0.4s, box-shadow 0.4s;
-    }
+    .pill { display: inline-flex; align-items: center; padding: 5px 14px; border-radius: 999px; background: rgba(200,230,74,0.06); border: 1px solid rgba(200,230,74,0.1); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lime); }
 
-    .card:hover {
-      border-color: rgba(200,230,74,0.12);
-      box-shadow: 0 0 35px rgba(200,230,74,0.03);
-    }
-
-    .card-accent {
-      background: var(--ink-card);
-      border: 1px solid rgba(200,230,74,0.12);
-      border-radius: 18px;
-      padding: 28px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.4s, box-shadow 0.4s;
-    }
-
-    .card-accent::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(200,230,74,0.18), transparent);
-    }
-
-    .card-accent:hover {
-      border-color: rgba(200,230,74,0.25);
-      box-shadow: 0 0 40px rgba(200,230,74,0.04);
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      padding: 5px 14px;
-      border-radius: 999px;
-      background: rgba(200,230,74,0.06);
-      border: 1px solid rgba(200,230,74,0.1);
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--lime);
-    }
-
-    .field {
-      width: 100%;
-      padding: 14px 18px;
-      background: var(--ink-card);
-      border: 1px solid var(--ink-border);
-      border-radius: 12px;
-      color: #E2E2E8;
-      font-family: 'Syne', sans-serif;
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-
-    .field:focus {
-      border-color: rgba(200,230,74,0.35);
-      box-shadow: 0 0 0 2px rgba(200,230,74,0.05);
-    }
-
+    .field { width: 100%; padding: 14px 18px; background: var(--ink-card); border: 1px solid var(--ink-border); border-radius: 12px; color: #E2E2E8; font-family: 'Syne', sans-serif; font-size: 14px; outline: none; transition: border-color 0.3s, box-shadow 0.3s; }
+    .field:focus { border-color: rgba(200,230,74,0.35); box-shadow: 0 0 0 2px rgba(200,230,74,0.05); }
     .field::placeholder { color: var(--ink-muted); }
 
-    .btn-primary {
-      background: var(--lime);
-      color: var(--ink);
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      padding: 15px 34px;
-      border-radius: 999px;
-      font-size: 14px;
-      letter-spacing: 0.005em;
-      border: none;
-      transition: background 0.25s, box-shadow 0.25s, transform 0.2s;
-      box-shadow: 0 0 25px rgba(200,230,74,0.18);
-    }
+    .btn-primary { background: var(--lime); color: var(--ink); font-family: 'Syne', sans-serif; font-weight: 700; padding: 15px 34px; border-radius: 999px; font-size: 14px; letter-spacing: 0.005em; border: none; transition: background 0.25s, box-shadow 0.25s, transform 0.2s; box-shadow: 0 0 25px rgba(200,230,74,0.18); }
+    .btn-primary:hover { background: var(--lime-dim); box-shadow: 0 0 40px rgba(200,230,74,0.3); transform: translateY(-1px); }
 
-    .btn-primary:hover {
-      background: var(--lime-dim);
-      box-shadow: 0 0 40px rgba(200,230,74,0.3);
-      transform: translateY(-1px);
-    }
+    .btn-secondary { background: transparent; color: #E2E2E8; font-family: 'Syne', sans-serif; font-weight: 500; padding: 15px 34px; border-radius: 999px; font-size: 14px; border: 1px solid var(--ink-border); transition: border-color 0.25s, color 0.25s, transform 0.2s; }
+    .btn-secondary:hover { border-color: rgba(200,230,74,0.25); color: var(--lime); transform: translateY(-1px); }
 
-    .btn-secondary {
-      background: transparent;
-      color: #E2E2E8;
-      font-family: 'Syne', sans-serif;
-      font-weight: 500;
-      padding: 15px 34px;
-      border-radius: 999px;
-      font-size: 14px;
-      border: 1px solid var(--ink-border);
-      transition: border-color 0.25s, color 0.25s, transform 0.2s;
-    }
+    .glow-btn { box-shadow: 0 0 25px rgba(200,230,74,0.2), 0 2px 20px rgba(200,230,74,0.08); }
 
-    .btn-secondary:hover {
-      border-color: rgba(200,230,74,0.25);
-      color: var(--lime);
-      transform: translateY(-1px);
-    }
+    .x-icon { width: 20px; height: 20px; border-radius: 50%; background: rgba(255,80,80,0.06); border: 1px solid rgba(255,80,80,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .check-icon { width: 20px; height: 20px; border-radius: 50%; background: rgba(200,230,74,0.06); border: 1px solid rgba(200,230,74,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
-    .x-icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: rgba(255,80,80,0.06);
-      border: 1px solid rgba(255,80,80,0.12);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
+    .marquee-track { display: inline-flex; animation: scroll 35s linear infinite; white-space: nowrap; }
+    .marquee-track-rev { animation-direction: reverse; animation-duration: 42s; }
+    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-    .check-icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: rgba(200,230,74,0.06);
-      border: 1px solid rgba(200,230,74,0.12);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
+    .step-num { font-family: 'Instrument Serif', serif; font-size: 100px; line-height: 1; color: rgba(200,230,74,0.04); position: absolute; top: -15px; right: 18px; pointer-events: none; user-select: none; }
 
-    .marquee-track {
-      display: inline-flex;
-      animation: scroll 35s linear infinite;
-      white-space: nowrap;
-    }
+    .metric-box { background: rgba(200,230,74,0.03); border: 1px solid rgba(200,230,74,0.07); border-radius: 12px; padding: 18px 22px; }
 
-    .marquee-track-rev {
-      animation-direction: reverse;
-      animation-duration: 42s;
-    }
+    .before-tag { display: inline-flex; padding: 4px 10px; border-radius: 6px; background: rgba(255,80,80,0.05); border: 1px solid rgba(255,80,80,0.08); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,80,80,0.45); }
+    .after-tag { display: inline-flex; padding: 4px 10px; border-radius: 6px; background: rgba(200,230,74,0.06); border: 1px solid rgba(200,230,74,0.1); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lime); }
 
-    @keyframes scroll {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
+    .qualify-for { padding: 5px 12px; border-radius: 8px; background: rgba(200,230,74,0.04); border: 1px solid rgba(200,230,74,0.08); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: rgba(200,230,74,0.6); }
+    .qualify-not { padding: 5px 12px; border-radius: 8px; background: rgba(255,80,80,0.03); border: 1px solid rgba(255,80,80,0.06); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: rgba(255,80,80,0.35); }
 
-    .step-num {
-      font-family: 'Instrument Serif', serif;
-      font-size: 100px;
-      line-height: 1;
-      color: rgba(200,230,74,0.04);
-      position: absolute;
-      top: -15px;
-      right: 18px;
-      pointer-events: none;
-      user-select: none;
-    }
+    .replace-row { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 10px; background: var(--ink-card); border: 1px solid var(--ink-border); transition: border-color 0.3s; }
+    .replace-row:hover { border-color: rgba(200,230,74,0.1); }
+    .replace-tool { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--ink-muted); text-decoration: line-through; text-decoration-color: rgba(255,80,80,0.25); min-width: 140px; }
+    .replace-feature { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--lime); }
 
-    .metric-box {
-      background: rgba(200,230,74,0.03);
-      border: 1px solid rgba(200,230,74,0.07);
-      border-radius: 12px;
-      padding: 18px 22px;
-    }
+    .sys-num { font-family: 'Instrument Serif', serif; font-size: 24px; color: rgba(200,230,74,0.12); line-height: 1; flex-shrink: 0; width: 36px; }
 
-    .before-tag {
-      display: inline-flex;
-      padding: 4px 10px;
-      border-radius: 6px;
-      background: rgba(255,80,80,0.05);
-      border: 1px solid rgba(255,80,80,0.08);
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(255,80,80,0.45);
-    }
+    /* NEW: Pain point ticker */
+    .pain-ticker { display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px; border-radius: 999px; background: rgba(255,80,80,0.04); border: 1px solid rgba(255,80,80,0.08); }
 
-    .after-tag {
-      display: inline-flex;
-      padding: 4px 10px;
-      border-radius: 6px;
-      background: rgba(200,230,74,0.06);
-      border: 1px solid rgba(200,230,74,0.1);
-      font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--lime);
-    }
+    /* NEW: Tool chaos grid */
+    .tool-bubble { display: inline-flex; align-items: center; padding: 6px 13px; border-radius: 999px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.04em; border: 1px solid var(--ink-border); color: var(--ink-muted); background: var(--ink-card); transition: all 0.3s; }
+    .tool-bubble:hover { border-color: rgba(255,80,80,0.18); color: rgba(255,80,80,0.45); }
 
-    .qualify-for {
-      padding: 5px 12px;
-      border-radius: 8px;
-      background: rgba(200,230,74,0.04);
-      border: 1px solid rgba(200,230,74,0.08);
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.04em;
-      color: rgba(200,230,74,0.6);
-    }
+    /* NEW: System module card */
+    .module-card { background: var(--ink-card); border: 1px solid var(--ink-border); border-radius: 14px; padding: 20px 22px; transition: border-color 0.3s, transform 0.3s; }
+    .module-card:hover { border-color: rgba(200,230,74,0.15); transform: translateY(-2px); }
 
-    .qualify-not {
-      padding: 5px 12px;
-      border-radius: 8px;
-      background: rgba(255,80,80,0.03);
-      border: 1px solid rgba(255,80,80,0.06);
-      font-family: 'DM Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.04em;
-      color: rgba(255,80,80,0.35);
-    }
+    /* NEW: Stat highlight */
+    .stat-pill { display: inline-flex; flex-direction: column; align-items: center; padding: 14px 22px; border-radius: 14px; background: rgba(200,230,74,0.04); border: 1px solid rgba(200,230,74,0.08); }
 
-    .status-msg {
-      font-family: 'DM Mono', monospace;
-      font-size: 12px;
-      padding: 11px 16px;
-      border-radius: 99px;
-      text-align: center;
-      margin-top: 14px;
-    }
+    /* NEW: Process connector line */
+    .process-line { position: absolute; top: 50%; right: -20px; width: 40px; height: 1px; background: linear-gradient(90deg, rgba(200,230,74,0.15), transparent); display: none; }
+    @media (min-width: 768px) { .process-line { display: block; } }
 
-    .sys-num {
-      font-family: 'Instrument Serif', serif;
-      font-size: 24px;
-      color: rgba(200,230,74,0.12);
-      line-height: 1;
-      flex-shrink: 0;
-      width: 36px;
-    }
+    .status-msg { font-family: 'DM Mono', monospace; font-size: 12px; padding: 11px 16px; border-radius: 99px; text-align: center; margin-top: 14px; }
 
-    .replace-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 16px;
-      border-radius: 10px;
-      background: var(--ink-card);
-      border: 1px solid var(--ink-border);
-      transition: border-color 0.3s;
-    }
+    /* FAQ accordion */
+    .faq-item { border-bottom: 1px solid var(--ink-border); }
+    .faq-item:last-child { border-bottom: none; }
 
-    .replace-row:hover {
-      border-color: rgba(200,230,74,0.1);
-    }
+    /* Floating screenshot card */
+    .ss-card { border-radius: 14px; overflow: hidden; border: 1px solid rgba(200,230,74,0.08); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
 
-    .replace-tool {
-      font-family: 'DM Mono', monospace;
-      font-size: 12px;
-      color: var(--ink-muted);
-      text-decoration: line-through;
-      text-decoration-color: rgba(255,80,80,0.25);
-      min-width: 140px;
-    }
-
-    .replace-arrow {
-      flex-shrink: 0;
-    }
-
-    .replace-feature {
-      font-family: 'DM Mono', monospace;
-      font-size: 12px;
-      color: var(--lime);
-    }
-
-    .workflow-step {
-      position: relative;
-    }
-
-    .workflow-connector {
-      display: none;
-    }
-
-    @media (min-width: 1024px) {
-      .workflow-connector {
-        display: block;
-        position: absolute;
-        top: 50%;
-        right: -12px;
-        width: 24px;
-        height: 1px;
-        background: linear-gradient(90deg, rgba(200,230,74,0.15), rgba(200,230,74,0.05));
-      }
-    }
-
-    @media (hover: none) {
-      * { cursor: auto !important; }
-      .cc, .cr { display: none !important; }
-      a, button, input, textarea, select { cursor: auto !important; }
-    }
+    @media (hover: none) { * { cursor: auto !important; } .cc, .cr { display: none !important; } a, button, input, textarea, select { cursor: auto !important; } }
 
     @media (max-width: 640px) {
       .sm-full { width: 100% !important; }
@@ -405,47 +154,28 @@
 const { useState, useRef, useEffect, useCallback } = React;
 const { motion, AnimatePresence } = window.Motion;
 
-/* ═══════════════════════════════════════════
-   CURSOR
-   ═══════════════════════════════════════════ */
+/* ─── CURSOR ─── */
 function Cursor() {
   const dot = useRef(null);
   const ring = useRef(null);
-
   useEffect(() => {
     let mx = 0, my = 0, rx = 0, ry = 0;
-
     const onMove = (e) => {
-      mx = e.clientX;
-      my = e.clientY;
-      if (dot.current) {
-        dot.current.style.transform = `translate(${mx - 3}px, ${my - 3}px)`;
-      }
+      mx = e.clientX; my = e.clientY;
+      if (dot.current) dot.current.style.transform = `translate(${mx - 3}px, ${my - 3}px)`;
       const t = e.target.closest('a, button, input, textarea, select, [data-h]');
       if (ring.current) {
-        const s = t ? '50px' : '34px';
-        const o = t ? -25 : -17;
-        ring.current.style.width = s;
-        ring.current.style.height = s;
-        ring.current.style.left = o + 'px';
-        ring.current.style.top = o + 'px';
+        const s = t ? '50px' : '34px'; const o = t ? -25 : -17;
+        ring.current.style.width = s; ring.current.style.height = s;
+        ring.current.style.left = o + 'px'; ring.current.style.top = o + 'px';
         ring.current.style.borderColor = t ? 'var(--lime)' : 'rgba(200,230,74,0.22)';
         ring.current.style.opacity = t ? '0.9' : '0.5';
       }
     };
-
-    const loop = () => {
-      rx += (mx - rx) * 0.11;
-      ry += (my - ry) * 0.11;
-      if (ring.current) ring.current.style.transform = `translate(${rx}px, ${ry}px)`;
-      requestAnimationFrame(loop);
-    };
-
-    window.addEventListener('mousemove', onMove);
-    loop();
+    const loop = () => { rx += (mx - rx) * 0.11; ry += (my - ry) * 0.11; if (ring.current) ring.current.style.transform = `translate(${rx}px, ${ry}px)`; requestAnimationFrame(loop); };
+    window.addEventListener('mousemove', onMove); loop();
     return () => window.removeEventListener('mousemove', onMove);
   }, []);
-
   return (
     <>
       <div ref={dot} className="cc fixed w-[6px] h-[6px] rounded-full pointer-events-none" style={{ background: 'var(--lime)', mixBlendMode: 'difference', zIndex: 10000 }} />
@@ -454,166 +184,70 @@ function Cursor() {
   );
 }
 
-/* ═══════════════════════════════════════════
-   PROGRESS BAR
-   ═══════════════════════════════════════════ */
+/* ─── PROGRESS BAR ─── */
 function ProgressBar() {
   const [p, setP] = useState(0);
   useEffect(() => {
-    const fn = () => {
-      const t = document.documentElement.scrollHeight - window.innerHeight;
-      setP(t > 0 ? (window.scrollY / t) * 100 : 0);
-    };
+    const fn = () => { const t = document.documentElement.scrollHeight - window.innerHeight; setP(t > 0 ? (window.scrollY / t) * 100 : 0); };
     window.addEventListener('scroll', fn);
     return () => window.removeEventListener('scroll', fn);
   }, []);
   return <div className="fixed top-0 left-0 h-[2px]" style={{ width: p + '%', background: 'var(--lime)', zIndex: 9998 }} />;
 }
 
-/* ═══════════════════════════════════════════
-   REVEAL
-   ═══════════════════════════════════════════ */
+/* ─── REVEAL ─── */
 function R({ children, d = 0, className = '', y = 26 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-30px' }}
-      transition={{ duration: 0.65, delay: d, ease: [0.22, 0.61, 0.36, 1] }}
-      className={className}
-    >
+    <motion.div initial={{ opacity: 0, y }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-30px' }} transition={{ duration: 0.65, delay: d, ease: [0.22, 0.61, 0.36, 1] }} className={className}>
       {children}
     </motion.div>
   );
 }
 
-/* ═══════════════════════════════════════════
-   THREE.JS BACKGROUND
-   ═══════════════════════════════════════════ */
+/* ─── THREE.JS BACKGROUND ─── */
 function ThreeBG() {
   const ref = useRef(null);
-
   useEffect(() => {
     const mob = window.innerWidth < 768;
-    const W = window.innerWidth;
-    const H = window.innerHeight;
-
+    const W = window.innerWidth, H = window.innerHeight;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(55, W / H, 0.1, 100);
     camera.position.z = 5.5;
-
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(W, H);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, mob ? 1.5 : 2));
+    renderer.setSize(W, H); renderer.setPixelRatio(Math.min(window.devicePixelRatio, mob ? 1.5 : 2));
     ref.current.appendChild(renderer.domElement);
-
-    const mat1 = new THREE.MeshBasicMaterial({ color: 0xC8E64A, wireframe: true, transparent: true, opacity: 0.035 });
-    const mat2 = new THREE.MeshBasicMaterial({ color: 0x888888, wireframe: true, transparent: true, opacity: 0.02 });
+    const mat1 = new THREE.MeshBasicMaterial({ color: 0xC8E64A, wireframe: true, transparent: true, opacity: 0.03 });
+    const mat2 = new THREE.MeshBasicMaterial({ color: 0x888888, wireframe: true, transparent: true, opacity: 0.015 });
     const m1 = new THREE.Mesh(new THREE.IcosahedronGeometry(2.2, 1), mat1);
     const m2 = new THREE.Mesh(new THREE.IcosahedronGeometry(1.3, 1), mat2);
     scene.add(m1, m2);
-
-    const mkTex = (c) => {
-      const cv = document.createElement('canvas');
-      cv.width = cv.height = 64;
-      const x = cv.getContext('2d');
-      const g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
-      g.addColorStop(0, c);
-      g.addColorStop(0.4, c.replace(',1)', ',0.3)'));
-      g.addColorStop(1, c.replace(',1)', ',0)'));
-      x.fillStyle = g;
-      x.fillRect(0, 0, 64, 64);
-      return new THREE.CanvasTexture(cv);
-    };
-
-    const mkPts = (n, col, sz, op, rMin, rSpr) => {
-      const pos = new Float32Array(n * 3);
-      for (let i = 0; i < n; i++) {
-        const r = rMin + Math.random() * rSpr;
-        const th = Math.random() * Math.PI * 2;
-        const ph = Math.acos(2 * Math.random() - 1);
-        pos[i*3] = r * Math.sin(ph) * Math.cos(th);
-        pos[i*3+1] = r * Math.sin(ph) * Math.sin(th);
-        pos[i*3+2] = r * Math.cos(ph);
-      }
-      const g = new THREE.BufferGeometry();
-      g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-      return new THREE.Points(g, new THREE.PointsMaterial({
-        map: mkTex(col), size: sz, transparent: true, opacity: op,
-        blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
-      }));
-    };
-
-    const p1 = mkPts(mob ? 120 : 500, 'rgba(200,230,74,1)', mob ? 0.04 : 0.025, 0.35, 2.5, 5);
-    const p2 = mkPts(mob ? 30 : 120, 'rgba(180,180,190,1)', mob ? 0.035 : 0.02, 0.18, 3, 4);
+    const mkTex = (c) => { const cv = document.createElement('canvas'); cv.width = cv.height = 64; const x = cv.getContext('2d'); const g = x.createRadialGradient(32,32,0,32,32,32); g.addColorStop(0, c); g.addColorStop(0.4, c.replace(',1)', ',0.3)')); g.addColorStop(1, c.replace(',1)', ',0)')); x.fillStyle = g; x.fillRect(0,0,64,64); return new THREE.CanvasTexture(cv); };
+    const mkPts = (n, col, sz, op, rMin, rSpr) => { const pos = new Float32Array(n*3); for (let i = 0; i < n; i++) { const r = rMin + Math.random()*rSpr; const th = Math.random()*Math.PI*2; const ph = Math.acos(2*Math.random()-1); pos[i*3]=r*Math.sin(ph)*Math.cos(th); pos[i*3+1]=r*Math.sin(ph)*Math.sin(th); pos[i*3+2]=r*Math.cos(ph); } const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos,3)); return new THREE.Points(g, new THREE.PointsMaterial({ map: mkTex(col), size: sz, transparent: true, opacity: op, blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true })); };
+    const p1 = mkPts(mob?120:500, 'rgba(200,230,74,1)', mob?0.04:0.025, 0.35, 2.5, 5);
+    const p2 = mkPts(mob?30:120, 'rgba(180,180,190,1)', mob?0.035:0.02, 0.18, 3, 4);
     scene.add(p1, p2);
-
     let mx = 0, my = 0;
-    const onM = (e) => { mx = (e.clientX / W) * 2 - 1; my = -(e.clientY / H) * 2 + 1; };
+    const onM = (e) => { mx = (e.clientX/W)*2-1; my = -(e.clientY/H)*2+1; };
     window.addEventListener('mousemove', onM);
-
     let id;
-    const tick = () => {
-      id = requestAnimationFrame(tick);
-      const t = performance.now() * 0.001;
-      m1.rotation.x = t * 0.03 + my * 0.15;
-      m1.rotation.y = t * 0.045 + mx * 0.15;
-      m2.rotation.x = -t * 0.025 + my * 0.08;
-      m2.rotation.y = -t * 0.035 + mx * 0.08;
-      p1.rotation.y = t * 0.008;
-      p2.rotation.y = -t * 0.005;
-      renderer.render(scene, camera);
-    };
+    const tick = () => { id = requestAnimationFrame(tick); const t = performance.now()*0.001; m1.rotation.x=t*0.03+my*0.15; m1.rotation.y=t*0.045+mx*0.15; m2.rotation.x=-t*0.025+my*0.08; m2.rotation.y=-t*0.035+mx*0.08; p1.rotation.y=t*0.008; p2.rotation.y=-t*0.005; renderer.render(scene, camera); };
     tick();
-
-    const onR = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
+    const onR = () => { camera.aspect = window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); };
     window.addEventListener('resize', onR);
-
-    return () => {
-      cancelAnimationFrame(id);
-      window.removeEventListener('resize', onR);
-      window.removeEventListener('mousemove', onM);
-      if (ref.current && renderer.domElement.parentNode === ref.current) {
-        ref.current.removeChild(renderer.domElement);
-      }
-      renderer.dispose();
-    };
+    return () => { cancelAnimationFrame(id); window.removeEventListener('resize', onR); window.removeEventListener('mousemove', onM); if (ref.current && renderer.domElement.parentNode === ref.current) ref.current.removeChild(renderer.domElement); renderer.dispose(); };
   }, []);
-
   return <div ref={ref} className="fixed inset-0" style={{ zIndex: -10 }} />;
 }
 
-/* ═══════════════════════════════════════════
-   PRELOADER
-   ═══════════════════════════════════════════ */
+/* ─── PRELOADER ─── */
 function Preloader({ done }) {
   const [n, setN] = useState(0);
-
   useEffect(() => {
-    const iv = setInterval(() => {
-      setN(p => {
-        if (p >= 100) {
-          clearInterval(iv);
-          setTimeout(done, 300);
-          return 100;
-        }
-        return p + 2;
-      });
-    }, 16);
+    const iv = setInterval(() => { setN(p => { if (p >= 100) { clearInterval(iv); setTimeout(done, 300); return 100; } return p + 2; }); }, 16);
     return () => clearInterval(iv);
   }, [done]);
-
   return (
-    <motion.div
-      exit={{ y: '-100%' }}
-      transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-      className="fixed inset-0 flex flex-col items-center justify-center"
-      style={{ background: 'var(--ink)', zIndex: 9999 }}
-    >
+    <motion.div exit={{ y: '-100%' }} transition={{ duration: 0.7, ease: [0.76,0,0.24,1] }} className="fixed inset-0 flex flex-col items-center justify-center" style={{ background: 'var(--ink)', zIndex: 9999 }}>
       <div style={{ fontFamily: 'Instrument Serif', fontSize: 'clamp(70px,13vw,130px)', color: 'var(--lime)', lineHeight: 1 }}>{n}</div>
       <div className="mt-4 w-32 h-[1px] overflow-hidden" style={{ background: 'var(--ink-border)' }}>
         <motion.div className="h-full" initial={{ width: '0%' }} animate={{ width: n + '%' }} style={{ background: 'var(--lime)' }} />
@@ -622,61 +256,27 @@ function Preloader({ done }) {
   );
 }
 
-/* ═══════════════════════════════════════════
-   NAVBAR
-   ═══════════════════════════════════════════ */
+/* ─── NAVBAR ─── */
 function Nav({ refs }) {
   const [sc, setSc] = useState(false);
   const [mo, setMo] = useState(false);
-
-  useEffect(() => {
-    const fn = () => setSc(window.scrollY > 40);
-    window.addEventListener('scroll', fn);
-    return () => window.removeEventListener('scroll', fn);
-  }, []);
-
-  const go = useCallback((r) => {
-    r.current.scrollIntoView({ behavior: 'smooth' });
-    setMo(false);
-  }, []);
-
+  useEffect(() => { const fn = () => setSc(window.scrollY > 40); window.addEventListener('scroll', fn); return () => window.removeEventListener('scroll', fn); }, []);
+  const go = useCallback((r) => { r.current.scrollIntoView({ behavior: 'smooth' }); setMo(false); }, []);
   const links = [
-    { l: 'Problem', r: refs.problem },
-    { l: 'System', r: refs.solution },
-    { l: 'Proof', r: refs.proof },
-    { l: 'Process', r: refs.process },
+    { l: 'What We Build', r: refs.solution },
+    { l: 'How It Works', r: refs.process },
+    { l: 'Results', r: refs.proof },
+    { l: 'Pricing', r: refs.investment },
   ];
-
   return (
-    <motion.nav
-      initial={{ opacity: 0, y: -18 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 1.4 }}
-      className="fixed w-full"
-      style={{
-        zIndex: 50,
-        background: sc ? 'rgba(10,10,11,0.9)' : 'transparent',
-        backdropFilter: sc ? 'blur(18px)' : 'none',
-        borderBottom: sc ? '1px solid var(--ink-border)' : 'none',
-        padding: sc ? '11px 0' : '20px 0',
-        transition: 'all 0.35s'
-      }}
-    >
+    <motion.nav initial={{ opacity: 0, y: -18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 1.4 }} className="fixed w-full" style={{ zIndex: 50, background: sc ? 'rgba(10,10,11,0.9)' : 'transparent', backdropFilter: sc ? 'blur(18px)' : 'none', borderBottom: sc ? '1px solid var(--ink-border)' : 'none', padding: sc ? '11px 0' : '20px 0', transition: 'all 0.35s' }}>
       <div className="max-w-5xl mx-auto px-6 flex items-center justify-between">
-        <button onClick={() => go(refs.hero)} data-h style={{ fontFamily: 'Instrument Serif', fontSize: '20px', color: '#E2E2E8', background: 'none', border: 'none', padding: 0 }}>
-          Andrady
-        </button>
+        <button onClick={() => go(refs.hero)} data-h style={{ fontFamily: 'Instrument Serif', fontSize: '20px', color: '#E2E2E8', background: 'none', border: 'none', padding: 0 }}>Andrady</button>
         <div className="hidden md:flex items-center gap-1">
           {links.map(lk => (
-            <button key={lk.l} onClick={() => go(lk.r)} data-h className="px-4 py-2 text-[13px]" style={{ color: 'var(--ink-muted)', background: 'none', border: 'none', transition: 'color 0.25s' }}
-              onMouseEnter={e => e.currentTarget.style.color = 'var(--lime)'}
-              onMouseLeave={e => e.currentTarget.style.color = 'var(--ink-muted)'}>
-              {lk.l}
-            </button>
+            <button key={lk.l} onClick={() => go(lk.r)} data-h className="px-4 py-2 text-[13px]" style={{ color: 'var(--ink-muted)', background: 'none', border: 'none', transition: 'color 0.25s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--lime)'} onMouseLeave={e => e.currentTarget.style.color = 'var(--ink-muted)'}>{lk.l}</button>
           ))}
-          <button onClick={() => go(refs.cta)} data-h className="btn-primary ml-2" style={{ padding: '9px 22px', fontSize: '12px' }}>
-            Get System Breakdown
-          </button>
+          <button onClick={() => go(refs.cta)} data-h className="btn-primary ml-2" style={{ padding: '9px 22px', fontSize: '12px' }}>Get a Free Scope</button>
         </div>
         <button onClick={() => setMo(!mo)} data-h className="md:hidden flex flex-col items-center justify-center gap-1.5 w-10 h-10" style={{ background: 'none', border: 'none' }}>
           <motion.span animate={mo ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} className="block w-5 h-[1.5px] origin-center" style={{ background: 'var(--lime)' }} />
@@ -686,14 +286,10 @@ function Nav({ refs }) {
       </div>
       <AnimatePresence>
         {mo && (
-          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.25 }}
-            className="md:hidden overflow-hidden" style={{ background: 'rgba(10,10,11,0.97)', backdropFilter: 'blur(18px)', borderTop: '1px solid var(--ink-border)' }}>
+          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.25 }} className="md:hidden overflow-hidden" style={{ background: 'rgba(10,10,11,0.97)', backdropFilter: 'blur(18px)', borderTop: '1px solid var(--ink-border)' }}>
             <div className="px-6 py-5 space-y-1">
-              {links.map((lk, i) => (
-                <motion.button key={lk.l} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}
-                  onClick={() => go(lk.r)} className="block w-full text-left py-3 text-base" style={{ color: 'var(--ink-muted)', background: 'none', border: 'none' }}>{lk.l}</motion.button>
-              ))}
-              <button onClick={() => go(refs.cta)} className="btn-primary w-full mt-3" style={{ fontSize: '13px' }}>Get System Breakdown</button>
+              {links.map((lk, i) => (<motion.button key={lk.l} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }} onClick={() => go(lk.r)} className="block w-full text-left py-3 text-base" style={{ color: 'var(--ink-muted)', background: 'none', border: 'none' }}>{lk.l}</motion.button>))}
+              <button onClick={() => go(refs.cta)} className="btn-primary w-full mt-3" style={{ fontSize: '13px' }}>Get a Free Scope</button>
             </div>
           </motion.div>
         )}
@@ -702,227 +298,208 @@ function Nav({ refs }) {
   );
 }
 
-/* ═══════════════════════════════════════════
-   1. HERO
-   ═══════════════════════════════════════════ */
+/* ─── 1. HERO — "The software that runs your business" ─── */
 function Hero({ refs }) {
   const go = (k) => refs[k].current.scrollIntoView({ behavior: 'smooth' });
-
+  const tools = ['Spreadsheets', 'Calendly', 'Trello', 'Notion', 'Mailchimp', 'Gmail threads', 'Typeform', 'Stripe links', 'WhatsApp', 'Airtable'];
   return (
     <section ref={refs.hero} className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ paddingTop: '70px' }}>
       <ThreeBG />
       <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(to bottom, var(--ink) 0%, transparent 12%, transparent 85%, var(--ink) 100%)' }} />
       <div className="relative z-10 text-center px-6 max-w-3xl w-full">
+
+        {/* ★ NEW: Credibility tag */}
         <R d={1.6}>
-          <div className="pill mx-auto mb-8 inline-block">Operational Systems Studio</div>
+          <div className="pill mx-auto mb-7 inline-block">Custom Business Operating Systems</div>
         </R>
-        <div className="overflow-hidden mb-6">
+
+        {/* ★ IMPROVED HERO HEADLINE — ultra-clear in 5 seconds */}
+        <div className="overflow-hidden mb-5">
           <motion.h1
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.8, ease: [0.22, 0.61, 0.36, 1] }}
-            className="display"
-            style={{ fontSize: 'clamp(38px,7.5vw,86px)', color: '#E2E2E8' }}
+            initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.8, ease: [0.22,0.61,0.36,1] }}
+            className="display" style={{ fontSize: 'clamp(36px,7vw,82px)', color: '#E2E2E8' }}
           >
-            One connected system<br />for your <em style={{ color: 'var(--lime)', fontStyle: 'italic' }}>entire operation</em>
+            We build the software<br />that <em style={{ color: 'var(--lime)', fontStyle: 'italic' }}>runs your business.</em>
           </motion.h1>
         </div>
+
+        {/* ★ IMPROVED SUBHEADLINE — tangible, specific */}
+        <R d={2.1}>
+          <p className="text-base md:text-lg max-w-xl mx-auto leading-relaxed mb-3" style={{ color: 'var(--ink-muted)' }}>
+            One custom platform — built for your agency or service business — that handles your CRM, client portal, booking, onboarding, workflows, and invoicing. No more juggling tools. No more manual admin.
+          </p>
+        </R>
+
+        {/* ★ NEW: Tool chaos visual — shows the problem immediately */}
         <R d={2.2}>
-          <p className="text-base md:text-lg max-w-lg mx-auto leading-relaxed mb-4" style={{ color: 'var(--ink-muted)' }}>
-            Andrady designs and builds custom operational platforms — unifying your website, client portal, bookings, workflows, and internal operations into one place.
-          </p>
+          <div className="flex flex-wrap justify-center gap-2 mb-8 max-w-lg mx-auto">
+            {tools.map((t, i) => (
+              <span key={i} className="tool-bubble" style={{ opacity: 0.5 + (i % 3) * 0.15 }}>{t}</span>
+            ))}
+            <span className="tool-bubble" style={{ borderColor: 'rgba(200,230,74,0.2)', color: 'var(--lime)', opacity: 1 }}>→ One System</span>
+          </div>
         </R>
-        <R d={2.35}>
-          <p className="mb-9" style={{ fontFamily: 'DM Mono', fontSize: '10px', letterSpacing: '0.18em', color: 'var(--ink-subtle)', textTransform: 'uppercase' }}>
-            Core system deployed in as little as 7 days
-          </p>
-        </R>
-        <R d={2.5} className="flex flex-col sm:flex-row items-center justify-center gap-3">
+
+        <R d={2.4} className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} data-h onClick={() => go('cta')} className="btn-primary glow-btn sm-full">
-            See what your system would include
+            Get a free scope of your system →
           </motion.button>
           <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} data-h onClick={() => go('solution')} className="btn-secondary sm-full">
-            How it works
+            See what we build
           </motion.button>
         </R>
-        <R d={2.7}>
+        <R d={2.55}>
           <p className="mt-5 text-[11px]" style={{ fontFamily: 'DM Mono', color: 'var(--ink-subtle)', letterSpacing: '0.06em' }}>
-            For service businesses, agencies, and consultancies generating $10K+/month
+            For agencies and service businesses doing $10K+/month · Core system delivered in 7 days
           </p>
         </R>
       </div>
       <motion.div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-10" animate={{ y: [0, 6, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}>
         <div className="w-5 h-8 rounded-full flex justify-center pt-2" style={{ border: '1px solid var(--ink-border)' }}>
-          <motion.div className="w-1 h-2 rounded-full" style={{ background: 'rgba(200,230,74,0.35)' }} animate={{ y: [0, 7, 0], opacity: [1, 0.15, 1] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }} />
+          <motion.div className="w-1 h-2 rounded-full" style={{ background: 'rgba(200,230,74,0.35)' }} animate={{ y: [0,7,0], opacity: [1,0.15,1] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }} />
         </div>
       </motion.div>
     </section>
   );
 }
 
-/* ═══════════════════════════════════════════
-   MARQUEE
-   ═══════════════════════════════════════════ */
+/* ─── MARQUEE ─── */
 function Marquee({ text, reverse }) {
   const t = `${text}  ·  ${text}  ·  ${text}  ·  ${text}  ·  `;
   return (
     <div className="overflow-hidden py-4 md:py-5" style={{ borderTop: '1px solid var(--ink-border)', borderBottom: '1px solid var(--ink-border)' }}>
       <div className={`marquee-track ${reverse ? 'marquee-track-rev' : ''}`}>
-        <span style={{ fontFamily: 'Instrument Serif', fontSize: 'clamp(38px,6.5vw,72px)', color: 'rgba(255,255,255,0.035)', whiteSpace: 'nowrap' }}>{t}</span>
+        <span style={{ fontFamily: 'Instrument Serif', fontSize: 'clamp(38px,6.5vw,72px)', color: 'rgba(255,255,255,0.03)', whiteSpace: 'nowrap' }}>{t}</span>
       </div>
     </div>
   );
 }
 
-/* ═══════════════════════════════════════════
-   2. PROBLEM
-   ═══════════════════════════════════════════ */
-function Problem({ sectionRef }) {
-  const go = () => document.getElementById('cta').scrollIntoView({ behavior: 'smooth' });
-
-  const items = [
-    {
-      t: 'Client data scattered across five different tools',
-      d: 'Some in spreadsheets. Some in your inbox. Some in a CRM nobody updates. Finding anything takes longer than it should.'
-    },
-    {
-      t: 'Every workflow requires manual intervention',
-      d: 'Onboarding a client, following up on a lead, sending a proposal — if you stop, it stops.'
-    },
-    {
-      t: 'Your tools don\'t communicate with each other',
-      d: 'Calendar, inbox, CRM, invoicing — every task touches at least three apps. Nothing is connected.'
-    },
-    {
-      t: 'Revenue leaks through operational gaps',
-      d: 'Missed follow-ups. Delayed responses. Lost client details. The cost isn\'t always visible — but it\'s always there.'
-    },
+/* ─── 2. PAIN POINTS — visceral, specific ─── */
+function PainPoints({ sectionRef }) {
+  const go = () => refs_cta_scroll();
+  const pains = [
+    { icon: '📋', t: 'Client info scattered across 6 different apps', d: 'Spreadsheet here. Inbox there. CRM nobody updates. Every time you need something, you\'re hunting for it.' },
+    { icon: '⏰', t: 'You spend hours a week on admin that could be automated', d: 'Chasing payments. Following up on leads. Sending onboarding documents manually. Repetitive. Time-consuming. Completely unnecessary.' },
+    { icon: '🔗', t: 'Nothing talks to anything else', d: 'Your booking tool doesn\'t update your CRM. Your CRM doesn\'t trigger onboarding. Your invoicing is separate from everything. You\'re the glue.' },
+    { icon: '📉', t: 'Growth is limited by your capacity', d: 'To take on more clients, you\'d need to hire an ops person or work more hours. The problem isn\'t clients — it\'s the backend that can\'t handle them.' },
   ];
-
   return (
     <section ref={sectionRef} className="py-20 md:py-28">
       <div className="max-w-5xl mx-auto px-6">
         <div className="max-w-xl mb-12">
-          <R><span className="label block mb-4">The Problem</span></R>
+          <R><span className="label block mb-4">Sound familiar?</span></R>
           <R d={0.08}>
-            <h2 className="display mb-5" style={{ fontSize: 'clamp(34px,5vw,58px)', color: '#E2E2E8' }}>
-              Fragmented tools create<br /><em style={{ color: 'var(--lime)', fontStyle: 'italic' }}>invisible costs.</em>
+            <h2 className="display mb-5" style={{ fontSize: 'clamp(32px,4.8vw,54px)', color: '#E2E2E8' }}>
+              You're running a real business<br />on <em style={{ color: 'rgba(255,80,80,0.7)', fontStyle: 'italic' }}>duct-taped tools.</em>
             </h2>
           </R>
           <R d={0.14}>
             <p className="text-[15px] leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-              You're generating revenue. But the way you operate — across email, spreadsheets, and disconnected apps — is creating friction that compounds every week.
+              Most agencies and service businesses are generating solid revenue — but operating on a mess of disconnected apps, manual processes, and tribal knowledge. Here's what that looks like.
             </p>
           </R>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {items.map((it, i) => (
+          {pains.map((p, i) => (
             <R key={i} d={i * 0.06}>
               <div className="card flex items-start gap-4">
-                <div className="x-icon" style={{ marginTop: '1px' }}>
+                <div className="x-icon" style={{ marginTop: '2px', flexShrink: 0 }}>
                   <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M2 2l4 4M6 2l-4 4" stroke="rgba(255,80,80,0.5)" strokeWidth="1.2" strokeLinecap="round" /></svg>
                 </div>
                 <div>
-                  <p className="text-sm mb-1" style={{ color: '#E2E2E8', fontWeight: 600 }}>{it.t}</p>
-                  <p className="text-[13px] leading-relaxed" style={{ color: 'var(--ink-muted)' }}>{it.d}</p>
+                  <p className="text-sm mb-1.5" style={{ color: '#E2E2E8', fontWeight: 700 }}>{p.t}</p>
+                  <p className="text-[13px] leading-relaxed" style={{ color: 'var(--ink-muted)' }}>{p.d}</p>
                 </div>
               </div>
             </R>
           ))}
         </div>
-        <R d={0.3} className="mt-9 text-center">
-          <button onClick={go} className="btn-secondary" data-h>See what a unified system looks like →</button>
+        <R d={0.3} className="mt-10 text-center">
+          <p className="text-[14px] mb-5" style={{ color: 'var(--ink-muted)' }}>These aren't tools problems. They're infrastructure problems. We fix the infrastructure.</p>
+          <button onClick={() => document.getElementById('cta-section').scrollIntoView({ behavior: 'smooth' })} className="btn-secondary" data-h>See what your system would look like →</button>
         </R>
       </div>
     </section>
   );
 }
 
-/* ═══════════════════════════════════════════
-   3. SOLUTION
-   ═══════════════════════════════════════════ */
-function Solution({ sectionRef }) {
-  const go = () => document.getElementById('cta').scrollIntoView({ behavior: 'smooth' });
-
-  const before = ['Spreadsheets for clients and revenue', 'Email threads for proposals and follow-ups', 'Separate scheduling tools', 'WhatsApp for client communication', 'Disconnected invoicing software', 'A CRM no one keeps updated'];
-
+/* ─── 3. THE SYSTEM — what we actually build ─── */
+function TheSystem({ sectionRef }) {
+  const modules = [
+    { n: '01', icon: '🌐', title: 'Your Website', sub: 'Built to convert, connected to everything.', desc: 'Not just a brochure — a front door that feeds directly into your CRM and triggers your onboarding the moment someone enquires.' },
+    { n: '02', icon: '👥', title: 'CRM & Client Management', sub: 'Every client. One screen. Always up to date.', desc: 'Full client history, documents, communication, status, and notes — without anyone needing to update a spreadsheet.' },
+    { n: '03', icon: '📅', title: 'Booking & Scheduling', sub: 'Clients book themselves. You just show up.', desc: 'Integrated calendar with automatic confirmations, reminders, and intake forms. No back-and-forth. No Calendly link hunting.' },
+    { n: '04', icon: '🚪', title: 'Client Portal', sub: 'Clients self-serve. Stop answering the same questions.', desc: 'A branded space where every client can access deliverables, sign documents, check project status, and communicate — on their own time.' },
+    { n: '05', icon: '⚡', title: 'Automated Workflows', sub: 'Your processes run without you being in them.', desc: 'Lead captured → booking confirmed → onboarding triggered → invoice sent. Every step connected. Every step automatic.' },
+    { n: '06', icon: '📊', title: 'Operations Dashboard', sub: 'Your entire business. One screen.', desc: 'Live view of pipeline, revenue, active clients, outstanding tasks, and team activity — no more switching between six apps to get a clear picture.' },
+  ];
   return (
     <section ref={sectionRef} className="py-20 md:py-28" style={{ background: 'rgba(15,15,18,0.5)' }}>
       <div className="max-w-5xl mx-auto px-6">
-        <div className="max-w-xl mb-12">
-          <R><span className="label block mb-4">The Solution</span></R>
+        <div className="text-center mb-14">
+          <R><span className="label block mb-4">What We Build</span></R>
           <R d={0.08}>
-            <h2 className="display mb-5" style={{ fontSize: 'clamp(34px,5vw,58px)', color: '#E2E2E8' }}>
-              One system.<br /><em style={{ color: 'var(--lime)', fontStyle: 'italic' }}>Everything connected.</em>
+            <h2 className="display mb-4" style={{ fontSize: 'clamp(32px,4.8vw,54px)', color: '#E2E2E8' }}>
+              One platform. Six systems.<br /><em style={{ color: 'var(--lime)', fontStyle: 'italic' }}>All connected.</em>
             </h2>
           </R>
-          <R d={0.14}>
-            <p className="text-[15px] leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-              Andrady builds a single operational platform designed around how your business actually works — replacing scattered tools with one connected system that handles your website, client management, bookings, and internal workflows.
+          <R d={0.12}>
+            <p className="text-[15px] max-w-lg mx-auto" style={{ color: 'var(--ink-muted)' }}>
+              These aren't separate tools bolted together. Every module is built as part of one system — sharing the same data, triggering each other automatically.
             </p>
           </R>
         </div>
-        <R d={0.18} className="mb-10">
-          <div className="ba-grid flex items-center justify-center gap-10 md:gap-14">
-            <div className="flex-1" style={{ maxWidth: '320px' }}>
-              <span className="before-tag mb-3 inline-block">Before</span>
-              <div className="space-y-[6px] mt-3">
-                {before.map((b, i) => (
-                  <div key={i} className="flex items-center gap-3 px-3 py-2 rounded-lg" style={{ background: 'rgba(255,80,80,0.02)', border: '1px solid rgba(255,80,80,0.04)' }}>
-                    <svg width="6" height="6" viewBox="0 0 6 6"><circle cx="3" cy="3" r="2.5" fill="rgba(255,80,80,0.18)" /></svg>
-                    <span className="text-[12px]" style={{ color: 'var(--ink-muted)' }}>{b}</span>
-                  </div>
-                ))}
+        {/* ★ Screenshot placement hint: insert real dashboard screenshot here between intro and grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-10">
+          {modules.map((m, i) => (
+            <R key={i} d={i * 0.05}>
+              <div className="module-card h-full">
+                <div className="flex items-center gap-3 mb-3">
+                  <span style={{ fontSize: '20px' }}>{m.icon}</span>
+                  <span className="sys-num" style={{ fontSize: '13px', fontFamily: 'DM Mono', color: 'rgba(200,230,74,0.3)', letterSpacing: '0.08em' }}>{m.n}</span>
+                </div>
+                <p className="text-[15px] mb-1" style={{ color: '#E2E2E8', fontWeight: 700 }}>{m.title}</p>
+                <p className="text-[12px] mb-2" style={{ color: 'var(--lime)', fontWeight: 600 }}>{m.sub}</p>
+                <p className="text-[12px] leading-relaxed" style={{ color: 'var(--ink-muted)' }}>{m.desc}</p>
               </div>
-            </div>
-            <div className="ba-arrow" style={{ flexShrink: 0 }}>
-              <svg width="36" height="20" viewBox="0 0 36 20" fill="none"><path d="M2 10h28M22 4l6 6-6 6" stroke="rgba(200,230,74,0.25)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            </div>
-            <div className="flex-1" style={{ maxWidth: '320px' }}>
-              <span className="after-tag mb-3 inline-block">After</span>
-              <div className="mt-3 px-5 py-7 rounded-xl text-center" style={{ background: 'rgba(200,230,74,0.025)', border: '1px solid rgba(200,230,74,0.08)' }}>
-                <p className="display" style={{ fontSize: '28px', color: 'var(--lime)' }}>One System</p>
-                <p className="text-[12px] mt-2 leading-relaxed" style={{ color: 'var(--ink-muted)' }}>Your website, CRM, bookings, client portal, and workflows — all in one place, all connected.</p>
-              </div>
-            </div>
-          </div>
-        </R>
-        <R d={0.28} className="text-center">
-          <button onClick={go} className="btn-primary glow-btn" data-h>See what your system would include</button>
+            </R>
+          ))}
+        </div>
+        <R d={0.3} className="text-center">
+          <button onClick={() => document.getElementById('cta-section').scrollIntoView({ behavior: 'smooth' })} className="btn-primary glow-btn" data-h>See what your version would include →</button>
         </R>
       </div>
     </section>
   );
 }
 
-/* ═══════════════════════════════════════════
-   4. WHAT YOUR SYSTEM REPLACES
-   ═══════════════════════════════════════════ */
-function WhatYourSystemReplaces() {
+/* ─── 4. WHAT IT REPLACES ─── */
+function WhatItReplaces() {
   const replacements = [
-    { tool: 'Google Sheets', feature: 'Live operations dashboard' },
-    { tool: 'Calendly', feature: 'Integrated scheduling' },
-    { tool: 'Mailchimp', feature: 'Automated client communication' },
-    { tool: 'Trello / Asana', feature: 'Internal workflow engine' },
-    { tool: 'Notion / Docs', feature: 'Branded client portal' },
-    { tool: 'Typeform', feature: 'Automated onboarding flows' },
-    { tool: 'Stripe links', feature: 'Integrated billing' },
-    { tool: 'WordPress', feature: 'Connected website' },
+    { tool: 'Google Sheets / Airtable', feature: 'Live CRM + operations dashboard' },
+    { tool: 'Calendly', feature: 'Integrated booking + intake forms' },
+    { tool: 'Mailchimp / ActiveCampaign', feature: 'Automated client communication' },
+    { tool: 'Trello / Asana / Monday', feature: 'Internal workflow engine' },
+    { tool: 'Notion / Google Docs', feature: 'Branded client portal' },
+    { tool: 'Typeform / JotForm', feature: 'Automated onboarding flows' },
+    { tool: 'Stripe links / FreshBooks', feature: 'Integrated billing + payments' },
+    { tool: 'WordPress / Squarespace', feature: 'Connected, conversion-ready website' },
   ];
-
   return (
     <section className="py-20 md:py-28">
       <div className="max-w-5xl mx-auto px-6">
         <div className="text-center mb-12">
-          <R><span className="label block mb-4">Consolidate Your Stack</span></R>
+          <R><span className="label block mb-4">Tool Consolidation</span></R>
           <R d={0.08}>
-            <h2 className="display mb-4" style={{ fontSize: 'clamp(32px,4.5vw,50px)', color: '#E2E2E8' }}>
-              Eight tools. <em style={{ color: 'var(--lime)', fontStyle: 'italic' }}>One system.</em>
+            <h2 className="display mb-4" style={{ fontSize: 'clamp(30px,4.5vw,50px)', color: '#E2E2E8' }}>
+              Stop paying for 8 tools<br />that <em style={{ color: 'rgba(255,80,80,0.65)', fontStyle: 'italic' }}>don't work together.</em>
             </h2>
           </R>
           <R d={0.12}>
             <p className="text-[14px] max-w-md mx-auto" style={{ color: 'var(--ink-muted)' }}>
-              Every tool below is replaced by a native feature inside your custom operational platform.
+              Everything below is replaced by a native feature inside your custom system — with the added benefit that they actually share data with each other.
             </p>
           </R>
         </div>
@@ -931,165 +508,55 @@ function WhatYourSystemReplaces() {
             <R key={i} d={i * 0.04}>
               <div className="replace-row">
                 <span className="replace-tool">{r.tool}</span>
-                <svg className="replace-arrow" width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M1 5h12M10 1l4 4-4 4" stroke="rgba(200,230,74,0.3)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M1 5h12M10 1l4 4-4 4" stroke="rgba(200,230,74,0.3)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 <span className="replace-feature">{r.feature}</span>
               </div>
             </R>
           ))}
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* ═══════════════════════════════════════════
-   5. WHAT'S INCLUDED
-   ═══════════════════════════════════════════ */
-function WhatsIncluded() {
-  const go = () => document.getElementById('cta').scrollIntoView({ behavior: 'smooth' });
-
-  const items = [
-    {
-      n: '01',
-      title: 'Website & Lead Capture',
-      outcome: 'Visitors become clients automatically.',
-      desc: 'A conversion-focused website that positions your offer and captures leads directly into your system — no manual entry.'
-    },
-    {
-      n: '02',
-      title: 'Client Portal',
-      outcome: 'Clients self-serve without contacting you.',
-      desc: 'A branded space where clients access documents, updates, and deliverables on their own schedule.'
-    },
-    {
-      n: '03',
-      title: 'Operations Dashboard',
-      outcome: 'Your entire business, one screen.',
-      desc: 'Live visibility into clients, revenue, tasks, and pipeline — no more switching between apps.'
-    },
-    {
-      n: '04',
-      title: 'Automated Workflows',
-      outcome: 'Processes run without you.',
-      desc: 'Booking, onboarding, follow-ups, and invoicing — automated from first contact to final delivery.'
-    },
-  ];
-
-  return (
-    <section className="py-20 md:py-28" style={{ background: 'rgba(15,15,18,0.5)' }}>
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="max-w-xl mb-12">
-          <R><span className="label block mb-4">What's Included</span></R>
-          <R d={0.08}>
-            <h2 className="display mb-4" style={{ fontSize: 'clamp(32px,4.5vw,50px)', color: '#E2E2E8' }}>
-              Four pillars. One platform.
-            </h2>
-          </R>
-          <R d={0.12}>
-            <p className="text-[13px]" style={{ color: 'var(--ink-subtle)' }}>Not separate products bolted together. Each component is built to work as part of one unified system.</p>
-          </R>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {items.map((it, i) => (
-            <R key={i} d={i * 0.06}>
-              <div className="card-accent flex items-start gap-4 h-full">
-                <div className="sys-num">{it.n}</div>
-                <div>
-                  <p className="text-[15px] mb-0.5" style={{ color: '#E2E2E8', fontWeight: 700 }}>{it.title}</p>
-                  <p className="text-[13px] mb-1.5" style={{ color: 'var(--lime)', fontWeight: 600 }}>{it.outcome}</p>
-                  <p className="text-[12px] leading-relaxed" style={{ color: 'var(--ink-muted)' }}>{it.desc}</p>
-                </div>
-              </div>
-            </R>
-          ))}
-        </div>
-        <R d={0.3} className="mt-9 text-center">
-          <button onClick={go} className="btn-secondary" data-h>Get your system breakdown →</button>
+        <R d={0.28} className="text-center mt-9">
+          <p className="text-[12px]" style={{ fontFamily: 'DM Mono', color: 'var(--ink-subtle)', letterSpacing: '0.06em' }}>Most clients eliminate 6–10 tool subscriptions after their system is live.</p>
         </R>
       </div>
     </section>
   );
 }
 
-/* ═══════════════════════════════════════════
-   6. OPERATIONAL WORKFLOW
-   ═══════════════════════════════════════════ */
-function OperationalWorkflow() {
-  const steps = [
-    { label: 'Lead captured', desc: 'Enquiry submits directly into your system. No manual entry.' },
-    { label: 'Booking confirmed', desc: 'Calendar synced. Confirmation sent. Slot reserved.' },
-    { label: 'Onboarding triggered', desc: 'Welcome email. Intake form. Document access — all automated.' },
-    { label: 'Work delivered', desc: 'Client portal updated. Milestones tracked. Status visible.' },
-    { label: 'Invoice sent', desc: 'Billing triggered automatically. Payment tracked in-dashboard.' },
-    { label: 'Follow-up queued', desc: 'Next steps scheduled. Nothing falls through.' },
+/* ─── 5. BEFORE vs AFTER (concrete, week-in-the-life format) ─── */
+function BeforeAfter() {
+  const comparisons = [
+    { before: 'New enquiry comes in → manually logged in spreadsheet → follow-up reminder set in calendar', after: 'New enquiry → auto-added to CRM → follow-up triggered automatically' },
+    { before: 'Client books → you confirm manually → send Zoom link → chase intake form', after: 'Client books → instant confirmation → intake form sent automatically → dashboard updated' },
+    { before: 'Project done → invoice manually created → sent via email → tracked in separate spreadsheet', after: 'Milestone reached → invoice auto-generated → payment tracked in dashboard' },
+    { before: 'Client asks for update → you search through emails, Notion, Slack to piece together an answer', after: 'Client logs into their portal → sees everything in real-time → no message sent at all' },
   ];
-
-  return (
-    <section className="py-20 md:py-28">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <R><span className="label block mb-4">End-to-End Workflow</span></R>
-          <R d={0.08}>
-            <h2 className="display mb-4" style={{ fontSize: 'clamp(32px,4.5vw,50px)', color: '#E2E2E8' }}>
-              From lead to delivery. <em style={{ color: 'var(--lime)', fontStyle: 'italic' }}>Automatically.</em>
-            </h2>
-          </R>
-          <R d={0.12}>
-            <p className="text-[14px] max-w-md mx-auto" style={{ color: 'var(--ink-muted)' }}>
-              Every step below runs inside your system — connected, sequenced, and automated.
-            </p>
-          </R>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {steps.map((s, i) => (
-            <R key={i} d={i * 0.06}>
-              <div className="card-accent h-full workflow-step">
-                <div className="flex items-center gap-3 mb-3">
-                  <span style={{ fontFamily: 'DM Mono', fontSize: '10px', color: 'var(--lime)', letterSpacing: '0.1em' }}>0{i + 1}</span>
-                  <div style={{ height: '1px', flex: 1, background: 'var(--ink-border)' }} />
-                </div>
-                <p className="text-sm mb-1" style={{ color: '#E2E2E8', fontWeight: 600 }}>{s.label}</p>
-                <p className="text-[12px]" style={{ color: 'var(--ink-muted)' }}>{s.desc}</p>
-                {i < steps.length - 1 && i % 3 !== 2 && <div className="workflow-connector" />}
-              </div>
-            </R>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ═══════════════════════════════════════════
-   7. OUTCOMES
-   ═══════════════════════════════════════════ */
-function Outcomes() {
-  const items = [
-    { t: 'Hours of manual work eliminated each week', d: 'Recurring tasks — follow-ups, onboarding, scheduling — run without intervention.' },
-    { t: 'Your business can operate without you', d: 'Processes run in the background. Growth is no longer limited by your bandwidth.' },
-    { t: 'One source of truth for every client and deal', d: 'No more searching across apps. Everything lives where it should.' },
-    { t: 'A consistent client experience, every time', d: 'Every client gets the same professional, seamless experience — from first contact to final delivery.' },
-  ];
-
   return (
     <section className="py-20 md:py-28" style={{ background: 'rgba(15,15,18,0.5)' }}>
       <div className="max-w-5xl mx-auto px-6">
         <div className="text-center mb-12">
-          <R><span className="label block mb-4">The Outcome</span></R>
+          <R><span className="label block mb-4">Before & After</span></R>
           <R d={0.08}>
-            <h2 className="display" style={{ fontSize: 'clamp(32px,4.5vw,50px)', color: '#E2E2E8' }}>What changes when your operation has infrastructure</h2>
+            <h2 className="display mb-4" style={{ fontSize: 'clamp(30px,4.5vw,50px)', color: '#E2E2E8' }}>
+              Here's what actually changes.
+            </h2>
+          </R>
+          <R d={0.12}>
+            <p className="text-[14px] max-w-md mx-auto" style={{ color: 'var(--ink-muted)' }}>Not vague "efficiency improvements." Real scenarios, before and after your system is live.</p>
           </R>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto">
-          {items.map((it, i) => (
+        <div className="space-y-3 max-w-3xl mx-auto">
+          {comparisons.map((c, i) => (
             <R key={i} d={i * 0.07}>
-              <div className="card flex items-center gap-4 py-5">
-                <div className="check-icon">
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="var(--lime)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                </div>
-                <div>
-                  <p className="text-sm" style={{ color: '#E2E2E8', fontWeight: 600 }}>{it.t}</p>
-                  <p className="text-[12px]" style={{ color: 'var(--ink-muted)' }}>{it.d}</p>
+              <div className="card" style={{ padding: '20px 24px' }}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <span className="before-tag mb-2 inline-block">Before</span>
+                    <p className="text-[13px] leading-relaxed" style={{ color: 'rgba(255,80,80,0.45)' }}>{c.before}</p>
+                  </div>
+                  <div>
+                    <span className="after-tag mb-2 inline-block">After</span>
+                    <p className="text-[13px] leading-relaxed" style={{ color: 'var(--lime)' }}>{c.after}</p>
+                  </div>
                 </div>
               </div>
             </R>
@@ -1100,109 +567,150 @@ function Outcomes() {
   );
 }
 
-/* ═══════════════════════════════════════════
-   8. PROOF
-   ═══════════════════════════════════════════ */
+/* ─── 6. OUTCOMES — specific, measurable ─── */
+function Outcomes() {
+  const stats = [
+    { n: '12+', unit: 'hrs/week', label: 'Recovered from admin' },
+    { n: '7', unit: 'days', label: 'To core system delivery' },
+    { n: '6–10', unit: 'tools', label: 'Eliminated on average' },
+    { n: '100%', unit: 'automated', label: 'Onboarding flow' },
+  ];
+  const outcomes = [
+    { t: 'You stop being the bottleneck', d: 'Processes run automatically. New clients onboard themselves. Invoices go out without you touching them.' },
+    { t: 'Your business can run without you in it every day', d: 'A team member, VA, or client can navigate the system without asking you every question.' },
+    { t: 'You have a clear picture of your business at all times', d: 'Pipeline, revenue, active client count, outstanding tasks — one screen, always live.' },
+    { t: 'Every client gets a consistent, professional experience', d: 'From the first booking confirmation to the final deliverable — the same quality, every time, without extra effort from you.' },
+  ];
+  return (
+    <section className="py-20 md:py-28">
+      <div className="max-w-5xl mx-auto px-6">
+        <div className="text-center mb-14">
+          <R><span className="label block mb-4">The Outcome</span></R>
+          <R d={0.08}>
+            <h2 className="display mb-4" style={{ fontSize: 'clamp(30px,4.5vw,50px)', color: '#E2E2E8' }}>What your business looks like<br />with proper infrastructure.</h2>
+          </R>
+        </div>
+        {/* Stats row */}
+        <R d={0.1} className="mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {stats.map((s, i) => (
+              <div key={i} className="stat-pill text-center" style={{ padding: '18px 16px' }}>
+                <span className="display" style={{ fontSize: '36px', color: 'var(--lime)', lineHeight: 1 }}>{s.n}</span>
+                <span className="block text-[11px] mt-0.5 mb-1" style={{ fontFamily: 'DM Mono', color: 'rgba(200,230,74,0.4)', letterSpacing: '0.06em' }}>{s.unit}</span>
+                <span className="block text-[12px]" style={{ color: 'var(--ink-muted)' }}>{s.label}</span>
+              </div>
+            ))}
+          </div>
+        </R>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl mx-auto">
+          {outcomes.map((o, i) => (
+            <R key={i} d={i * 0.07}>
+              <div className="card flex items-start gap-4 py-5">
+                <div className="check-icon" style={{ marginTop: '1px', flexShrink: 0 }}>
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="var(--lime)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                </div>
+                <div>
+                  <p className="text-sm mb-1" style={{ color: '#E2E2E8', fontWeight: 700 }}>{o.t}</p>
+                  <p className="text-[12px] leading-relaxed" style={{ color: 'var(--ink-muted)' }}>{o.d}</p>
+                </div>
+              </div>
+            </R>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── 7. PROOF — case studies with screenshots ─── */
 function Proof({ sectionRef }) {
   const [activeGallery, setActiveGallery] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
-
   const cases = [
     {
-      label: 'Boutique Real Estate Agency · Team of 4',
-      type: 'Client Management System',
-      images: [
-        'screencapture-127-0-0-1-5500-real-etate-portal-html-2026-05-06-14_50_36.png',
-      ],
-      metrics: [
-        'Avg. response time: 6 hrs → under 30 min',
-        'Admin time saved: ~12 hours/week',
-      ],
-      desc: 'Replaced a shared inbox and three spreadsheets with a unified client dashboard. All enquiries, documents, and status updates in one place.',
+      client: 'Boutique Real Estate Agency',
+      context: 'Team of 4 · US-based',
+      built: 'Client Management System',
+      problem: 'Client info split across a shared inbox, three spreadsheets, and a CRM nobody kept updated. Response times were slow and deals were slipping.',
+      solution: 'Unified client dashboard with automatic lead capture, document management, and status tracking. All enquiries feed in automatically.',
+      results: ['Response time: 6 hrs → under 30 min', 'Admin time saved: ~12 hours/week', 'Zero leads lost to follow-up gaps'],
+      images: ['ChatGPT Image May 12, 2026, 01_48_14 AM.png'],
     },
     {
-      label: 'Independent Consulting Practice · Solo operator',
-      type: 'Booking & Onboarding System',
-      images: [
-        'screencapture-127-0-0-1-5500-real-etate-booking-html-2026-05-06-15_00_04.png',
-        'screencapture-127-0-0-1-5500-real-etate-booking-html-2026-05-06-15_00_43.png',
-        'screencapture-127-0-0-1-5500-real-etate-booking-html-2026-05-06-15_00_54.png',
-      ],
-      metrics: [
-        'Booked discovery calls: +34% in 60 days',
-        'Onboarding time: 3 days → under 2 hours',
-      ],
-      desc: 'Automated the full journey from first contact to signed contract. Booking, intake form, proposal, and e-signature — all without manual follow-up.',
+      client: 'Independent Consulting Practice',
+      context: 'Solo operator · UK-based',
+      built: 'Booking & Onboarding System',
+      problem: 'Spending 3+ days onboarding each new client — manually emailing documents, chasing signatures, booking calls back-and-forth.',
+      solution: 'Automated full journey from first enquiry to signed contract. Booking, intake form, proposal generation, and e-signature — all without manual follow-up.',
+      results: ['Onboarding time: 3 days → under 2 hours', 'Discovery calls booked: +34% in 60 days', 'No manual onboarding steps remaining'],
+      images: ['ChatGPT Image May 12, 2026, 01_49_32 AM.png'],
     },
     {
-      label: 'Service Business · Team of 8',
-      type: 'Operations Hub',
-      images: [
-        'screencapture-127-0-0-1-5500-real-etate-portal-html-2026-05-06-14_50_36.png',
-        'screencapture-127-0-0-1-5500-real-etate-portal-html-2026-05-06-14_58_50.png',
-      ],
-      metrics: [
-        '15+ recurring manual tasks eliminated',
-        'Revenue and pipeline tracked automatically',
-      ],
-      desc: 'Built a combined client portal, internal operations dashboard, and automated billing system — replacing four separate tools.',
+      client: 'Marketing & Strategy Agency',
+      context: 'Team of 8 · AU-based',
+      built: 'Full Operations Hub',
+      problem: 'Using 7 separate tools that didn\'t connect. Team spent significant time each week on admin and status updates rather than client work.',
+      solution: 'Combined client portal, internal operations dashboard, automated billing, and project tracking — replacing four separate tools entirely.',
+      results: ['15+ recurring manual tasks eliminated', 'Revenue and pipeline tracked automatically', '4 tool subscriptions cancelled'],
+      images: ['ChatGPT Image May 12, 2026, 01_51_14 AM.png'],
     },
   ];
-
   return (
-    <section ref={sectionRef} className="py-20 md:py-28">
+    <section ref={sectionRef} className="py-20 md:py-28" style={{ background: 'rgba(15,15,18,0.5)' }}>
       <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-5">
-          <R><span className="label block mb-4">Proof</span></R>
+        <div className="text-center mb-14">
+          <R><span className="label block mb-4">Client Results</span></R>
           <R d={0.06}>
-            <h2 className="display mb-3" style={{ fontSize: 'clamp(32px,4.5vw,50px)', color: '#E2E2E8' }}>
-              Real systems. Measurable results.
+            <h2 className="display mb-3" style={{ fontSize: 'clamp(30px,4.5vw,50px)', color: '#E2E2E8' }}>
+              Real systems. Real numbers.
             </h2>
           </R>
           <R d={0.1}>
-            <p className="text-[13px] mb-10" style={{ color: 'var(--ink-muted)' }}>
-              Built for service businesses, agencies, and consultancies across the US, UK, and AU.
-            </p>
+            <p className="text-[14px]" style={{ color: 'var(--ink-muted)' }}>Built for agencies and service businesses across the US, UK, and AU.</p>
           </R>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {cases.map((c, i) => (
-            <div key={i} className="card overflow-hidden h-full flex flex-col">
-              <img
-                src={c.images[0]}
-                alt={c.label}
-                onClick={() => { setActiveGallery(c.images); setActiveIndex(0); }}
-                className="rounded-md border border-white/10 cursor-pointer hover:opacity-90 transition mb-3"
-              />
-              {c.images.length > 1 && (
-                <div className="flex gap-2 mb-4">
-                  {c.images.map((img, idx) => (
-                    <img key={idx} src={img} alt="thumb" onClick={() => { setActiveGallery(c.images); setActiveIndex(idx); }}
-                      className="w-12 h-12 object-cover rounded border border-white/10 cursor-pointer hover:opacity-80" />
-                  ))}
+            <R key={i} d={i * 0.08}>
+              <div className="card overflow-hidden h-full flex flex-col" style={{ padding: '0' }}>
+                {/* Screenshot */}
+                <div style={{ background: 'var(--ink-border)', borderRadius: '18px 18px 0 0', overflow: 'hidden', position: 'relative' }}>
+                  <img src={c.images[0]} alt={c.client} onClick={() => { setActiveGallery(c.images); setActiveIndex(0); }}
+                    className="w-full object-cover" style={{ maxHeight: '180px', objectPosition: 'top', cursor: 'pointer' }} />
+                  {c.images.length > 1 && (
+                    <div className="absolute bottom-2 right-2 flex gap-1">
+                      {c.images.map((_, idx) => (
+                        <button key={idx} onClick={() => { setActiveGallery(c.images); setActiveIndex(idx); }}
+                          style={{ width: '6px', height: '6px', borderRadius: '50%', background: idx === 0 ? 'var(--lime)' : 'rgba(255,255,255,0.3)', border: 'none' }} />
+                      ))}
+                    </div>
+                  )}
                 </div>
-              )}
-              <span className="label mb-1 block" style={{ color: 'var(--lime)', opacity: 0.7 }}>{c.type}</span>
-              <p className="text-sm mb-1" style={{ color: '#E2E2E8', fontWeight: 600 }}>{c.label}</p>
-              <p className="text-[12px] mb-4" style={{ color: 'var(--ink-muted)' }}>{c.desc}</p>
-              <div className="mt-auto space-y-2">
-                {c.metrics.map((m, j) => (
-                  <div key={j} className="metric-box">
-                    <span className="text-[11px]" style={{ color: 'var(--lime)' }}>{m}</span>
+                <div style={{ padding: '20px 22px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  <span className="label block mb-1" style={{ color: 'var(--lime)', opacity: 0.65 }}>{c.built}</span>
+                  <p className="text-sm mb-0.5" style={{ color: '#E2E2E8', fontWeight: 700 }}>{c.client}</p>
+                  <p className="text-[11px] mb-3" style={{ fontFamily: 'DM Mono', color: 'var(--ink-subtle)' }}>{c.context}</p>
+                  <p className="text-[12px] leading-relaxed mb-2" style={{ color: 'var(--ink-muted)' }}><span style={{ color: 'rgba(255,100,100,0.5)', fontWeight: 600 }}>Problem: </span>{c.problem}</p>
+                  <p className="text-[12px] leading-relaxed mb-4" style={{ color: 'var(--ink-muted)' }}><span style={{ color: 'rgba(200,230,74,0.6)', fontWeight: 600 }}>Built: </span>{c.solution}</p>
+                  <div className="mt-auto space-y-2">
+                    {c.results.map((r, j) => (
+                      <div key={j} className="metric-box flex items-center gap-2">
+                        <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4.5l2 2L6.5 2" stroke="var(--lime)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                        <span className="text-[11px]" style={{ color: 'var(--lime)' }}>{r}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
               </div>
-            </div>
+            </R>
           ))}
         </div>
-
         {activeGallery && (
-          <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-black/90 flex items-center justify-center" style={{ zIndex: 200 }}>
             <button className="absolute top-6 right-6 text-white text-xl" onClick={() => setActiveGallery(null)}>✕</button>
-            <button className="absolute left-6 text-white text-2xl" onClick={() => setActiveIndex((prev) => prev === 0 ? activeGallery.length - 1 : prev - 1)}>‹</button>
+            <button className="absolute left-6 text-white text-2xl" onClick={() => setActiveIndex(prev => prev === 0 ? activeGallery.length-1 : prev-1)}>‹</button>
             <img src={activeGallery[activeIndex]} alt="preview" className="max-w-[90%] max-h-[85%] rounded-lg" />
-            <button className="absolute right-6 text-white text-2xl" onClick={() => setActiveIndex((prev) => prev === activeGallery.length - 1 ? 0 : prev + 1)}>›</button>
+            <button className="absolute right-6 text-white text-2xl" onClick={() => setActiveIndex(prev => prev === activeGallery.length-1 ? 0 : prev+1)}>›</button>
           </div>
         )}
       </div>
@@ -1210,224 +718,256 @@ function Proof({ sectionRef }) {
   );
 }
 
-/* ═══════════════════════════════════════════
-   9. INVESTMENT
-   ═══════════════════════════════════════════ */
-function Investment() {
-  const go = () => document.getElementById('cta').scrollIntoView({ behavior: 'smooth' });
-
-  return (
-    <section className="py-20 md:py-28" style={{ background: 'rgba(15,15,18,0.5)' }}>
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="max-w-md mx-auto text-center">
-          <R><span className="label block mb-4">Investment</span></R>
-          <R d={0.08}>
-            <div className="display mb-1" style={{ fontSize: 'clamp(46px,7vw,76px)', color: 'var(--lime)' }}>From $5,000</div>
-          </R>
-          <R d={0.10}>
-            <p className="mb-1" style={{ fontFamily: 'DM Mono', fontSize: '10px', letterSpacing: '0.16em', color: 'var(--ink-muted)', textTransform: 'uppercase' }}>
-              Custom System Build
-            </p>
-          </R>
-          <R d={0.12}>
-            <div className="flex justify-center gap-4 mb-7 mt-4 flex-wrap">
-              <div className="text-center">
-                <p style={{ fontFamily: 'DM Mono', fontSize: '11px', color: 'var(--ink-muted)' }}>Most builds</p>
-                <p style={{ fontFamily: 'Instrument Serif', fontSize: '22px', color: '#E2E2E8' }}>$5K – $15K</p>
-              </div>
-              <div style={{ width: '1px', background: 'var(--ink-border)' }} />
-              <div className="text-center">
-                <p style={{ fontFamily: 'DM Mono', fontSize: '11px', color: 'var(--ink-muted)' }}>Advanced systems</p>
-                <p style={{ fontFamily: 'Instrument Serif', fontSize: '22px', color: '#E2E2E8' }}>$15K+</p>
-              </div>
-            </div>
-          </R>
-          <R d={0.16}>
-            <div className="card text-left mb-6">
-              <p className="text-[13px] leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-                Every system is scoped before we start. You receive a clear breakdown of what gets built and what it costs — before any commitment.
-              </p>
-            </div>
-          </R>
-          <R d={0.22}>
-            <button onClick={go} className="btn-primary glow-btn" data-h>Get your custom quote</button>
-          </R>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ═══════════════════════════════════════════
-   10. PROCESS
-   ═══════════════════════════════════════════ */
+/* ─── 8. HOW IT WORKS (process) ─── */
 function Process({ sectionRef }) {
-  const go = () => document.getElementById('cta').scrollIntoView({ behavior: 'smooth' });
-
   const steps = [
-    { n: '01', t: 'Audit', d: 'We map your current workflows, identify operational bottlenecks, and define exactly what gets built.' },
-    { n: '02', t: 'Build', d: 'Your system is designed and engineered to specification. No agency layers. No handoffs.' },
-    { n: '03', t: 'Deploy', d: 'Your platform goes live. Core system deployed in as little as 7 days.' },
+    { n: '01', t: 'Scoping Call', sub: '45 minutes. Free.', d: 'We map your current workflows, tools, and pain points. You walk away with a clear picture of what we\'d build — even if you don\'t move forward.', icon: '🔍' },
+    { n: '02', t: 'System Design', sub: '2–3 days.', d: 'We design your platform architecture and send you a detailed scope document: every module, every workflow, every automation — and the exact cost.', icon: '🗺️' },
+    { n: '03', t: 'Build & Deploy', sub: '7–21 days depending on scope.', d: 'We build it. You review it. We refine it. Then we deploy it and train you and your team on how to use it.', icon: '⚡' },
+    { n: '04', t: 'Ongoing Support', sub: 'Optional.', d: 'After launch, you can retain us for system management, updates, and expansion as your business grows.', icon: '🛡️' },
   ];
-
   return (
     <section ref={sectionRef} className="py-20 md:py-28">
       <div className="max-w-5xl mx-auto px-6">
         <div className="text-center mb-12">
-          <R><span className="label block mb-4">Process</span></R>
+          <R><span className="label block mb-4">How It Works</span></R>
           <R d={0.08}>
-            <h2 className="display" style={{ fontSize: 'clamp(32px,4.5vw,50px)', color: '#E2E2E8' }}>
-              Audit. Build. <em style={{ color: 'var(--lime)', fontStyle: 'italic' }}>Deploy.</em>
+            <h2 className="display mb-3" style={{ fontSize: 'clamp(30px,4.5vw,50px)', color: '#E2E2E8' }}>
+              From scoping call to live system<br />in <em style={{ color: 'var(--lime)', fontStyle: 'italic' }}>under 3 weeks.</em>
             </h2>
           </R>
+          <R d={0.12}>
+            <p className="text-[14px] max-w-sm mx-auto" style={{ color: 'var(--ink-muted)' }}>No agency handoffs. No 6-month timelines. We scope, build, and deploy — directly.</p>
+          </R>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-9">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-9">
           {steps.map((s, i) => (
             <R key={i} d={i * 0.08}>
-              <div className="card h-full text-center py-10 px-5 relative overflow-hidden">
-                <div className="step-num">{s.n}</div>
+              <div className="card h-full text-center py-8 px-5 relative overflow-hidden">
+                <div className="step-num" style={{ fontSize: '70px', opacity: 0.035 }}>{s.n}</div>
                 <div className="relative z-10">
-                  <span className="label block mb-5">{s.n}</span>
-                  <p className="text-lg mb-2" style={{ color: '#E2E2E8', fontWeight: 700 }}>{s.t}</p>
-                  <p className="text-[13px] leading-relaxed" style={{ color: 'var(--ink-muted)' }}>{s.d}</p>
+                  <div className="text-2xl mb-3">{s.icon}</div>
+                  <span className="label block mb-3">{s.n}</span>
+                  <p className="text-[15px] mb-1" style={{ color: '#E2E2E8', fontWeight: 700 }}>{s.t}</p>
+                  <p className="text-[11px] mb-3" style={{ fontFamily: 'DM Mono', color: 'var(--lime)', letterSpacing: '0.04em' }}>{s.sub}</p>
+                  <p className="text-[12px] leading-relaxed" style={{ color: 'var(--ink-muted)' }}>{s.d}</p>
                 </div>
               </div>
             </R>
           ))}
         </div>
         <R d={0.3} className="text-center">
-          <button onClick={go} className="btn-primary glow-btn" data-h>Get your system breakdown</button>
+          <button onClick={() => document.getElementById('cta-section').scrollIntoView({ behavior: 'smooth' })} className="btn-primary glow-btn" data-h>Start with a free scoping call</button>
         </R>
       </div>
     </section>
   );
 }
 
-/* ═══════════════════════════════════════════
-   11. QUALIFICATION
-   ═══════════════════════════════════════════ */
-function Qualification() {
+/* ─── 9. INVESTMENT ─── */
+function Investment({ sectionRef }) {
   return (
-    <section className="py-16 md:py-20" style={{ background: 'rgba(15,15,18,0.5)', borderTop: '1px solid var(--ink-border)', borderBottom: '1px solid var(--ink-border)' }}>
-      <div className="max-w-xl mx-auto px-6 text-center">
-        <R><span className="label block mb-5">This is for</span></R>
-        <div className="space-y-3 mb-8">
-          <R d={0.06}><div className="qualify-for">Service businesses, agencies, and consultancies generating $10K+/month</div></R>
-          <R d={0.1}><div className="qualify-for">Founders spending 10+ hours/week on manual operations and admin</div></R>
-          <R d={0.14}><div className="qualify-for">Teams ready to systemize but limited by fragmented tools and processes</div></R>
+    <section ref={sectionRef} className="py-20 md:py-28" style={{ background: 'rgba(15,15,18,0.5)' }}>
+      <div className="max-w-3xl mx-auto px-6">
+        <div className="text-center mb-12">
+          <R><span className="label block mb-4">Investment</span></R>
+          <R d={0.08}>
+            <h2 className="display mb-4" style={{ fontSize: 'clamp(30px,4.5vw,50px)', color: '#E2E2E8' }}>
+              Priced for the value it delivers,<br />not the hours it takes.
+            </h2>
+          </R>
+          <R d={0.12}>
+            <p className="text-[14px] max-w-md mx-auto" style={{ color: 'var(--ink-muted)' }}>
+              A custom system isn't an expense. It's infrastructure. Most clients recover the cost within the first 60–90 days in admin time alone.
+            </p>
+          </R>
         </div>
-        <R d={0.18}><span className="label block mb-4">This is not for</span></R>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          {[
+            { tier: 'Core System', range: '$5,000 – $8,000', desc: 'CRM, client portal, booking, and automated onboarding. Ideal for solo operators and small teams.', items: ['CRM + Client Management', 'Booking & Scheduling', 'Client Portal', 'Onboarding Automation', 'Operations Dashboard'] },
+            { tier: 'Full Platform', range: '$8,000 – $15,000', desc: 'Everything in Core, plus website, advanced automations, custom workflows, and integrations.', items: ['Everything in Core', 'Connected Website', 'Advanced Automation', 'Custom Workflow Engine', 'Billing Integration'], featured: true },
+            { tier: 'Enterprise System', range: '$15,000+', desc: 'Multi-team systems, complex integrations, white-label portals, and custom-built internal tools.', items: ['Multi-team Access', 'Custom Integrations', 'White-label Portals', 'Advanced Reporting', 'Dedicated Support'] },
+          ].map((tier, i) => (
+            <R key={i} d={i * 0.08}>
+              <div className={tier.featured ? 'card-accent' : 'card'} style={{ height: '100%' }}>
+                {tier.featured && <div className="pill mb-3 inline-block" style={{ fontSize: '9px' }}>Most Popular</div>}
+                <p className="text-[13px] mb-1" style={{ color: '#E2E2E8', fontWeight: 700 }}>{tier.tier}</p>
+                <p className="display mb-3" style={{ fontSize: '22px', color: 'var(--lime)' }}>{tier.range}</p>
+                <p className="text-[12px] leading-relaxed mb-4" style={{ color: 'var(--ink-muted)' }}>{tier.desc}</p>
+                <div className="space-y-2">
+                  {tier.items.map((item, j) => (
+                    <div key={j} className="flex items-center gap-2">
+                      <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3.5" stroke="var(--lime)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                      <span className="text-[12px]" style={{ color: 'var(--ink-muted)' }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </R>
+          ))}
+        </div>
+        <R d={0.3} className="text-center">
+          <p className="text-[13px] mb-5" style={{ color: 'var(--ink-muted)' }}>Every system is scoped individually. You'll receive a detailed breakdown before anything is agreed.</p>
+          <button onClick={() => document.getElementById('cta-section').scrollIntoView({ behavior: 'smooth' })} className="btn-primary glow-btn" data-h>Get a custom quote — it's free</button>
+        </R>
+      </div>
+    </section>
+  );
+}
+
+/* ─── 10. WHO THIS IS FOR ─── */
+function WhoThisIsFor() {
+  return (
+    <section className="py-16 md:py-20" style={{ borderTop: '1px solid var(--ink-border)', borderBottom: '1px solid var(--ink-border)' }}>
+      <div className="max-w-xl mx-auto px-6 text-center">
+        <R><span className="label block mb-6">This is built for</span></R>
+        <div className="space-y-3 mb-8">
+          <R d={0.06}><div className="qualify-for">Agencies and consultancies doing $10K+/month who want to scale without hiring more people</div></R>
+          <R d={0.1}><div className="qualify-for">Founders spending 10+ hours a week on admin, follow-up, and manual operations</div></R>
+          <R d={0.14}><div className="qualify-for">Service businesses with established processes that need to be systematised and automated</div></R>
+          <R d={0.18}><div className="qualify-for">Teams running on 5+ disconnected tools who need everything in one place</div></R>
+        </div>
+        <R d={0.2}><span className="label block mb-4">This is not for</span></R>
         <div className="space-y-3">
-          <R d={0.22}><div className="qualify-not">Pre-revenue or early-stage ventures</div></R>
-          <R d={0.26}><div className="qualify-not">Businesses seeking a standalone website without operational integration</div></R>
+          <R d={0.24}><div className="qualify-not">Pre-revenue businesses or early-stage ventures not yet validated</div></R>
+          <R d={0.28}><div className="qualify-not">Businesses looking for a standalone website with no operational integration</div></R>
         </div>
       </div>
     </section>
   );
 }
 
-/* ═══════════════════════════════════════════
-   12. FINAL CTA
-   ═══════════════════════════════════════════ */
+/* ─── 11. FAQ ─── */
+function FAQ() {
+  const [open, setOpen] = useState(null);
+  const qs = [
+    { q: 'What exactly do you build?', a: 'Custom software platforms tailored to your business. Typically this includes a CRM, client portal, booking system, onboarding automation, operations dashboard, and website — all connected and sharing the same data. Every system is scoped to your exact needs.' },
+    { q: 'How is this different from Notion, HubSpot, or a website builder?', a: 'Those are generic tools you adapt yourself. We build a system specifically for how your business works — your clients, your workflows, your processes. Nothing is off-the-shelf. And because it\'s all one system, every component talks to every other component.' },
+    { q: 'How long does it take?', a: 'Core systems are typically live in 7 days. Full platforms take 14–21 days depending on scope. We agree on a timeline before we start — no open-ended projects.' },
+    { q: 'What do I need to have in place before we start?', a: 'Just a clear sense of your current process and where the friction is. We handle the rest in the scoping session. Most clients are surprised by how quickly we can map their operation and turn it into a build plan.' },
+    { q: 'What happens after the system is built?', a: 'You own it. We train you and your team. If you want ongoing management, updates, or expansion, that\'s available — but you\'re never locked in. The system is yours.' },
+    { q: 'Do you offer payment plans?', a: 'Yes. We typically structure larger projects as 50% upfront and 50% on delivery. For ongoing retainer work, monthly billing applies. We can discuss what works for you.' },
+  ];
+  return (
+    <section className="py-20 md:py-28">
+      <div className="max-w-2xl mx-auto px-6">
+        <div className="text-center mb-10">
+          <R><span className="label block mb-4">Common Questions</span></R>
+          <R d={0.08}><h2 className="display" style={{ fontSize: 'clamp(28px,4vw,44px)', color: '#E2E2E8' }}>Before you reach out.</h2></R>
+        </div>
+        <div className="card" style={{ padding: '0' }}>
+          {qs.map((faq, i) => (
+            <R key={i} d={i * 0.04}>
+              <div className="faq-item">
+                <button onClick={() => setOpen(open === i ? null : i)} className="w-full text-left flex items-center justify-between gap-4" style={{ padding: '18px 24px', background: 'none', border: 'none', color: '#E2E2E8' }} data-h>
+                  <span className="text-[14px]" style={{ fontWeight: 600 }}>{faq.q}</span>
+                  <motion.span animate={{ rotate: open === i ? 45 : 0 }} transition={{ duration: 0.2 }} style={{ flexShrink: 0, color: 'var(--lime)', fontSize: '18px', lineHeight: 1 }}>+</motion.span>
+                </button>
+                <AnimatePresence>
+                  {open === i && (
+                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} style={{ overflow: 'hidden' }}>
+                      <p className="text-[13px] leading-relaxed" style={{ color: 'var(--ink-muted)', padding: '0 24px 20px' }}>{faq.a}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </R>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── 12. FINAL CTA — specificity + no-risk framing ─── */
 function FinalCTA({ sectionRef }) {
-  const [form, setForm] = useState({ name: '', email: '', msg: '' });
+  const [form, setForm] = useState({ name: '', email: '', biz: '', msg: '' });
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState(null);
   const timerRef = useRef(null);
-
   const ch = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-
-  const clearStatus = () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => setStatus(null), 5000);
-  };
-
+  const clearStatus = () => { if (timerRef.current) clearTimeout(timerRef.current); timerRef.current = setTimeout(() => setStatus(null), 6000); };
   const submit = async (e) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.email.trim() || !form.msg.trim()) {
-      setStatus({ t: 'error', m: 'Please fill in all fields.' });
-      clearStatus();
-      return;
-    }
-    setSubmitting(true);
-    setStatus(null);
+    if (!form.name.trim() || !form.email.trim() || !form.msg.trim()) { setStatus({ t: 'error', m: 'Please fill in all required fields.' }); clearStatus(); return; }
+    setSubmitting(true); setStatus(null);
     try {
       const res = await fetch('https://rsttirosnsfaortzugld.functions.supabase.co/submit-brief', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: form.name.trim(), email: form.email.trim(), message: form.msg.trim() })
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: form.name.trim(), email: form.email.trim(), message: `Business: ${form.biz}\n\n${form.msg.trim()}` })
       });
-      if (res.ok) {
-        setStatus({ t: 'ok', m: "Received. We'll respond within 24 hours with your system breakdown." });
-        setForm({ name: '', email: '', msg: '' });
-      } else {
-        setStatus({ t: 'error', m: 'Something went wrong. Please try again.' });
-      }
-    } catch {
-      setStatus({ t: 'error', m: 'Something went wrong. Please try again.' });
-    } finally {
-      setSubmitting(false);
-      clearStatus();
-    }
+      if (res.ok) { setStatus({ t: 'ok', m: "Received. We'll send your custom scope breakdown within 24 hours." }); setForm({ name: '', email: '', biz: '', msg: '' }); }
+      else setStatus({ t: 'error', m: 'Something went wrong. Please try again or WhatsApp us directly.' });
+    } catch { setStatus({ t: 'error', m: 'Something went wrong. Please try again or WhatsApp us directly.' }); }
+    finally { setSubmitting(false); clearStatus(); }
   };
-
   return (
-    <section ref={sectionRef} id="cta" className="py-20 md:py-28 relative">
-      <div className="absolute w-80 h-80 rounded-full" style={{ background: 'rgba(200,230,74,0.01)', filter: 'blur(100px)', right: '30%', bottom: 0, zIndex: -1 }} />
-      <div className="max-w-md mx-auto px-6 text-center">
-        <R><span className="label block mb-4">Get Started</span></R>
-        <R d={0.08}>
-          <h2 className="display mb-4" style={{ fontSize: 'clamp(36px,6vw,60px)', color: '#E2E2E8' }}>
-            See exactly what your<br /><em style={{ color: 'var(--lime)', fontStyle: 'italic' }}>system would include</em>
-          </h2>
-        </R>
-        <R d={0.14}>
-          <p className="text-[14px] leading-relaxed mb-3" style={{ color: 'var(--ink-muted)' }}>
-            Describe your current setup and where the friction is. We'll return a clear breakdown of what we'd build — and what it costs.
-          </p>
-        </R>
-        <R d={0.18}>
-          <p className="text-[11px] mb-8" style={{ color: 'var(--ink-subtle)' }}>No sales call required. No commitment. Just clarity.</p>
-        </R>
-        <R d={0.22}>
+    <section ref={sectionRef} id="cta-section" className="py-20 md:py-28 relative">
+      <div className="absolute w-80 h-80 rounded-full" style={{ background: 'rgba(200,230,74,0.012)', filter: 'blur(100px)', right: '30%', bottom: 0, zIndex: -1 }} />
+      <div className="max-w-lg mx-auto px-6">
+        <div className="text-center mb-10">
+          <R><span className="label block mb-4">Get Started</span></R>
+          <R d={0.08}>
+            <h2 className="display mb-4" style={{ fontSize: 'clamp(34px,5.5vw,58px)', color: '#E2E2E8' }}>
+              Tell us how you work.<br />We'll tell you what<br /><em style={{ color: 'var(--lime)', fontStyle: 'italic' }}>we'd build.</em>
+            </h2>
+          </R>
+          <R d={0.13}>
+            <p className="text-[14px] leading-relaxed mb-2" style={{ color: 'var(--ink-muted)' }}>
+              Describe your current tools and where the friction is. We'll respond within 24 hours with a specific breakdown of what we'd build and what it would cost.
+            </p>
+          </R>
+          <R d={0.16}>
+            <p className="text-[11px]" style={{ color: 'var(--ink-subtle)', fontFamily: 'DM Mono', letterSpacing: '0.05em' }}>No sales call required · No commitment · No generic pitch</p>
+          </R>
+        </div>
+        <R d={0.2}>
           <form onSubmit={submit} className="space-y-3 text-left">
-            <input name="name" value={form.name} onChange={ch} placeholder="Your name" required className="field" />
-            <input name="email" type="email" value={form.email} onChange={ch} placeholder="your@email.com" required className="field" />
-            <textarea name="msg" rows={3} value={form.msg} onChange={ch} required placeholder="What tools are you currently using, and what's the biggest operational problem you want solved?" className="field" style={{ resize: 'none' }} />
-            <motion.button type="submit" disabled={submitting} whileHover={{ scale: submitting ? 1 : 1.03 }} whileTap={{ scale: submitting ? 1 : 0.97 }} data-h
-              className="btn-primary glow-btn w-full" style={{ opacity: submitting ? 0.5 : 1 }}>
-              {submitting ? 'Sending...' : 'Get my system breakdown'}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <input name="name" value={form.name} onChange={ch} placeholder="Your name *" required className="field" />
+              <input name="email" type="email" value={form.email} onChange={ch} placeholder="your@email.com *" required className="field" />
+            </div>
+            <input name="biz" value={form.biz} onChange={ch} placeholder="What type of business do you run?" className="field" />
+            <textarea name="msg" rows={4} value={form.msg} onChange={ch} required placeholder="What tools are you using now, and what's the biggest operational problem you want to fix? *" className="field" style={{ resize: 'none' }} />
+            <motion.button type="submit" disabled={submitting} whileHover={{ scale: submitting ? 1 : 1.02 }} whileTap={{ scale: submitting ? 1 : 0.97 }} data-h className="btn-primary glow-btn w-full" style={{ opacity: submitting ? 0.5 : 1, fontSize: '15px', padding: '17px' }}>
+              {submitting ? 'Sending...' : 'Get my custom system breakdown →'}
             </motion.button>
             {status && (
-              <div className={`status-msg ${status.t === 'ok' ? 'bg-lime/10 text-lime border border-lime/25' : 'bg-rose/10 text-rose border border-rose/18'}`}>
+              <div className={`status-msg ${status.t === 'ok' ? '' : ''}`} style={{ background: status.t === 'ok' ? 'rgba(200,230,74,0.06)' : 'rgba(255,80,80,0.05)', color: status.t === 'ok' ? 'var(--lime)' : 'rgba(255,100,100,0.7)', border: status.t === 'ok' ? '1px solid rgba(200,230,74,0.15)' : '1px solid rgba(255,80,80,0.12)' }}>
                 {status.m}
               </div>
             )}
           </form>
         </R>
+        {/* ★ NEW: Trust signals below form */}
+        <R d={0.3} className="mt-8">
+          <div className="grid grid-cols-3 gap-3 text-center">
+            {['Response within 24hrs', 'Free scope included', 'No commitment needed'].map((t, i) => (
+              <div key={i} style={{ padding: '10px 8px', borderRadius: '10px', background: 'rgba(200,230,74,0.02)', border: '1px solid rgba(200,230,74,0.06)' }}>
+                <p className="text-[11px]" style={{ fontFamily: 'DM Mono', color: 'rgba(200,230,74,0.4)', letterSpacing: '0.04em', lineHeight: 1.4 }}>{t}</p>
+              </div>
+            ))}
+          </div>
+        </R>
       </div>
     </section>
   );
 }
 
-/* ═══════════════════════════════════════════
-   FOOTER
-   ═══════════════════════════════════════════ */
+/* ─── FOOTER ─── */
 function Footer() {
   return (
     <footer className="py-7" style={{ borderTop: '1px solid var(--ink-border)' }}>
       <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-3">
         <span style={{ fontFamily: 'Instrument Serif', fontSize: '17px', color: 'rgba(226,226,232,0.2)' }}>Andrady</span>
-        <span style={{ fontFamily: 'DM Mono', fontSize: '10px', color: 'var(--ink-subtle)', letterSpacing: '0.06em' }}>© {new Date().getFullYear()} Andrady</span>
-        <span style={{ fontFamily: 'DM Mono', fontSize: '10px', color: 'var(--ink-subtle)', letterSpacing: '0.04em' }}>andrady.co</span>
+        <span style={{ fontFamily: 'DM Mono', fontSize: '10px', color: 'var(--ink-subtle)', letterSpacing: '0.06em', textAlign: 'center' }}>Custom business operating systems for agencies and service businesses.</span>
+        <span style={{ fontFamily: 'DM Mono', fontSize: '10px', color: 'var(--ink-subtle)', letterSpacing: '0.04em' }}>© {new Date().getFullYear()} Andrady</span>
       </div>
     </footer>
   );
 }
 
-/* ═══════════════════════════════════════════
-   WHATSAPP
-   ═══════════════════════════════════════════ */
+/* ─── WHATSAPP ─── */
 function WA() {
   return (
     <motion.a href="https://wa.me/27715165243" target="_blank" rel="noopener noreferrer" data-h
@@ -1440,22 +980,18 @@ function WA() {
   );
 }
 
-/* ═══════════════════════════════════════════
-   APP
-   ═══════════════════════════════════════════ */
+/* ─── APP ─── */
 function App() {
   const [loading, setLoading] = useState(true);
   const done = useCallback(() => setLoading(false), []);
-
   const hero = useRef(null);
   const problem = useRef(null);
   const solution = useRef(null);
   const proof = useRef(null);
   const process = useRef(null);
+  const investment = useRef(null);
   const cta = useRef(null);
-
-  const refs = { hero, problem, solution, proof, process, cta };
-
+  const refs = { hero, problem, solution, proof, process, investment, cta };
   return (
     <div style={{ background: 'var(--ink)', color: '#E2E2E8', minHeight: '100vh' }}>
       <AnimatePresence>{loading && <Preloader done={done} />}</AnimatePresence>
@@ -1463,17 +999,17 @@ function App() {
       <ProgressBar />
       <Nav refs={refs} />
       <Hero refs={refs} />
-      <Marquee text="ONE SYSTEM · UNIFIED OPERATIONS · EVERYTHING CONNECTED" />
-      <Problem sectionRef={problem} />
-      <Solution sectionRef={solution} />
-      <WhatYourSystemReplaces />
-      <WhatsIncluded />
-      <OperationalWorkflow />
+      <Marquee text="CRM · CLIENT PORTAL · BOOKING · AUTOMATION · OPERATIONS DASHBOARD · ONBOARDING" />
+      <PainPoints sectionRef={problem} />
+      <TheSystem sectionRef={solution} />
+      <WhatItReplaces />
+      <BeforeAfter />
       <Outcomes />
       <Proof sectionRef={proof} />
-      <Investment />
       <Process sectionRef={process} />
-      <Qualification />
+      <Investment sectionRef={investment} />
+      <WhoThisIsFor />
+      <FAQ />
       <FinalCTA sectionRef={cta} />
       <Footer />
       <WA />
