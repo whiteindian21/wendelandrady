@@ -876,118 +876,193 @@ function Process({sectionRef}){
     </section>
   );
 }
-/* ─── 10. PRICING ─── */
-function Investment({sectionRef}){
-return (
-<section ref={sectionRef} className="py-20 md:py-28" style={{background:'rgba(13,13,16,0.6)'}}> <div className="max-w-3xl mx-auto px-6"> <div className="text-center mb-12"> <R><span className="label block mb-4">Investment</span></R> <R d={0.08}>
-<h2 className="display mb-4" style={{fontSize:'clamp(28px,4.2vw,48px)',color:'#E2E2E8'}}>
-Built for operational leverage.<br />Not cheap execution. </h2> </R> <R d={0.12}>
-<p className="text-[14px] max-w-md mx-auto" style={{color:'var(--ink-muted)'}}>
-Every system is designed to reduce operational friction, centralize workflows, and eliminate manual overhead as your agency scales. </p> </R> </div>
 
-```
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-      {[
-        {
-          tier:'Foundation Infrastructure',
-          range:'$1,500 – $3,000',
-          desc:'Operational foundation for lean agencies needing centralized onboarding, CRM, and internal visibility.',
-          items:[
-            'CRM + Client Management',
-            'Client Portal',
-            'Smart Intake Workflows',
-            'Onboarding Automation',
-            'Operations Dashboard',
-          ],
-        },
-        {
-          tier:'Growth Operations System',
-          range:'$3,000 – $6,000',
-          desc:'Advanced operational infrastructure with AI-assisted workflows, automation layers, and reporting systems.',
-          items:[
-            'Everything in Foundation',
-            'AI Workflow Layer',
-            'Advanced Automation',
-            'Reporting & Analytics',
-            'Internal Workflow Systems',
-          ],
-          featured:true,
-        },
-        {
-          tier:'Enterprise Infrastructure',
-          range:'Custom Scope',
-          desc:'Custom operational ecosystems for scaling agencies requiring multi-team workflows, integrations, and internal tooling.',
-          items:[
-            'Multi-team Architecture',
-            'Custom Integrations',
-            'White-label Portals',
-            'Advanced Reporting',
-            'Priority Support',
-          ],
-        },
-      ].map((tier,i)=>(
-        <R key={i} d={i*0.08}>
-          <div className={tier.featured?'card-accent':'card'} style={{height:'100%'}}>
-            {tier.featured&&(
-              <div className="pill mb-3 inline-block" style={{fontSize:'9px'}}>
-                Most Popular
-              </div>
-            )}
+  /* ─── 10. PRICING ─── */
+function Investment({ sectionRef }) {
+  return (
+    <section
+      ref={sectionRef}
+      className="py-20 md:py-28"
+      style={{ background: 'rgba(13,13,16,0.6)' }}
+    >
+      <div className="max-w-3xl mx-auto px-6">
+        
+        <div className="text-center mb-12">
+          <R>
+            <span className="label block mb-4">Investment</span>
+          </R>
 
-            <p className="text-[13px] mb-1" style={{color:'#E2E2E8',fontWeight:700}}>
-              {tier.tier}
+          <R d={0.08}>
+            <h2
+              className="display mb-4"
+              style={{
+                fontSize: 'clamp(28px,4.2vw,48px)',
+                color: '#E2E2E8',
+              }}
+            >
+              Built for operational leverage.
+              <br />
+              Not cheap execution.
+            </h2>
+          </R>
+
+          <R d={0.12}>
+            <p
+              className="text-[14px] max-w-md mx-auto"
+              style={{ color: 'var(--ink-muted)' }}
+            >
+              Every system is designed to reduce operational friction,
+              centralize workflows, and eliminate manual overhead as your
+              agency scales.
             </p>
+          </R>
+        </div>
 
-            <p className="display mb-3" style={{fontSize:'21px',color:'var(--lime)'}}>
-              {tier.range}
-            </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          {[
+            {
+              tier: 'Foundation Infrastructure',
+              range: '$1,500 – $3,000',
+              desc:
+                'Operational foundation for lean agencies needing centralized onboarding, CRM, and internal visibility.',
+              items: [
+                'CRM + Client Management',
+                'Client Portal',
+                'Smart Intake Workflows',
+                'Onboarding Automation',
+                'Operations Dashboard',
+              ],
+            },
 
-            <p className="text-[12px] leading-relaxed mb-4" style={{color:'var(--ink-muted)'}}>
-              {tier.desc}
-            </p>
+            {
+              tier: 'Growth Operations System',
+              range: '$3,000 – $6,000',
+              desc:
+                'Advanced operational infrastructure with AI-assisted workflows, automation layers, and reporting systems.',
+              items: [
+                'Everything in Foundation',
+                'AI Workflow Layer',
+                'Advanced Automation',
+                'Reporting & Analytics',
+                'Internal Workflow Systems',
+              ],
+              featured: true,
+            },
 
-            <div className="space-y-2">
-              {tier.items.map((item,j)=>(
-                <div key={j} className="flex items-center gap-2">
-                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
-                    <path
-                      d="M1.5 4l2 2 3-3.5"
-                      stroke="var(--lime)"
-                      strokeWidth="1.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+            {
+              tier: 'Enterprise Infrastructure',
+              range: 'Custom Scope',
+              desc:
+                'Custom operational ecosystems for scaling agencies requiring multi-team workflows, integrations, and internal tooling.',
+              items: [
+                'Multi-team Architecture',
+                'Custom Integrations',
+                'White-label Portals',
+                'Advanced Reporting',
+                'Priority Support',
+              ],
+            },
+          ].map((tier, i) => (
+            <R key={i} d={i * 0.08}>
+              <div
+                className={tier.featured ? 'card-accent' : 'card'}
+                style={{ height: '100%' }}
+              >
+                {tier.featured && (
+                  <div
+                    className="pill mb-3 inline-block"
+                    style={{ fontSize: '9px' }}
+                  >
+                    Most Popular
+                  </div>
+                )}
 
-                  <span className="text-[12px]" style={{color:'var(--ink-muted)'}}>
-                    {item}
-                  </span>
+                <p
+                  className="text-[13px] mb-1"
+                  style={{
+                    color: '#E2E2E8',
+                    fontWeight: 700,
+                  }}
+                >
+                  {tier.tier}
+                </p>
+
+                <p
+                  className="display mb-3"
+                  style={{
+                    fontSize: '21px',
+                    color: 'var(--lime)',
+                  }}
+                >
+                  {tier.range}
+                </p>
+
+                <p
+                  className="text-[12px] leading-relaxed mb-4"
+                  style={{ color: 'var(--ink-muted)' }}
+                >
+                  {tier.desc}
+                </p>
+
+                <div className="space-y-2">
+                  {tier.items.map((item, j) => (
+                    <div
+                      key={j}
+                      className="flex items-center gap-2"
+                    >
+                      <svg
+                        width="8"
+                        height="8"
+                        viewBox="0 0 8 8"
+                        fill="none"
+                      >
+                        <path
+                          d="M1.5 4l2 2 3-3.5"
+                          stroke="var(--lime)"
+                          strokeWidth="1.2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+
+                      <span
+                        className="text-[12px]"
+                        style={{ color: 'var(--ink-muted)' }}
+                      >
+                        {item}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
+            </R>
+          ))}
+        </div>
+
+        <R d={0.3} className="text-center">
+          <p
+            className="text-[13px] mb-5"
+            style={{ color: 'var(--ink-muted)' }}
+          >
+            Every engagement is scoped strategically based on operational
+            complexity, workflow requirements, and automation depth.
+          </p>
+
+          <button
+            onClick={() =>
+              document
+                .getElementById('cta-section')
+                ?.scrollIntoView({ behavior: 'smooth' })
+            }
+            className="btn-primary glow-btn"
+            data-h
+          >
+            Book a system audit — free
+          </button>
         </R>
-      ))}
-    </div>
-
-    <R d={0.3} className="text-center">
-      <p className="text-[13px] mb-5" style={{color:'var(--ink-muted)'}}>
-        Every engagement is scoped strategically based on operational complexity, workflow requirements, and automation depth.
-      </p>
-
-      <button
-        onClick={()=>document.getElementById('cta-section').scrollIntoView({behavior:'smooth'})}
-        className="btn-primary glow-btn"
-        data-h
-      >
-        Book a system audit — free
-      </button>
-    </R>
-  </div>
-</section>
-```
-
-);
+      </div>
+    </section>
+  );
 }
 
 
