@@ -736,79 +736,102 @@ function Outcomes(){
   );
 }
 
-/* ─── 8. PROOF / CASE STUDIES ─── */
-function Proof({sectionRef}){
-  const cases=[
+/* ─── 7. PROOF — case studies with screenshots ─── */
+function Proof({ sectionRef }) {
+  const [activeGallery, setActiveGallery] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const cases = [
     {
-      client:'Boutique Real Estate Agency',context:'Team of 4 · US-based',built:'Client Management System',
-      problem:'Client data split across shared inbox, three spreadsheets, and a CRM nobody updated. Response times were slow. Deals were slipping.',
-      solution:'Unified client dashboard with AI-powered lead capture, automatic document management, and live status tracking. All enquiries routed and tagged automatically.',
-      results:['Response time: 6hrs → under 30 min','Admin time saved: ~12 hours/week','Zero leads lost to follow-up gaps'],
+      client: 'Boutique Real Estate Agency',
+      context: 'Team of 4 · US-based',
+      built: 'Client Management System',
+      problem: 'Client info split across a shared inbox, three spreadsheets, and a CRM nobody kept updated. Response times were slow and deals were slipping.',
+      solution: 'Unified client dashboard with automatic lead capture, document management, and status tracking. All enquiries feed in automatically.',
+      results: ['Response time: 6 hrs → under 30 min', 'Admin time saved: ~12 hours/week', 'Zero leads lost to follow-up gaps'],
+      images: ['ChatGPT Image May 12, 2026, 01_48_14 AM.png'],
     },
     {
-      client:'Independent Consulting Practice',context:'Solo operator · UK-based',built:'Booking & Onboarding System',
-      problem:'3+ days to onboard each new client — manually emailing documents, chasing signatures, scheduling calls back and forth.',
-      solution:'Automated full journey from first enquiry to signed contract. Booking, AI-assisted intake, proposal generation, and e-signature — without manual follow-up.',
-      results:['Onboarding: 3 days → under 2 hours','Discovery calls booked: +34% in 60 days','Zero manual onboarding steps remaining'],
+      client: 'Independent Consulting Practice',
+      context: 'Solo operator · UK-based',
+      built: 'Booking & Onboarding System',
+      problem: 'Spending 3+ days onboarding each new client — manually emailing documents, chasing signatures, booking calls back-and-forth.',
+      solution: 'Automated full journey from first enquiry to signed contract. Booking, intake form, proposal generation, and e-signature — all without manual follow-up.',
+      results: ['Onboarding time: 3 days → under 2 hours', 'Discovery calls booked: +34% in 60 days', 'No manual onboarding steps remaining'],
+      images: ['ChatGPT Image May 12, 2026, 01_49_32 AM.png'],
     },
     {
-      client:'Marketing & Strategy Agency',context:'Team of 8 · AU-based',built:'Full Operations Hub',
-      problem:'7 separate tools that didn\'t connect. Team spending significant time each week on admin and status updates instead of client work.',
-      solution:'Combined client portal, AI-powered operations dashboard, automated billing, and project tracking — four separate tools replaced entirely.',
-      results:['15+ recurring manual tasks eliminated','Revenue and pipeline tracked automatically','4 tool subscriptions cancelled'],
+      client: 'Marketing & Strategy Agency',
+      context: 'Team of 8 · AU-based',
+      built: 'Full Operations Hub',
+      problem: 'Using 7 separate tools that didn\'t connect. Team spent significant time each week on admin and status updates rather than client work.',
+      solution: 'Combined client portal, internal operations dashboard, automated billing, and project tracking — replacing four separate tools entirely.',
+      results: ['15+ recurring manual tasks eliminated', 'Revenue and pipeline tracked automatically', '4 tool subscriptions cancelled'],
+      images: ['ChatGPT Image May 12, 2026, 01_51_14 AM.png'],
     },
   ];
   return (
-    <section ref={sectionRef} className="py-20 md:py-28" style={{background:'rgba(13,13,16,0.6)'}}>
-      <div className="max-w-5xl mx-auto px-6">
+    <section ref={sectionRef} className="py-20 md:py-28" style={{ background: 'rgba(15,15,18,0.5)' }}>
+      <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-14">
-          <R><span className="label block mb-4">Results</span></R>
+          <R><span className="label block mb-4">Client Results</span></R>
           <R d={0.06}>
-            <h2 className="display mb-3" style={{fontSize:'clamp(28px,4.2vw,48px)',color:'#E2E2E8'}}>Real systems. Real numbers.</h2>
+            <h2 className="display mb-3" style={{ fontSize: 'clamp(30px,4.5vw,50px)', color: '#E2E2E8' }}>
+              Real systems. Real numbers.
+            </h2>
           </R>
           <R d={0.1}>
-            <p className="text-[14px]" style={{color:'var(--ink-muted)'}}>Built for agencies and service businesses across the US, UK, and AU.</p>
+            <p className="text-[14px]" style={{ color: 'var(--ink-muted)' }}>Built for agencies and service businesses across the US, UK, and AU.</p>
           </R>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {cases.map((c,i)=>(
-            <R key={i} d={i*0.08}>
-              <div className="card h-full flex flex-col" style={{padding:'24px'}}>
-                <span className="label block mb-1" style={{color:'var(--lime)',opacity:0.6}}>{c.built}</span>
-                <p className="text-sm mb-0.5" style={{color:'#E2E2E8',fontWeight:700}}>{c.client}</p>
-                <p className="text-[11px] mb-4" style={{fontFamily:'DM Mono',color:'var(--ink-subtle)'}}>{c.context}</p>
-                {/* Conceptual system preview */}
-                <div className="mb-4 p-3 rounded-10 overflow-hidden" style={{background:'rgba(255,255,255,0.015)',border:'1px solid var(--ink-border)',borderRadius:'10px'}}>
-                  <div style={{fontFamily:'DM Mono',fontSize:'9px',letterSpacing:'0.12em',color:'var(--ink-muted)',textTransform:'uppercase',marginBottom:'8px'}}>System Preview</div>
-                  <div className="space-y-1.5">
-                    {['Client Hub','Workflow Engine','Live Dashboard'].map((item,j)=>(
-                      <div key={j} className="flex items-center gap-2">
-                        <div style={{width:'5px',height:'5px',borderRadius:'50%',background:'var(--lime)',opacity:0.5,flexShrink:0}}/>
-                        <span style={{fontFamily:'DM Mono',fontSize:'10px',color:'rgba(200,230,74,0.45)',letterSpacing:'0.04em'}}>{item}</span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {cases.map((c, i) => (
+            <R key={i} d={i * 0.08}>
+              <div className="card overflow-hidden h-full flex flex-col" style={{ padding: '0' }}>
+                {/* Screenshot */}
+                <div style={{ background: 'var(--ink-border)', borderRadius: '18px 18px 0 0', overflow: 'hidden', position: 'relative' }}>
+                  <img src={c.images[0]} alt={c.client} onClick={() => { setActiveGallery(c.images); setActiveIndex(0); }}
+                    className="w-full object-cover" style={{ maxHeight: '180px', objectPosition: 'top', cursor: 'pointer' }} />
+                  {c.images.length > 1 && (
+                    <div className="absolute bottom-2 right-2 flex gap-1">
+                      {c.images.map((_, idx) => (
+                        <button key={idx} onClick={() => { setActiveGallery(c.images); setActiveIndex(idx); }}
+                          style={{ width: '6px', height: '6px', borderRadius: '50%', background: idx === 0 ? 'var(--lime)' : 'rgba(255,255,255,0.3)', border: 'none' }} />
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <div style={{ padding: '20px 22px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  <span className="label block mb-1" style={{ color: 'var(--lime)', opacity: 0.65 }}>{c.built}</span>
+                  <p className="text-sm mb-0.5" style={{ color: '#E2E2E8', fontWeight: 700 }}>{c.client}</p>
+                  <p className="text-[11px] mb-3" style={{ fontFamily: 'DM Mono', color: 'var(--ink-subtle)' }}>{c.context}</p>
+                  <p className="text-[12px] leading-relaxed mb-2" style={{ color: 'var(--ink-muted)' }}><span style={{ color: 'rgba(255,100,100,0.5)', fontWeight: 600 }}>Problem: </span>{c.problem}</p>
+                  <p className="text-[12px] leading-relaxed mb-4" style={{ color: 'var(--ink-muted)' }}><span style={{ color: 'rgba(200,230,74,0.6)', fontWeight: 600 }}>Built: </span>{c.solution}</p>
+                  <div className="mt-auto space-y-2">
+                    {c.results.map((r, j) => (
+                      <div key={j} className="metric-box flex items-center gap-2">
+                        <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4.5l2 2L6.5 2" stroke="var(--lime)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                        <span className="text-[11px]" style={{ color: 'var(--lime)' }}>{r}</span>
                       </div>
                     ))}
                   </div>
-                </div>
-                <p className="text-[12px] leading-relaxed mb-2" style={{color:'var(--ink-muted)'}}><span style={{color:'rgba(255,100,100,0.45)',fontWeight:600}}>Problem: </span>{c.problem}</p>
-                <p className="text-[12px] leading-relaxed mb-4" style={{color:'var(--ink-muted)'}}><span style={{color:'rgba(200,230,74,0.5)',fontWeight:600}}>Built: </span>{c.solution}</p>
-                <div className="mt-auto space-y-2">
-                  {c.results.map((r,j)=>(
-                    <div key={j} className="metric-box flex items-center gap-2">
-                      <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4.5l2 2L6.5 2" stroke="var(--lime)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                      <span className="text-[11px]" style={{color:'var(--lime)'}}>{r}</span>
-                    </div>
-                  ))}
                 </div>
               </div>
             </R>
           ))}
         </div>
+        {activeGallery && (
+          <div className="fixed inset-0 bg-black/90 flex items-center justify-center" style={{ zIndex: 200 }}>
+            <button className="absolute top-6 right-6 text-white text-xl" onClick={() => setActiveGallery(null)}>✕</button>
+            <button className="absolute left-6 text-white text-2xl" onClick={() => setActiveIndex(prev => prev === 0 ? activeGallery.length-1 : prev-1)}>‹</button>
+            <img src={activeGallery[activeIndex]} alt="preview" className="max-w-[90%] max-h-[85%] rounded-lg" />
+            <button className="absolute right-6 text-white text-2xl" onClick={() => setActiveIndex(prev => prev === activeGallery.length-1 ? 0 : prev+1)}>›</button>
+          </div>
+        )}
       </div>
     </section>
   );
 }
-
-/* ─── 9. PROCESS ─── */
+  /* ─── 9. PROCESS ─── */
 function Process({sectionRef}){
   const steps=[
     {n:'01',t:'System Audit',sub:'45 minutes. Free.',d:'We map your current tools, workflows, and operational friction points. You leave with a clear picture of what needs to be built — even if you don\'t move forward.',icon:'🔍'},
