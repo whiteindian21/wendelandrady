@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andrady — White-Labeled Client Portals for Elite Agencies</title>
+    <title>Andrady — 48-Hour Client Performance Portals for Ad Agencies</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -86,6 +86,12 @@
         }
         .float-anim { animation: float 5s ease-in-out infinite; }
 
+        @keyframes countTick {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        .count-tick { animation: countTick 2.4s ease-in-out infinite; }
+
         .form-input:focus {
             border-color: #b4ff39;
             box-shadow: 0 0 0 1px rgba(180,255,57,0.3);
@@ -112,15 +118,15 @@
 
             <!-- Nav Links (Desktop) -->
             <div class="hidden md:flex items-center gap-8">
-                <a href="#pain" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">Problem</a>
-                <a href="#offer" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">Architecture</a>
+                <a href="#problem" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">Problem</a>
+                <a href="#solution" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">The Install</a>
                 <a href="#pricing" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">Pricing</a>
                 <a href="#guarantee" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">Guarantee</a>
             </div>
 
             <!-- CTA -->
-            <a href="#convert" class="bg-accent text-black text-xs font-bold tracking-widest uppercase px-6 py-3 rounded-sm hover:bg-white transition-colors duration-300">
-                Secure Your Portal
+            <a href="#install" class="bg-accent text-black text-xs font-bold tracking-widest uppercase px-6 py-3 rounded-sm hover:bg-white transition-colors duration-300">
+                Get Your Portal Installed
             </a>
         </div>
         <!-- Bottom border -->
@@ -147,43 +153,43 @@
                     <!-- Eyebrow -->
                     <div class="flex items-center gap-3 mb-8">
                         <div class="h-px w-12 bg-accent"></div>
-                        <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Client Infrastructure for Elite Agencies</span>
+                        <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Client Portals for Performance & Ad Agencies</span>
                     </div>
 
                     <!-- Headline -->
                     <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-500 leading-[0.9] tracking-tight uppercase mb-8">
-                        Your <span class="shimmer-text">$20k</span> Clients<br>
-                        Deserve More<br>
-                        Than a Slack<br>
-                        Channel
+                        End The<br>
+                        <span class="shimmer-text">Status Update</span><br>
+                        Email Chain.<br>
+                        For Good.
                     </h1>
 
                     <!-- Subheadline -->
                     <p class="text-gray-400 text-lg font-light leading-relaxed max-w-lg mb-10">
-                        A custom-built, white-labeled client engine engineered with static HTML and Supabase security. Give your high-ticket clients a digital headquarters they actually respect. Delivered in <span class="text-white font-medium">14 days flat</span>.
+                        A white-labeled Client Performance Portal — installed, secured, and live in <span class="text-white font-medium">48 hours flat</span>. No more spreadsheet exports. No more buried Drive links. No more "just checking in" texts at 9pm.
                     </p>
 
                     <!-- CTAs -->
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="#convert" class="inline-flex items-center justify-center gap-2 bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-all duration-300 pulse-glow">
-                            Upgrade Your Client Experience
+                        <a href="#install" class="inline-flex items-center justify-center gap-2 bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-all duration-300 pulse-glow">
+                            48-Hour Deployment Setup
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
-                        <a href="#offer" class="inline-flex items-center justify-center gap-2 border border-white/10 text-white text-sm font-medium tracking-wider uppercase px-8 py-4 rounded-sm hover:border-white/30 hover:bg-white/5 transition-all duration-300">
-                            See The Architecture
+                        <a href="#solution" class="inline-flex items-center justify-center gap-2 border border-white/10 text-white text-sm font-medium tracking-wider uppercase px-8 py-4 rounded-sm hover:border-white/30 hover:bg-white/5 transition-all duration-300">
+                            See The 48-Hour Install
                         </a>
                     </div>
 
                     <!-- Micro proof -->
                     <div class="flex items-center gap-6 mt-10 pt-8 border-t border-white/5">
                         <div>
-                            <div class="font-display text-2xl font-500 text-accent tracking-tight">14</div>
-                            <div class="text-[10px] tracking-widest uppercase text-gray-500 mt-1">Day Delivery</div>
+                            <div class="font-display text-2xl font-500 text-accent tracking-tight">48</div>
+                            <div class="text-[10px] tracking-widest uppercase text-gray-500 mt-1">Hour Delivery</div>
                         </div>
                         <div class="w-px h-8 bg-white/10"></div>
                         <div>
-                            <div class="font-display text-2xl font-500 text-accent tracking-tight">$0</div>
-                            <div class="text-[10px] tracking-widest uppercase text-gray-500 mt-1">Monthly Software Rent</div>
+                            <div class="font-display text-2xl font-500 text-accent tracking-tight">$1,500</div>
+                            <div class="text-[10px] tracking-widest uppercase text-gray-500 mt-1">Flat Install Fee</div>
                         </div>
                         <div class="w-px h-8 bg-white/10"></div>
                         <div>
@@ -218,49 +224,45 @@
                                 <div class="flex items-center justify-between">
                                     <div>
                                         <div class="text-xs text-gray-500 tracking-wider uppercase">Welcome back</div>
-                                        <div class="text-white font-medium mt-1">Acme Corp — Brand Refresh</div>
+                                        <div class="text-white font-medium mt-1">Nova Retail — Paid Social, Q3</div>
                                     </div>
-                                    <div class="bg-accent/10 border border-accent/20 text-accent text-[10px] font-bold tracking-wider uppercase px-3 py-1.5 rounded-sm">Active</div>
+                                    <div class="bg-accent/10 border border-accent/20 text-accent text-[10px] font-bold tracking-wider uppercase px-3 py-1.5 rounded-sm flex items-center gap-1.5">
+                                        <span class="w-1.5 h-1.5 bg-accent rounded-full count-tick"></span>
+                                        Live
+                                    </div>
                                 </div>
 
-                                <!-- Milestone timeline -->
-                                <div class="space-y-3 mt-6">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-3 h-3 rounded-full bg-accent"></div>
-                                        <div class="flex-1 h-px bg-white/10"></div>
-                                        <span class="text-xs text-gray-400 w-24 text-right">Discovery</span>
-                                        <span class="text-[10px] text-accent font-medium w-16 text-right">Complete</span>
+                                <!-- KPI grid -->
+                                <div class="grid grid-cols-2 gap-3 mt-6">
+                                    <div class="bg-black/30 border border-white/5 rounded-sm p-3">
+                                        <div class="text-[10px] tracking-widest uppercase text-gray-500">Ad Spend</div>
+                                        <div class="text-base font-medium text-white mt-1">$42,180</div>
+                                        <div class="w-full h-1 bg-white/5 rounded-full mt-2 overflow-hidden">
+                                            <div class="h-full bg-accent rounded-full" style="width: 68%;"></div>
+                                        </div>
+                                        <div class="text-[10px] text-gray-500 mt-1">68% of budget</div>
                                     </div>
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-3 h-3 rounded-full bg-accent"></div>
-                                        <div class="flex-1 h-px bg-white/10"></div>
-                                        <span class="text-xs text-gray-400 w-24 text-right">Strategy</span>
-                                        <span class="text-[10px] text-accent font-medium w-16 text-right">Complete</span>
+                                    <div class="bg-black/30 border border-white/5 rounded-sm p-3">
+                                        <div class="text-[10px] tracking-widest uppercase text-gray-500">ROAS</div>
+                                        <div class="text-base font-medium text-accent mt-1">4.2x</div>
+                                        <div class="text-[10px] text-accent mt-1">▲ 12% vs last mo.</div>
                                     </div>
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-3 h-3 rounded-full bg-accent animate-pulse"></div>
-                                        <div class="flex-1 h-px bg-gradient-to-r from-accent/50 to-white/10"></div>
-                                        <span class="text-xs text-white w-24 text-right font-medium">Design</span>
-                                        <span class="text-[10px] text-accent font-medium w-16 text-right">In Progress</span>
+                                    <div class="bg-black/30 border border-white/5 rounded-sm p-3">
+                                        <div class="text-[10px] tracking-widest uppercase text-gray-500">Conversions</div>
+                                        <div class="text-base font-medium text-white mt-1">318</div>
+                                        <div class="text-[10px] text-accent mt-1">▲ 8% vs last mo.</div>
                                     </div>
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-3 h-3 rounded-full bg-white/10"></div>
-                                        <div class="flex-1 h-px bg-white/5"></div>
-                                        <span class="text-xs text-gray-600 w-24 text-right">Development</span>
-                                        <span class="text-[10px] text-gray-600 w-16 text-right">Upcoming</span>
-                                    </div>
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-3 h-3 rounded-full bg-white/10"></div>
-                                        <div class="flex-1 h-px bg-white/5"></div>
-                                        <span class="text-xs text-gray-600 w-24 text-right">Launch</span>
-                                        <span class="text-[10px] text-gray-600 w-16 text-right">Upcoming</span>
+                                    <div class="bg-black/30 border border-white/5 rounded-sm p-3">
+                                        <div class="text-[10px] tracking-widest uppercase text-gray-500">CPA</div>
+                                        <div class="text-base font-medium text-white mt-1">$32.40</div>
+                                        <div class="text-[10px] text-accent mt-1">▼ 6% vs last mo.</div>
                                     </div>
                                 </div>
 
                                 <!-- File upload area -->
                                 <div class="mt-4 border border-dashed border-white/10 rounded-sm p-4 flex items-center justify-center gap-3 hover:border-accent/30 transition-colors duration-300 cursor-pointer">
                                     <i data-lucide="upload-cloud" class="w-4 h-4 text-gray-500"></i>
-                                    <span class="text-xs text-gray-500 tracking-wider">Drop assets here — encrypted & isolated</span>
+                                    <span class="text-xs text-gray-500 tracking-wider">Drop reports or creative here — encrypted & isolated</span>
                                 </div>
                             </div>
 
@@ -274,7 +276,7 @@
 
                         <!-- Caption -->
                         <p class="text-center text-[10px] tracking-[0.2em] uppercase text-gray-600 mt-4">
-                            Cinematic Dashboard Preview — Auto-plays on scroll
+                            Live Performance Snapshot — Updates Without A Single Export
                         </p>
                     </div>
                 </div>
@@ -284,29 +286,29 @@
 
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 3: THE CHURN METRIC (Pain Point)   -->
+    <!-- SECTION 3: THE PROBLEM (Before / After)    -->
     <!-- ═══════════════════════════════════════════ -->
-    <section id="pain" class="relative py-32 overflow-hidden">
+    <section id="problem" class="relative py-32 overflow-hidden">
         <div class="max-w-7xl mx-auto px-6">
             <!-- Section header -->
             <div class="fade-up max-w-3xl mx-auto text-center mb-20">
                 <div class="flex items-center justify-center gap-3 mb-6">
                     <div class="h-px w-8 bg-accent"></div>
-                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">The Churn Metric</span>
+                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">The Real Retention Leak</span>
                     <div class="h-px w-8 bg-accent"></div>
                 </div>
                 <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
                     They Don't Leave Because<br>
-                    of <span class="text-accent">Bad Work</span>
+                    The Ads Didn't <span class="text-accent">Work</span>
                 </h2>
                 <p class="text-gray-400 text-lg font-light leading-relaxed">
-                    High-ticket clients churn because of operational chaos. Scattered files, missed messages, and the creeping feeling that their six-figure engagement is being managed out of a inbox. That friction is a revenue leak — and it's entirely preventable.
+                    Performance agencies lose high-ticket retainers over operational chaos — not ROAS. Spreadsheet exports nobody opens, screenshots buried in Slack, and the creeping feeling that their ad spend is being managed out of a Google Drive folder. That friction is a retainer killer, and it's entirely preventable.
                 </p>
             </div>
 
             <!-- The Contrast Grid -->
             <div class="grid md:grid-cols-2 gap-1">
-                <!-- OLD WAY -->
+                <!-- BEFORE -->
                 <div class="fade-up bg-surfaceCard border border-white/5 rounded-sm p-8 md:p-10 relative overflow-hidden">
                     <!-- Subtle red danger tint -->
                     <div class="absolute top-0 right-0 w-32 h-32 bg-red-500/5 blur-[80px]"></div>
@@ -316,37 +318,37 @@
                             <div class="w-8 h-8 rounded-sm bg-red-500/10 border border-red-500/20 flex items-center justify-center">
                                 <i data-lucide="x" class="w-4 h-4 text-red-400"></i>
                             </div>
-                            <span class="text-xs font-bold tracking-[0.2em] uppercase text-red-400/80">The Old Way</span>
+                            <span class="text-xs font-bold tracking-[0.2em] uppercase text-red-400/80">Before</span>
                         </div>
 
-                        <h3 class="font-display text-2xl font-500 tracking-tight uppercase mb-6 text-white/80">Fragmented Tool Chaos</h3>
+                        <h3 class="font-display text-2xl font-500 tracking-tight uppercase mb-6 text-white/80">The Status-Update Spiral</h3>
 
                         <ul class="space-y-4">
                             <li class="flex items-start gap-3">
+                                <i data-lucide="file-spreadsheet" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
+                                <span class="text-gray-500 text-sm font-light">Sunday-night CSV exports from Ads Manager nobody opens</span>
+                            </li>
+                            <li class="flex items-start gap-3">
                                 <i data-lucide="message-circle" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-500 text-sm font-light">Slack channels with 47 unread messages and zero decisions documented</span>
+                                <span class="text-gray-500 text-sm font-light">Screenshot dumps dropped into a Slack channel with 40 unreads</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="folder" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-500 text-sm font-light">Google Drive folders with "Final_v3_ACTUAL_final.pdf" naming conventions</span>
+                                <span class="text-gray-500 text-sm font-light">Drive folders full of "Report_Final_v3_ACTUAL.pdf"</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="mail" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-500 text-sm font-light">Email threads that bury critical feedback under "thanks" and "sounds good"</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="help-circle" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-500 text-sm font-light">Clients asking "Where are we on this?" because there's no single source of truth</span>
+                                <span class="text-gray-500 text-sm font-light">Clients texting "quick question on spend" at 9pm</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="shield-off" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-500 text-sm font-light">Zero data isolation — Client A can accidentally see Client B's assets</span>
+                                <span class="text-gray-500 text-sm font-light">One wrong share link and Client A sees Client B's numbers</span>
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- ANDRADY WAY -->
+                <!-- AFTER -->
                 <div class="fade-up bg-surfaceCard border border-accent/10 rounded-sm p-8 md:p-10 relative overflow-hidden" style="animation-delay: 0.2s;">
                     <!-- Accent glow -->
                     <div class="absolute top-0 right-0 w-40 h-40 bg-accent/5 blur-[80px]"></div>
@@ -356,31 +358,31 @@
                             <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center">
                                 <i data-lucide="check" class="w-4 h-4 text-accent"></i>
                             </div>
-                            <span class="text-xs font-bold tracking-[0.2em] uppercase text-accent">The Andrady Way</span>
+                            <span class="text-xs font-bold tracking-[0.2em] uppercase text-accent">After</span>
                         </div>
 
-                        <h3 class="font-display text-2xl font-500 tracking-tight uppercase mb-6 text-white">One Pristine Client Interface</h3>
+                        <h3 class="font-display text-2xl font-500 tracking-tight uppercase mb-6 text-white">One Branded Performance Hub</h3>
 
                         <ul class="space-y-4">
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm font-light">One branded URL. One login. Every conversation, asset, and milestone in one place.</span>
+                                <span class="text-gray-300 text-sm font-light">One branded login. Every report, creative, and number in one place.</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm font-light">Structured upload pipelines — no more guessing which file is the latest version</span>
+                                <span class="text-gray-300 text-sm font-light">Live spend, ROAS, and conversion data — no manual exports, ever</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm font-light">Contextual feedback loops tied directly to deliverables, not buried in threads</span>
+                                <span class="text-gray-300 text-sm font-light">Reports and creative assets versioned in a single hub</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm font-light">Real-time milestone tracking — clients see progress without pinging you at 11pm</span>
+                                <span class="text-gray-300 text-sm font-light">Clients self-serve answers instead of pinging you after hours</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm font-light">Supabase RLS ironclad isolation — Client A's data is invisible to Client B. Always.</span>
+                                <span class="text-gray-300 text-sm font-light">Bank-grade account isolation — Client A never sees Client B's data</span>
                             </li>
                         </ul>
                     </div>
@@ -390,18 +392,18 @@
             <!-- Bottom stat bar -->
             <div class="fade-up mt-12 border border-white/5 rounded-sm p-6 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 bg-surfaceCard/50">
                 <div class="text-center">
-                    <div class="font-display text-3xl font-500 text-accent">73%</div>
-                    <div class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mt-1">of high-ticket churn traces back to communication gaps</div>
+                    <div class="font-display text-3xl font-500 text-accent">82%</div>
+                    <div class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mt-1">of agency churn traces back to reporting friction, not ad performance</div>
                 </div>
                 <div class="hidden md:block w-px h-10 bg-white/10"></div>
                 <div class="text-center">
-                    <div class="font-display text-3xl font-500 text-accent">9.2x</div>
-                    <div class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mt-1">client retention uplift with dedicated portal infrastructure</div>
+                    <div class="font-display text-3xl font-500 text-accent">6.4x</div>
+                    <div class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mt-1">client retention lift with a dedicated performance portal</div>
                 </div>
                 <div class="hidden md:block w-px h-10 bg-white/10"></div>
                 <div class="text-center">
-                    <div class="font-display text-3xl font-500 text-accent">$0</div>
-                    <div class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mt-1">monthly software rent with the Sovereign Stack</div>
+                    <div class="font-display text-3xl font-500 text-accent">48 Hrs</div>
+                    <div class="text-[10px] tracking-[0.2em] uppercase text-gray-500 mt-1">from kickoff to your first client login</div>
                 </div>
             </div>
         </div>
@@ -409,9 +411,9 @@
 
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 4: CORE OFFER ARCHITECTURE         -->
+    <!-- SECTION 4: THE 48-HOUR INSTALL             -->
     <!-- ═══════════════════════════════════════════ -->
-    <section id="offer" class="relative py-32 overflow-hidden">
+    <section id="solution" class="relative py-32 overflow-hidden">
         <!-- Background texture -->
         <div class="absolute inset-0 grid-bg opacity-30"></div>
 
@@ -420,14 +422,14 @@
             <div class="fade-up max-w-3xl mb-20">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="h-px w-8 bg-accent"></div>
-                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Offer Architecture</span>
+                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">The Install</span>
                 </div>
                 <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
-                    What's Behind<br>
-                    the <span class="text-accent">Login Wall</span>
+                    Three Systems.<br>
+                    One <span class="text-accent">48-Hour</span> Install
                 </h2>
                 <p class="text-gray-400 text-lg font-light leading-relaxed max-w-xl">
-                    A fully functional, production-grade web application — not a template, not a plugin. Three core systems engineered to eliminate operational friction and command client respect.
+                    Not a Notion hack. Not a page-builder template. A fully functional, white-labeled web app — wired, secured, and handed to you with the keys in two days flat.
                 </p>
             </div>
 
@@ -445,29 +447,29 @@
                     </div>
 
                     <h3 class="font-display text-3xl md:text-4xl font-500 tracking-tight uppercase mb-4">
-                        Secure Client<br>Onboarding & Auth
+                        Bank-Grade Login.<br>Zero Setup Headache
                     </h3>
 
                     <p class="text-gray-400 font-light leading-relaxed mb-6">
-                        Every client gets a private, password-protected entry into your portal. Powered by Supabase Authentication with Row-Level Security (RLS) policies that enforce ironclad data isolation at the database level. Client A's data is structurally invisible to Client B — not hidden, <span class="text-white">architecturally inaccessible</span>.
+                        Every client gets a private, branded login into their own dashboard. Behind the scenes, bank-grade security keeps every account fully walled off from every other — Client A's numbers never touch Client B's screen. You don't manage servers, certificates, or password resets. It just <span class="text-white">works</span>.
                     </p>
 
                     <ul class="space-y-3">
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Magic link & password authentication</span>
+                            <span class="text-gray-300 text-sm">One branded login screen — your colors, your logo, your domain</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Supabase RLS: database-level data isolation, not UI-level hiding</span>
+                            <span class="text-gray-300 text-sm">Bank-grade account isolation between every single client</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">White-labeled login screen with your agency's brand identity</span>
+                            <span class="text-gray-300 text-sm">Magic-link or password sign-in, no IT ticket required</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Role-based access: Admin (you) vs. Client (them)</span>
+                            <span class="text-gray-300 text-sm">Admin vs. client roles — you control exactly what they see</span>
                         </li>
                     </ul>
                 </div>
@@ -495,48 +497,54 @@
                         </div>
                         <!-- Label -->
                         <div class="text-center pt-72">
-                            <div class="text-[10px] tracking-[0.2em] uppercase text-gray-600">Row-Level Security — Active</div>
+                            <div class="text-[10px] tracking-[0.2em] uppercase text-gray-600">Account Isolation — Active</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Feature 2: Asset Hub -->
+            <!-- Feature 2: Live Performance Dashboard -->
             <div class="fade-up grid lg:grid-cols-2 gap-12 items-center mb-24 border border-white/5 rounded-sm p-8 md:p-12 bg-surfaceCard/30 relative overflow-hidden">
                 <!-- Background accent -->
                 <div class="absolute -top-20 -left-20 w-60 h-60 bg-accent/3 blur-[100px]"></div>
 
-                <!-- Visual: Upload flow (left on desktop) -->
+                <!-- Visual: Live metrics (left on desktop) -->
                 <div class="relative z-10 flex items-center justify-center order-2 lg:order-1">
-                    <div class="w-full max-w-sm space-y-4">
-                        <!-- Upload zone mockup -->
-                        <div class="border border-dashed border-accent/20 rounded-sm p-8 text-center bg-accent/5 hover:bg-accent/10 transition-colors duration-300 cursor-pointer">
-                            <i data-lucide="upload-cloud" class="w-8 h-8 text-accent mx-auto mb-3"></i>
-                            <div class="text-sm text-white font-medium mb-1">Drop assets here</div>
-                            <div class="text-[10px] tracking-widest uppercase text-gray-500">Encrypted pipeline to isolated storage bucket</div>
+                    <div class="w-full max-w-sm">
+                        <div class="border border-white/10 rounded-sm bg-black/30 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 border-b border-white/5">
+                                <span class="text-xs text-white font-medium">Nova Retail — Live View</span>
+                                <span class="text-[10px] text-accent tracking-wider uppercase flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 bg-accent rounded-full count-tick"></span>
+                                    Updated 2 min ago
+                                </span>
+                            </div>
+                            <div class="p-4 space-y-3">
+                                <div>
+                                    <div class="flex items-center justify-between text-xs mb-1">
+                                        <span class="text-gray-400">Spend Pacing</span>
+                                        <span class="text-white font-medium">$42,180 / $62k</span>
+                                    </div>
+                                    <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                        <div class="h-full bg-accent rounded-full" style="width: 68%;"></div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between text-xs py-2 border-t border-white/5">
+                                    <span class="text-gray-400">ROAS</span>
+                                    <span class="text-accent font-medium">4.2x ▲ 12%</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs py-2 border-t border-white/5">
+                                    <span class="text-gray-400">Conversions</span>
+                                    <span class="text-white font-medium">318 <span class="text-accent">▲ 8%</span></span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs py-2 border-t border-white/5">
+                                    <span class="text-gray-400">CPA</span>
+                                    <span class="text-white font-medium">$32.40 <span class="text-accent">▼ 6%</span></span>
+                                </div>
+                            </div>
                         </div>
-
-                        <!-- File list mockup -->
-                        <div class="space-y-2">
-                            <div class="flex items-center gap-3 bg-black/30 border border-white/5 rounded-sm px-4 py-3">
-                                <i data-lucide="file-image" class="w-4 h-4 text-accent"></i>
-                                <span class="text-xs text-gray-300 flex-1">Brand_Guidelines_v2.pdf</span>
-                                <span class="text-[10px] text-accent">4.2 MB</span>
-                            </div>
-                            <div class="flex items-center gap-3 bg-black/30 border border-white/5 rounded-sm px-4 py-3">
-                                <i data-lucide="file-video" class="w-4 h-4 text-gray-500"></i>
-                                <span class="text-xs text-gray-300 flex-1">Hero_Shot_Final.mp4</span>
-                                <span class="text-[10px] text-gray-500">28.1 MB</span>
-                            </div>
-                            <div class="flex items-center gap-3 bg-black/30 border border-white/5 rounded-sm px-4 py-3">
-                                <i data-lucide="file-text" class="w-4 h-4 text-gray-500"></i>
-                                <span class="text-xs text-gray-300 flex-1">Copy_Deck_Approved.docx</span>
-                                <span class="text-[10px] text-gray-500">1.8 MB</span>
-                            </div>
-                        </div>
-
-                        <div class="text-center">
-                            <div class="text-[10px] tracking-[0.2em] uppercase text-gray-600">Direct to Supabase Storage — Isolated Per Client</div>
+                        <div class="text-center mt-6">
+                            <div class="text-[10px] tracking-[0.2em] uppercase text-gray-600">Auto-Refreshes Every 60s — Bank-Grade Secured</div>
                         </div>
                     </div>
                 </div>
@@ -544,155 +552,111 @@
                 <div class="relative z-10 order-1 lg:order-2">
                     <div class="flex items-center gap-3 mb-6">
                         <div class="w-10 h-10 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center">
-                            <i data-lucide="folder-sync" class="w-5 h-5 text-accent"></i>
+                            <i data-lucide="activity" class="w-5 h-5 text-accent"></i>
                         </div>
                         <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent">System 02</span>
                     </div>
 
                     <h3 class="font-display text-3xl md:text-4xl font-500 tracking-tight uppercase mb-4">
-                        Centralized Asset<br>& Feedback Hub
+                        A Live Number Beats<br>A Weekly Email
                     </h3>
 
                     <p class="text-gray-400 font-light leading-relaxed mb-6">
-                        Custom upload pipelines that route files directly to isolated Supabase storage buckets. Every asset versioned, every piece of feedback threaded to its deliverable. No more "I sent that over Slack last week" or "Which version is current?" — the hub is the <span class="text-white">single source of truth</span>.
+                        Replace the Sunday-night export with a dashboard that moves the moment spend, ROAS, or conversions do. Your client opens one tab and sees exactly what they're paying for — <span class="text-white">no status call required</span>.
                     </p>
 
                     <ul class="space-y-3">
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Client-facing upload portal with file type and size validation</span>
+                            <span class="text-gray-300 text-sm">Live spend, ROAS, CPA, and conversion tracking</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Per-client Supabase storage buckets — physical data separation</span>
+                            <span class="text-gray-300 text-sm">Budget pacing bars so clients see the burn at a glance</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Contextual feedback threads pinned to specific deliverables</span>
+                            <span class="text-gray-300 text-sm">Cuts "how are we doing?" messages by 80%+</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Automatic version control — eliminates scope creep from ambiguous revisions</span>
+                            <span class="text-gray-300 text-sm">You control what's visible — no surprise numbers, ever</span>
                         </li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Feature 3: Milestone Tracking -->
+            <!-- Feature 3: Reports & Asset Hub -->
             <div class="fade-up grid lg:grid-cols-2 gap-12 items-center border border-white/5 rounded-sm p-8 md:p-12 bg-surfaceCard/30 relative overflow-hidden">
                 <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-accent/3 blur-[100px]"></div>
 
                 <div class="relative z-10">
                     <div class="flex items-center gap-3 mb-6">
                         <div class="w-10 h-10 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center">
-                            <i data-lucide="activity" class="w-5 h-5 text-accent"></i>
+                            <i data-lucide="folder-sync" class="w-5 h-5 text-accent"></i>
                         </div>
                         <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent">System 03</span>
                     </div>
 
                     <h3 class="font-display text-3xl md:text-4xl font-500 tracking-tight uppercase mb-4">
-                        Real-Time<br>Milestone Tracking
+                        One Hub For Every<br>Report & Creative
                     </h3>
 
                     <p class="text-gray-400 font-light leading-relaxed mb-6">
-                        A stunning, visual project timeline that answers the question your clients are always asking: <span class="text-white">"What are we paying for right now?"</span> Each milestone is a data-driven proof point — live status, tied deliverables, and clear progress indicators that eliminate status-call overhead and reinforce the value of your engagement.
+                        Monthly reports, ad creatives, raw exports — everything lands in one versioned hub instead of six different Drive links. Feedback stays pinned to the file it's about, not buried three weeks deep in a <span class="text-white">Slack thread</span>.
                     </p>
 
                     <ul class="space-y-3">
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Visual project timeline with live status updates</span>
+                            <span class="text-gray-300 text-sm">Drag-and-drop reports and creative assets, fully versioned</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Milestone-linked deliverables — clients see what's done, what's next, why</span>
+                            <span class="text-gray-300 text-sm">Feedback threads pinned to the exact file they reference</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Eliminates "status check" emails by 80%+ — clients self-serve progress</span>
+                            <span class="text-gray-300 text-sm">No more guessing which file is the client-approved one</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Admin-only controls for milestone updates — you control the narrative</span>
+                            <span class="text-gray-300 text-sm">Each client's files are physically walled off from the rest</span>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Visual: Timeline mockup -->
+                <!-- Visual: Upload flow -->
                 <div class="relative z-10 flex items-center justify-center">
-                    <div class="w-full max-w-sm">
-                        <!-- Timeline visual -->
-                        <div class="relative">
-                            <!-- Vertical line -->
-                            <div class="absolute left-[18px] top-0 bottom-0 w-px bg-white/10"></div>
+                    <div class="w-full max-w-sm space-y-4">
+                        <!-- Upload zone mockup -->
+                        <div class="border border-dashed border-accent/20 rounded-sm p-8 text-center bg-accent/5 hover:bg-accent/10 transition-colors duration-300 cursor-pointer">
+                            <i data-lucide="upload-cloud" class="w-8 h-8 text-accent mx-auto mb-3"></i>
+                            <div class="text-sm text-white font-medium mb-1">Drop reports or creative here</div>
+                            <div class="text-[10px] tracking-widest uppercase text-gray-500">Encrypted pipeline to an isolated storage hub</div>
+                        </div>
 
-                            <div class="space-y-6">
-                                <!-- Milestone: Complete -->
-                                <div class="flex items-start gap-4 relative">
-                                    <div class="w-[38px] h-[38px] rounded-full bg-accent/10 border-2 border-accent flex items-center justify-center flex-shrink-0 z-10">
-                                        <i data-lucide="check" class="w-4 h-4 text-accent"></i>
-                                    </div>
-                                    <div class="pt-1.5">
-                                        <div class="text-sm font-medium text-white">Discovery & Audit</div>
-                                        <div class="text-xs text-gray-500 mt-0.5">Completed Mar 12</div>
-                                        <div class="text-[10px] text-accent mt-1 tracking-wider uppercase">3 deliverables attached</div>
-                                    </div>
-                                </div>
-
-                                <!-- Milestone: Complete -->
-                                <div class="flex items-start gap-4 relative">
-                                    <div class="w-[38px] h-[38px] rounded-full bg-accent/10 border-2 border-accent flex items-center justify-center flex-shrink-0 z-10">
-                                        <i data-lucide="check" class="w-4 h-4 text-accent"></i>
-                                    </div>
-                                    <div class="pt-1.5">
-                                        <div class="text-sm font-medium text-white">Strategy & Positioning</div>
-                                        <div class="text-xs text-gray-500 mt-0.5">Completed Mar 28</div>
-                                        <div class="text-[10px] text-accent mt-1 tracking-wider uppercase">5 deliverables attached</div>
-                                    </div>
-                                </div>
-
-                                <!-- Milestone: In Progress -->
-                                <div class="flex items-start gap-4 relative">
-                                    <div class="w-[38px] h-[38px] rounded-full bg-accent/20 border-2 border-accent flex items-center justify-center flex-shrink-0 z-10 animate-pulse">
-                                        <div class="w-2.5 h-2.5 bg-accent rounded-full"></div>
-                                    </div>
-                                    <div class="pt-1.5">
-                                        <div class="text-sm font-medium text-white">Visual Design System</div>
-                                        <div class="text-xs text-gray-400 mt-0.5">In Progress — Est. Apr 15</div>
-                                        <div class="text-[10px] text-gray-500 mt-1 tracking-wider uppercase">2 of 4 deliverables ready</div>
-                                        <!-- Progress bar -->
-                                        <div class="w-full h-1 bg-white/5 rounded-full mt-2 overflow-hidden">
-                                            <div class="h-full bg-accent rounded-full" style="width: 55%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Milestone: Upcoming -->
-                                <div class="flex items-start gap-4 relative">
-                                    <div class="w-[38px] h-[38px] rounded-full bg-white/5 border-2 border-white/10 flex items-center justify-center flex-shrink-0 z-10">
-                                        <div class="w-2 h-2 bg-white/20 rounded-full"></div>
-                                    </div>
-                                    <div class="pt-1.5">
-                                        <div class="text-sm font-medium text-gray-600">Build & Implementation</div>
-                                        <div class="text-xs text-gray-700 mt-0.5">Upcoming</div>
-                                    </div>
-                                </div>
-
-                                <!-- Milestone: Upcoming -->
-                                <div class="flex items-start gap-4 relative">
-                                    <div class="w-[38px] h-[38px] rounded-full bg-white/5 border-2 border-white/10 flex items-center justify-center flex-shrink-0 z-10">
-                                        <div class="w-2 h-2 bg-white/20 rounded-full"></div>
-                                    </div>
-                                    <div class="pt-1.5">
-                                        <div class="text-sm font-medium text-gray-600">Launch & Handoff</div>
-                                        <div class="text-xs text-gray-700 mt-0.5">Upcoming</div>
-                                    </div>
-                                </div>
+                        <!-- File list mockup -->
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-3 bg-black/30 border border-white/5 rounded-sm px-4 py-3">
+                                <i data-lucide="file-text" class="w-4 h-4 text-accent"></i>
+                                <span class="text-xs text-gray-300 flex-1">Q3_Performance_Report.pdf</span>
+                                <span class="text-[10px] text-accent">2.1 MB</span>
+                            </div>
+                            <div class="flex items-center gap-3 bg-black/30 border border-white/5 rounded-sm px-4 py-3">
+                                <i data-lucide="file-video" class="w-4 h-4 text-gray-500"></i>
+                                <span class="text-xs text-gray-300 flex-1">UGC_Ad_Variant_04.mp4</span>
+                                <span class="text-[10px] text-gray-500">18.6 MB</span>
+                            </div>
+                            <div class="flex items-center gap-3 bg-black/30 border border-white/5 rounded-sm px-4 py-3">
+                                <i data-lucide="file-check" class="w-4 h-4 text-gray-500"></i>
+                                <span class="text-xs text-gray-300 flex-1">Creative_Brief_Approved.docx</span>
+                                <span class="text-[10px] text-gray-500">1.3 MB</span>
                             </div>
                         </div>
 
-                        <div class="text-center mt-8">
-                            <div class="text-[10px] tracking-[0.2em] uppercase text-gray-600">Real-Time State — Supabase Powered</div>
+                        <div class="text-center">
+                            <div class="text-[10px] tracking-[0.2em] uppercase text-gray-600">Walled Off From Every Other Client's Files</div>
                         </div>
                     </div>
                 </div>
@@ -702,7 +666,7 @@
 
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 5: PRICING — ZERO SOFTWARE RENT    -->
+    <!-- SECTION 5: PRICING — ONE FLAT FEE          -->
     <!-- ═══════════════════════════════════════════ -->
     <section id="pricing" class="relative py-32 overflow-hidden">
         <div class="max-w-7xl mx-auto px-6">
@@ -710,87 +674,87 @@
             <div class="fade-up text-center max-w-3xl mx-auto mb-16">
                 <div class="flex items-center justify-center gap-3 mb-6">
                     <div class="h-px w-8 bg-accent"></div>
-                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Zero Software Rent</span>
+                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">One Flat Fee. Installed In 48 Hours.</span>
                     <div class="h-px w-8 bg-accent"></div>
                 </div>
                 <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
-                    One Investment.<br>
-                    <span class="text-accent">Zero Ongoing Tax.</span>
+                    Pick Your Setup.<br>
+                    <span class="text-accent">Both Ship In 48 Hours.</span>
                 </h2>
                 <p class="text-gray-400 text-lg font-light leading-relaxed">
-                    SaaS portal platforms charge you $49-$299/month per seat, forever. Because your portal is built on a lightweight static stack with Supabase, the infrastructure cost approaches zero as you scale. You own the code. You own the data. You call the shots.
+                    SaaS portal tools charge $49–$299 per month, per seat, forever. Your Andrady install runs on maintenance-free, zero-bloat infrastructure that costs next to nothing to keep alive — so the price you see is close to the price you'll ever pay. You own the code. You own the data. You call the shots.
                 </p>
             </div>
 
             <!-- Pricing cards -->
             <div class="grid md:grid-cols-2 gap-1 max-w-4xl mx-auto">
 
-                <!-- Option A: Sovereign Stack -->
+                <!-- Option A: Sovereign Ownership -->
                 <div class="fade-up relative border border-accent/20 rounded-sm p-8 md:p-10 bg-surfaceCard/50 overflow-hidden group">
                     <!-- Recommended badge -->
                     <div class="absolute top-0 right-0 bg-accent text-black text-[9px] font-bold tracking-[0.2em] uppercase px-4 py-1.5">
-                        Recommended
+                        Most Popular
                     </div>
                     <!-- Glow -->
                     <div class="absolute -bottom-20 -right-20 w-60 h-60 bg-accent/5 blur-[80px] group-hover:bg-accent/10 transition-all duration-700"></div>
 
                     <div class="relative z-10">
                         <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent block mb-4">Option A</span>
-                        <h3 class="font-display text-3xl font-500 tracking-tight uppercase mb-2">The Sovereign Stack</h3>
+                        <h3 class="font-display text-3xl font-500 tracking-tight uppercase mb-2">Sovereign Ownership</h3>
 
                         <div class="flex items-baseline gap-1 mb-6">
-                            <span class="font-display text-5xl font-500 text-white">$5,000</span>
+                            <span class="font-display text-5xl font-500 text-white">$1,500</span>
                             <span class="text-gray-500 text-sm font-light">one-time</span>
                         </div>
 
                         <p class="text-gray-400 text-sm font-light leading-relaxed mb-8">
-                            For owners who want total control. We build your portal and deploy it directly to your own free Supabase and Vercel accounts. You hold the keys. You own the code. Zero vendor lock-in.
+                            For agencies who want total control. We install your portal directly into your own free hosting accounts and hand you the keys. You own it outright — zero ongoing rent, forever.
                         </p>
 
                         <ul class="space-y-3 mb-10">
                             <li class="flex items-center gap-3">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm">Full white-labeled client portal application</span>
+                                <span class="text-gray-300 text-sm">Full white-labeled Client Performance Portal</span>
                             </li>
                             <li class="flex items-center gap-3">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm">Deployed to your own Supabase + Vercel accounts</span>
+                                <span class="text-gray-300 text-sm">Installed directly into your own hosting accounts</span>
                             </li>
                             <li class="flex items-center gap-3">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm">100% lifetime code ownership</span>
+                                <span class="text-gray-300 text-sm">100% lifetime ownership of the code</span>
                             </li>
                             <li class="flex items-center gap-3">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm"><span class="text-accent font-medium">$0/mo</span> ongoing infrastructure costs</span>
+                                <span class="text-gray-300 text-sm"><span class="text-accent font-medium">$0/mo</span> ongoing cost — ever</span>
                             </li>
                             <li class="flex items-center gap-3">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm">No per-seat fees — scale to unlimited clients</span>
+                                <span class="text-gray-300 text-sm">No per-seat fees — unlimited clients</span>
                             </li>
                             <li class="flex items-center gap-3">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm">14-day delivery guarantee</span>
+                                <span class="text-gray-300 text-sm">48-hour delivery guarantee</span>
                             </li>
                         </ul>
 
-                        <a href="#convert" class="block w-full text-center bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-colors duration-300">
-                            Claim Your Portal
+                        <a href="#install" class="block w-full text-center bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-colors duration-300">
+                            Get Your Portal Installed
                         </a>
                     </div>
                 </div>
 
-                <!-- Option B: Hands-Off Concierge -->
+                <!-- Option B: Concierge Hosting -->
                 <div class="fade-up relative border border-white/5 rounded-sm p-8 md:p-10 bg-surfaceCard/30 overflow-hidden group" style="animation-delay: 0.2s;">
                     <!-- Glow -->
                     <div class="absolute -top-20 -left-20 w-40 h-40 bg-white/3 blur-[80px] group-hover:bg-white/5 transition-all duration-700"></div>
 
                     <div class="relative z-10">
                         <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-500 block mb-4">Option B</span>
-                        <h3 class="font-display text-3xl font-500 tracking-tight uppercase mb-2 text-white/80">The Hands-Off Concierge</h3>
+                        <h3 class="font-display text-3xl font-500 tracking-tight uppercase mb-2 text-white/80">Concierge Hosting</h3>
 
                         <div class="flex items-baseline gap-1 mb-2">
-                            <span class="font-display text-5xl font-500 text-white/80">$5,000</span>
+                            <span class="font-display text-5xl font-500 text-white/80">$1,500</span>
                             <span class="text-gray-500 text-sm font-light">one-time</span>
                         </div>
                         <div class="flex items-center gap-1 mb-6">
@@ -799,17 +763,17 @@
                         </div>
 
                         <p class="text-gray-500 text-sm font-light leading-relaxed mb-8">
-                            For non-technical owners who want zero infrastructure responsibility. We manage the secure hosting, custom domain configuration, automated backups, and Supabase instance — so you never touch a server config.
+                            For agencies who'd rather never touch a server. We manage hosting, your custom domain, backups, and uptime monitoring — you just log in and run client calls.
                         </p>
 
                         <ul class="space-y-3 mb-10">
                             <li class="flex items-center gap-3">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
-                                <span class="text-gray-400 text-sm">Full white-labeled client portal application</span>
+                                <span class="text-gray-400 text-sm">Full white-labeled Client Performance Portal</span>
                             </li>
                             <li class="flex items-center gap-3">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
-                                <span class="text-gray-400 text-sm">Managed hosting on our secure infrastructure</span>
+                                <span class="text-gray-400 text-sm">Fully managed, maintenance-free hosting</span>
                             </li>
                             <li class="flex items-center gap-3">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
@@ -821,16 +785,16 @@
                             </li>
                             <li class="flex items-center gap-3">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
-                                <span class="text-gray-400 text-sm">No per-seat fees — scale to unlimited clients</span>
+                                <span class="text-gray-400 text-sm">No per-seat fees — unlimited clients</span>
                             </li>
                             <li class="flex items-center gap-3">
                                 <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
-                                <span class="text-gray-400 text-sm">14-day delivery guarantee</span>
+                                <span class="text-gray-400 text-sm">48-hour delivery guarantee</span>
                             </li>
                         </ul>
 
-                        <a href="#convert" class="block w-full text-center border border-white/10 text-white text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:border-white/30 hover:bg-white/5 transition-all duration-300">
-                            Go Concierge
+                        <a href="#install" class="block w-full text-center border border-white/10 text-white text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:border-white/30 hover:bg-white/5 transition-all duration-300">
+                            48-Hour Deployment Setup
                         </a>
                     </div>
                 </div>
@@ -853,8 +817,8 @@
                         </div>
                         <div>
                             <div class="text-xs text-accent mb-1">Andrady Sovereign</div>
-                            <div class="font-display text-xl text-accent">$5,000</div>
-                            <div class="text-[10px] text-gray-600 mt-1">$5,000 total. Ever.</div>
+                            <div class="font-display text-xl text-accent">$1,500</div>
+                            <div class="text-[10px] text-gray-600 mt-1">$1,500 total. Ever.</div>
                         </div>
                     </div>
                 </div>
@@ -864,7 +828,7 @@
 
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 6: 14-DAY DELIVERY GUARANTEE       -->
+    <!-- SECTION 6: 48-HOUR DELIVERY GUARANTEE      -->
     <!-- ═══════════════════════════════════════════ -->
     <section id="guarantee" class="relative py-24 overflow-hidden">
         <div class="max-w-7xl mx-auto px-6">
@@ -883,15 +847,15 @@
                     <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent block mb-4">Ironclad Guarantee</span>
 
                     <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
-                        14 Days.<br>Live. Or Your<br>Money Back.
+                        48 Hours. Live.<br>Or Your Money Back.
                     </h2>
 
                     <p class="text-gray-400 text-lg font-light leading-relaxed mb-6">
-                        If your custom client portal isn't built, fully secure with Supabase RLS, white-labeled to your brand, and ready to onboard your first client within 14 calendar days of project kickoff — you receive a <span class="text-white font-medium">100% refund</span>. No clawback clauses. No "store credit." Cash back in your account.
+                        If your branded Client Performance Portal isn't built, fully secured, white-labeled to your brand, and ready for your first client login within <span class="text-white font-medium">48 hours</span> of kickoff — you get a 100% refund. No clawback clauses. No "store credit." Cash back in your account.
                     </p>
 
                     <p class="text-gray-500 text-sm font-light leading-relaxed max-w-md mx-auto">
-                        We can make this guarantee because our stack is production-proven. Static HTML, Tailwind, Supabase. No scope creep. No custom framework hell. Just a precise, repeatable build process refined across deployments.
+                        We can make this promise because the install is repeatable, not bespoke. Same maintenance-free stack, same proven process, every single time.
                     </p>
                 </div>
             </div>
@@ -900,9 +864,9 @@
 
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 7: FINAL CTA & INTAKE FORM         -->
+    <!-- SECTION 7: FINAL CTA — FAST-TRACK BOOKING  -->
     <!-- ═══════════════════════════════════════════ -->
-    <section id="convert" class="relative py-32 overflow-hidden">
+    <section id="install" class="relative py-32 overflow-hidden">
         <div class="absolute inset-0 grid-bg opacity-30"></div>
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/3 blur-[150px] rounded-full"></div>
 
@@ -913,25 +877,25 @@
                 <div class="fade-up">
                     <div class="flex items-center gap-3 mb-6">
                         <div class="h-px w-8 bg-accent"></div>
-                        <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Begin</span>
+                        <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Start Your Install</span>
                     </div>
 
                     <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
-                        Stop Routing<br>Your Best Clients<br>Through a <span class="text-accent">Messy Inbox</span>
+                        Your Retainer Clients<br>Deserve Better Than<br>A <span class="text-accent">Spreadsheet</span>
                     </h2>
 
                     <p class="text-gray-400 text-lg font-light leading-relaxed mb-8">
-                        Your $20k+ clients chose you because you deliver premium work. It's time your client infrastructure matched that standard. Fill in the form. We'll reach out within 24 hours with a custom deployment plan.
+                        You're already delivering the results. Give clients a portal that looks like it costs as much as your retainer. Lock in your 48-hour install below — no sales call required.
                     </p>
 
                     <div class="space-y-4">
                         <div class="flex items-center gap-3">
                             <i data-lucide="shield-check" class="w-4 h-4 text-accent"></i>
-                            <span class="text-gray-400 text-sm">Your information is encrypted and never shared</span>
+                            <span class="text-gray-400 text-sm">Encrypted intake — your information is never shared</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <i data-lucide="clock" class="w-4 h-4 text-accent"></i>
-                            <span class="text-gray-400 text-sm">Response within 24 hours with a custom deployment plan</span>
+                            <span class="text-gray-400 text-sm">Install kicks off within 24 hours of booking</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <i data-lucide="ban" class="w-4 h-4 text-accent"></i>
@@ -940,10 +904,10 @@
                     </div>
                 </div>
 
-                <!-- Right: Intake Form -->
+                <!-- Right: Fast-Track Booking -->
                 <div class="fade-up" style="animation-delay: 0.2s;">
                     <div class="border border-white/10 rounded-sm p-8 md:p-10 bg-surfaceCard/50 backdrop-blur-sm">
-                        <div class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-500 mb-8">Agency Intake Form</div>
+                        <div class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-500 mb-8">Fast-Track Booking</div>
 
                         <form id="intake-form" class="space-y-6">
                             <!-- Name -->
@@ -967,35 +931,22 @@
                                     class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white placeholder-gray-700 outline-none transition-all duration-300">
                             </div>
 
-                            <!-- Average Ticket Size -->
-                            <div>
-                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Average Client Ticket Size</label>
-                                <select name="ticket_size" required
-                                    class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white outline-none transition-all duration-300 appearance-none cursor-pointer">
-                                    <option value="" disabled selected class="text-gray-700">Select your range</option>
-                                    <option value="10k-20k" class="bg-[#111]">$10,000 — $20,000</option>
-                                    <option value="20k-50k" class="bg-[#111]">$20,000 — $50,000</option>
-                                    <option value="50k-100k" class="bg-[#111]">$50,000 — $100,000</option>
-                                    <option value="100k+" class="bg-[#111]">$100,000+</option>
-                                </select>
-                            </div>
-
                             <!-- Deployment Preference -->
                             <div>
-                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Deployment Preference</label>
+                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Choose Your Setup</label>
                                 <div class="grid grid-cols-2 gap-3">
                                     <label class="deployment-option cursor-pointer">
                                         <input type="radio" name="deployment" value="sovereign" class="hidden peer" checked>
                                         <div class="border border-white/10 rounded-sm p-3 text-center peer-checked:border-accent/50 peer-checked:bg-accent/5 transition-all duration-300">
                                             <div class="text-xs text-gray-400 peer-checked:text-accent font-medium">Sovereign</div>
-                                            <div class="text-[10px] text-gray-600 mt-0.5">$5k one-time</div>
+                                            <div class="text-[10px] text-gray-600 mt-0.5">$1,500 one-time</div>
                                         </div>
                                     </label>
                                     <label class="deployment-option cursor-pointer">
                                         <input type="radio" name="deployment" value="concierge" class="hidden peer">
                                         <div class="border border-white/10 rounded-sm p-3 text-center peer-checked:border-accent/50 peer-checked:bg-accent/5 transition-all duration-300">
                                             <div class="text-xs text-gray-400 peer-checked:text-accent font-medium">Concierge</div>
-                                            <div class="text-[10px] text-gray-600 mt-0.5">$5k + $99/mo</div>
+                                            <div class="text-[10px] text-gray-600 mt-0.5">$1,500 + $99/mo</div>
                                         </div>
                                     </label>
                                 </div>
@@ -1009,7 +960,7 @@
                             <!-- Submit -->
                             <button type="submit" id="submit-btn"
                                 class="w-full bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                                <span id="btn-text">Secure Your Portal</span>
+                                <span id="btn-text">48-Hour Deployment Setup</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4" id="btn-icon"></i>
                                 <svg id="btn-spinner" class="hidden animate-spin w-4 h-4" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
@@ -1023,15 +974,15 @@
                             <div class="w-16 h-16 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-4">
                                 <i data-lucide="check" class="w-7 h-7 text-accent"></i>
                             </div>
-                            <div class="font-display text-2xl font-500 tracking-tight uppercase mb-2">Application Received</div>
-                            <p class="text-gray-400 text-sm font-light">We'll reach out within 24 hours with your custom deployment plan.</p>
+                            <div class="font-display text-2xl font-500 tracking-tight uppercase mb-2">You're Booked</div>
+                            <p class="text-gray-400 text-sm font-light">We'll reach out within 24 hours to kick off your 48-hour install.</p>
                         </div>
 
                         <!-- Privacy indicators -->
                         <div class="flex items-center justify-center gap-4 mt-6 pt-6 border-t border-white/5">
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="lock" class="w-3 h-3 text-gray-700"></i>
-                                <span class="text-[9px] tracking-widest uppercase text-gray-700">256-bit Encrypted</span>
+                                <span class="text-[9px] tracking-widest uppercase text-gray-700">Bank-Grade Encrypted</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="eye-off" class="w-3 h-3 text-gray-700"></i>
@@ -1059,7 +1010,7 @@
 
                 <!-- Copy -->
                 <p class="text-gray-700 text-xs text-center">
-                    © 2025 Andrady. All rights reserved. Engineered for agencies that refuse to compromise.
+                    © 2026 Andrady. All rights reserved. Installed for agencies that move at performance-marketing speed.
                 </p>
 
                 <!-- Links -->
@@ -1115,9 +1066,14 @@
             });
         });
 
-        // ── Form handling via Supabase Edge Function ──
-        const SUPABASE_ENDPOINT = 'https://rsttirosnsfaortzugld.functions.supabase.co/submit-brief';
-        
+        // ── Fast-Track Booking form handling ──
+        // NOTE: This is a high-speed booking form, not a long intake form.
+        // Wire SUBMIT_ENDPOINT to your real checkout / scheduling tool —
+        // e.g. a Stripe Checkout session, a Calendly redirect, or your own
+        // booking API. Until then, submission is simulated locally so the
+        // flow can be demoed end-to-end.
+        const SUBMIT_ENDPOINT = null; // e.g. 'https://your-api.example.com/book-install'
+
         const form = document.getElementById('intake-form');
         const formSuccess = document.getElementById('form-success');
         const formError = document.getElementById('form-error');
@@ -1128,13 +1084,13 @@
 
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             // Reset error state
             formError.classList.add('hidden');
 
             // Show loading state
             submitBtn.disabled = true;
-            btnText.textContent = 'Submitting';
+            btnText.textContent = 'Booking';
             btnIcon.classList.add('hidden');
             btnSpinner.classList.remove('hidden');
 
@@ -1143,23 +1099,24 @@
                 name: form.name.value.trim(),
                 email: form.email.value.trim(),
                 agency_url: form.agency_url.value.trim(),
-                ticket_size: form.ticket_size.value,
                 deployment: form.deployment.value
             };
 
             try {
-                const response = await fetch(SUPABASE_ENDPOINT, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
-                });
+                if (SUBMIT_ENDPOINT) {
+                    const response = await fetch(SUBMIT_ENDPOINT, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
 
-                if (!response.ok) {
-                    // Attempt to get error message from response body
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.message || `Server responded with status ${response.status}`);
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new Error(errorData.message || `Server responded with status ${response.status}`);
+                    }
+                } else {
+                    // Simulated booking — replace with a real endpoint above.
+                    await new Promise(resolve => setTimeout(resolve, 700));
                 }
 
                 // Success state
@@ -1170,14 +1127,14 @@
 
             } catch (error) {
                 console.error('Form submission error:', error);
-                
+
                 // Show error state
                 formError.textContent = error.message || 'Submission failed. Please check your connection and try again.';
                 formError.classList.remove('hidden');
-                
+
                 // Reset button
                 submitBtn.disabled = false;
-                btnText.textContent = 'Secure Your Portal';
+                btnText.textContent = '48-Hour Deployment Setup';
                 btnIcon.classList.remove('hidden');
                 btnSpinner.classList.add('hidden');
             }
