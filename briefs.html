@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrady — Leads Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                    },
+                    colors: {
+                        accent: '#b4ff39',
+                        surface: '#030303',
+                        surfaceCard: '#111111',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background: #030303; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #030303; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #b4ff39; }
+        .form-input:focus {
+            border-color: #b4ff39;
+            box-shadow: 0 0 0 1px rgba(180,255,57,0.3);
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spin { animation: spin 1s linear infinite; }
+        .status-select option { background: #111111; }
+    </style>
+</head>
+<body class="bg-surface text-white font-sans antialiased min-h-screen">
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- PASSWORD GATE                               -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div id="gate" class="fixed inset-0 z-50 flex items-center justify-center bg-surface px-6">
+        <div class="w-full max-w-sm border border-white/10 rounded-sm p-8 bg-surfaceCard/50">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-2 h-2 bg-accent rounded-full"></div>
+                <span class="font-display text-lg font-500 tracking-[0.2em] uppercase text-white">Andrady</span>
+            </div>
+            <div class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-500 mb-6">Leads Dashboard — Restricted</div>
+            <form id="gate-form" class="space-y-4">
+                <input type="password" id="gate-password" required placeholder="Password"
+                    class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white placeholder-gray-700 outline-none transition-all duration-300">
+                <div id="gate-error" class="hidden text-red-400 text-xs tracking-wider text-center bg-red-500/5 border border-red-500/10 rounded-sm px-4 py-3">
+                    Incorrect password.
+                </div>
+                <button type="submit" class="w-full bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-3 rounded-sm hover:bg-white transition-colors duration-300">
+                    Unlock
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- DASHBOARD (hidden until unlocked)           -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div id="dashboard" class="hidden">
+
+        <!-- Header -->
+        <nav class="border-b border-white/5">
+            <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-2 bg-accent rounded-full"></div>
+                    <span class="font-display text-lg font-500 tracking-[0.2em] uppercase text-white">Andrady</span>
+                    <span class="text-[10px] tracking-widest uppercase text-gray-600 ml-2 pl-2 border-l border-white/10">Leads Dashboard</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button id="refresh-btn" class="flex items-center gap-2 text-xs font-medium tracking-widest uppercase text-gray-400 hover:text-white transition-colors duration-300 border border-white/10 rounded-sm px-4 py-2">
+                        <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="refresh-icon"></i>
+                        Refresh
+                    </button>
+                    <label class="flex items-center gap-2 text-[10px] tracking-widest uppercase text-gray-500">
+                        <input type="checkbox" id="auto-refresh" class="accent-accent" checked>
+                        Auto
+                    </label>
+                </div>
+            </div>
+        </nav>
+
+        <main class="max-w-7xl mx-auto px-6 py-10">
+
+            <!-- Stat cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-1 mb-10">
+                <div class="bg-surfaceCard border border-white/5 rounded-sm p-5">
+                    <div class="text-[10px] tracking-widest uppercase text-gray-500 mb-2">Total Leads</div>
+                    <div id="stat-total" class="font-display text-3xl text-white">—</div>
+                </div>
+                <div class="bg-surfaceCard border border-accent/10 rounded-sm p-5">
+                    <div class="text-[10px] tracking-widest uppercase text-accent mb-2">New</div>
+                    <div id="stat-new" class="font-display text-3xl text-accent">—</div>
+                </div>
+                <div class="bg-surfaceCard border border-white/5 rounded-sm p-5">
+                    <div class="text-[10px] tracking-widest uppercase text-gray-500 mb-2">Today</div>
+                    <div id="stat-today" class="font-display text-3xl text-white">—</div>
+                </div>
+                <div class="bg-surfaceCard border border-white/5 rounded-sm p-5">
+                    <div class="text-[10px] tracking-widest uppercase text-gray-500 mb-2">Last 7 Days</div>
+                    <div id="stat-week" class="font-display text-3xl text-white">—</div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex flex-wrap items-center gap-3 mb-6">
+                <input type="text" id="search-input" placeholder="Search name, email, company, URL..."
+                    class="form-input flex-1 min-w-[220px] bg-black/50 border border-white/10 rounded-sm px-4 py-2.5 text-sm text-white placeholder-gray-700 outline-none transition-all duration-300">
+                <select id="status-filter" class="form-input bg-black/50 border border-white/10 rounded-sm px-4 py-2.5 text-sm text-white outline-none">
+                    <option value="">All Statuses</option>
+                    <option value="new">New</option>
+                    <option value="contacted">Contacted</option>
+                    <option value="qualified">Qualified</option>
+                    <option value="closed">Closed</option>
+                    <option value="ignored">Ignored</option>
+                </select>
+                <a id="export-csv" href="#" class="flex items-center gap-2 text-xs font-medium tracking-widest uppercase text-gray-400 hover:text-white transition-colors duration-300 border border-white/10 rounded-sm px-4 py-2.5">
+                    <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                    Export CSV
+                </a>
+            </div>
+
+            <!-- Status / error messages -->
+            <div id="load-status" class="hidden mb-4 text-sm text-gray-400 flex items-center gap-2">
+                <i data-lucide="loader-2" class="w-4 h-4 spin"></i>
+                Loading leads...
+            </div>
+            <div id="load-error" class="hidden mb-4 text-red-400 text-sm bg-red-500/5 border border-red-500/10 rounded-sm px-4 py-3"></div>
+            <div id="empty-state" class="hidden text-center py-20 text-gray-500">
+                <i data-lucide="inbox" class="w-10 h-10 mx-auto mb-4 text-gray-700"></i>
+                No leads match the current filters.
+            </div>
+
+            <!-- Leads table -->
+            <div id="table-wrap" class="border border-white/5 rounded-sm overflow-hidden overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="bg-black/40 text-left">
+                            <th class="p-4 text-[10px] tracking-widest uppercase text-gray-500 font-medium whitespace-nowrap">Date</th>
+                            <th class="p-4 text-[10px] tracking-widest uppercase text-gray-500 font-medium whitespace-nowrap">Name</th>
+                            <th class="p-4 text-[10px] tracking-widest uppercase text-gray-500 font-medium whitespace-nowrap">Email</th>
+                            <th class="p-4 text-[10px] tracking-widest uppercase text-gray-500 font-medium whitespace-nowrap">Company</th>
+                            <th class="p-4 text-[10px] tracking-widest uppercase text-gray-500 font-medium whitespace-nowrap">Landing Page</th>
+                            <th class="p-4 text-[10px] tracking-widest uppercase text-gray-500 font-medium whitespace-nowrap">Ad Spend</th>
+                            <th class="p-4 text-[10px] tracking-widest uppercase text-gray-500 font-medium whitespace-nowrap">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leads-tbody">
+                        <!-- Rows injected here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-[10px] tracking-widest uppercase text-gray-700 mt-6 text-center" id="last-updated"></div>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons({ attrs: { strokeWidth: 1.5 } });
+
+        // ════════════════════════════════════════════
+        // CONFIG — fill these in
+        // ════════════════════════════════════════════
+        const SUPABASE_URL = 'https://rsttirosnsfaortzugld.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzdHRpcm9zbnNmYW9ydHp1Z2xkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMTExMzIsImV4cCI6MjA5Mjg4NzEzMn0.h4oLu54uxT2_ZgMVujcKHWgchngxBQmKt6TenqFG8j8'; // Settings > API > anon/public key
+        const DASHBOARD_PASSWORD = 'bitchassnigga'; // set your own password before deploying
+
+        const AD_SPEND_LABELS = {
+            under_5k: 'Under $5k/mo',
+            '5k_10k': '$5k–$10k/mo',
+            '10k_25k': '$10k–$25k/mo',
+            '25k_plus': '$25k+/mo'
+        };
+
+        const STATUS_COLORS = {
+            new: 'text-accent border-accent/30 bg-accent/5',
+            contacted: 'text-blue-300 border-blue-400/30 bg-blue-400/5',
+            qualified: 'text-purple-300 border-purple-400/30 bg-purple-400/5',
+            closed: 'text-gray-400 border-white/10 bg-white/5',
+            ignored: 'text-gray-600 border-white/5 bg-transparent'
+        };
+
+        let allLeads = [];
+        let refreshTimer = null;
+
+        // ════════════════════════════════════════════
+        // PASSWORD GATE
+        // ════════════════════════════════════════════
+        const gate = document.getElementById('gate');
+        const dashboard = document.getElementById('dashboard');
+        const gateForm = document.getElementById('gate-form');
+        const gateError = document.getElementById('gate-error');
+
+        gateForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const entered = document.getElementById('gate-password').value;
+            if (entered === DASHBOARD_PASSWORD) {
+                sessionStorage.setItem('andrady_dash_unlocked', '1');
+                unlockDashboard();
+            } else {
+                gateError.classList.remove('hidden');
+            }
+        });
+
+        function unlockDashboard() {
+            gate.classList.add('hidden');
+            dashboard.classList.remove('hidden');
+            loadLeads();
+            startAutoRefresh();
+        }
+
+        // Stay unlocked across refreshes within the same tab session
+        if (sessionStorage.getItem('andrady_dash_unlocked') === '1') {
+            unlockDashboard();
+        }
+
+        // ════════════════════════════════════════════
+        // DATA LOADING
+        // ════════════════════════════════════════════
+        async function loadLeads() {
+            const loadStatus = document.getElementById('load-status');
+            const loadError = document.getElementById('load-error');
+            const refreshIcon = document.getElementById('refresh-icon');
+
+            loadStatus.classList.remove('hidden');
+            loadError.classList.add('hidden');
+            refreshIcon.classList.add('spin');
+
+            try {
+                const res = await fetch(
+                    `${SUPABASE_URL}/rest/v1/briefs?select=*&order=created_at.desc`,
+                    {
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                        }
+                    }
+                );
+
+                if (!res.ok) {
+                    throw new Error(`Request failed with status ${res.status}`);
+                }
+
+                allLeads = await res.json();
+                renderAll();
+                document.getElementById('last-updated').textContent =
+                    `Last updated ${new Date().toLocaleTimeString()}`;
+
+            } catch (err) {
+                console.error('Failed to load leads:', err);
+                loadError.textContent = `Couldn't load leads: ${err.message}. Check your Supabase URL, anon key, and RLS read policy.`;
+                loadError.classList.remove('hidden');
+            } finally {
+                loadStatus.classList.add('hidden');
+                refreshIcon.classList.remove('spin');
+            }
+        }
+
+        function startAutoRefresh() {
+            if (refreshTimer) clearInterval(refreshTimer);
+            refreshTimer = setInterval(() => {
+                if (document.getElementById('auto-refresh').checked) {
+                    loadLeads();
+                }
+            }, 30000); // every 30s
+        }
+
+        document.getElementById('refresh-btn').addEventListener('click', loadLeads);
+
+        // ════════════════════════════════════════════
+        // RENDERING
+        // ════════════════════════════════════════════
+        function renderAll() {
+            renderStats();
+            renderTable();
+        }
+
+        function renderStats() {
+            const total = allLeads.length;
+            const newCount = allLeads.filter(l => l.status === 'new').length;
+
+            const now = new Date();
+            const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+            const today = allLeads.filter(l => new Date(l.created_at) >= startOfToday).length;
+            const week = allLeads.filter(l => new Date(l.created_at) >= sevenDaysAgo).length;
+
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-new').textContent = newCount;
+            document.getElementById('stat-today').textContent = today;
+            document.getElementById('stat-week').textContent = week;
+        }
+
+        function getFilteredLeads() {
+            const search = document.getElementById('search-input').value.trim().toLowerCase();
+            const statusFilter = document.getElementById('status-filter').value;
+
+            return allLeads.filter(lead => {
+                if (statusFilter && lead.status !== statusFilter) return false;
+                if (!search) return true;
+                const haystack = [lead.name, lead.email, lead.company, lead.landing_page_url]
+                    .filter(Boolean)
+                    .join(' ')
+                    .toLowerCase();
+                return haystack.includes(search);
+            });
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('leads-tbody');
+            const emptyState = document.getElementById('empty-state');
+            const tableWrap = document.getElementById('table-wrap');
+
+            const filtered = getFilteredLeads();
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                tableWrap.classList.add('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            tableWrap.classList.remove('hidden');
+
+            tbody.innerHTML = filtered.map(lead => {
+                const date = new Date(lead.created_at);
+                const dateStr = date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+                const timeStr = date.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+                const adSpendLabel = AD_SPEND_LABELS[lead.ad_spend] || lead.ad_spend || '—';
+                const statusClass = STATUS_COLORS[lead.status] || STATUS_COLORS.new;
+
+                return `
+                    <tr class="border-t border-white/5 hover:bg-white/[0.02] transition-colors duration-200">
+                        <td class="p-4 text-gray-500 text-xs whitespace-nowrap">${dateStr}<br><span class="text-gray-700">${timeStr}</span></td>
+                        <td class="p-4 text-white font-medium whitespace-nowrap">${escapeHtml(lead.name)}</td>
+                        <td class="p-4 text-gray-300 whitespace-nowrap">
+                            <a href="mailto:${escapeHtml(lead.email)}" class="hover:text-accent transition-colors">${escapeHtml(lead.email)}</a>
+                        </td>
+                        <td class="p-4 text-gray-300 whitespace-nowrap">${escapeHtml(lead.company || '—')}</td>
+                        <td class="p-4 text-gray-400 max-w-[220px] truncate">
+                            <a href="${escapeHtml(lead.landing_page_url)}" target="_blank" rel="noopener" class="hover:text-accent transition-colors underline decoration-white/10">${escapeHtml(lead.landing_page_url)}</a>
+                        </td>
+                        <td class="p-4 text-gray-300 whitespace-nowrap">${escapeHtml(adSpendLabel)}</td>
+                        <td class="p-4 whitespace-nowrap">
+                            <select data-id="${lead.id}" class="status-update text-[10px] tracking-widest uppercase border rounded-sm px-2.5 py-1.5 bg-black/40 outline-none cursor-pointer ${statusClass}">
+                                <option value="new" ${lead.status === 'new' ? 'selected' : ''}>New</option>
+                                <option value="contacted" ${lead.status === 'contacted' ? 'selected' : ''}>Contacted</option>
+                                <option value="qualified" ${lead.status === 'qualified' ? 'selected' : ''}>Qualified</option>
+                                <option value="closed" ${lead.status === 'closed' ? 'selected' : ''}>Closed</option>
+                                <option value="ignored" ${lead.status === 'ignored' ? 'selected' : ''}>Ignored</option>
+                            </select>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            // Status dropdowns are display-only for now — see note below the table logic.
+            document.querySelectorAll('.status-update').forEach(select => {
+                select.addEventListener('change', handleStatusChangeAttempt);
+            });
+        }
+
+        function handleStatusChangeAttempt(e) {
+            // Writing status changes back to Supabase requires an UPDATE policy,
+            // which is intentionally not part of the read-only setup here.
+            // Revert the dropdown and inform the user instead of silently failing.
+            const select = e.target;
+            const lead = allLeads.find(l => l.id === select.dataset.id);
+            alert(
+                'Status updates aren\'t wired up yet. The dashboard is currently read-only ' +
+                '(it can only fetch leads, not write changes back to Supabase). ' +
+                'Update status directly in the Supabase table editor for now, or ask Claude ' +
+                'to add a write-enabled status-update flow if you want this to work here.'
+            );
+            select.value = lead.status || 'new';
+        }
+
+        function escapeHtml(str) {
+            if (str === null || str === undefined) return '';
+            const div = document.createElement('div');
+            div.textContent = String(str);
+            return div.innerHTML;
+        }
+
+        // ════════════════════════════════════════════
+        // FILTER LISTENERS
+        // ════════════════════════════════════════════
+        document.getElementById('search-input').addEventListener('input', renderTable);
+        document.getElementById('status-filter').addEventListener('change', renderTable);
+
+        // ════════════════════════════════════════════
+        // CSV EXPORT
+        // ════════════════════════════════════════════
+        document.getElementById('export-csv').addEventListener('click', (e) => {
+            e.preventDefault();
+            const rows = getFilteredLeads();
+            if (rows.length === 0) return;
+
+            const headers = ['created_at', 'name', 'email', 'company', 'landing_page_url', 'ad_spend', 'status'];
+            const csvLines = [headers.join(',')];
+
+            rows.forEach(lead => {
+                const line = headers.map(h => {
+                    const val = (lead[h] ?? '').toString().replace(/"/g, '""');
+                    return `"${val}"`;
+                }).join(',');
+                csvLines.push(line);
+            });
+
+            const blob = new Blob([csvLines.join('\n')], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `andrady-leads-${new Date().toISOString().slice(0, 10)}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>
