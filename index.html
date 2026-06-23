@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andrady — Client Retention Infrastructure for Performance Agencies</title>
+    <title>Andrady — Performance Infrastructure for Paid Traffic</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -92,10 +92,27 @@
         }
         .count-tick { animation: countTick 2.4s ease-in-out infinite; }
 
+        @keyframes loadBar {
+            0% { width: 0%; }
+            100% { width: 92%; }
+        }
+        .load-bar-fast { animation: loadBar 1.4s ease-out forwards; }
+
+        @keyframes loadBarSlow {
+            0% { width: 0%; }
+            100% { width: 38%; }
+        }
+        .load-bar-slow { animation: loadBarSlow 3.2s ease-out forwards; }
+
         .form-input:focus {
             border-color: #b4ff39;
             box-shadow: 0 0 0 1px rgba(180,255,57,0.3);
         }
+
+        .faq-toggle .faq-icon { transition: transform 0.3s ease; }
+        .faq-toggle.open .faq-icon { transform: rotate(45deg); }
+        .faq-panel { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+        .faq-panel.open { max-height: 300px; }
 
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #030303; }
@@ -106,43 +123,35 @@
 <body class="bg-surface text-white font-sans antialiased">
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 1: HEADER & NAVIGATION             -->
+    <!-- NAVIGATION                                  -->
     <!-- ═══════════════════════════════════════════ -->
     <nav id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <!-- Logo -->
             <a href="#" class="flex items-center gap-3 group">
                 <div class="w-2 h-2 bg-accent rounded-full group-hover:shadow-[0_0_10px_#b4ff39] transition-shadow duration-300"></div>
                 <span class="font-display text-lg font-500 tracking-[0.2em] uppercase text-white">Andrady</span>
             </a>
 
-            <!-- Nav Links (Desktop) -->
             <div class="hidden md:flex items-center gap-8">
                 <a href="#problem" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">Problem</a>
-                <a href="#solution" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">The Install</a>
-                <a href="#deliverables" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">Deliverables</a>
-                <a href="#pricing" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">Pricing</a>
-                <a href="#guarantee" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">Guarantee</a>
+                <a href="#how-it-works" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">How It Works</a>
+                <a href="#offer" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">The Rebuild</a>
+                <a href="#faq" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">FAQ</a>
             </div>
 
-            <!-- CTA -->
-            <a href="#install" class="bg-accent text-black text-xs font-bold tracking-widest uppercase px-6 py-3 rounded-sm hover:bg-white transition-colors duration-300">
-                Get Your Portal Installed
+            <a href="#audit" class="bg-accent text-black text-xs font-bold tracking-widest uppercase px-6 py-3 rounded-sm hover:bg-white transition-colors duration-300">
+                Get a Free Audit
             </a>
         </div>
-        <!-- Bottom border -->
         <div class="h-px bg-white/5"></div>
     </nav>
 
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 2: HERO                            -->
+    <!-- HERO                                        -->
     <!-- ═══════════════════════════════════════════ -->
     <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
-        <!-- Background grid -->
         <div class="absolute inset-0 grid-bg opacity-60"></div>
-
-        <!-- Atmospheric blurs -->
         <div class="absolute top-1/4 -left-40 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[150px]"></div>
         <div class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-accent/3 rounded-full blur-[120px]"></div>
 
@@ -151,138 +160,117 @@
 
                 <!-- Left: Copy -->
                 <div class="fade-up">
-                    <!-- Eyebrow -->
                     <div class="flex items-center gap-3 mb-8">
                         <div class="h-px w-12 bg-accent"></div>
-                        <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Client Retention Infrastructure for Performance Agencies</span>
+                        <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Performance Infrastructure for Paid Traffic</span>
                     </div>
 
-                    <!-- Headline -->
                     <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-500 leading-[0.9] tracking-tight uppercase mb-8">
-                        End Client<br>
-                        <span class="shimmer-text">Reporting</span><br>
-                        Chaos.
+                        Your Ads Are<br>
+                        <span class="shimmer-text">Fast.</span><br>
+                        Your Landing Page Isn't.
                     </h1>
 
-                    <!-- Subheadline -->
                     <p class="text-gray-400 text-lg font-light leading-relaxed max-w-lg mb-6">
-                        A white-labeled client portal installed in <span class="text-white font-medium">48 hours</span>. Reports, creative assets, and performance data in one branded login your clients actually use.
+                        We rebuild bloated landing pages into <span class="text-white font-medium">sub-second-loading acquisition infrastructure</span> — built for the traffic you're already paying for.
                     </p>
 
-                    <!-- Trust statement -->
                     <p class="text-sm text-gray-600 font-light tracking-wide mb-10 flex items-center gap-2">
                         <i data-lucide="ban" class="w-3.5 h-3.5 text-gray-700 flex-shrink-0"></i>
-                        No subscriptions. No per-seat fees. No lengthy implementation projects.
+                        No page builders. No bloat. No monthly software rent.
                     </p>
 
-                    <!-- CTAs -->
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="#install" class="inline-flex items-center justify-center gap-2 bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-all duration-300 pulse-glow">
-                            Get Your Portal Installed
+                        <a href="#audit" class="inline-flex items-center justify-center gap-2 bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-all duration-300 pulse-glow">
+                            Get a Free Landing Page Audit
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
-                        <a href="#solution" class="inline-flex items-center justify-center gap-2 border border-white/10 text-white text-sm font-medium tracking-wider uppercase px-8 py-4 rounded-sm hover:border-white/30 hover:bg-white/5 transition-all duration-300">
-                            See The 48-Hour Install
+                        <a href="#how-it-works" class="inline-flex items-center justify-center gap-2 border border-white/10 text-white text-sm font-medium tracking-wider uppercase px-8 py-4 rounded-sm hover:border-white/30 hover:bg-white/5 transition-all duration-300">
+                            See How The Rebuild Works
                         </a>
                     </div>
 
-                    <!-- Micro proof -->
                     <div class="flex items-center gap-6 mt-10 pt-8 border-t border-white/5">
                         <div>
-                            <div class="font-display text-2xl font-500 text-accent tracking-tight">48</div>
-                            <div class="text-[10px] tracking-widest uppercase text-gray-500 mt-1">Hour Delivery</div>
+                            <div class="font-display text-2xl font-500 text-accent tracking-tight">&lt;1s</div>
+                            <div class="text-[10px] tracking-widest uppercase text-gray-500 mt-1">Target Load Time</div>
                         </div>
                         <div class="w-px h-8 bg-white/10"></div>
                         <div>
                             <div class="font-display text-2xl font-500 text-accent tracking-tight">$1,500</div>
-                            <div class="text-[10px] tracking-widest uppercase text-gray-500 mt-1">Flat Install Fee</div>
+                            <div class="text-[10px] tracking-widest uppercase text-gray-500 mt-1">Fixed Rebuild Fee</div>
                         </div>
                         <div class="w-px h-8 bg-white/10"></div>
                         <div>
-                            <div class="font-display text-2xl font-500 text-accent tracking-tight">100%</div>
-                            <div class="text-[10px] tracking-widest uppercase text-gray-500 mt-1">White-Labeled</div>
+                            <div class="font-display text-2xl font-500 text-accent tracking-tight">Zero</div>
+                            <div class="text-[10px] tracking-widest uppercase text-gray-500 mt-1">Page Builder Bloat</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right: Dashboard Visual Placeholder -->
+                <!-- Right: Load-time comparison visual -->
                 <div class="fade-up relative" style="animation-delay: 0.3s;">
                     <div class="relative">
-                        <!-- Glow behind -->
                         <div class="absolute -inset-4 bg-accent/5 blur-[60px] rounded-lg"></div>
 
-                        <!-- Dashboard mockup container -->
                         <div class="relative dash-video-placeholder rounded-lg border border-white/10 overflow-hidden">
-                            <!-- Top bar -->
                             <div class="flex items-center justify-between px-5 py-3 border-b border-white/5 bg-black/50">
                                 <div class="flex items-center gap-2">
                                     <div class="w-2.5 h-2.5 rounded-full bg-red-500/60"></div>
                                     <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/60"></div>
                                     <div class="w-2.5 h-2.5 rounded-full bg-green-500/60"></div>
                                 </div>
-                                <div class="text-[10px] text-gray-600 tracking-wider">portal.youragency.com</div>
+                                <div class="text-[10px] text-gray-600 tracking-wider">PageSpeed Comparison</div>
                                 <div class="w-16"></div>
                             </div>
 
-                            <!-- Dashboard content simulation -->
-                            <div class="p-6 space-y-4">
-                                <!-- Welcome bar -->
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <div class="text-xs text-gray-500 tracking-wider uppercase">Welcome back</div>
-                                        <div class="text-white font-medium mt-1">Nova Retail — Paid Social, Q3</div>
+                            <div class="p-6 space-y-5">
+                                <!-- Before -->
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs text-gray-500 tracking-wider uppercase">Typical Page Builder Site</span>
+                                        <span class="text-xs text-red-400/80 font-medium">4.8s</span>
                                     </div>
-                                    <div class="bg-accent/10 border border-accent/20 text-accent text-[10px] font-bold tracking-wider uppercase px-3 py-1.5 rounded-sm flex items-center gap-1.5">
-                                        <span class="w-1.5 h-1.5 bg-accent rounded-full count-tick"></span>
-                                        Live
+                                    <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                                        <div class="h-full bg-red-500/50 rounded-full load-bar-slow"></div>
                                     </div>
+                                </div>
+
+                                <!-- After -->
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs text-white tracking-wider uppercase">Andrady Rebuild</span>
+                                        <span class="text-xs text-accent font-medium">0.6s</span>
+                                    </div>
+                                    <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                                        <div class="h-full bg-accent rounded-full load-bar-fast"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Stack badges -->
+                                <div class="flex items-center gap-2 pt-4 flex-wrap">
+                                    <span class="text-[10px] tracking-wider text-gray-500 bg-black/30 border border-white/5 rounded-sm px-2.5 py-1.5">Static HTML</span>
+                                    <span class="text-[10px] tracking-wider text-gray-500 bg-black/30 border border-white/5 rounded-sm px-2.5 py-1.5">Tailwind</span>
+                                    <span class="text-[10px] tracking-wider text-gray-500 bg-black/30 border border-white/5 rounded-sm px-2.5 py-1.5">Vercel</span>
+                                    <span class="text-[10px] tracking-wider text-gray-500 bg-black/30 border border-white/5 rounded-sm px-2.5 py-1.5">Supabase</span>
                                 </div>
 
                                 <!-- KPI grid -->
-                                <div class="grid grid-cols-2 gap-3 mt-6">
+                                <div class="grid grid-cols-2 gap-3 pt-2">
                                     <div class="bg-black/30 border border-white/5 rounded-sm p-3">
-                                        <div class="text-[10px] tracking-widest uppercase text-gray-500">Ad Spend</div>
-                                        <div class="text-base font-medium text-white mt-1">$42,180</div>
-                                        <div class="w-full h-1 bg-white/5 rounded-full mt-2 overflow-hidden">
-                                            <div class="h-full bg-accent rounded-full" style="width: 68%;"></div>
-                                        </div>
-                                        <div class="text-[10px] text-gray-500 mt-1">68% of budget</div>
+                                        <div class="text-[10px] tracking-widest uppercase text-gray-500">Lighthouse</div>
+                                        <div class="text-base font-medium text-accent mt-1">98 / 100</div>
                                     </div>
                                     <div class="bg-black/30 border border-white/5 rounded-sm p-3">
-                                        <div class="text-[10px] tracking-widest uppercase text-gray-500">ROAS</div>
-                                        <div class="text-base font-medium text-accent mt-1">4.2x</div>
-                                        <div class="text-[10px] text-accent mt-1">▲ 12% vs last mo.</div>
+                                        <div class="text-[10px] tracking-widest uppercase text-gray-500">JS Payload</div>
+                                        <div class="text-base font-medium text-white mt-1">&minus;91%</div>
                                     </div>
-                                    <div class="bg-black/30 border border-white/5 rounded-sm p-3">
-                                        <div class="text-[10px] tracking-widest uppercase text-gray-500">Conversions</div>
-                                        <div class="text-base font-medium text-white mt-1">318</div>
-                                        <div class="text-[10px] text-accent mt-1">▲ 8% vs last mo.</div>
-                                    </div>
-                                    <div class="bg-black/30 border border-white/5 rounded-sm p-3">
-                                        <div class="text-[10px] tracking-widest uppercase text-gray-500">CPA</div>
-                                        <div class="text-base font-medium text-white mt-1">$32.40</div>
-                                        <div class="text-[10px] text-accent mt-1">▼ 6% vs last mo.</div>
-                                    </div>
-                                </div>
-
-                                <!-- File upload area -->
-                                <div class="mt-4 border border-dashed border-white/10 rounded-sm p-4 flex items-center justify-center gap-3 hover:border-accent/30 transition-colors duration-300 cursor-pointer">
-                                    <i data-lucide="upload-cloud" class="w-4 h-4 text-gray-500"></i>
-                                    <span class="text-xs text-gray-500 tracking-wider">Drop reports or creative here — encrypted & isolated</span>
-                                </div>
-                            </div>
-
-                            <!-- Overlay: PLAY button for video -->
-                            <div class="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 hover:opacity-100 transition-opacity duration-300 cursor-pointer">
-                                <div class="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center backdrop-blur-sm">
-                                    <i data-lucide="play" class="w-6 h-6 text-white ml-1"></i>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Caption -->
                         <p class="text-center text-[10px] tracking-[0.2em] uppercase text-gray-600 mt-4">
-                            Live Performance Snapshot — Updates Without A Single Export
+                            Same Ad. Same Spend. Different Page.
                         </p>
                     </div>
                 </div>
@@ -292,31 +280,29 @@
 
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 3: THE PROBLEM (Before / After)    -->
+    <!-- PROBLEM                                     -->
     <!-- ═══════════════════════════════════════════ -->
     <section id="problem" class="relative py-32 overflow-hidden">
         <div class="max-w-7xl mx-auto px-6">
-            <!-- Section header -->
             <div class="fade-up max-w-3xl mx-auto text-center mb-20">
                 <div class="flex items-center justify-center gap-3 mb-6">
                     <div class="h-px w-8 bg-accent"></div>
-                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">The Real Retention Problem</span>
+                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">The Real Cost Problem</span>
                     <div class="h-px w-8 bg-accent"></div>
                 </div>
                 <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
-                    They Don't Leave Because<br>
-                    The Ads Didn't <span class="text-accent">Work</span>
+                    Your CPC Isn't The Leak.<br>
+                    Your <span class="text-accent">Page Speed</span> Is.
                 </h2>
                 <p class="text-gray-400 text-lg font-light leading-relaxed">
-                    Clients rarely leave because a report was late. They leave because confidence erodes over time. Andrady gives your agency a professional client experience that keeps communication organized, transparent, and easy to access.
+                    Most landing pages are built on page builders, stacked with plugins, tracking scripts, and chat widgets — and every one of those slows the page down. You're paying full price for clicks that land on a page engineered to lose them.
                 </p>
             </div>
 
-            <!-- The Contrast Grid -->
+            <!-- Contrast grid -->
             <div class="grid md:grid-cols-2 gap-1">
                 <!-- BEFORE -->
                 <div class="fade-up bg-surfaceCard border border-white/5 rounded-sm p-8 md:p-10 relative overflow-hidden">
-                    <!-- Subtle red danger tint -->
                     <div class="absolute top-0 right-0 w-32 h-32 bg-red-500/5 blur-[80px]"></div>
 
                     <div class="relative z-10">
@@ -327,28 +313,28 @@
                             <span class="text-xs font-bold tracking-[0.2em] uppercase text-red-400/80">Before</span>
                         </div>
 
-                        <h3 class="font-display text-2xl font-500 tracking-tight uppercase mb-6 text-white/80">The Status-Update Spiral</h3>
+                        <h3 class="font-display text-2xl font-500 tracking-tight uppercase mb-6 text-white/80">The Bloat Stack</h3>
 
                         <ul class="space-y-4">
                             <li class="flex items-start gap-3">
-                                <i data-lucide="file-spreadsheet" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-500 text-sm font-light">Sunday-night CSV exports from Ads Manager nobody opens</span>
+                                <i data-lucide="puzzle" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
+                                <span class="text-gray-500 text-sm font-light">A page builder rendering layout with megabytes of unused CSS and JS</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i data-lucide="message-circle" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-500 text-sm font-light">Screenshot dumps dropped into a Slack channel with 40 unreads</span>
+                                <i data-lucide="layers" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
+                                <span class="text-gray-500 text-sm font-light">A dozen plugins and embeds, each adding its own render-blocking script</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i data-lucide="folder" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-500 text-sm font-light">Drive folders full of "Report_Final_v3_ACTUAL.pdf"</span>
+                                <i data-lucide="gauge" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
+                                <span class="text-gray-500 text-sm font-light">A 3–5 second load time on mobile, where most paid traffic lands</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i data-lucide="mail" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-500 text-sm font-light">Clients texting "quick question on spend" at 9pm</span>
+                                <i data-lucide="trending-down" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
+                                <span class="text-gray-500 text-sm font-light">Visitors bouncing before the form even finishes rendering</span>
                             </li>
                             <li class="flex items-start gap-3">
-                                <i data-lucide="shield-off" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-500 text-sm font-light">One wrong share link and Client A sees Client B's numbers</span>
+                                <i data-lucide="receipt" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
+                                <span class="text-gray-500 text-sm font-light">Monthly software rent for a page builder, on top of your ad spend</span>
                             </li>
                         </ul>
                     </div>
@@ -356,7 +342,6 @@
 
                 <!-- AFTER -->
                 <div class="fade-up bg-surfaceCard border border-accent/10 rounded-sm p-8 md:p-10 relative overflow-hidden" style="animation-delay: 0.2s;">
-                    <!-- Accent glow -->
                     <div class="absolute top-0 right-0 w-40 h-40 bg-accent/5 blur-[80px]"></div>
 
                     <div class="relative z-10">
@@ -367,38 +352,37 @@
                             <span class="text-xs font-bold tracking-[0.2em] uppercase text-accent">After</span>
                         </div>
 
-                        <h3 class="font-display text-2xl font-500 tracking-tight uppercase mb-6 text-white">One Branded Performance Hub</h3>
+                        <h3 class="font-display text-2xl font-500 tracking-tight uppercase mb-6 text-white">Static Performance Infrastructure</h3>
 
                         <ul class="space-y-4">
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm font-light">One branded login. Every report, creative, and number in one place.</span>
+                                <span class="text-gray-300 text-sm font-light">Hand-built static HTML and Tailwind — no builder runtime to drag it down</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm font-light">Live spend, ROAS, and conversion data — no manual exports, ever</span>
+                                <span class="text-gray-300 text-sm font-light">Only the scripts your page actually needs — nothing else ships</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm font-light">Reports and creative assets versioned in a single hub</span>
+                                <span class="text-gray-300 text-sm font-light">Sub-second loads on mobile, where the click actually lands</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm font-light">Clients self-serve answers instead of pinging you after hours</span>
+                                <span class="text-gray-300 text-sm font-light">A form that's visible and usable before the visitor can change their mind</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm font-light">Isolated client accounts — Client A never sees Client B's data</span>
+                                <span class="text-gray-300 text-sm font-light">One fixed fee. No builder subscription. Hosting that costs pennies.</span>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- Bottom credibility bar — no unsupported stats -->
             <div class="fade-up mt-12 border border-white/5 rounded-sm p-8 bg-surfaceCard/50">
                 <p class="text-center text-gray-400 text-base font-light leading-relaxed max-w-3xl mx-auto">
-                    You're already delivering the results. Andrady helps you deliver a client experience that matches them — so the work you do is visible, organized, and easy to trust.
+                    You're already paying for the click. Andrady makes sure the page on the other end of it is built to convert that click — not lose it to a three-second spinner.
                 </p>
             </div>
         </div>
@@ -406,140 +390,125 @@
 
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 4: THE 48-HOUR INSTALL             -->
+    <!-- HOW ANDRADY WORKS                           -->
     <!-- ═══════════════════════════════════════════ -->
-    <section id="solution" class="relative py-32 overflow-hidden">
-        <!-- Background texture -->
+    <section id="how-it-works" class="relative py-32 overflow-hidden">
         <div class="absolute inset-0 grid-bg opacity-30"></div>
 
         <div class="relative z-10 max-w-7xl mx-auto px-6">
-            <!-- Section header -->
             <div class="fade-up max-w-3xl mb-20">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="h-px w-8 bg-accent"></div>
-                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">The Install</span>
+                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">How Andrady Works</span>
                 </div>
                 <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
-                    Three Systems.<br>
-                    One <span class="text-accent">48-Hour</span> Install
+                    Three Steps.<br>
+                    One <span class="text-accent">Performance</span> Rebuild
                 </h2>
                 <p class="text-gray-400 text-lg font-light leading-relaxed max-w-xl">
-                    Not a Notion hack. Not a page-builder template. A fully functional, white-labeled web app — wired, secured, and handed to you with the keys in two days flat.
+                    Not a redesign. Not a re-skin. We rebuild the page underneath your existing offer and creative — engineered specifically for the traffic hitting it.
                 </p>
             </div>
 
-            <!-- Feature 1: Secure Auth -->
+            <!-- Step 1: Audit -->
             <div class="fade-up grid lg:grid-cols-2 gap-12 items-center mb-24 border border-white/5 rounded-sm p-8 md:p-12 bg-surfaceCard/30 relative overflow-hidden">
-                <!-- Background accent -->
                 <div class="absolute -bottom-20 -right-20 w-60 h-60 bg-accent/3 blur-[100px]"></div>
 
                 <div class="relative z-10">
                     <div class="flex items-center gap-3 mb-6">
                         <div class="w-10 h-10 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center">
-                            <i data-lucide="shield-check" class="w-5 h-5 text-accent"></i>
+                            <i data-lucide="search" class="w-5 h-5 text-accent"></i>
                         </div>
-                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent">System 01</span>
+                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent">Step 01</span>
                     </div>
 
                     <h3 class="font-display text-3xl md:text-4xl font-500 tracking-tight uppercase mb-4">
-                        Secure Login.<br>Zero Setup Headache
+                        We Audit What's<br>Actually Slowing You Down
                     </h3>
 
                     <p class="text-gray-400 font-light leading-relaxed mb-6">
-                        Every client gets a private, branded login into their own dashboard. Role-based access control keeps every account fully isolated from every other — Client A's numbers never touch Client B's screen. You don't manage servers, certificates, or password resets. It just <span class="text-white">works</span>.
+                        We run your current page through real performance testing and trace exactly where the load time, render-blocking scripts, and conversion friction are coming from. You get a clear breakdown — <span class="text-white">not a sales pitch dressed up as an audit</span>.
                     </p>
 
                     <ul class="space-y-3">
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">One branded login screen — your colors, your logo, your domain</span>
+                            <span class="text-gray-300 text-sm">Full load-time and Core Web Vitals breakdown</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Isolated client accounts with role-based access control</span>
+                            <span class="text-gray-300 text-sm">Bloat sources identified — builder runtime, scripts, plugins</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Magic-link or password sign-in, no IT ticket required</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Admin vs. client roles — you control exactly what they see</span>
+                            <span class="text-gray-300 text-sm">Mobile-first read, since that's where most paid clicks land</span>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Visual: Auth flow diagram -->
                 <div class="relative z-10 flex items-center justify-center">
                     <div class="relative w-full max-w-sm">
-                        <!-- Radar container -->
                         <div class="absolute inset-0 flex items-center justify-center">
                             <div class="w-64 h-64 rounded-full border border-white/5 relative">
                                 <div class="absolute inset-0 radar-sweep rounded-full"></div>
                                 <div class="absolute inset-8 rounded-full border border-white/5"></div>
                                 <div class="absolute inset-16 rounded-full border border-white/5"></div>
-                                <!-- Center shield -->
                                 <div class="absolute inset-0 flex items-center justify-center">
                                     <div class="w-12 h-12 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center">
-                                        <i data-lucide="lock" class="w-5 h-5 text-accent"></i>
+                                        <i data-lucide="activity" class="w-5 h-5 text-accent"></i>
                                     </div>
                                 </div>
-                                <!-- Orbiting dots -->
                                 <div class="absolute top-4 left-1/2 w-2 h-2 bg-accent rounded-full float-anim" style="animation-delay: 0s;"></div>
                                 <div class="absolute bottom-8 right-8 w-2 h-2 bg-white/30 rounded-full float-anim" style="animation-delay: 1.5s;"></div>
                                 <div class="absolute top-1/2 left-4 w-2 h-2 bg-white/20 rounded-full float-anim" style="animation-delay: 3s;"></div>
                             </div>
                         </div>
-                        <!-- Label -->
                         <div class="text-center pt-72">
-                            <div class="text-[10px] tracking-[0.2em] uppercase text-gray-600">Secure Client Authentication — Active</div>
+                            <div class="text-[10px] tracking-[0.2em] uppercase text-gray-600">Scanning Render Path — Active</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Feature 2: Live Performance Dashboard -->
+            <!-- Step 2: Rebuild -->
             <div class="fade-up grid lg:grid-cols-2 gap-12 items-center mb-24 border border-white/5 rounded-sm p-8 md:p-12 bg-surfaceCard/30 relative overflow-hidden">
-                <!-- Background accent -->
                 <div class="absolute -top-20 -left-20 w-60 h-60 bg-accent/3 blur-[100px]"></div>
 
-                <!-- Visual: Live metrics (left on desktop) -->
                 <div class="relative z-10 flex items-center justify-center order-2 lg:order-1">
                     <div class="w-full max-w-sm">
                         <div class="border border-white/10 rounded-sm bg-black/30 overflow-hidden">
                             <div class="flex items-center justify-between px-4 py-3 border-b border-white/5">
-                                <span class="text-xs text-white font-medium">Nova Retail — Live View</span>
+                                <span class="text-xs text-white font-medium">Stack Comparison</span>
                                 <span class="text-[10px] text-accent tracking-wider uppercase flex items-center gap-1.5">
                                     <span class="w-1.5 h-1.5 bg-accent rounded-full count-tick"></span>
-                                    Updated 2 min ago
+                                    Rebuilt
                                 </span>
                             </div>
                             <div class="p-4 space-y-3">
-                                <div>
-                                    <div class="flex items-center justify-between text-xs mb-1">
-                                        <span class="text-gray-400">Spend Pacing</span>
-                                        <span class="text-white font-medium">$42,180 / $62k</span>
-                                    </div>
-                                    <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
-                                        <div class="h-full bg-accent rounded-full" style="width: 68%;"></div>
-                                    </div>
+                                <div class="flex items-center justify-between text-xs py-2">
+                                    <span class="text-gray-400">Page Builder Runtime</span>
+                                    <span class="text-red-400/80 font-medium">Removed</span>
                                 </div>
                                 <div class="flex items-center justify-between text-xs py-2 border-t border-white/5">
-                                    <span class="text-gray-400">ROAS</span>
-                                    <span class="text-accent font-medium">4.2x ▲ 12%</span>
+                                    <span class="text-gray-400">Frontend</span>
+                                    <span class="text-white font-medium">Static HTML + Tailwind</span>
                                 </div>
                                 <div class="flex items-center justify-between text-xs py-2 border-t border-white/5">
-                                    <span class="text-gray-400">Conversions</span>
-                                    <span class="text-white font-medium">318 <span class="text-accent">▲ 8%</span></span>
+                                    <span class="text-gray-400">Interactivity</span>
+                                    <span class="text-white font-medium">Vanilla JS</span>
                                 </div>
                                 <div class="flex items-center justify-between text-xs py-2 border-t border-white/5">
-                                    <span class="text-gray-400">CPA</span>
-                                    <span class="text-white font-medium">$32.40 <span class="text-accent">▼ 6%</span></span>
+                                    <span class="text-gray-400">Lead Data</span>
+                                    <span class="text-white font-medium">Supabase</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs py-2 border-t border-white/5">
+                                    <span class="text-gray-400">Hosting</span>
+                                    <span class="text-white font-medium">Vercel Edge</span>
                                 </div>
                             </div>
                         </div>
                         <div class="text-center mt-6">
-                            <div class="text-[10px] tracking-[0.2em] uppercase text-gray-600">Auto-Refreshes Every 60s — Isolated Per Client</div>
+                            <div class="text-[10px] tracking-[0.2em] uppercase text-gray-600">Same Offer. Same Creative. New Foundation.</div>
                         </div>
                     </div>
                 </div>
@@ -547,111 +516,101 @@
                 <div class="relative z-10 order-1 lg:order-2">
                     <div class="flex items-center gap-3 mb-6">
                         <div class="w-10 h-10 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center">
-                            <i data-lucide="activity" class="w-5 h-5 text-accent"></i>
+                            <i data-lucide="hammer" class="w-5 h-5 text-accent"></i>
                         </div>
-                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent">System 02</span>
+                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent">Step 02</span>
                     </div>
 
                     <h3 class="font-display text-3xl md:text-4xl font-500 tracking-tight uppercase mb-4">
-                        A Live Number Beats<br>A Weekly Email
+                        We Rebuild It On<br>Real Infrastructure
                     </h3>
 
                     <p class="text-gray-400 font-light leading-relaxed mb-6">
-                        Give clients a professional home for every report, asset, and performance update. Replace the Sunday-night export with a dashboard that moves the moment spend, ROAS, or conversions do — <span class="text-white">no status call required</span>.
+                        We rebuild your page from the ground up on static HTML, Tailwind CSS, and vanilla JavaScript — hosted on Vercel, backed by Supabase for lead capture. Your message and creative stay yours. <span class="text-white">The engine underneath changes entirely</span>.
                     </p>
 
                     <ul class="space-y-3">
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Live spend, ROAS, CPA, and conversion tracking</span>
+                            <span class="text-gray-300 text-sm">Full rebuild — not a theme swap or a plugin removal pass</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Budget pacing bars so clients see the burn at a glance</span>
+                            <span class="text-gray-300 text-sm">Mobile-optimized layout, since that's where the spend lands</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Fewer "how are we doing?" messages — clients self-serve first</span>
+                            <span class="text-gray-300 text-sm">Lead capture wired directly into your CRM or inbox</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">You control what's visible — no surprise numbers, ever</span>
+                            <span class="text-gray-300 text-sm">Your tracking and analytics carried over, not lost in the switch</span>
                         </li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Feature 3: Reports & Asset Hub -->
+            <!-- Step 3: Deploy -->
             <div class="fade-up grid lg:grid-cols-2 gap-12 items-center border border-white/5 rounded-sm p-8 md:p-12 bg-surfaceCard/30 relative overflow-hidden">
                 <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-accent/3 blur-[100px]"></div>
 
                 <div class="relative z-10">
                     <div class="flex items-center gap-3 mb-6">
                         <div class="w-10 h-10 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center">
-                            <i data-lucide="folder-sync" class="w-5 h-5 text-accent"></i>
+                            <i data-lucide="rocket" class="w-5 h-5 text-accent"></i>
                         </div>
-                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent">System 03</span>
+                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent">Step 03</span>
                     </div>
 
                     <h3 class="font-display text-3xl md:text-4xl font-500 tracking-tight uppercase mb-4">
-                        One Hub For Every<br>Report & Creative
+                        We Deploy It Behind<br>Your Live Campaigns
                     </h3>
 
                     <p class="text-gray-400 font-light leading-relaxed mb-6">
-                        Monthly reports, ad creatives, raw exports — everything lands in one versioned hub instead of six different Drive links. The easiest way to increase perceived value is to improve how clients experience your work. Feedback stays pinned to the file it's about, not buried three weeks deep in a <span class="text-white">Slack thread</span>.
+                        We deploy the rebuilt page to your domain, verify every tracking pixel and conversion event fires correctly, and hand you a page that's ready to take traffic the same day. No downtime. No re-approval delays on your ad accounts.
                     </p>
 
                     <ul class="space-y-3">
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Drag-and-drop reports and creative assets, fully versioned</span>
+                            <span class="text-gray-300 text-sm">Pixel and conversion-event verification before go-live</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Feedback threads pinned to the exact file they reference</span>
+                            <span class="text-gray-300 text-sm">Deployed to your existing domain — no new URL to re-approve</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">No more guessing which file is the client-approved one</span>
+                            <span class="text-gray-300 text-sm">Full source code handed to you — yours outright</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Secure file storage — each client's assets physically walled off</span>
+                            <span class="text-gray-300 text-sm">Optional ongoing oversight if you'd rather not touch it again</span>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Visual: Upload flow -->
                 <div class="relative z-10 flex items-center justify-center">
                     <div class="w-full max-w-sm space-y-4">
-                        <!-- Upload zone mockup -->
-                        <div class="border border-dashed border-accent/20 rounded-sm p-8 text-center bg-accent/5 hover:bg-accent/10 transition-colors duration-300 cursor-pointer">
-                            <i data-lucide="upload-cloud" class="w-8 h-8 text-accent mx-auto mb-3"></i>
-                            <div class="text-sm text-white font-medium mb-1">Drop reports or creative here</div>
-                            <div class="text-[10px] tracking-widest uppercase text-gray-500">Secure file storage — isolated per client</div>
+                        <div class="border border-dashed border-accent/20 rounded-sm p-8 text-center bg-accent/5">
+                            <i data-lucide="check-circle-2" class="w-8 h-8 text-accent mx-auto mb-3"></i>
+                            <div class="text-sm text-white font-medium mb-1">Live & Taking Traffic</div>
+                            <div class="text-[10px] tracking-widest uppercase text-gray-500">Pixels Verified — Conversions Firing</div>
                         </div>
 
-                        <!-- File list mockup -->
                         <div class="space-y-2">
                             <div class="flex items-center gap-3 bg-black/30 border border-white/5 rounded-sm px-4 py-3">
-                                <i data-lucide="file-text" class="w-4 h-4 text-accent"></i>
-                                <span class="text-xs text-gray-300 flex-1">Q3_Performance_Report.pdf</span>
-                                <span class="text-[10px] text-accent">2.1 MB</span>
+                                <i data-lucide="check" class="w-4 h-4 text-accent"></i>
+                                <span class="text-xs text-gray-300 flex-1">Meta Pixel — Firing</span>
                             </div>
                             <div class="flex items-center gap-3 bg-black/30 border border-white/5 rounded-sm px-4 py-3">
-                                <i data-lucide="file-video" class="w-4 h-4 text-gray-500"></i>
-                                <span class="text-xs text-gray-300 flex-1">UGC_Ad_Variant_04.mp4</span>
-                                <span class="text-[10px] text-gray-500">18.6 MB</span>
+                                <i data-lucide="check" class="w-4 h-4 text-accent"></i>
+                                <span class="text-xs text-gray-300 flex-1">Google Ads Conversion — Firing</span>
                             </div>
                             <div class="flex items-center gap-3 bg-black/30 border border-white/5 rounded-sm px-4 py-3">
-                                <i data-lucide="file-check" class="w-4 h-4 text-gray-500"></i>
-                                <span class="text-xs text-gray-300 flex-1">Creative_Brief_Approved.docx</span>
-                                <span class="text-[10px] text-gray-500">1.3 MB</span>
+                                <i data-lucide="check" class="w-4 h-4 text-accent"></i>
+                                <span class="text-xs text-gray-300 flex-1">LinkedIn Insight Tag — Firing</span>
                             </div>
-                        </div>
-
-                        <div class="text-center">
-                            <div class="text-[10px] tracking-[0.2em] uppercase text-gray-600">Isolated From Every Other Client's Files</div>
                         </div>
                     </div>
                 </div>
@@ -661,89 +620,67 @@
 
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 4B: WHAT'S INCLUDED                -->
+    <!-- BEFORE VS AFTER INFRASTRUCTURE COMPARISON   -->
     <!-- ═══════════════════════════════════════════ -->
-    <section id="deliverables" class="relative py-24 overflow-hidden">
+    <section class="relative py-24 overflow-hidden">
         <div class="max-w-7xl mx-auto px-6">
             <div class="fade-up text-center max-w-2xl mx-auto mb-16">
                 <div class="flex items-center justify-center gap-3 mb-6">
                     <div class="h-px w-8 bg-accent"></div>
-                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Every Install</span>
+                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Infrastructure Comparison</span>
                     <div class="h-px w-8 bg-accent"></div>
                 </div>
                 <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95]">
-                    What's Included In<br>
-                    <span class="text-accent">Every Install</span>
+                    Before vs After<br>
+                    <span class="text-accent">The Rebuild</span>
                 </h2>
             </div>
 
-            <div class="fade-up grid md:grid-cols-2 lg:grid-cols-3 gap-1 max-w-4xl mx-auto">
-                <!-- Deliverable items -->
-                <div class="bg-surfaceCard border border-white/5 rounded-sm p-5 flex items-center gap-4">
-                    <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="layout-dashboard" class="w-4 h-4 text-accent"></i>
+            <div class="fade-up max-w-4xl mx-auto overflow-hidden border border-white/5 rounded-sm">
+                <div class="grid grid-cols-3 text-xs md:text-sm">
+                    <!-- Header row -->
+                    <div class="bg-black/40 p-4 border-b border-white/5"></div>
+                    <div class="bg-black/40 p-4 border-b border-white/5 border-l border-white/5 text-center">
+                        <span class="text-gray-500 font-bold tracking-widest uppercase text-[10px]">Before</span>
                     </div>
-                    <span class="text-gray-300 text-sm">Branded login experience</span>
-                </div>
-                <div class="bg-surfaceCard border border-white/5 rounded-sm p-5 flex items-center gap-4">
-                    <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="bar-chart-2" class="w-4 h-4 text-accent"></i>
+                    <div class="bg-accent/5 p-4 border-b border-accent/10 border-l border-white/5 text-center">
+                        <span class="text-accent font-bold tracking-widest uppercase text-[10px]">After</span>
                     </div>
-                    <span class="text-gray-300 text-sm">Client dashboards</span>
-                </div>
-                <div class="bg-surfaceCard border border-white/5 rounded-sm p-5 flex items-center gap-4">
-                    <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="file-bar-chart" class="w-4 h-4 text-accent"></i>
-                    </div>
-                    <span class="text-gray-300 text-sm">Performance reporting hub</span>
-                </div>
-                <div class="bg-surfaceCard border border-white/5 rounded-sm p-5 flex items-center gap-4">
-                    <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="image" class="w-4 h-4 text-accent"></i>
-                    </div>
-                    <span class="text-gray-300 text-sm">Creative asset library</span>
-                </div>
-                <div class="bg-surfaceCard border border-white/5 rounded-sm p-5 flex items-center gap-4">
-                    <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="hard-drive" class="w-4 h-4 text-accent"></i>
-                    </div>
-                    <span class="text-gray-300 text-sm">Secure file management</span>
-                </div>
-                <div class="bg-surfaceCard border border-white/5 rounded-sm p-5 flex items-center gap-4">
-                    <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="users" class="w-4 h-4 text-accent"></i>
-                    </div>
-                    <span class="text-gray-300 text-sm">Role-based permissions</span>
-                </div>
-                <div class="bg-surfaceCard border border-white/5 rounded-sm p-5 flex items-center gap-4">
-                    <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="smartphone" class="w-4 h-4 text-accent"></i>
-                    </div>
-                    <span class="text-gray-300 text-sm">Mobile responsive design</span>
-                </div>
-                <div class="bg-surfaceCard border border-white/5 rounded-sm p-5 flex items-center gap-4">
-                    <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="globe" class="w-4 h-4 text-accent"></i>
-                    </div>
-                    <span class="text-gray-300 text-sm">Custom domain setup</span>
-                </div>
-                <div class="bg-surfaceCard border border-white/5 rounded-sm p-5 flex items-center gap-4">
-                    <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="server" class="w-4 h-4 text-accent"></i>
-                    </div>
-                    <span class="text-gray-300 text-sm">Hosting configuration</span>
-                </div>
-                <div class="bg-surfaceCard border border-white/5 rounded-sm p-5 flex items-center gap-4">
-                    <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="code-2" class="w-4 h-4 text-accent"></i>
-                    </div>
-                    <span class="text-gray-300 text-sm">Source code ownership</span>
-                </div>
-                <div class="bg-surfaceCard border border-accent/15 rounded-sm p-5 flex items-center gap-4 md:col-span-2 lg:col-span-2">
-                    <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="zap" class="w-4 h-4 text-accent"></i>
-                    </div>
-                    <span class="text-white text-sm font-medium">48-hour deployment — <span class="text-accent">guaranteed</span></span>
+
+                    <!-- Row: Load time -->
+                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">Load Time</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-red-400/80">3–5s</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-accent font-medium">&lt;1s</div>
+
+                    <!-- Row: Stack -->
+                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">Frontend Stack</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-500">Page Builder + Plugins</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-300">Static HTML + Tailwind</div>
+
+                    <!-- Row: JS payload -->
+                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">JavaScript Payload</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-500">Heavy, Often Unused</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-300">Minimal, Vanilla JS Only</div>
+
+                    <!-- Row: Hosting -->
+                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">Hosting</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-500">Shared / Builder-Locked</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-300">Vercel Edge Network</div>
+
+                    <!-- Row: Lead capture -->
+                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">Lead Data</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-500">Locked Inside Builder</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-300">Yours, in Supabase</div>
+
+                    <!-- Row: Ongoing cost -->
+                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">Ongoing Software Cost</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-red-400/80">$50–$300/mo</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-accent font-medium">~$0/mo</div>
+
+                    <!-- Row: Ownership -->
+                    <div class="p-4 text-gray-400 font-light">Code Ownership</div>
+                    <div class="p-4 border-l border-white/5 text-center text-gray-500">Locked to Platform</div>
+                    <div class="p-4 border-l border-white/5 text-center text-gray-300">100% Yours</div>
                 </div>
             </div>
         </div>
@@ -751,86 +688,223 @@
 
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 5: WHAT WE NEED FROM YOU           -->
+    <!-- OFFER BREAKDOWN                             -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section id="offer" class="relative py-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="fade-up text-center max-w-3xl mx-auto mb-16">
+                <div class="flex items-center justify-center gap-3 mb-6">
+                    <div class="h-px w-8 bg-accent"></div>
+                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">One Fixed Fee. No Retainers Required.</span>
+                    <div class="h-px w-8 bg-accent"></div>
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
+                    The Performance Rebuild.<br>
+                    <span class="text-accent">Everything Included.</span>
+                </h2>
+                <p class="text-gray-400 text-lg font-light leading-relaxed">
+                    One project. One price. Your existing landing page, rebuilt on infrastructure designed to convert paid traffic — not just exist on the internet.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-1 max-w-4xl mx-auto">
+
+                <!-- Core offer: Performance Rebuild -->
+                <div class="fade-up relative border border-accent/30 rounded-sm p-8 md:p-10 bg-surfaceCard/70 overflow-hidden group shadow-[0_0_60px_rgba(180,255,57,0.06)]">
+                    <div class="absolute top-0 right-0 bg-accent text-black text-[9px] font-bold tracking-[0.2em] uppercase px-4 py-1.5">
+                        Core Offer
+                    </div>
+                    <div class="absolute -bottom-20 -right-20 w-60 h-60 bg-accent/8 blur-[80px] group-hover:bg-accent/12 transition-all duration-700"></div>
+
+                    <div class="relative z-10">
+                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent block mb-4">The Rebuild</span>
+                        <h3 class="font-display text-3xl font-500 tracking-tight uppercase mb-2">Performance Rebuild</h3>
+
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="font-display text-5xl font-500 text-white">$1,500</span>
+                            <span class="text-gray-500 text-sm font-light">fixed fee</span>
+                        </div>
+
+                        <p class="text-gray-400 text-sm font-light leading-relaxed mb-8">
+                            We take your existing landing page and rebuild it from the ground up as fast, clean, static infrastructure — engineered specifically for paid traffic.
+                        </p>
+
+                        <ul class="space-y-3 mb-10">
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                                <span class="text-gray-300 text-sm">Full landing page audit</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                                <span class="text-gray-300 text-sm">Full rebuild on static HTML + Tailwind</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                                <span class="text-gray-300 text-sm">Mobile optimization, top to bottom</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                                <span class="text-gray-300 text-sm">Lead capture integration (CRM, inbox, or Supabase)</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                                <span class="text-gray-300 text-sm">Analytics & pixel preservation — nothing breaks</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                                <span class="text-gray-300 text-sm">Full deployment to your domain</span>
+                            </li>
+                        </ul>
+
+                        <a href="#audit" class="block w-full text-center bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-colors duration-300">
+                            Get a Free Landing Page Audit
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Add-on: SLA -->
+                <div class="fade-up relative border border-white/5 rounded-sm p-8 md:p-10 bg-surfaceCard/30 overflow-hidden group" style="animation-delay: 0.2s;">
+                    <div class="absolute -top-20 -left-20 w-40 h-40 bg-white/3 blur-[80px] group-hover:bg-white/5 transition-all duration-700"></div>
+
+                    <div class="relative z-10">
+                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-500 block mb-4">Optional Add-On</span>
+                        <h3 class="font-display text-3xl font-500 tracking-tight uppercase mb-2 text-white/80">Infrastructure SLA</h3>
+
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="font-display text-5xl font-500 text-white/80">$500</span>
+                            <span class="text-gray-500 text-sm font-light">/month</span>
+                        </div>
+
+                        <p class="text-gray-500 text-sm font-light leading-relaxed mb-8">
+                            For teams who'd rather never think about their landing page infrastructure again. We watch it, maintain it, and handle small changes as your campaigns evolve.
+                        </p>
+
+                        <ul class="space-y-3 mb-10">
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
+                                <span class="text-gray-400 text-sm">Hosting oversight on Vercel</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
+                                <span class="text-gray-400 text-sm">Uptime monitoring, 24/7</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
+                                <span class="text-gray-400 text-sm">Database maintenance (Supabase)</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
+                                <span class="text-gray-400 text-sm">Minor content and copy changes</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
+                                <span class="text-gray-400 text-sm">Direct technical support, no ticket queue</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
+                                <span class="text-gray-400 text-sm">Cancel anytime — no lock-in contract</span>
+                            </li>
+                        </ul>
+
+                        <a href="#audit" class="block w-full text-center border border-white/10 text-white text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:border-white/30 hover:bg-white/5 transition-all duration-300">
+                            Ask About the SLA
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Eligibility note -->
+            <div class="fade-up mt-12 max-w-4xl mx-auto">
+                <div class="border border-white/5 rounded-sm p-6 bg-surfaceCard/30 flex items-start gap-4">
+                    <i data-lucide="info" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
+                    <p class="text-gray-400 text-sm font-light leading-relaxed">
+                        The Performance Rebuild is built for businesses already running paid traffic — typically <span class="text-white">$5,000–$10,000+ per month</span> across Meta, Google, or LinkedIn. If that's not you yet, the audit is still free, but the rebuild pays off fastest when there's active spend behind it.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- WHY STATIC INFRASTRUCTURE WINS               -->
     <!-- ═══════════════════════════════════════════ -->
     <section class="relative py-24 overflow-hidden">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid lg:grid-cols-2 gap-16 items-center">
 
-                <!-- Left: Copy -->
                 <div class="fade-up">
                     <div class="flex items-center gap-3 mb-6">
                         <div class="h-px w-8 bg-accent"></div>
-                        <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Getting Started</span>
+                        <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Why It Works</span>
                     </div>
                     <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
-                        What We Need<br>
-                        <span class="text-accent">From You</span>
+                        Why Static<br>
+                        <span class="text-accent">Infrastructure Wins</span>
                     </h2>
                     <p class="text-gray-400 text-lg font-light leading-relaxed mb-10">
-                        Getting started takes less than 30 minutes. We only need four things — everything else is handled by Andrady.
+                        Page builders are designed to be easy to edit. They were never designed to be fast. Every visual editor, plugin, and drag-and-drop block adds a layer your visitor has to download and render before they ever see your offer. Static infrastructure removes that layer entirely.
                     </p>
 
                     <ul class="space-y-5">
                         <li class="flex items-start gap-4">
                             <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <i data-lucide="image" class="w-4 h-4 text-accent"></i>
+                                <i data-lucide="zap" class="w-4 h-4 text-accent"></i>
                             </div>
                             <div>
-                                <div class="text-white text-sm font-medium mb-0.5">Agency Logo</div>
-                                <div class="text-gray-500 text-sm font-light">Your brand mark in any standard format</div>
+                                <div class="text-white text-sm font-medium mb-0.5">No Builder Runtime</div>
+                                <div class="text-gray-500 text-sm font-light">Static HTML ships exactly what the browser needs — nothing assembled client-side.</div>
                             </div>
                         </li>
                         <li class="flex items-start gap-4">
                             <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <i data-lucide="palette" class="w-4 h-4 text-accent"></i>
+                                <i data-lucide="git-branch" class="w-4 h-4 text-accent"></i>
                             </div>
                             <div>
-                                <div class="text-white text-sm font-medium mb-0.5">Brand Colors</div>
-                                <div class="text-gray-500 text-sm font-light">Primary and accent hex codes</div>
+                                <div class="text-white text-sm font-medium mb-0.5">Vercel's Edge Network</div>
+                                <div class="text-gray-500 text-sm font-light">Your page is served from the location closest to each visitor, every time.</div>
                             </div>
                         </li>
                         <li class="flex items-start gap-4">
                             <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <i data-lucide="users" class="w-4 h-4 text-accent"></i>
+                                <i data-lucide="database" class="w-4 h-4 text-accent"></i>
                             </div>
                             <div>
-                                <div class="text-white text-sm font-medium mb-0.5">Client List</div>
-                                <div class="text-gray-500 text-sm font-light">Names and email addresses for initial accounts</div>
+                                <div class="text-white text-sm font-medium mb-0.5">Supabase for Lead Data</div>
+                                <div class="text-gray-500 text-sm font-light">Your leads land in a database you control — not locked inside a builder's export tool.</div>
                             </div>
                         </li>
                         <li class="flex items-start gap-4">
                             <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <i data-lucide="globe" class="w-4 h-4 text-accent"></i>
+                                <i data-lucide="dollar-sign" class="w-4 h-4 text-accent"></i>
                             </div>
                             <div>
-                                <div class="text-white text-sm font-medium mb-0.5">Domain Access</div>
-                                <div class="text-gray-500 text-sm font-light">Ability to add a DNS record for your subdomain</div>
+                                <div class="text-white text-sm font-medium mb-0.5">Near-Zero Hosting Cost</div>
+                                <div class="text-gray-500 text-sm font-light">No builder subscription, no plugin licenses — hosting alone costs next to nothing.</div>
                             </div>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Right: Time card -->
+                <!-- Right: speed stat card -->
                 <div class="fade-up flex items-center justify-center" style="animation-delay: 0.2s;">
                     <div class="w-full max-w-sm">
                         <div class="border border-accent/20 rounded-sm p-10 bg-surfaceCard/50 text-center relative overflow-hidden">
-                            <!-- Glow -->
                             <div class="absolute inset-0 flex items-center justify-center">
                                 <div class="w-64 h-64 bg-accent/5 blur-[80px] rounded-full"></div>
                             </div>
 
                             <div class="relative z-10">
                                 <div class="w-14 h-14 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-6">
-                                    <i data-lucide="clock" class="w-6 h-6 text-accent"></i>
+                                    <i data-lucide="gauge-circle" class="w-6 h-6 text-accent"></i>
                                 </div>
 
-                                <div class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent mb-2">Your Time Required</div>
-                                <div class="font-display text-6xl font-500 text-white mb-2">30</div>
-                                <div class="font-display text-2xl font-500 text-gray-500 uppercase tracking-wide">Minutes</div>
+                                <div class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent mb-2">Every 1-Second Delay</div>
+                                <div class="font-display text-5xl font-500 text-white mb-2">Costs You</div>
+                                <div class="font-display text-2xl font-500 text-gray-500 uppercase tracking-wide">Conversions</div>
 
                                 <div class="mt-8 pt-8 border-t border-white/5">
-                                    <div class="text-gray-500 text-sm font-light">Then Andrady takes it from there — and your portal is live in 48 hours.</div>
+                                    <div class="text-gray-500 text-sm font-light">Speed isn't a technical detail. On paid traffic, it's a direct lever on your cost per acquisition.</div>
                                 </div>
                             </div>
                         </div>
@@ -843,193 +917,34 @@
 
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 6: PRICING — ONE FLAT FEE          -->
+    <!-- AUDIT CTA (mid-page)                        -->
     <!-- ═══════════════════════════════════════════ -->
-    <section id="pricing" class="relative py-32 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6">
-            <!-- Section header -->
-            <div class="fade-up text-center max-w-3xl mx-auto mb-16">
-                <div class="flex items-center justify-center gap-3 mb-6">
-                    <div class="h-px w-8 bg-accent"></div>
-                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">One Flat Fee. Installed In 48 Hours.</span>
-                    <div class="h-px w-8 bg-accent"></div>
-                </div>
-                <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
-                    Pick Your Setup.<br>
-                    <span class="text-accent">Both Ship In 48 Hours.</span>
-                </h2>
-                <p class="text-gray-400 text-lg font-light leading-relaxed">
-                    SaaS portal tools charge $49–$299 per month, per seat, forever. Your Andrady install runs on maintenance-free, zero-bloat infrastructure that costs next to nothing to keep alive — so the price you see is close to the price you'll ever pay. You own the code. You own the data. You call the shots.
-                </p>
-            </div>
-
-            <!-- Pricing cards -->
-            <div class="grid md:grid-cols-2 gap-1 max-w-4xl mx-auto">
-
-                <!-- Option A: Sovereign Ownership — DOMINANT -->
-                <div class="fade-up relative border border-accent/30 rounded-sm p-8 md:p-10 bg-surfaceCard/70 overflow-hidden group shadow-[0_0_60px_rgba(180,255,57,0.06)]">
-                    <!-- Recommended badge -->
-                    <div class="absolute top-0 right-0 bg-accent text-black text-[9px] font-bold tracking-[0.2em] uppercase px-4 py-1.5">
-                        Recommended
-                    </div>
-                    <!-- Glow -->
-                    <div class="absolute -bottom-20 -right-20 w-60 h-60 bg-accent/8 blur-[80px] group-hover:bg-accent/12 transition-all duration-700"></div>
-
-                    <div class="relative z-10">
-                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent block mb-4">Option A</span>
-                        <h3 class="font-display text-3xl font-500 tracking-tight uppercase mb-2">Sovereign Ownership</h3>
-
-                        <div class="flex items-baseline gap-1 mb-6">
-                            <span class="font-display text-5xl font-500 text-white">$1,500</span>
-                            <span class="text-gray-500 text-sm font-light">one-time</span>
-                        </div>
-
-                        <p class="text-gray-400 text-sm font-light leading-relaxed mb-8">
-                            For agencies who want total control. We install your portal directly into your own free hosting accounts and hand you the keys. You own it outright — zero ongoing rent, forever.
-                        </p>
-
-                        <ul class="space-y-3 mb-10">
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm">Full white-labeled client retention infrastructure</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm">Installed directly into your own hosting accounts</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm">100% lifetime ownership of the source code</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm"><span class="text-accent font-medium">$0/mo</span> ongoing cost — ever</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm">No per-seat fees — unlimited clients</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm">48-hour delivery guarantee</span>
-                            </li>
-                        </ul>
-
-                        <a href="#install" class="block w-full text-center bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-colors duration-300">
-                            Get Your Portal Installed
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Option B: Managed Hosting Add-On -->
-                <div class="fade-up relative border border-white/5 rounded-sm p-8 md:p-10 bg-surfaceCard/30 overflow-hidden group" style="animation-delay: 0.2s;">
-                    <!-- Glow -->
-                    <div class="absolute -top-20 -left-20 w-40 h-40 bg-white/3 blur-[80px] group-hover:bg-white/5 transition-all duration-700"></div>
-
-                    <div class="relative z-10">
-                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-500 block mb-4">Option B</span>
-                        <h3 class="font-display text-3xl font-500 tracking-tight uppercase mb-2 text-white/80">Managed Hosting Add-On</h3>
-
-                        <div class="flex items-baseline gap-1 mb-2">
-                            <span class="font-display text-5xl font-500 text-white/80">$1,500</span>
-                            <span class="text-gray-500 text-sm font-light">one-time</span>
-                        </div>
-                        <div class="flex items-center gap-1 mb-6">
-                            <span class="text-accent font-display text-lg font-500">+ $99/mo</span>
-                            <span class="text-gray-600 text-xs font-light">managed hosting</span>
-                        </div>
-
-                        <p class="text-gray-500 text-sm font-light leading-relaxed mb-8">
-                            For agencies who'd rather never touch a server. We manage hosting, your custom domain, backups, and uptime monitoring — you just log in and run client calls.
-                        </p>
-
-                        <ul class="space-y-3 mb-10">
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
-                                <span class="text-gray-400 text-sm">Full white-labeled client retention infrastructure</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
-                                <span class="text-gray-400 text-sm">Fully managed, maintenance-free hosting</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
-                                <span class="text-gray-400 text-sm">Custom domain configuration (portal.youragency.com)</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
-                                <span class="text-gray-400 text-sm">Automated daily backups & uptime monitoring</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
-                                <span class="text-gray-400 text-sm">No per-seat fees — unlimited clients</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
-                                <span class="text-gray-400 text-sm">48-hour delivery guarantee</span>
-                            </li>
-                        </ul>
-
-                        <a href="#install" class="block w-full text-center border border-white/10 text-white text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:border-white/30 hover:bg-white/5 transition-all duration-300">
-                            48-Hour Deployment Setup
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bottom comparison bar -->
-            <div class="fade-up mt-12 max-w-4xl mx-auto">
-                <div class="border border-white/5 rounded-sm p-6 bg-surfaceCard/30">
-                    <div class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-500 text-center mb-4">The Software Rent Comparison</div>
-                    <div class="grid grid-cols-3 gap-4 text-center">
-                        <div>
-                            <div class="text-xs text-gray-500 mb-1">Typical SaaS Portal</div>
-                            <div class="font-display text-xl text-red-400/80">$299<span class="text-xs text-gray-600">/mo</span></div>
-                            <div class="text-[10px] text-gray-600 mt-1">$10,764 over 3 years</div>
-                        </div>
-                        <div>
-                            <div class="text-xs text-gray-500 mb-1">Per-Seat Platforms</div>
-                            <div class="font-display text-xl text-red-400/80">$49<span class="text-xs text-gray-600">/seat/mo</span></div>
-                            <div class="text-[10px] text-gray-600 mt-1">$7,056 over 3 years (4 seats)</div>
-                        </div>
-                        <div>
-                            <div class="text-xs text-accent mb-1">Andrady Sovereign</div>
-                            <div class="font-display text-xl text-accent">$1,500</div>
-                            <div class="text-[10px] text-gray-600 mt-1">$1,500 total. Ever.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 7: 48-HOUR DELIVERY GUARANTEE      -->
-    <!-- ═══════════════════════════════════════════ -->
-    <section id="guarantee" class="relative py-24 overflow-hidden">
+    <section class="relative py-24 overflow-hidden">
         <div class="max-w-7xl mx-auto px-6">
             <div class="fade-up max-w-3xl mx-auto text-center border border-accent/10 rounded-sm p-10 md:p-14 bg-surfaceCard/30 relative overflow-hidden">
-                <!-- Background glow -->
                 <div class="absolute inset-0 flex items-center justify-center">
                     <div class="w-[400px] h-[400px] bg-accent/3 blur-[120px] rounded-full"></div>
                 </div>
 
                 <div class="relative z-10">
-                    <!-- Icon -->
                     <div class="w-16 h-16 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-6">
-                        <i data-lucide="zap" class="w-7 h-7 text-accent"></i>
+                        <i data-lucide="search-check" class="w-7 h-7 text-accent"></i>
                     </div>
 
-                    <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent block mb-4">Ironclad Guarantee</span>
+                    <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent block mb-4">No Cost. No Commitment.</span>
 
                     <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
-                        48 Hours. Live.<br>Or Your Money Back.
+                        See Exactly What's<br>Slowing You Down.
                     </h2>
 
-                    <p class="text-gray-400 text-lg font-light leading-relaxed max-w-xl mx-auto">
-                        If your portal isn't fully deployed, branded, and ready for your first client login within <span class="text-white font-medium">48 hours of kickoff</span>, we'll refund 100% of your payment. No clawback clauses. No store credit. Cash back in your account.
+                    <p class="text-gray-400 text-lg font-light leading-relaxed max-w-xl mx-auto mb-10">
+                        Send us your landing page URL. We'll show you your real load time, what's causing it, and what it's likely costing you in lost conversions on the traffic you're already paying for.
                     </p>
+
+                    <a href="#audit" class="inline-flex items-center justify-center gap-2 bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-all duration-300">
+                        Get a Free Landing Page Audit
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1037,9 +952,104 @@
 
 
     <!-- ═══════════════════════════════════════════ -->
-    <!-- SECTION 8: FINAL CTA — FAST-TRACK BOOKING  -->
+    <!-- FAQ                                         -->
     <!-- ═══════════════════════════════════════════ -->
-    <section id="install" class="relative py-32 overflow-hidden">
+    <section id="faq" class="relative py-32 overflow-hidden">
+        <div class="absolute inset-0 grid-bg opacity-20"></div>
+        <div class="relative z-10 max-w-4xl mx-auto px-6">
+            <div class="fade-up text-center mb-16">
+                <div class="flex items-center justify-center gap-3 mb-6">
+                    <div class="h-px w-8 bg-accent"></div>
+                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Frequently Asked</span>
+                    <div class="h-px w-8 bg-accent"></div>
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95]">
+                    Questions, <span class="text-accent">Answered</span>
+                </h2>
+            </div>
+
+            <div class="fade-up space-y-3">
+                <!-- FAQ item -->
+                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
+                        <span class="text-white font-medium text-sm md:text-base">Are you a web design agency?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-panel">
+                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
+                            No. We don't do branding, design exploration, or general web development. We rebuild the technical infrastructure behind landing pages that already exist and already run paid traffic. Your design and offer stay yours — we replace what's underneath it.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
+                        <span class="text-white font-medium text-sm md:text-base">Will my page look different after the rebuild?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-panel">
+                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
+                            It will look the same — or close to it. We rebuild the underlying code, not the design. If we spot a layout or copy change that would clearly help conversions, we'll flag it, but the rebuild itself is about performance, not a redesign.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
+                        <span class="text-white font-medium text-sm md:text-base">What happens to my existing tracking and pixels?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-panel">
+                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
+                            We preserve and re-verify every tracking script, pixel, and conversion event before the rebuilt page goes live — Meta, Google Ads, LinkedIn, GA4, or anything else you're running. Nothing goes live until we've confirmed it's firing correctly.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
+                        <span class="text-white font-medium text-sm md:text-base">Do I need to already be spending on ads?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-panel">
+                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
+                            The audit is free regardless. The Performance Rebuild pays off fastest for companies already spending $5,000–$10,000+ per month on Meta, Google, or LinkedIn, since every percentage point of speed improvement compounds against real, ongoing spend.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
+                        <span class="text-white font-medium text-sm md:text-base">Who owns the code after the rebuild?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-panel">
+                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
+                            You do, outright. There's no platform lock-in, no proprietary builder, and no dependency on us to keep the page running. If you choose the optional SLA, that's for convenience — not because the page needs us to function.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
+                        <span class="text-white font-medium text-sm md:text-base">How long does the rebuild take?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-panel">
+                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
+                            Most rebuilds are scoped, built, and deployed within days of kickoff, not weeks. Exact timing depends on the complexity of your current page and integrations — we'll give you a specific timeline after the audit.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- FINAL CTA — AUDIT FORM                      -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section id="audit" class="relative py-32 overflow-hidden">
         <div class="absolute inset-0 grid-bg opacity-30"></div>
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/3 blur-[150px] rounded-full"></div>
 
@@ -1050,80 +1060,80 @@
                 <div class="fade-up">
                     <div class="flex items-center gap-3 mb-6">
                         <div class="h-px w-8 bg-accent"></div>
-                        <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Start Your Install</span>
+                        <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Get Your Free Audit</span>
                     </div>
 
                     <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
-                        Turn Great Results Into<br>A Great Client<br>
-                        <span class="text-accent">Experience.</span>
+                        Stop Paying For Clicks<br>
+                        Your Page Is<br>
+                        <span class="text-accent">Wasting.</span>
                     </h2>
 
                     <p class="text-gray-400 text-lg font-light leading-relaxed mb-8">
-                        Your clients already pay for performance. Give them a professional place to see it. Lock in your 48-hour install below — no sales call required.
+                        Send us your landing page URL. We'll send back exactly what's slowing it down, and what a rebuild would change — no sales call required to get the audit.
                     </p>
 
                     <div class="space-y-4">
                         <div class="flex items-center gap-3">
                             <i data-lucide="shield-check" class="w-4 h-4 text-accent"></i>
-                            <span class="text-gray-400 text-sm">Encrypted intake — your information is never shared</span>
+                            <span class="text-gray-400 text-sm">Your data is never shared or sold</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <i data-lucide="clock" class="w-4 h-4 text-accent"></i>
-                            <span class="text-gray-400 text-sm">Install kicks off within 24 hours of booking</span>
+                            <span class="text-gray-400 text-sm">Audits are typically returned within 48 hours</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <i data-lucide="ban" class="w-4 h-4 text-accent"></i>
-                            <span class="text-gray-400 text-sm">No commitment until you approve the scope</span>
+                            <span class="text-gray-400 text-sm">No commitment, no pressure to buy the rebuild</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right: Fast-Track Booking -->
+                <!-- Right: Audit Form -->
                 <div class="fade-up" style="animation-delay: 0.2s;">
                     <div class="border border-white/10 rounded-sm p-8 md:p-10 bg-surfaceCard/50 backdrop-blur-sm">
-                        <div class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-500 mb-8">Fast-Track Booking</div>
+                        <div class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-500 mb-8">Free Landing Page Audit</div>
 
-                        <form id="intake-form" class="space-y-6">
+                        <form id="audit-form" class="space-y-6">
                             <!-- Name -->
                             <div>
                                 <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Full Name</label>
-                                <input type="text" name="name" required placeholder="e.g. Marcus Chen"
+                                <input type="text" name="name" required placeholder="e.g. Sarah Whitfield"
                                     class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white placeholder-gray-700 outline-none transition-all duration-300">
                             </div>
 
                             <!-- Email -->
                             <div>
                                 <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Email Address</label>
-                                <input type="email" name="email" required placeholder="e.g. marcus@youragency.com"
+                                <input type="email" name="email" required placeholder="e.g. sarah@company.com"
                                     class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white placeholder-gray-700 outline-none transition-all duration-300">
                             </div>
 
-                            <!-- Agency URL -->
+                            <!-- Company -->
                             <div>
-                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Agency URL</label>
-                                <input type="url" name="agency_url" required placeholder="e.g. https://youragency.com"
+                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Company</label>
+                                <input type="text" name="company" required placeholder="e.g. Company Name"
                                     class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white placeholder-gray-700 outline-none transition-all duration-300">
                             </div>
 
-                            <!-- Deployment Preference -->
+                            <!-- Landing Page URL -->
                             <div>
-                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Choose Your Setup</label>
-                                <div class="grid grid-cols-2 gap-3">
-                                    <label class="deployment-option cursor-pointer">
-                                        <input type="radio" name="deployment" value="sovereign" class="hidden peer" checked>
-                                        <div class="border border-white/10 rounded-sm p-3 text-center peer-checked:border-accent/50 peer-checked:bg-accent/5 transition-all duration-300">
-                                            <div class="text-xs text-gray-400 peer-checked:text-accent font-medium">Sovereign</div>
-                                            <div class="text-[10px] text-gray-600 mt-0.5">$1,500 one-time</div>
-                                        </div>
-                                    </label>
-                                    <label class="deployment-option cursor-pointer">
-                                        <input type="radio" name="deployment" value="concierge" class="hidden peer">
-                                        <div class="border border-white/10 rounded-sm p-3 text-center peer-checked:border-accent/50 peer-checked:bg-accent/5 transition-all duration-300">
-                                            <div class="text-xs text-gray-400 peer-checked:text-accent font-medium">Managed</div>
-                                            <div class="text-[10px] text-gray-600 mt-0.5">$1,500 + $99/mo</div>
-                                        </div>
-                                    </label>
-                                </div>
+                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Landing Page URL</label>
+                                <input type="url" name="landing_page_url" required placeholder="e.g. https://yoursite.com/landing"
+                                    class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white placeholder-gray-700 outline-none transition-all duration-300">
+                            </div>
+
+                            <!-- Monthly Ad Spend -->
+                            <div>
+                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Monthly Ad Spend</label>
+                                <select name="ad_spend" required
+                                    class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white outline-none transition-all duration-300 appearance-none">
+                                    <option value="" class="bg-black">Select a range</option>
+                                    <option value="under_5k" class="bg-black">Under $5,000/mo</option>
+                                    <option value="5k_10k" class="bg-black">$5,000–$10,000/mo</option>
+                                    <option value="10k_25k" class="bg-black">$10,000–$25,000/mo</option>
+                                    <option value="25k_plus" class="bg-black">$25,000+/mo</option>
+                                </select>
                             </div>
 
                             <!-- Error message container -->
@@ -1134,7 +1144,7 @@
                             <!-- Submit -->
                             <button type="submit" id="submit-btn"
                                 class="w-full bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                                <span id="btn-text">Get Your Portal Installed</span>
+                                <span id="btn-text">Get a Free Landing Page Audit</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4" id="btn-icon"></i>
                                 <svg id="btn-spinner" class="hidden animate-spin w-4 h-4" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
@@ -1148,8 +1158,8 @@
                             <div class="w-16 h-16 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-4">
                                 <i data-lucide="check" class="w-7 h-7 text-accent"></i>
                             </div>
-                            <div class="font-display text-2xl font-500 tracking-tight uppercase mb-2">You're Booked</div>
-                            <p class="text-gray-400 text-sm font-light">We'll reach out within 24 hours to kick off your 48-hour install.</p>
+                            <div class="font-display text-2xl font-500 tracking-tight uppercase mb-2">Audit Requested</div>
+                            <p class="text-gray-400 text-sm font-light">We'll run your page through testing and send your results within 48 hours.</p>
                         </div>
 
                         <!-- Privacy indicators -->
@@ -1176,18 +1186,15 @@
     <footer class="border-t border-white/5 py-12">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                <!-- Logo -->
                 <div class="flex items-center gap-3">
                     <div class="w-1.5 h-1.5 bg-accent rounded-full"></div>
                     <span class="font-display text-sm font-500 tracking-[0.2em] uppercase text-gray-600">Andrady</span>
                 </div>
 
-                <!-- Copy -->
                 <p class="text-gray-700 text-xs text-center">
-                    © 2026 Andrady. All rights reserved. Client retention infrastructure for performance agencies.
+                    © 2026 Andrady. All rights reserved. Performance infrastructure for paid traffic.
                 </p>
 
-                <!-- Links -->
                 <div class="flex items-center gap-6">
                     <a href="#" class="text-[10px] tracking-widest uppercase text-gray-700 hover:text-gray-400 transition-colors">Privacy</a>
                     <a href="#" class="text-[10px] tracking-widest uppercase text-gray-700 hover:text-gray-400 transition-colors">Terms</a>
@@ -1240,10 +1247,29 @@
             });
         });
 
-        // ── Fast-Track Booking form handling ──
-        const SUBMIT_ENDPOINT = null; // e.g. 'https://your-api.example.com/book-install'
+        // ── FAQ accordion ──
+        document.querySelectorAll('.faq-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const panel = btn.nextElementSibling;
+                const isOpen = btn.classList.contains('open');
 
-        const form = document.getElementById('intake-form');
+                // Close all other panels
+                document.querySelectorAll('.faq-toggle').forEach(otherBtn => {
+                    if (otherBtn !== btn) {
+                        otherBtn.classList.remove('open');
+                        otherBtn.nextElementSibling.classList.remove('open');
+                    }
+                });
+
+                btn.classList.toggle('open', !isOpen);
+                panel.classList.toggle('open', !isOpen);
+            });
+        });
+
+        // ── Audit form handling ──
+        const SUBMIT_ENDPOINT = null; // e.g. 'https://your-api.example.com/audit-request'
+
+        const form = document.getElementById('audit-form');
         const formSuccess = document.getElementById('form-success');
         const formError = document.getElementById('form-error');
         const submitBtn = document.getElementById('submit-btn');
@@ -1257,15 +1283,16 @@
             formError.classList.add('hidden');
 
             submitBtn.disabled = true;
-            btnText.textContent = 'Booking';
+            btnText.textContent = 'Submitting';
             btnIcon.classList.add('hidden');
             btnSpinner.classList.remove('hidden');
 
             const formData = {
                 name: form.name.value.trim(),
                 email: form.email.value.trim(),
-                agency_url: form.agency_url.value.trim(),
-                deployment: form.deployment.value
+                company: form.company.value.trim(),
+                landing_page_url: form.landing_page_url.value.trim(),
+                ad_spend: form.ad_spend.value
             };
 
             try {
@@ -1293,29 +1320,10 @@
                 formError.textContent = error.message || 'Submission failed. Please check your connection and try again.';
                 formError.classList.remove('hidden');
                 submitBtn.disabled = false;
-                btnText.textContent = 'Get Your Portal Installed';
+                btnText.textContent = 'Get a Free Landing Page Audit';
                 btnIcon.classList.remove('hidden');
                 btnSpinner.classList.add('hidden');
             }
-        });
-
-        // ── Deployment radio visual update ──
-        document.querySelectorAll('input[name="deployment"]').forEach(radio => {
-            radio.addEventListener('change', () => {
-                document.querySelectorAll('.deployment-option > div').forEach(div => {
-                    div.classList.remove('border-accent/50', 'bg-accent/5');
-                    div.classList.add('border-white/10');
-                    const label = div.querySelector('div:first-child');
-                    label.classList.remove('text-accent');
-                    label.classList.add('text-gray-400');
-                });
-                const selectedDiv = radio.closest('label').querySelector('div');
-                selectedDiv.classList.remove('border-white/10');
-                selectedDiv.classList.add('border-accent/50', 'bg-accent/5');
-                const selectedLabel = selectedDiv.querySelector('div:first-child');
-                selectedLabel.classList.remove('text-gray-400');
-                selectedLabel.classList.add('text-accent');
-            });
         });
     </script>
 </body>
