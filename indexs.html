@@ -1,1294 +1,1330 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Andrady — AI-Powered Operating Systems for Agencies</title>
-  <meta name="description" content="Andrady builds AI-powered operating systems for agencies. Replace scattered tools, manual admin, and disconnected workflows with one intelligent operational platform.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
-  <script src="https://unpkg.com/three@0.132.2/build/three.min.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ink: '#080809',
-            'ink-card': '#0D0D10',
-            'ink-border': '#181820',
-            'ink-muted': '#52525C',
-            'ink-subtle': '#2E2E38',
-            lime: '#C8E64A',
-            'lime-dim': '#A8C43A',
-          },
-          fontFamily: {
-            display: ['"Instrument Serif"', 'serif'],
-            sans: ['"Syne"', 'sans-serif'],
-            mono: ['"DM Mono"', 'monospace'],
-          }
-        }
-      }
-    };
-  </script>
-  <style>
-    :root {
-      --lime: #C8E64A;
-      --lime-dim: #A8C43A;
-      --ink: #080809;
-      --ink-card: #0D0D10;
-      --ink-border: #181820;
-      --ink-muted: #52525C;
-      --ink-subtle: #2E2E38;
-      --red: rgba(255,72,72,0.7);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; cursor: none; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--ink); color: #E2E2E8; font-family: 'Syne', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-
-    ::-webkit-scrollbar { width: 2px; }
-    ::-webkit-scrollbar-track { background: var(--ink); }
-    ::-webkit-scrollbar-thumb { background: var(--lime); border-radius: 99px; }
-    ::selection { background: rgba(200,230,74,0.12); color: #fff; }
-
-    .grid-bg {
-      background-image:
-        linear-gradient(rgba(255,255,255,0.013) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.013) 1px, transparent 1px);
-      background-size: 56px 56px;
-    }
-
-    .display { font-family: 'Instrument Serif', serif; line-height: 1.02; letter-spacing: -0.015em; }
-    .label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-muted); }
-
-    /* Cards */
-    .card { background: var(--ink-card); border: 1px solid var(--ink-border); border-radius: 18px; padding: 28px; transition: border-color 0.4s, box-shadow 0.4s; }
-    .card:hover { border-color: rgba(200,230,74,0.1); box-shadow: 0 0 40px rgba(200,230,74,0.025); }
-    .card-accent { background: var(--ink-card); border: 1px solid rgba(200,230,74,0.12); border-radius: 18px; padding: 28px; position: relative; overflow: hidden; }
-    .card-accent::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,230,74,0.18), transparent); }
-
-    .pill { display: inline-flex; align-items: center; padding: 5px 14px; border-radius: 999px; background: rgba(200,230,74,0.05); border: 1px solid rgba(200,230,74,0.12); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lime); }
-
-    .field { width: 100%; padding: 14px 18px; background: var(--ink-card); border: 1px solid var(--ink-border); border-radius: 12px; color: #E2E2E8; font-family: 'Syne', sans-serif; font-size: 14px; outline: none; transition: border-color 0.3s, box-shadow 0.3s; }
-    .field:focus { border-color: rgba(200,230,74,0.3); box-shadow: 0 0 0 2px rgba(200,230,74,0.04); }
-    .field::placeholder { color: var(--ink-muted); }
-
-    .btn-primary { background: var(--lime); color: var(--ink); font-family: 'Syne', sans-serif; font-weight: 700; padding: 15px 34px; border-radius: 999px; font-size: 14px; letter-spacing: 0.005em; border: none; transition: background 0.25s, box-shadow 0.25s, transform 0.2s; box-shadow: 0 0 28px rgba(200,230,74,0.16); cursor: none; }
-    .btn-primary:hover { background: var(--lime-dim); box-shadow: 0 0 44px rgba(200,230,74,0.28); transform: translateY(-1px); }
-    .btn-secondary { background: transparent; color: #E2E2E8; font-family: 'Syne', sans-serif; font-weight: 500; padding: 15px 34px; border-radius: 999px; font-size: 14px; border: 1px solid var(--ink-border); transition: border-color 0.25s, color 0.25s, transform 0.2s; cursor: none; }
-    .btn-secondary:hover { border-color: rgba(200,230,74,0.2); color: var(--lime); transform: translateY(-1px); }
-    .glow-btn { box-shadow: 0 0 28px rgba(200,230,74,0.18), 0 2px 20px rgba(200,230,74,0.06); }
-
-    .check-icon { width: 20px; height: 20px; border-radius: 50%; background: rgba(200,230,74,0.05); border: 1px solid rgba(200,230,74,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .x-icon { width: 20px; height: 20px; border-radius: 50%; background: rgba(255,80,80,0.05); border: 1px solid rgba(255,80,80,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-
-    /* Marquee */
-    .marquee-track { display: inline-flex; animation: scroll 40s linear infinite; white-space: nowrap; }
-    .marquee-rev { animation-direction: reverse; animation-duration: 50s; }
-    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-    /* AI Badge */
-    .ai-badge { display: inline-flex; align-items: center; gap: 7px; padding: 5px 14px 5px 8px; border-radius: 999px; background: rgba(200,230,74,0.04); border: 1px solid rgba(200,230,74,0.1); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(200,230,74,0.7); }
-    .ai-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); animation: pulse 2s ease-in-out infinite; }
-    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(200,230,74,0.4); } 50% { box-shadow: 0 0 0 5px rgba(200,230,74,0); } }
-
-    /* Dashboard Preview */
-    .dash-card { background: var(--ink-card); border: 1px solid var(--ink-border); border-radius: 10px; overflow: hidden; }
-    .dash-header { padding: 8px 14px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--ink-border); }
-    .dash-dot { width: 8px; height: 8px; border-radius: 50%; }
-
-    /* Flow node */
-    .flow-node { padding: 8px 16px; border-radius: 8px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.04em; border: 1px solid var(--ink-border); background: var(--ink-card); color: rgba(226,226,232,0.6); white-space: nowrap; }
-    .flow-node-active { border-color: rgba(200,230,74,0.25); color: var(--lime); background: rgba(200,230,74,0.04); }
-    .flow-arrow { color: var(--ink-subtle); font-size: 14px; flex-shrink: 0; }
-
-    /* System cards */
-    .sys-card { background: var(--ink-card); border: 1px solid var(--ink-border); border-radius: 14px; padding: 22px 24px; transition: border-color 0.35s, transform 0.35s; }
-    .sys-card:hover { border-color: rgba(200,230,74,0.14); transform: translateY(-2px); }
-
-    /* Before/after tags */
-    .before-tag { display: inline-flex; padding: 3px 10px; border-radius: 6px; background: rgba(255,72,72,0.04); border: 1px solid rgba(255,72,72,0.08); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,72,72,0.4); }
-    .after-tag { display: inline-flex; padding: 3px 10px; border-radius: 6px; background: rgba(200,230,74,0.05); border: 1px solid rgba(200,230,74,0.1); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lime); }
-
-    /* Replace row */
-    .replace-row { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 10px; background: var(--ink-card); border: 1px solid var(--ink-border); transition: border-color 0.3s; }
-    .replace-row:hover { border-color: rgba(200,230,74,0.1); }
-
-    /* Qualify */
-    .qualify-for { padding: 8px 14px; border-radius: 10px; background: rgba(200,230,74,0.03); border: 1px solid rgba(200,230,74,0.07); font-size: 13px; color: rgba(200,230,74,0.55); }
-    .qualify-not { padding: 8px 14px; border-radius: 10px; background: rgba(255,72,72,0.02); border: 1px solid rgba(255,72,72,0.05); font-size: 13px; color: rgba(255,72,72,0.3); }
-
-    /* Metric */
-    .metric-box { background: rgba(200,230,74,0.03); border: 1px solid rgba(200,230,74,0.07); border-radius: 10px; padding: 10px 14px; }
-    .stat-card { background: rgba(200,230,74,0.03); border: 1px solid rgba(200,230,74,0.07); border-radius: 14px; padding: 20px 18px; text-align: center; }
-
-    /* FAQ */
-    .faq-item { border-bottom: 1px solid var(--ink-border); }
-    .faq-item:last-child { border-bottom: none; }
-
-    /* Step */
-    .step-num { font-family: 'Instrument Serif', serif; font-size: 80px; line-height: 1; color: rgba(200,230,74,0.03); position: absolute; top: -10px; right: 14px; pointer-events: none; user-select: none; }
-
-    /* Status */
-    .status-msg { font-family: 'DM Mono', monospace; font-size: 12px; padding: 11px 16px; border-radius: 99px; text-align: center; margin-top: 12px; }
-
-    /* Workflow animation */
-    @keyframes flowIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
-    .flow-animate { animation: flowIn 0.4s ease forwards; }
-
-    /* Cursor hide on touch */
-    @media (hover: none) { * { cursor: auto !important; } .cc, .cr { display: none !important; } }
-
-    @media (max-width: 640px) {
-      .sm-full { width: 100% !important; }
-    }
-
-    /* Infra ticker */
-    .infra-chip { display: inline-flex; align-items: center; gap: 7px; padding: 6px 14px; border-radius: 999px; background: var(--ink-card); border: 1px solid var(--ink-border); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--ink-muted); white-space: nowrap; transition: border-color 0.3s, color 0.3s; }
-    .infra-chip:hover { border-color: rgba(200,230,74,0.2); color: rgba(200,230,74,0.7); }
-    .infra-chip-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--lime); opacity: 0.4; flex-shrink: 0; }
-  </style>
-</head>
-<body class="grid-bg">
-<div id="root"></div>
-
-<script type="text/babel">
-const { useState, useRef, useEffect, useCallback } = React;
-const { motion, AnimatePresence } = window.Motion;
-
-/* ─── CURSOR ─── */
-function Cursor() {
-  const dot = useRef(null);
-  const ring = useRef(null);
-  useEffect(() => {
-    let mx=0,my=0,rx=0,ry=0;
-    const onMove=(e)=>{
-      mx=e.clientX; my=e.clientY;
-      if(dot.current) dot.current.style.transform=`translate(${mx-3}px,${my-3}px)`;
-      const t=e.target.closest('a,button,input,textarea,select,[data-h]');
-      if(ring.current){
-        const s=t?'48px':'32px'; const o=t?-24:-16;
-        ring.current.style.width=s; ring.current.style.height=s;
-        ring.current.style.left=o+'px'; ring.current.style.top=o+'px';
-        ring.current.style.borderColor=t?'var(--lime)':'rgba(200,230,74,0.18)';
-        ring.current.style.opacity=t?'0.85':'0.45';
-      }
-    };
-    const loop=()=>{ rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; if(ring.current) ring.current.style.transform=`translate(${rx}px,${ry}px)`; requestAnimationFrame(loop); };
-    window.addEventListener('mousemove',onMove); loop();
-    return ()=>window.removeEventListener('mousemove',onMove);
-  },[]);
-  return (<>
-    <div ref={dot} className="cc fixed w-[6px] h-[6px] rounded-full pointer-events-none" style={{background:'var(--lime)',mixBlendMode:'difference',zIndex:10000}}/>
-    <div ref={ring} className="cr fixed rounded-full pointer-events-none" style={{width:'32px',height:'32px',border:'1px solid rgba(200,230,74,0.18)',left:0,top:0,transition:'width 0.2s,height 0.2s,left 0.2s,top 0.2s,border-color 0.2s,opacity 0.2s',zIndex:10000}}/>
-  </>);
-}
-
-/* ─── PROGRESS BAR ─── */
-function ProgressBar(){
-  const [p,setP]=useState(0);
-  useEffect(()=>{
-    const fn=()=>{const t=document.documentElement.scrollHeight-window.innerHeight; setP(t>0?(window.scrollY/t)*100:0);};
-    window.addEventListener('scroll',fn); return ()=>window.removeEventListener('scroll',fn);
-  },[]);
-  return <div className="fixed top-0 left-0 h-[2px]" style={{width:p+'%',background:'var(--lime)',zIndex:9998}}/>;
-}
-
-/* ─── REVEAL ─── */
-function R({children,d=0,className='',y=22}){
-  return (
-    <motion.div initial={{opacity:0,y}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:'-30px'}} transition={{duration:0.6,delay:d,ease:[0.22,0.61,0.36,1]}} className={className}>
-      {children}
-    </motion.div>
-  );
-}
-
-/* ─── THREE.JS BG ─── */
-function ThreeBG(){
-  const ref=useRef(null);
-  useEffect(()=>{
-    const mob=window.innerWidth<768;
-    const W=window.innerWidth,H=window.innerHeight;
-    const scene=new THREE.Scene();
-    const camera=new THREE.PerspectiveCamera(55,W/H,0.1,100);
-    camera.position.z=5.5;
-    const renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});
-    renderer.setSize(W,H); renderer.setPixelRatio(Math.min(window.devicePixelRatio,mob?1.5:2));
-    ref.current.appendChild(renderer.domElement);
-    const mat1=new THREE.MeshBasicMaterial({color:0xC8E64A,wireframe:true,transparent:true,opacity:0.025});
-    const mat2=new THREE.MeshBasicMaterial({color:0x444455,wireframe:true,transparent:true,opacity:0.012});
-    const m1=new THREE.Mesh(new THREE.IcosahedronGeometry(2.2,1),mat1);
-    const m2=new THREE.Mesh(new THREE.IcosahedronGeometry(1.3,1),mat2);
-    scene.add(m1,m2);
-    const mkTex=(c)=>{const cv=document.createElement('canvas');cv.width=cv.height=64;const x=cv.getContext('2d');const g=x.createRadialGradient(32,32,0,32,32,32);g.addColorStop(0,c);g.addColorStop(0.4,c.replace(',1)',',0.3)'));g.addColorStop(1,c.replace(',1)',',0)'));x.fillStyle=g;x.fillRect(0,0,64,64);return new THREE.CanvasTexture(cv);};
-    const mkPts=(n,col,sz,op,rMin,rSpr)=>{const pos=new Float32Array(n*3);for(let i=0;i<n;i++){const r=rMin+Math.random()*rSpr;const th=Math.random()*Math.PI*2;const ph=Math.acos(2*Math.random()-1);pos[i*3]=r*Math.sin(ph)*Math.cos(th);pos[i*3+1]=r*Math.sin(ph)*Math.sin(th);pos[i*3+2]=r*Math.cos(ph);}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));return new THREE.Points(g,new THREE.PointsMaterial({map:mkTex(col),size:sz,transparent:true,opacity:op,blending:THREE.AdditiveBlending,depthWrite:false,sizeAttenuation:true}));};
-    const p1=mkPts(mob?100:420,'rgba(200,230,74,1)',mob?0.04:0.022,0.32,2.5,5);
-    const p2=mkPts(mob?25:100,'rgba(160,160,175,1)',mob?0.035:0.018,0.15,3,4);
-    scene.add(p1,p2);
-    let mx=0,my=0;
-    const onM=(e)=>{mx=(e.clientX/W)*2-1;my=-(e.clientY/H)*2+1;};
-    window.addEventListener('mousemove',onM);
-    let id;
-    const tick=()=>{ id=requestAnimationFrame(tick); const t=performance.now()*0.001; m1.rotation.x=t*0.025+my*0.12; m1.rotation.y=t*0.038+mx*0.12; m2.rotation.x=-t*0.02+my*0.07; m2.rotation.y=-t*0.03+mx*0.07; p1.rotation.y=t*0.007; p2.rotation.y=-t*0.005; renderer.render(scene,camera); };
-    tick();
-    const onR=()=>{ camera.aspect=window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth,window.innerHeight); };
-    window.addEventListener('resize',onR);
-    return ()=>{ cancelAnimationFrame(id); window.removeEventListener('resize',onR); window.removeEventListener('mousemove',onM); if(ref.current&&renderer.domElement.parentNode===ref.current) ref.current.removeChild(renderer.domElement); renderer.dispose(); };
-  },[]);
-  return <div ref={ref} className="fixed inset-0" style={{zIndex:-10}}/>;
-}
-
-/* ─── PRELOADER ─── */
-function Preloader({done}){
-  const [n,setN]=useState(0);
-  useEffect(()=>{
-    const iv=setInterval(()=>{ setN(p=>{ if(p>=100){clearInterval(iv);setTimeout(done,250);return 100;} return p+2; }); },16);
-    return ()=>clearInterval(iv);
-  },[done]);
-  return (
-    <motion.div exit={{y:'-100%'}} transition={{duration:0.65,ease:[0.76,0,0.24,1]}} className="fixed inset-0 flex flex-col items-center justify-center" style={{background:'var(--ink)',zIndex:9999}}>
-      <div style={{fontFamily:'Instrument Serif',fontSize:'clamp(70px,12vw,120px)',color:'var(--lime)',lineHeight:1}}>{n}</div>
-      <div className="mt-4 w-28 h-[1px] overflow-hidden" style={{background:'var(--ink-border)'}}>
-        <motion.div className="h-full" initial={{width:'0%'}} animate={{width:n+'%'}} style={{background:'var(--lime)'}}/>
-      </div>
-      <div className="mt-4" style={{fontFamily:'DM Mono',fontSize:'10px',letterSpacing:'0.2em',color:'var(--ink-muted)',textTransform:'uppercase'}}>Andrady</div>
-    </motion.div>
-  );
-}
-
-/* ─── NAVBAR ─── */
-function Nav({refs}){
-  const [sc,setSc]=useState(false);
-  const [mo,setMo]=useState(false);
-  useEffect(()=>{const fn=()=>setSc(window.scrollY>40);window.addEventListener('scroll',fn);return ()=>window.removeEventListener('scroll',fn);},[]);
-  const go=useCallback((r)=>{r.current.scrollIntoView({behavior:'smooth'});setMo(false);},[]);
-  const links=[
-    {l:'Systems',r:refs.solution},
-    {l:'How It Works',r:refs.process},
-    {l:'Results',r:refs.proof},
-    {l:'Pricing',r:refs.investment},
-  ];
-  return (
-    <motion.nav initial={{opacity:0,y:-16}} animate={{opacity:1,y:0}} transition={{duration:0.5,delay:1.4}} className="fixed w-full" style={{zIndex:50,background:sc?'rgba(8,8,9,0.92)':'transparent',backdropFilter:sc?'blur(20px)':'none',borderBottom:sc?'1px solid var(--ink-border)':'none',padding:sc?'10px 0':'20px 0',transition:'all 0.35s'}}>
-      <div className="max-w-5xl mx-auto px-6 flex items-center justify-between">
-        <button onClick={()=>go(refs.hero)} data-h style={{fontFamily:'Instrument Serif',fontSize:'19px',color:'#E2E2E8',background:'none',border:'none',padding:0}}>Andrady</button>
-        <div className="hidden md:flex items-center gap-1">
-          {links.map(lk=>(
-            <button key={lk.l} onClick={()=>go(lk.r)} data-h className="px-4 py-2 text-[13px]" style={{color:'var(--ink-muted)',background:'none',border:'none',transition:'color 0.2s'}} onMouseEnter={e=>e.currentTarget.style.color='var(--lime)'} onMouseLeave={e=>e.currentTarget.style.color='var(--ink-muted)'}>{lk.l}</button>
-          ))}
-          <button onClick={()=>go(refs.cta)} data-h className="btn-primary ml-2" style={{padding:'9px 20px',fontSize:'12px'}}>Book System Audit</button>
-        </div>
-        <button onClick={()=>setMo(!mo)} data-h className="md:hidden flex flex-col items-center justify-center gap-1.5 w-10 h-10" style={{background:'none',border:'none'}}>
-          <motion.span animate={mo?{rotate:45,y:6}:{rotate:0,y:0}} className="block w-5 h-[1.5px] origin-center" style={{background:'var(--lime)'}}/>
-          <motion.span animate={mo?{opacity:0}:{opacity:1}} className="block w-5 h-[1.5px]" style={{background:'var(--lime)'}}/>
-          <motion.span animate={mo?{rotate:-45,y:-6}:{rotate:0,y:0}} className="block w-5 h-[1.5px] origin-center" style={{background:'var(--lime)'}}/>
-        </button>
-      </div>
-      <AnimatePresence>
-        {mo&&(
-          <motion.div initial={{opacity:0,height:0}} animate={{opacity:1,height:'auto'}} exit={{opacity:0,height:0}} transition={{duration:0.22}} className="md:hidden overflow-hidden" style={{background:'rgba(8,8,9,0.97)',backdropFilter:'blur(20px)',borderTop:'1px solid var(--ink-border)'}}>
-            <div className="px-6 py-5 space-y-1">
-              {links.map((lk,i)=>(<motion.button key={lk.l} initial={{opacity:0,x:-10}} animate={{opacity:1,x:0}} transition={{delay:i*0.04}} onClick={()=>go(lk.r)} className="block w-full text-left py-3 text-base" style={{color:'var(--ink-muted)',background:'none',border:'none'}}>{lk.l}</motion.button>))}
-              <button onClick={()=>go(refs.cta)} className="btn-primary w-full mt-3" style={{fontSize:'13px'}}>Book System Audit</button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
-  );
-}
-
-/* ─── ANIMATED WORKFLOW PREVIEW ─── */
-function WorkflowPreview(){
-  const [step,setStep]=useState(0);
-  const flows=[
-    ['Lead Captured','→','CRM Entry','→','Auto-Tagged','→','Follow-up Queued'],
-    ['Client Books','→','Intake Sent','→','Portal Created','→','Team Notified'],
-    ['Project Closes','→','Invoice Generated','→','Payment Tracked','→','Dashboard Updated'],
-  ];
-  const metrics=[
-    {label:'Active Clients',value:'48',change:'+3'},
-    {label:'Pipeline Value',value:'$218K',change:'↑12%'},
-    {label:'Tasks Automated',value:'142',change:'this week'},
-    {label:'Avg Onboard',value:'1.8hr',change:'was 3 days'},
-  ];
-  useEffect(()=>{
-    const iv=setInterval(()=>setStep(s=>(s+1)%3),3200);
-    return ()=>clearInterval(iv);
-  },[]);
-  return (
-    <div className="relative w-full max-w-2xl mx-auto" style={{marginTop:'40px'}}>
-      {/* Glow */}
-      <div className="absolute inset-0 rounded-2xl" style={{background:'radial-gradient(ellipse at 50% 0%,rgba(200,230,74,0.06) 0%,transparent 65%)',pointerEvents:'none'}}/>
-      <div className="dash-card" style={{borderRadius:'16px',border:'1px solid rgba(200,230,74,0.1)'}}>
-        {/* Top bar */}
-        <div className="dash-header">
-          <div className="dash-dot" style={{background:'rgba(255,72,72,0.5)'}}/>
-          <div className="dash-dot" style={{background:'rgba(255,190,0,0.5)'}}/>
-          <div className="dash-dot" style={{background:'rgba(200,230,74,0.5)'}}/>
-          <div style={{fontFamily:'DM Mono',fontSize:'10px',color:'var(--ink-muted)',letterSpacing:'0.1em',marginLeft:'8px'}}>andrady.io/operations</div>
-          <div className="ml-auto ai-badge" style={{fontSize:'9px',padding:'3px 10px 3px 6px'}}>
-            <div className="ai-dot" style={{width:'5px',height:'5px'}}/>
-            AI ACTIVE
-          </div>
-        </div>
-        {/* Metrics row */}
-        <div className="grid grid-cols-4 gap-2 p-4 border-b" style={{borderColor:'var(--ink-border)'}}>
-          {metrics.map((m,i)=>(
-            <div key={i} className="text-center p-2 rounded-lg" style={{background:'rgba(255,255,255,0.015)',border:'1px solid var(--ink-border)'}}>
-              <div style={{fontFamily:'Instrument Serif',fontSize:'18px',color:'var(--lime)',lineHeight:1}}>{m.value}</div>
-              <div style={{fontFamily:'DM Mono',fontSize:'8px',color:'var(--ink-muted)',letterSpacing:'0.06em',marginTop:'2px'}}>{m.label}</div>
-              <div style={{fontFamily:'DM Mono',fontSize:'8px',color:'rgba(200,230,74,0.4)',marginTop:'2px'}}>{m.change}</div>
-            </div>
-          ))}
-        </div>
-        {/* Live workflow */}
-        <div className="p-4">
-          <div style={{fontFamily:'DM Mono',fontSize:'9px',letterSpacing:'0.15em',color:'var(--ink-muted)',textTransform:'uppercase',marginBottom:'10px'}}>Live Workflow</div>
-          <AnimatePresence mode="wait">
-            <motion.div key={step} initial={{opacity:0,y:6}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-6}} transition={{duration:0.3}} className="flex items-center gap-2 flex-wrap">
-              {flows[step].map((node,i)=>(
-                <React.Fragment key={i}>
-                  {node==='→' ? (
-                    <svg width="14" height="8" viewBox="0 0 14 8" fill="none"><path d="M1 4h10M8 1l3 3-3 3" stroke="rgba(200,230,74,0.25)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                  ):(
-                    <motion.div initial={{opacity:0,scale:0.9}} animate={{opacity:1,scale:1}} transition={{delay:i*0.07}} className={i===0||i===2?'flow-node flow-node-active':'flow-node'}>{node}</motion.div>
-                  )}
-                </React.Fragment>
-              ))}
-              <div className="ml-auto flex gap-1">
-                {[0,1,2].map(d=><div key={d} style={{width:'5px',height:'5px',borderRadius:'50%',background:d===step?'var(--lime)':'var(--ink-subtle)',transition:'background 0.3s'}}/>)}
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ─── 1. HERO ─── */
-function Hero({refs}){
-  const go=(k)=>refs[k].current.scrollIntoView({behavior:'smooth'});
-  return (
-    <section ref={refs.hero} className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{paddingTop:'70px'}}>
-      <ThreeBG/>
-      <div className="absolute inset-0 pointer-events-none" style={{background:'linear-gradient(to bottom,var(--ink) 0%,transparent 10%,transparent 80%,var(--ink) 100%)'}}/>
-      <div className="relative z-10 text-center px-6 max-w-4xl w-full">
-
-        <R d={1.6}>
-          <div className="ai-badge mx-auto mb-7 inline-flex">
-            <div className="ai-dot"/>
-            AI-Powered Operations Infrastructure
-          </div>
-        </R>
-
-        <div className="overflow-hidden mb-5">
-          <motion.h1
-            initial={{y:90,opacity:0}} animate={{y:0,opacity:1}}
-            transition={{duration:0.75,delay:1.75,ease:[0.22,0.61,0.36,1]}}
-            className="display" style={{fontSize:'clamp(38px,7.5vw,88px)',color:'#E2E2E8'}}
-          >
-            We build AI-powered<br /><em style={{color:'var(--lime)',fontStyle:'italic'}}>operating systems</em><br />for agencies.
-          </motion.h1>
-        </div>
-
-        <R d={2.05}>
-          <p className="text-base md:text-[17px] max-w-xl mx-auto leading-relaxed mb-8" style={{color:'var(--ink-muted)'}}>
-            Replace scattered tools, manual admin, and disconnected workflows with one intelligent operational platform — built specifically for how your agency runs.
-          </p>
-        </R>
-
-        <R d={2.25} className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10">
-          <motion.button whileHover={{scale:1.03}} whileTap={{scale:0.97}} data-h onClick={()=>go('cta')} className="btn-primary glow-btn sm-full">
-            Book a system audit →
-          </motion.button>
-          <motion.button whileHover={{scale:1.03}} whileTap={{scale:0.97}} data-h onClick={()=>go('solution')} className="btn-secondary sm-full">
-            See live systems
-          </motion.button>
-        </R>
-
-        <R d={2.4}>
-          <WorkflowPreview/>
-        </R>
-
-        <R d={2.5}>
-          <p className="mt-6 text-[11px]" style={{fontFamily:'DM Mono',color:'var(--ink-subtle)',letterSpacing:'0.06em'}}>
-            For agencies and service businesses doing $10K+/month · Core system deployed in 7 days
-          </p>
-        </R>
-      </div>
-      <motion.div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-10" animate={{y:[0,6,0]}} transition={{duration:2.2,repeat:Infinity,ease:'easeInOut'}}>
-        <div className="w-5 h-8 rounded-full flex justify-center pt-2" style={{border:'1px solid var(--ink-border)'}}>
-          <motion.div className="w-1 h-2 rounded-full" style={{background:'rgba(200,230,74,0.3)'}} animate={{y:[0,7,0],opacity:[1,0.15,1]}} transition={{duration:2.2,repeat:Infinity}}/>
-        </div>
-      </motion.div>
-    </section>
-  );
-}
-
-/* ─── MARQUEE ─── */
-function Marquee({text,reverse}){
-  const t=`${text}  ·  ${text}  ·  ${text}  ·  ${text}  ·  `;
-  return (
-    <div className="overflow-hidden py-4 md:py-5" style={{borderTop:'1px solid var(--ink-border)',borderBottom:'1px solid var(--ink-border)'}}>
-      <div className={`marquee-track ${reverse?'marquee-rev':''}`}>
-        <span style={{fontFamily:'Instrument Serif',fontSize:'clamp(36px,6vw,68px)',color:'rgba(255,255,255,0.025)',whiteSpace:'nowrap'}}>{t}</span>
-      </div>
-    </div>
-  );
-}
-
-/* ─── 2. OPERATIONAL INFRASTRUCTURE — new positioning section ─── */
-function InfraSection(){
-  const capabilities=[
-    'Centralized Operations','AI-Assisted Workflows','Automated Onboarding','Client Portals','Internal Dashboards','Smart Reporting','CRM Systems','Workflow Automation','Unified Communication','Lead Intelligence','Document Automation','Billing Integration',
-  ];
-  return (
-    <section className="py-20 md:py-28" style={{background:'rgba(13,13,16,0.6)'}}>
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div>
-            <R><span className="label block mb-4">What We Do</span></R>
-            <R d={0.08}>
-              <h2 className="display mb-5" style={{fontSize:'clamp(30px,4.5vw,52px)',color:'#E2E2E8'}}>
-                Operational infrastructure.<br /><em style={{color:'var(--lime)',fontStyle:'italic'}}>Not just websites.</em>
-              </h2>
-            </R>
-            <R d={0.14}>
-              <p className="text-[15px] leading-relaxed mb-5" style={{color:'var(--ink-muted)'}}>
-                Most agencies run on a patchwork of disconnected SaaS tools. Andrady replaces that patchwork with one AI-powered system built around your exact workflows — the system your business actually runs on, every day.
-              </p>
-            </R>
-            <R d={0.18}>
-              <p className="text-[14px] leading-relaxed" style={{color:'var(--ink-muted)'}}>
-                This isn't off-the-shelf software. It's custom operational infrastructure — built to your processes, integrated with your team, and designed to scale as you grow.
-              </p>
-            </R>
-          </div>
-          <R d={0.1}>
-            <div className="flex flex-wrap gap-2">
-              {capabilities.map((c,i)=>(
-                <span key={i} className="infra-chip">
-                  <span className="infra-chip-dot"/>
-                  {c}
-                </span>
-              ))}
-            </div>
-          </R>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─── 3. PAIN POINTS ─── */
-function PainPoints({sectionRef}){
-  const pains=[
-    {icon:'📋',t:'Client data scattered across 6 tools',d:'Spreadsheet here. Inbox there. CRM nobody updates. Every time you need anything, you\'re hunting for it across three platforms.'},
-    {icon:'⏰',t:'10+ hours a week on admin that should be automated',d:'Chasing payments. Manually following up on leads. Sending onboarding documents one by one. Repetitive, time-consuming, entirely unnecessary.'},
-    {icon:'🔗',t:'Nothing talks to anything else',d:'Your booking tool doesn\'t update your CRM. Your CRM doesn\'t trigger onboarding. Your invoicing is separate from everything. You\'re the integration layer.'},
-    {icon:'📉',t:'You can\'t scale — the backend can\'t handle it',d:'To take on more clients you\'d need to hire an ops person or work longer hours. The bottleneck isn\'t demand. It\'s infrastructure.'},
-  ];
-  return (
-    <section ref={sectionRef} className="py-20 md:py-28">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="max-w-xl mb-12">
-          <R><span className="label block mb-4">The Problem</span></R>
-          <R d={0.08}>
-            <h2 className="display mb-5" style={{fontSize:'clamp(30px,4.5vw,52px)',color:'#E2E2E8'}}>
-              You're running a real business<br />on <em style={{color:'rgba(255,72,72,0.65)',fontStyle:'italic'}}>duct-taped tools.</em>
-            </h2>
-          </R>
-          <R d={0.14}>
-            <p className="text-[15px] leading-relaxed" style={{color:'var(--ink-muted)'}}>
-              Agencies generating real revenue — still operating on manual processes, disconnected apps, and tribal knowledge. That's not a tool problem. It's an infrastructure problem.
-            </p>
-          </R>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {pains.map((p,i)=>(
-            <R key={i} d={i*0.06}>
-              <div className="card flex items-start gap-4">
-                <div className="x-icon" style={{marginTop:'2px',flexShrink:0}}>
-                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M2 2l4 4M6 2l-4 4" stroke="rgba(255,72,72,0.45)" strokeWidth="1.2" strokeLinecap="round"/></svg>
-                </div>
-                <div>
-                  <p className="text-sm mb-1.5" style={{color:'#E2E2E8',fontWeight:700}}>{p.t}</p>
-                  <p className="text-[13px] leading-relaxed" style={{color:'var(--ink-muted)'}}>{p.d}</p>
-                </div>
-              </div>
-            </R>
-          ))}
-        </div>
-        <R d={0.28} className="mt-9 text-center">
-          <p className="text-[14px] mb-5" style={{color:'var(--ink-muted)'}}>We fix the infrastructure — so you stop being the glue holding everything together.</p>
-          <button onClick={()=>document.getElementById('cta-section').scrollIntoView({behavior:'smooth'})} className="btn-secondary" data-h>See what your system would look like →</button>
-        </R>
-      </div>
-    </section>
-  );
-}
-
-/* ─── 4. SYSTEMS — outcome-focused ─── */
-function Systems({sectionRef}){
-  const systems=[
-    {n:'01',icon:'👥',title:'CRM & Client Intelligence',problem:'Client data scattered. No single source of truth.',solution:'Centralized client hub with full history, communication, documents, and status — all live, all automatic.',impact:'Every client visible. Nothing slips.'},
-    {n:'02',icon:'🌐',title:'Conversion-Connected Website',problem:'Website is a brochure. Leads go nowhere automatically.',solution:'Front door directly wired to your CRM — enquiries captured, tagged, and routed before you see them.',impact:'Every lead enters your system, not your inbox.'},
-    {n:'03',icon:'📅',title:'Booking & Smart Intake',problem:'Booking confirmation is a manual 4-step process.',solution:'Clients book, confirm, fill intake forms, and get onboarded — without a single manual step from your side.',impact:'Onboarding time drops from days to hours.'},
-    {n:'04',icon:'🚪',title:'Client Portal',problem:'Clients email you for every status update.',solution:'A branded self-service portal — deliverables, documents, communication, and project status all in one place.',impact:'80% fewer client status requests.'},
-    {n:'05',icon:'⚡',title:'AI Workflow Engine',problem:'Every process requires you in the middle of it.',solution:'Lead captured → onboarding triggered → invoice sent. AI-assisted routing, tagging, and follow-up — all automatic.',impact:'15+ recurring manual tasks eliminated weekly.'},
-    {n:'06',icon:'📊',title:'Operations Dashboard',problem:'You manage from memory. No live visibility.',solution:'Real-time view of pipeline, revenue, active clients, team tasks, and billing — one screen, always current.',impact:'Complete operational visibility, always.'},
-  ];
-  return (
-    <section ref={sectionRef} className="py-20 md:py-28" style={{background:'rgba(13,13,16,0.6)'}}>
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="text-center mb-14">
-          <R><span className="label block mb-4">The System</span></R>
-          <R d={0.08}>
-            <h2 className="display mb-4" style={{fontSize:'clamp(30px,4.5vw,52px)',color:'#E2E2E8'}}>
-              Six systems. One platform.<br /><em style={{color:'var(--lime)',fontStyle:'italic'}}>All connected.</em>
-            </h2>
-          </R>
-          <R d={0.12}>
-            <p className="text-[15px] max-w-lg mx-auto" style={{color:'var(--ink-muted)'}}>
-              Not separate tools. One architecture — built around your workflows, sharing the same data, triggering each other automatically.
-            </p>
-          </R>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {systems.map((s,i)=>(
-            <R key={i} d={i*0.05}>
-              <div className="sys-card h-full flex flex-col">
-                <div className="flex items-center gap-3 mb-4">
-                  <span style={{fontSize:'18px'}}>{s.icon}</span>
-                  <span style={{fontFamily:'DM Mono',fontSize:'11px',color:'rgba(200,230,74,0.28)',letterSpacing:'0.08em'}}>{s.n}</span>
-                </div>
-                <p className="text-[15px] mb-2" style={{color:'#E2E2E8',fontWeight:700}}>{s.title}</p>
-                <div className="space-y-2 mb-4 flex-1">
-                  <p className="text-[12px] leading-relaxed" style={{color:'rgba(255,72,72,0.4)'}}><span style={{color:'rgba(255,72,72,0.55)',fontWeight:600}}>Problem: </span>{s.problem}</p>
-                  <p className="text-[12px] leading-relaxed" style={{color:'var(--ink-muted)'}}><span style={{color:'rgba(200,230,74,0.55)',fontWeight:600}}>System: </span>{s.solution}</p>
-                </div>
-                <div className="metric-box">
-                  <p className="text-[11px]" style={{color:'var(--lime)',fontFamily:'DM Mono',letterSpacing:'0.03em'}}>→ {s.impact}</p>
-                </div>
-              </div>
-            </R>
-          ))}
-        </div>
-        <R d={0.32} className="text-center mt-10">
-          <button onClick={()=>document.getElementById('cta-section').scrollIntoView({behavior:'smooth'})} className="btn-primary glow-btn" data-h>Get your system scoped →</button>
-        </R>
-      </div>
-    </section>
-  );
-}
-
-/* ─── 5. WHAT IT REPLACES ─── */
-function WhatItReplaces(){
-  const replacements=[
-    {tool:'Google Sheets / Airtable',feature:'Live CRM + operations dashboard'},
-    {tool:'Calendly',feature:'Integrated booking + smart intake'},
-    {tool:'Mailchimp / ActiveCampaign',feature:'AI-triggered client communication'},
-    {tool:'Trello / Asana / Monday',feature:'Internal workflow automation engine'},
-    {tool:'Notion / Google Docs',feature:'Branded self-service client portal'},
-    {tool:'Typeform / JotForm',feature:'Automated onboarding flows'},
-    {tool:'Stripe links / FreshBooks',feature:'Integrated billing + payment tracking'},
-    {tool:'WordPress / Squarespace',feature:'Conversion-connected website layer'},
-  ];
-  return (
-    <section className="py-20 md:py-28">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <R><span className="label block mb-4">Tool Consolidation</span></R>
-          <R d={0.08}>
-            <h2 className="display mb-4" style={{fontSize:'clamp(28px,4.2vw,48px)',color:'#E2E2E8'}}>
-              Eight tools that don't talk to each other.<br /><em style={{color:'rgba(255,72,72,0.6)',fontStyle:'italic'}}>Replaced by one system that does.</em>
-            </h2>
-          </R>
-          <R d={0.12}>
-            <p className="text-[14px] max-w-md mx-auto" style={{color:'var(--ink-muted)'}}>
-              Every item below becomes a native module in your custom system — sharing data across every other module, automatically.
-            </p>
-          </R>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-3xl mx-auto">
-          {replacements.map((r,i)=>(
-            <R key={i} d={i*0.04}>
-              <div className="replace-row">
-                <span style={{fontFamily:'DM Mono',fontSize:'12px',color:'var(--ink-muted)',textDecoration:'line-through',textDecorationColor:'rgba(255,72,72,0.2)',minWidth:'160px'}}>{r.tool}</span>
-                <svg width="14" height="8" viewBox="0 0 14 8" fill="none"><path d="M1 4h10M8 1l3 3-3 3" stroke="rgba(200,230,74,0.25)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                <span style={{fontFamily:'DM Mono',fontSize:'12px',color:'var(--lime)'}}>{r.feature}</span>
-              </div>
-            </R>
-          ))}
-        </div>
-        <R d={0.28} className="text-center mt-8">
-          <p className="text-[11px]" style={{fontFamily:'DM Mono',color:'var(--ink-subtle)',letterSpacing:'0.05em'}}>Most clients eliminate 6–10 SaaS subscriptions after their system goes live.</p>
-        </R>
-      </div>
-    </section>
-  );
-}
-
-/* ─── 6. BEFORE vs AFTER ─── */
-function BeforeAfter(){
-  const comparisons=[
-    {before:'New enquiry arrives → manually logged in spreadsheet → follow-up reminder added to calendar → someone forgets',after:'New enquiry → auto-captured → CRM updated → follow-up queued → AI-tagged by type'},
-    {before:'Client books → you manually confirm → send Zoom link → chase intake form → log notes somewhere',after:'Client books → instant confirmation → intake auto-sent → portal created → dashboard updated'},
-    {before:'Project delivered → invoice manually created → emailed → payment tracked in a separate spreadsheet',after:'Milestone triggered → invoice auto-generated → payment tracked live in dashboard'},
-    {before:'Client asks for update → search inbox, Notion, Slack, repeat → send a manually written reply',after:'Client logs into their portal → sees all deliverables, status, and communication in real time'},
-  ];
-  return (
-    <section className="py-20 md:py-28" style={{background:'rgba(13,13,16,0.6)'}}>
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <R><span className="label block mb-4">Before & After</span></R>
-          <R d={0.08}>
-            <h2 className="display mb-3" style={{fontSize:'clamp(28px,4.2vw,48px)',color:'#E2E2E8'}}>Here's what actually changes.</h2>
-          </R>
-          <R d={0.12}>
-            <p className="text-[14px] max-w-sm mx-auto" style={{color:'var(--ink-muted)'}}>Not vague efficiency claims. Real workflows — before and after your system is live.</p>
-          </R>
-        </div>
-        <div className="space-y-3 max-w-3xl mx-auto">
-          {comparisons.map((c,i)=>(
-            <R key={i} d={i*0.07}>
-              <div className="card" style={{padding:'20px 24px'}}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <span className="before-tag mb-2 inline-block">Before</span>
-                    <p className="text-[13px] leading-relaxed" style={{color:'rgba(255,72,72,0.4)'}}>{c.before}</p>
-                  </div>
-                  <div>
-                    <span className="after-tag mb-2 inline-block">After</span>
-                    <p className="text-[13px] leading-relaxed" style={{color:'var(--lime)'}}>{c.after}</p>
-                  </div>
-                </div>
-              </div>
-            </R>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─── 7. OUTCOMES ─── */
-function Outcomes(){
-  const stats=[
-    {n:'12+',unit:'hrs/week',label:'Recovered from admin'},
-    {n:'7',unit:'days',label:'Core system delivery'},
-    {n:'6–10',unit:'tools',label:'Eliminated on average'},
-    {n:'100%',unit:'automated',label:'Onboarding flow'},
-  ];
-  const outcomes=[
-    {t:'You stop being the operational bottleneck',d:'Processes run automatically. New clients onboard themselves. Invoices go out without you touching them.'},
-    {t:'Your business runs without you in every step',d:'A team member, VA, or client can navigate the system without asking you every question.'},
-    {t:'Full operational visibility at all times',d:'Pipeline, revenue, active clients, outstanding tasks — one screen, always live, always accurate.'},
-    {t:'Every client gets a consistently excellent experience',d:'From first booking to final delivery — same quality, every time, without extra effort from your side.'},
-  ];
-  return (
-    <section className="py-20 md:py-28">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="text-center mb-14">
-          <R><span className="label block mb-4">The Outcome</span></R>
-          <R d={0.08}>
-            <h2 className="display mb-4" style={{fontSize:'clamp(28px,4.2vw,48px)',color:'#E2E2E8'}}>
-              What your agency looks like<br />with proper infrastructure.
-            </h2>
-          </R>
-        </div>
-        <R d={0.1} className="mb-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {stats.map((s,i)=>(
-              <div key={i} className="stat-card">
-                <span className="display" style={{fontSize:'38px',color:'var(--lime)',lineHeight:1}}>{s.n}</span>
-                <span className="block text-[10px] mt-1 mb-1.5" style={{fontFamily:'DM Mono',color:'rgba(200,230,74,0.35)',letterSpacing:'0.08em'}}>{s.unit}</span>
-                <span className="block text-[12px]" style={{color:'var(--ink-muted)'}}>{s.label}</span>
-              </div>
-            ))}
-          </div>
-        </R>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl mx-auto">
-          {outcomes.map((o,i)=>(
-            <R key={i} d={i*0.07}>
-              <div className="card flex items-start gap-4 py-5">
-                <div className="check-icon" style={{marginTop:'1px',flexShrink:0}}>
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="var(--lime)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </div>
-                <div>
-                  <p className="text-sm mb-1" style={{color:'#E2E2E8',fontWeight:700}}>{o.t}</p>
-                  <p className="text-[12px] leading-relaxed" style={{color:'var(--ink-muted)'}}>{o.d}</p>
-                </div>
-              </div>
-            </R>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─── 7. PROOF — case studies with screenshots ─── */
-function Proof({ sectionRef }) {
-  const [activeGallery, setActiveGallery] = useState(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const cases = [
-    {
-      client: 'Boutique Real Estate Agency',
-      context: 'Team of 4 · US-based',
-      built: 'Client Management System',
-      problem: 'Client info split across a shared inbox, three spreadsheets, and a CRM nobody kept updated. Response times were slow and deals were slipping.',
-      solution: 'Unified client dashboard with automatic lead capture, document management, and status tracking. All enquiries feed in automatically.',
-      results: ['Response time: 6 hrs → under 30 min', 'Admin time saved: ~12 hours/week', 'Zero leads lost to follow-up gaps'],
-      images: ['ChatGPT Image May 12, 2026, 01_48_14 AM.png'],
-    },
-    {
-      client: 'Independent Consulting Practice',
-      context: 'Solo operator · UK-based',
-      built: 'Booking & Onboarding System',
-      problem: 'Spending 3+ days onboarding each new client — manually emailing documents, chasing signatures, booking calls back-and-forth.',
-      solution: 'Automated full journey from first enquiry to signed contract. Booking, intake form, proposal generation, and e-signature — all without manual follow-up.',
-      results: ['Onboarding time: 3 days → under 2 hours', 'Discovery calls booked: +34% in 60 days', 'No manual onboarding steps remaining'],
-      images: ['ChatGPT Image May 12, 2026, 01_49_32 AM.png'],
-    },
-    {
-      client: 'Marketing & Strategy Agency',
-      context: 'Team of 8 · AU-based',
-      built: 'Full Operations Hub',
-      problem: 'Using 7 separate tools that didn\'t connect. Team spent significant time each week on admin and status updates rather than client work.',
-      solution: 'Combined client portal, internal operations dashboard, automated billing, and project tracking — replacing four separate tools entirely.',
-      results: ['15+ recurring manual tasks eliminated', 'Revenue and pipeline tracked automatically', '4 tool subscriptions cancelled'],
-      images: ['ChatGPT Image May 12, 2026, 01_51_14 AM.png'],
-    },
-  ];
-  return (
-    <section ref={sectionRef} className="py-20 md:py-28" style={{ background: 'rgba(15,15,18,0.5)' }}>
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-14">
-          <R><span className="label block mb-4">Client Results</span></R>
-          <R d={0.06}>
-            <h2 className="display mb-3" style={{ fontSize: 'clamp(30px,4.5vw,50px)', color: '#E2E2E8' }}>
-              Real systems. Real numbers.
-            </h2>
-          </R>
-          <R d={0.1}>
-            <p className="text-[14px]" style={{ color: 'var(--ink-muted)' }}>Built for agencies and service businesses across the US, UK, and AU.</p>
-          </R>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {cases.map((c, i) => (
-            <R key={i} d={i * 0.08}>
-              <div className="card overflow-hidden h-full flex flex-col" style={{ padding: '0' }}>
-                {/* Screenshot */}
-                <div style={{ background: 'var(--ink-border)', borderRadius: '18px 18px 0 0', overflow: 'hidden', position: 'relative' }}>
-                  <img src={c.images[0]} alt={c.client} onClick={() => { setActiveGallery(c.images); setActiveIndex(0); }}
-                    className="w-full object-cover" style={{ maxHeight: '180px', objectPosition: 'top', cursor: 'pointer' }} />
-                  {c.images.length > 1 && (
-                    <div className="absolute bottom-2 right-2 flex gap-1">
-                      {c.images.map((_, idx) => (
-                        <button key={idx} onClick={() => { setActiveGallery(c.images); setActiveIndex(idx); }}
-                          style={{ width: '6px', height: '6px', borderRadius: '50%', background: idx === 0 ? 'var(--lime)' : 'rgba(255,255,255,0.3)', border: 'none' }} />
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div style={{ padding: '20px 22px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                  <span className="label block mb-1" style={{ color: 'var(--lime)', opacity: 0.65 }}>{c.built}</span>
-                  <p className="text-sm mb-0.5" style={{ color: '#E2E2E8', fontWeight: 700 }}>{c.client}</p>
-                  <p className="text-[11px] mb-3" style={{ fontFamily: 'DM Mono', color: 'var(--ink-subtle)' }}>{c.context}</p>
-                  <p className="text-[12px] leading-relaxed mb-2" style={{ color: 'var(--ink-muted)' }}><span style={{ color: 'rgba(255,100,100,0.5)', fontWeight: 600 }}>Problem: </span>{c.problem}</p>
-                  <p className="text-[12px] leading-relaxed mb-4" style={{ color: 'var(--ink-muted)' }}><span style={{ color: 'rgba(200,230,74,0.6)', fontWeight: 600 }}>Built: </span>{c.solution}</p>
-                  <div className="mt-auto space-y-2">
-                    {c.results.map((r, j) => (
-                      <div key={j} className="metric-box flex items-center gap-2">
-                        <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4.5l2 2L6.5 2" stroke="var(--lime)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                        <span className="text-[11px]" style={{ color: 'var(--lime)' }}>{r}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </R>
-          ))}
-        </div>
-        {activeGallery && (
-          <div className="fixed inset-0 bg-black/90 flex items-center justify-center" style={{ zIndex: 200 }}>
-            <button className="absolute top-6 right-6 text-white text-xl" onClick={() => setActiveGallery(null)}>✕</button>
-            <button className="absolute left-6 text-white text-2xl" onClick={() => setActiveIndex(prev => prev === 0 ? activeGallery.length-1 : prev-1)}>‹</button>
-            <img src={activeGallery[activeIndex]} alt="preview" className="max-w-[90%] max-h-[85%] rounded-lg" />
-            <button className="absolute right-6 text-white text-2xl" onClick={() => setActiveIndex(prev => prev === activeGallery.length-1 ? 0 : prev+1)}>›</button>
-          </div>
-        )}
-      </div>
-    </section>
-  );
-}
-  /* ─── 9. PROCESS ─── */
-function Process({sectionRef}){
-  const steps=[
-    {n:'01',t:'System Audit',sub:'45 minutes. Free.',d:'We map your current tools, workflows, and operational friction points. You leave with a clear picture of what needs to be built — even if you don\'t move forward.',icon:'🔍'},
-    {n:'02',t:'Architecture Design',sub:'2–3 days.',d:'We design your platform architecture and deliver a detailed scope document: every module, every workflow, every automation, and the exact investment.',icon:'🗺️'},
-    {n:'03',t:'Build & Deploy',sub:'7–21 days depending on scope.',d:'We build it. You review it. We refine and deploy. Then we train your team on the system — no open-ended timelines, no agency handoffs.',icon:'⚡'},
-    {n:'04',t:'Ongoing Operations',sub:'Optional retainer.',d:'After launch you own the system entirely. Retain us for management, expansion, and updates as your business scales — never required, always available.',icon:'🛡️'},
-  ];
-  return (
-    <section ref={sectionRef} className="py-20 md:py-28">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <R><span className="label block mb-4">How It Works</span></R>
-          <R d={0.08}>
-            <h2 className="display mb-3" style={{fontSize:'clamp(28px,4.2vw,48px)',color:'#E2E2E8'}}>
-              Audit to deployment<br /><em style={{color:'var(--lime)',fontStyle:'italic'}}>in under 3 weeks.</em>
-            </h2>
-          </R>
-          <R d={0.12}>
-            <p className="text-[14px] max-w-sm mx-auto" style={{color:'var(--ink-muted)'}}>No agency handoffs. No 6-month timelines. We scope, build, and deploy — directly.</p>
-          </R>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-9">
-          {steps.map((s,i)=>(
-            <R key={i} d={i*0.08}>
-              <div className="card h-full text-center py-8 px-5 relative overflow-hidden">
-                <div className="step-num">{s.n}</div>
-                <div className="relative z-10">
-                  <div className="text-2xl mb-3">{s.icon}</div>
-                  <span className="label block mb-3">{s.n}</span>
-                  <p className="text-[15px] mb-1" style={{color:'#E2E2E8',fontWeight:700}}>{s.t}</p>
-                  <p className="text-[11px] mb-3" style={{fontFamily:'DM Mono',color:'var(--lime)',letterSpacing:'0.04em'}}>{s.sub}</p>
-                  <p className="text-[12px] leading-relaxed" style={{color:'var(--ink-muted)'}}>{s.d}</p>
-                </div>
-              </div>
-            </R>
-          ))}
-        </div>
-        <R d={0.3} className="text-center">
-          <button onClick={()=>document.getElementById('cta-section').scrollIntoView({behavior:'smooth'})} className="btn-primary glow-btn" data-h>Start with a free system audit</button>
-        </R>
-      </div>
-    </section>
-  );
-}
-
-  /* ─── 10. PRICING ─── */
-function Investment({ sectionRef }) {
-  return (
-    <section
-      ref={sectionRef}
-      className="py-20 md:py-28"
-      style={{ background: 'rgba(13,13,16,0.6)' }}
-    >
-      <div className="max-w-3xl mx-auto px-6">
-        
-        <div className="text-center mb-12">
-          <R>
-            <span className="label block mb-4">Investment</span>
-          </R>
-
-          <R d={0.08}>
-            <h2
-              className="display mb-4"
-              style={{
-                fontSize: 'clamp(28px,4.2vw,48px)',
-                color: '#E2E2E8',
-              }}
-            >
-              Built for operational leverage.
-              <br />
-              Not cheap execution.
-            </h2>
-          </R>
-
-          <R d={0.12}>
-            <p
-              className="text-[14px] max-w-md mx-auto"
-              style={{ color: 'var(--ink-muted)' }}
-            >
-              Every system is designed to reduce operational friction,
-              centralize workflows, and eliminate manual overhead as your
-              agency scales.
-            </p>
-          </R>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          {[
-            {
-              tier: 'Foundation Infrastructure',
-              range: '$1,500 – $3,000',
-              desc:
-                'Operational foundation for lean agencies needing centralized onboarding, CRM, and internal visibility.',
-              items: [
-                'CRM + Client Management',
-                'Client Portal',
-                'Smart Intake Workflows',
-                'Onboarding Automation',
-                'Operations Dashboard',
-              ],
-            },
-
-            {
-              tier: 'Growth Operations System',
-              range: '$3,000 – $6,000',
-              desc:
-                'Advanced operational infrastructure with AI-assisted workflows, automation layers, and reporting systems.',
-              items: [
-                'Everything in Foundation',
-                'AI Workflow Layer',
-                'Advanced Automation',
-                'Reporting & Analytics',
-                'Internal Workflow Systems',
-              ],
-              featured: true,
-            },
-
-            {
-              tier: 'Enterprise Infrastructure',
-              range: 'Custom Scope',
-              desc:
-                'Custom operational ecosystems for scaling agencies requiring multi-team workflows, integrations, and internal tooling.',
-              items: [
-                'Multi-team Architecture',
-                'Custom Integrations',
-                'White-label Portals',
-                'Advanced Reporting',
-                'Priority Support',
-              ],
-            },
-          ].map((tier, i) => (
-            <R key={i} d={i * 0.08}>
-              <div
-                className={tier.featured ? 'card-accent' : 'card'}
-                style={{ height: '100%' }}
-              >
-                {tier.featured && (
-                  <div
-                    className="pill mb-3 inline-block"
-                    style={{ fontSize: '9px' }}
-                  >
-                    Most Popular
-                  </div>
-                )}
-
-                <p
-                  className="text-[13px] mb-1"
-                  style={{
-                    color: '#E2E2E8',
-                    fontWeight: 700,
-                  }}
-                >
-                  {tier.tier}
-                </p>
-
-                <p
-                  className="display mb-3"
-                  style={{
-                    fontSize: '21px',
-                    color: 'var(--lime)',
-                  }}
-                >
-                  {tier.range}
-                </p>
-
-                <p
-                  className="text-[12px] leading-relaxed mb-4"
-                  style={{ color: 'var(--ink-muted)' }}
-                >
-                  {tier.desc}
-                </p>
-
-                <div className="space-y-2">
-                  {tier.items.map((item, j) => (
-                    <div
-                      key={j}
-                      className="flex items-center gap-2"
-                    >
-                      <svg
-                        width="8"
-                        height="8"
-                        viewBox="0 0 8 8"
-                        fill="none"
-                      >
-                        <path
-                          d="M1.5 4l2 2 3-3.5"
-                          stroke="var(--lime)"
-                          strokeWidth="1.2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-
-                      <span
-                        className="text-[12px]"
-                        style={{ color: 'var(--ink-muted)' }}
-                      >
-                        {item}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </R>
-          ))}
-        </div>
-
-        <R d={0.3} className="text-center">
-          <p
-            className="text-[13px] mb-5"
-            style={{ color: 'var(--ink-muted)' }}
-          >
-            Every engagement is scoped strategically based on operational
-            complexity, workflow requirements, and automation depth.
-          </p>
-
-          <button
-            onClick={() =>
-              document
-                .getElementById('cta-section')
-                ?.scrollIntoView({ behavior: 'smooth' })
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrady — Performance Infrastructure for Paid Traffic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                    },
+                    colors: {
+                        accent: '#b4ff39',
+                        surface: '#030303',
+                        surfaceAlt: '#0a0a0a',
+                        surfaceCard: '#111111',
+                    }
+                }
             }
-            className="btn-primary glow-btn"
-            data-h
-          >
-            Book a system audit — free
-          </button>
-        </R>
-      </div>
-    </section>
-  );
-}
+        }
+    </script>
+    <style>
+        body { background: #030303; }
 
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .fade-up.visible {
+            animation: fadeUp 0.8s ease-out forwards;
+        }
 
-/* ─── 11. WHO THIS IS FOR ─── */
-function WhoThisIsFor(){
-  const forList=[
-    'Agencies managing clients across too many disconnected tools',
-    'Founders spending 10+ hours a week on admin instead of delivery',
-    'Businesses scaling but running on manual operational processes',
-    'Teams with established workflows that need to be systematised and automated',
-    'Service businesses losing visibility as client volume grows',
-  ];
-  const notList=[
-    'Pre-revenue businesses without validated operations to systematise',
-    'Businesses looking for a standalone website with no operational integration',
-  ];
-  return (
-    <section className="py-16 md:py-20" style={{borderTop:'1px solid var(--ink-border)',borderBottom:'1px solid var(--ink-border)'}}>
-      <div className="max-w-xl mx-auto px-6">
-        <R><span className="label block mb-5 text-center">Built For</span></R>
-        <div className="space-y-2 mb-8">
-          {forList.map((t,i)=>(
-            <R key={i} d={i*0.06}>
-              <div className="qualify-for flex items-center gap-3">
-                <div className="check-icon" style={{width:'16px',height:'16px',flexShrink:0}}>
-                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2L6.5 2" stroke="var(--lime)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </div>
-                {t}
-              </div>
-            </R>
-          ))}
-        </div>
-        <R d={0.2}><span className="label block mb-4 text-center">Not For</span></R>
-        <div className="space-y-2">
-          {notList.map((t,i)=>(
-            <R key={i} d={0.22+i*0.04}>
-              <div className="qualify-not">{t}</div>
-            </R>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(180, 255, 57, 0.15); }
+            50% { box-shadow: 0 0 40px rgba(180, 255, 57, 0.3); }
+        }
+        .pulse-glow { animation: pulseGlow 3s ease-in-out infinite; }
 
-/* ─── 12. FAQ ─── */
-function FAQ(){
-  const [open,setOpen]=useState(null);
-  const qs=[
-    {q:'What exactly do you build?',a:'Custom AI-powered operational platforms for agencies and service businesses. Typically this includes a CRM, client portal, booking system, automated onboarding, operations dashboard, and website — all connected, all sharing the same data. Every system is architected to your exact workflows.'},
-    {q:'How is this different from HubSpot, Notion, or any other platform?',a:'Those are generic tools you adapt your business to. We build a system specifically for how your business operates — your clients, your workflows, your processes. Nothing is off-the-shelf. And because it\'s all one system, every component talks to every other component with AI-assisted routing and automation.'},
-    {q:'How long does it take?',a:'Core systems are typically live in 7 days. Full platforms take 14–21 days depending on scope. We agree on a delivery timeline before we start — no open-ended engagements.'},
-    {q:'What do I need before we start?',a:'A clear picture of your current process and where the friction is. We handle everything else in the scoping session. Most clients are surprised by how quickly we can map their operation and produce a detailed build plan.'},
-    {q:'What happens after the system is built?',a:'You own it entirely. We train you and your team on every module. If you want ongoing system management, updates, or expansion, that\'s available as a retainer — but you\'re never locked in. The infrastructure is yours.'},
-    {q:'Do you offer payment plans?',a:'Yes. Larger projects are typically structured as 50% upfront and 50% on delivery. For ongoing retainer work, monthly billing applies. We can structure what works for your situation.'},
-  ];
-  return (
-    <section className="py-20 md:py-28">
-      <div className="max-w-2xl mx-auto px-6">
-        <div className="text-center mb-10">
-          <R><span className="label block mb-4">Common Questions</span></R>
-          <R d={0.08}><h2 className="display" style={{fontSize:'clamp(26px,4vw,42px)',color:'#E2E2E8'}}>Before you reach out.</h2></R>
-        </div>
-        <div className="card" style={{padding:0}}>
-          {qs.map((faq,i)=>(
-            <R key={i} d={i*0.04}>
-              <div className="faq-item">
-                <button onClick={()=>setOpen(open===i?null:i)} className="w-full text-left flex items-center justify-between gap-4" style={{padding:'18px 24px',background:'none',border:'none',color:'#E2E2E8'}} data-h>
-                  <span className="text-[14px]" style={{fontWeight:600}}>{faq.q}</span>
-                  <motion.span animate={{rotate:open===i?45:0}} transition={{duration:0.18}} style={{flexShrink:0,color:'var(--lime)',fontSize:'18px',lineHeight:1}}>+</motion.span>
-                </button>
-                <AnimatePresence>
-                  {open===i&&(
-                    <motion.div initial={{height:0,opacity:0}} animate={{height:'auto',opacity:1}} exit={{height:0,opacity:0}} transition={{duration:0.22}} style={{overflow:'hidden'}}>
-                      <p className="text-[13px] leading-relaxed" style={{color:'var(--ink-muted)',padding:'0 24px 20px'}}>{faq.a}</p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </R>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        .shimmer-text {
+            background: linear-gradient(90deg, #b4ff39 0%, #ffffff 50%, #b4ff39 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 6s linear infinite;
+        }
 
-/* ─── 13. FINAL CTA ─── */
-function FinalCTA({sectionRef}){
-  const [form,setForm]=useState({name:'',email:'',biz:'',msg:''});
-  const [submitting,setSubmitting]=useState(false);
-  const [status,setStatus]=useState(null);
-  const timerRef=useRef(null);
-  const ch=(e)=>setForm({...form,[e.target.name]:e.target.value});
-  const clearStatus=()=>{ if(timerRef.current) clearTimeout(timerRef.current); timerRef.current=setTimeout(()=>setStatus(null),6000); };
-  const submit=async(e)=>{
-    e.preventDefault();
-    if(!form.name.trim()||!form.email.trim()||!form.msg.trim()){setStatus({t:'error',m:'Please fill in all required fields.'});clearStatus();return;}
-    setSubmitting(true);setStatus(null);
-    try{
-      const res=await fetch('https://rsttirosnsfaortzugld.functions.supabase.co/submit-brief',{
-        method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({name:form.name.trim(),email:form.email.trim(),message:`Business: ${form.biz}\n\n${form.msg.trim()}`})
-      });
-      if(res.ok){setStatus({t:'ok',m:"Received. We'll send your system scope within 24 hours."});setForm({name:'',email:'',biz:'',msg:''});}
-      else setStatus({t:'error',m:'Something went wrong. Try again or WhatsApp us directly.'});
-    }catch{setStatus({t:'error',m:'Something went wrong. Try again or WhatsApp us directly.'});}
-    finally{setSubmitting(false);clearStatus();}
-  };
-  return (
-    <section ref={sectionRef} id="cta-section" className="py-20 md:py-28 relative">
-      <div className="absolute w-96 h-96 rounded-full" style={{background:'rgba(200,230,74,0.01)',filter:'blur(110px)',right:'25%',bottom:0,zIndex:-1}}/>
-      <div className="max-w-lg mx-auto px-6">
-        <div className="text-center mb-10">
-          <R><span className="label block mb-4">Get Started</span></R>
-          <R d={0.08}>
-            <h2 className="display mb-4" style={{fontSize:'clamp(32px,5vw,56px)',color:'#E2E2E8'}}>
-              Tell us how you operate.<br />We'll design what<br /><em style={{color:'var(--lime)',fontStyle:'italic'}}>you need built.</em>
-            </h2>
-          </R>
-          <R d={0.13}>
-            <p className="text-[14px] leading-relaxed mb-2" style={{color:'var(--ink-muted)'}}>
-              Describe your current tools and where the operational friction is. We'll respond within 24 hours with a specific breakdown of what we'd architect and what it would cost.
-            </p>
-          </R>
-          <R d={0.16}>
-            <p className="text-[11px]" style={{color:'var(--ink-subtle)',fontFamily:'DM Mono',letterSpacing:'0.05em'}}>No sales call required · No commitment · No generic pitch</p>
-          </R>
-        </div>
-        <R d={0.2}>
-          <form onSubmit={submit} className="space-y-3 text-left">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <input name="name" value={form.name} onChange={ch} placeholder="Your name *" required className="field"/>
-              <input name="email" type="email" value={form.email} onChange={ch} placeholder="your@email.com *" required className="field"/>
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .radar-sweep {
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(180,255,57,0.08) 60deg, transparent 60deg);
+            animation: radarSpin 8s linear infinite;
+        }
+        @keyframes radarSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .dash-video-placeholder {
+            background: linear-gradient(135deg, #0a0a0a 0%, #111111 50%, #0a0a0a 100%);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .float-anim { animation: float 5s ease-in-out infinite; }
+
+        @keyframes countTick {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        .count-tick { animation: countTick 2.4s ease-in-out infinite; }
+
+        @keyframes loadBar {
+            0% { width: 0%; }
+            100% { width: 92%; }
+        }
+        .load-bar-fast { animation: loadBar 1.4s ease-out forwards; }
+
+        @keyframes loadBarSlow {
+            0% { width: 0%; }
+            100% { width: 38%; }
+        }
+        .load-bar-slow { animation: loadBarSlow 3.2s ease-out forwards; }
+
+        .form-input:focus {
+            border-color: #b4ff39;
+            box-shadow: 0 0 0 1px rgba(180,255,57,0.3);
+        }
+
+        .faq-toggle .faq-icon { transition: transform 0.3s ease; }
+        .faq-toggle.open .faq-icon { transform: rotate(45deg); }
+        .faq-panel { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+        .faq-panel.open { max-height: 300px; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #030303; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #b4ff39; }
+    </style>
+</head>
+<body class="bg-surface text-white font-sans antialiased">
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- NAVIGATION                                  -->
+    <!-- ═══════════════════════════════════════════ -->
+    <nav id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-2 h-2 bg-accent rounded-full group-hover:shadow-[0_0_10px_#b4ff39] transition-shadow duration-300"></div>
+                <span class="font-display text-lg font-500 tracking-[0.2em] uppercase text-white">Andrady</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#problem" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">Problem</a>
+                <a href="#how-it-works" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">How It Works</a>
+                <a href="#offer" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">The Rebuild</a>
+                <a href="#faq" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">FAQ</a>
             </div>
-            <input name="biz" value={form.biz} onChange={ch} placeholder="What type of agency or business do you run?" className="field"/>
-            <textarea name="msg" rows={4} value={form.msg} onChange={ch} required placeholder="What tools are you using now, and what's the biggest operational problem you need solved? *" className="field" style={{resize:'none'}}/>
-            <motion.button type="submit" disabled={submitting} whileHover={{scale:submitting?1:1.02}} whileTap={{scale:submitting?1:0.97}} data-h className="btn-primary glow-btn w-full" style={{opacity:submitting?0.5:1,fontSize:'15px',padding:'17px'}}>
-              {submitting?'Sending...':'Get my system architecture →'}
-            </motion.button>
-            {status&&(
-              <div className="status-msg" style={{background:status.t==='ok'?'rgba(200,230,74,0.05)':'rgba(255,72,72,0.04)',color:status.t==='ok'?'var(--lime)':'rgba(255,100,100,0.65)',border:status.t==='ok'?'1px solid rgba(200,230,74,0.12)':'1px solid rgba(255,72,72,0.1)'}}>
-                {status.m}
-              </div>
-            )}
-          </form>
-        </R>
-        <R d={0.3} className="mt-8">
-          <div className="grid grid-cols-3 gap-3 text-center">
-            {['Response in 24hrs','Free scope included','Zero commitment'].map((t,i)=>(
-              <div key={i} style={{padding:'10px 8px',borderRadius:'10px',background:'rgba(200,230,74,0.02)',border:'1px solid rgba(200,230,74,0.06)'}}>
-                <p className="text-[10px]" style={{fontFamily:'DM Mono',color:'rgba(200,230,74,0.35)',letterSpacing:'0.04em',lineHeight:1.4}}>{t}</p>
-              </div>
-            ))}
-          </div>
-        </R>
-      </div>
+
+            <a href="#audit" class="bg-accent text-black text-xs font-bold tracking-widest uppercase px-6 py-3 rounded-sm hover:bg-white transition-colors duration-300">
+                Get a Free Audit
+            </a>
+        </div>
+        <div class="h-px bg-white/5"></div>
+    </nav>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- HERO                                        -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <div class="absolute inset-0 grid-bg opacity-60"></div>
+        <div class="absolute top-1/4 -left-40 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[150px]"></div>
+        <div class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-accent/3 rounded-full blur-[120px]"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 w-full">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+                <!-- Left: Copy -->
+                <div class="fade-up">
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="h-px w-12 bg-accent"></div>
+                        <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Performance Infrastructure for Paid Traffic</span>
+                    </div>
+
+                    <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-500 leading-[0.9] tracking-tight uppercase mb-8">
+                        Your Ads Are<br>
+                        <span class="shimmer-text">Fast.</span><br>
+                        Your Landing Page Isn't.
+                    </h1>
+
+                    <p class="text-gray-400 text-lg font-light leading-relaxed max-w-lg mb-6">
+                        We rebuild bloated landing pages into <span class="text-white font-medium">sub-second-loading acquisition infrastructure</span> — built for the traffic you're already paying for.
+                    </p>
+
+                    <p class="text-sm text-gray-600 font-light tracking-wide mb-10 flex items-center gap-2">
+                        <i data-lucide="ban" class="w-3.5 h-3.5 text-gray-700 flex-shrink-0"></i>
+                        No page builders. No bloat. No monthly software rent.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#audit" class="inline-flex items-center justify-center gap-2 bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-all duration-300 pulse-glow">
+                            Get a Free Landing Page Audit
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#how-it-works" class="inline-flex items-center justify-center gap-2 border border-white/10 text-white text-sm font-medium tracking-wider uppercase px-8 py-4 rounded-sm hover:border-white/30 hover:bg-white/5 transition-all duration-300">
+                            See How The Rebuild Works
+                        </a>
+                    </div>
+
+                    <div class="flex items-center gap-6 mt-10 pt-8 border-t border-white/5">
+                        <div>
+                            <div class="font-display text-2xl font-500 text-accent tracking-tight">&lt;1s</div>
+                            <div class="text-[10px] tracking-widest uppercase text-gray-500 mt-1">Target Load Time</div>
+                        </div>
+                        <div class="w-px h-8 bg-white/10"></div>
+                        <div>
+                            <div class="font-display text-2xl font-500 text-accent tracking-tight">$1,500</div>
+                            <div class="text-[10px] tracking-widest uppercase text-gray-500 mt-1">Fixed Rebuild Fee</div>
+                        </div>
+                        <div class="w-px h-8 bg-white/10"></div>
+                        <div>
+                            <div class="font-display text-2xl font-500 text-accent tracking-tight">Zero</div>
+                            <div class="text-[10px] tracking-widest uppercase text-gray-500 mt-1">Page Builder Bloat</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Load-time comparison visual -->
+                <div class="fade-up relative" style="animation-delay: 0.3s;">
+                    <div class="relative">
+                        <div class="absolute -inset-4 bg-accent/5 blur-[60px] rounded-lg"></div>
+
+                        <div class="relative dash-video-placeholder rounded-lg border border-white/10 overflow-hidden">
+                            <div class="flex items-center justify-between px-5 py-3 border-b border-white/5 bg-black/50">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-red-500/60"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/60"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-green-500/60"></div>
+                                </div>
+                                <div class="text-[10px] text-gray-600 tracking-wider">PageSpeed Comparison</div>
+                                <div class="w-16"></div>
+                            </div>
+
+                            <div class="p-6 space-y-5">
+                                <!-- Before -->
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs text-gray-500 tracking-wider uppercase">Typical Page Builder Site</span>
+                                        <span class="text-xs text-red-400/80 font-medium">4.8s</span>
+                                    </div>
+                                    <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                                        <div class="h-full bg-red-500/50 rounded-full load-bar-slow"></div>
+                                    </div>
+                                </div>
+
+                                <!-- After -->
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs text-white tracking-wider uppercase">Andrady Rebuild</span>
+                                        <span class="text-xs text-accent font-medium">0.6s</span>
+                                    </div>
+                                    <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                                        <div class="h-full bg-accent rounded-full load-bar-fast"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Stack badges -->
+                                <div class="flex items-center gap-2 pt-4 flex-wrap">
+                                    <span class="text-[10px] tracking-wider text-gray-500 bg-black/30 border border-white/5 rounded-sm px-2.5 py-1.5">Static HTML</span>
+                                    <span class="text-[10px] tracking-wider text-gray-500 bg-black/30 border border-white/5 rounded-sm px-2.5 py-1.5">Tailwind</span>
+                                    <span class="text-[10px] tracking-wider text-gray-500 bg-black/30 border border-white/5 rounded-sm px-2.5 py-1.5">Vercel</span>
+                                    <span class="text-[10px] tracking-wider text-gray-500 bg-black/30 border border-white/5 rounded-sm px-2.5 py-1.5">Supabase</span>
+                                </div>
+
+                                <!-- KPI grid -->
+                                <div class="grid grid-cols-2 gap-3 pt-2">
+                                    <div class="bg-black/30 border border-white/5 rounded-sm p-3">
+                                        <div class="text-[10px] tracking-widest uppercase text-gray-500">Lighthouse</div>
+                                        <div class="text-base font-medium text-accent mt-1">98 / 100</div>
+                                    </div>
+                                    <div class="bg-black/30 border border-white/5 rounded-sm p-3">
+                                        <div class="text-[10px] tracking-widest uppercase text-gray-500">JS Payload</div>
+                                        <div class="text-base font-medium text-white mt-1">&minus;91%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-center text-[10px] tracking-[0.2em] uppercase text-gray-600 mt-4">
+                            Same Ad. Same Spend. Different Page.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
-  );
-}
 
-/* ─── FOOTER ─── */
-function Footer(){
-  return (
-    <footer className="py-7" style={{borderTop:'1px solid var(--ink-border)'}}>
-      <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-3">
-        <span style={{fontFamily:'Instrument Serif',fontSize:'17px',color:'rgba(226,226,232,0.18)'}}>Andrady</span>
-        <span style={{fontFamily:'DM Mono',fontSize:'10px',color:'var(--ink-subtle)',letterSpacing:'0.06em',textAlign:'center'}}>AI-powered operating systems for agencies and service businesses.</span>
-        <span style={{fontFamily:'DM Mono',fontSize:'10px',color:'var(--ink-subtle)',letterSpacing:'0.04em'}}>© {new Date().getFullYear()} Andrady</span>
-      </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- PROBLEM                                     -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section id="problem" class="relative py-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="fade-up max-w-3xl mx-auto text-center mb-20">
+                <div class="flex items-center justify-center gap-3 mb-6">
+                    <div class="h-px w-8 bg-accent"></div>
+                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">The Real Cost Problem</span>
+                    <div class="h-px w-8 bg-accent"></div>
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
+                    Your CPC Isn't The Leak.<br>
+                    Your <span class="text-accent">Page Speed</span> Is.
+                </h2>
+                <p class="text-gray-400 text-lg font-light leading-relaxed">
+                    Most landing pages are built on page builders, stacked with plugins, tracking scripts, and chat widgets — and every one of those slows the page down. You're paying full price for clicks that land on a page engineered to lose them.
+                </p>
+            </div>
+
+            <!-- Contrast grid -->
+            <div class="grid md:grid-cols-2 gap-1">
+                <!-- BEFORE -->
+                <div class="fade-up bg-surfaceCard border border-white/5 rounded-sm p-8 md:p-10 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-red-500/5 blur-[80px]"></div>
+
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-8">
+                            <div class="w-8 h-8 rounded-sm bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                                <i data-lucide="x" class="w-4 h-4 text-red-400"></i>
+                            </div>
+                            <span class="text-xs font-bold tracking-[0.2em] uppercase text-red-400/80">Before</span>
+                        </div>
+
+                        <h3 class="font-display text-2xl font-500 tracking-tight uppercase mb-6 text-white/80">The Bloat Stack</h3>
+
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="puzzle" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
+                                <span class="text-gray-500 text-sm font-light">A page builder rendering layout with megabytes of unused CSS and JS</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="layers" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
+                                <span class="text-gray-500 text-sm font-light">A dozen plugins and embeds, each adding its own render-blocking script</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="gauge" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
+                                <span class="text-gray-500 text-sm font-light">A 3–5 second load time on mobile, where most paid traffic lands</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="trending-down" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
+                                <span class="text-gray-500 text-sm font-light">Visitors bouncing before the form even finishes rendering</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="receipt" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
+                                <span class="text-gray-500 text-sm font-light">Monthly software rent for a page builder, on top of your ad spend</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- AFTER -->
+                <div class="fade-up bg-surfaceCard border border-accent/10 rounded-sm p-8 md:p-10 relative overflow-hidden" style="animation-delay: 0.2s;">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-accent/5 blur-[80px]"></div>
+
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-8">
+                            <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center">
+                                <i data-lucide="check" class="w-4 h-4 text-accent"></i>
+                            </div>
+                            <span class="text-xs font-bold tracking-[0.2em] uppercase text-accent">After</span>
+                        </div>
+
+                        <h3 class="font-display text-2xl font-500 tracking-tight uppercase mb-6 text-white">Static Performance Infrastructure</h3>
+
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
+                                <span class="text-gray-300 text-sm font-light">Hand-built static HTML and Tailwind — no builder runtime to drag it down</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
+                                <span class="text-gray-300 text-sm font-light">Only the scripts your page actually needs — nothing else ships</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
+                                <span class="text-gray-300 text-sm font-light">Sub-second loads on mobile, where the click actually lands</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
+                                <span class="text-gray-300 text-sm font-light">A form that's visible and usable before the visitor can change their mind</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
+                                <span class="text-gray-300 text-sm font-light">One fixed fee. No builder subscription. Hosting that costs pennies.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fade-up mt-12 border border-white/5 rounded-sm p-8 bg-surfaceCard/50">
+                <p class="text-center text-gray-400 text-base font-light leading-relaxed max-w-3xl mx-auto">
+                    You're already paying for the click. Andrady makes sure the page on the other end of it is built to convert that click — not lose it to a three-second spinner.
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- HOW ANDRADY WORKS                           -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section id="how-it-works" class="relative py-32 overflow-hidden">
+        <div class="absolute inset-0 grid-bg opacity-30"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6">
+            <div class="fade-up max-w-3xl mb-20">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="h-px w-8 bg-accent"></div>
+                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">How Andrady Works</span>
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
+                    Three Steps.<br>
+                    One <span class="text-accent">Performance</span> Rebuild
+                </h2>
+                <p class="text-gray-400 text-lg font-light leading-relaxed max-w-xl">
+                    Not a redesign. Not a re-skin. We rebuild the page underneath your existing offer and creative — engineered specifically for the traffic hitting it.
+                </p>
+            </div>
+
+            <!-- Step 1: Audit -->
+            <div class="fade-up grid lg:grid-cols-2 gap-12 items-center mb-24 border border-white/5 rounded-sm p-8 md:p-12 bg-surfaceCard/30 relative overflow-hidden">
+                <div class="absolute -bottom-20 -right-20 w-60 h-60 bg-accent/3 blur-[100px]"></div>
+
+                <div class="relative z-10">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center">
+                            <i data-lucide="search" class="w-5 h-5 text-accent"></i>
+                        </div>
+                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent">Step 01</span>
+                    </div>
+
+                    <h3 class="font-display text-3xl md:text-4xl font-500 tracking-tight uppercase mb-4">
+                        We Audit What's<br>Actually Slowing You Down
+                    </h3>
+
+                    <p class="text-gray-400 font-light leading-relaxed mb-6">
+                        We run your current page through real performance testing and trace exactly where the load time, render-blocking scripts, and conversion friction are coming from. You get a clear breakdown — <span class="text-white">not a sales pitch dressed up as an audit</span>.
+                    </p>
+
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                            <span class="text-gray-300 text-sm">Full load-time and Core Web Vitals breakdown</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                            <span class="text-gray-300 text-sm">Bloat sources identified — builder runtime, scripts, plugins</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                            <span class="text-gray-300 text-sm">Mobile-first read, since that's where most paid clicks land</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="relative z-10 flex items-center justify-center">
+                    <div class="relative w-full max-w-sm">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-64 h-64 rounded-full border border-white/5 relative">
+                                <div class="absolute inset-0 radar-sweep rounded-full"></div>
+                                <div class="absolute inset-8 rounded-full border border-white/5"></div>
+                                <div class="absolute inset-16 rounded-full border border-white/5"></div>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="w-12 h-12 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center">
+                                        <i data-lucide="activity" class="w-5 h-5 text-accent"></i>
+                                    </div>
+                                </div>
+                                <div class="absolute top-4 left-1/2 w-2 h-2 bg-accent rounded-full float-anim" style="animation-delay: 0s;"></div>
+                                <div class="absolute bottom-8 right-8 w-2 h-2 bg-white/30 rounded-full float-anim" style="animation-delay: 1.5s;"></div>
+                                <div class="absolute top-1/2 left-4 w-2 h-2 bg-white/20 rounded-full float-anim" style="animation-delay: 3s;"></div>
+                            </div>
+                        </div>
+                        <div class="text-center pt-72">
+                            <div class="text-[10px] tracking-[0.2em] uppercase text-gray-600">Scanning Render Path — Active</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Rebuild -->
+            <div class="fade-up grid lg:grid-cols-2 gap-12 items-center mb-24 border border-white/5 rounded-sm p-8 md:p-12 bg-surfaceCard/30 relative overflow-hidden">
+                <div class="absolute -top-20 -left-20 w-60 h-60 bg-accent/3 blur-[100px]"></div>
+
+                <div class="relative z-10 flex items-center justify-center order-2 lg:order-1">
+                    <div class="w-full max-w-sm">
+                        <div class="border border-white/10 rounded-sm bg-black/30 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 border-b border-white/5">
+                                <span class="text-xs text-white font-medium">Stack Comparison</span>
+                                <span class="text-[10px] text-accent tracking-wider uppercase flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 bg-accent rounded-full count-tick"></span>
+                                    Rebuilt
+                                </span>
+                            </div>
+                            <div class="p-4 space-y-3">
+                                <div class="flex items-center justify-between text-xs py-2">
+                                    <span class="text-gray-400">Page Builder Runtime</span>
+                                    <span class="text-red-400/80 font-medium">Removed</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs py-2 border-t border-white/5">
+                                    <span class="text-gray-400">Frontend</span>
+                                    <span class="text-white font-medium">Static HTML + Tailwind</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs py-2 border-t border-white/5">
+                                    <span class="text-gray-400">Interactivity</span>
+                                    <span class="text-white font-medium">Vanilla JS</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs py-2 border-t border-white/5">
+                                    <span class="text-gray-400">Lead Data</span>
+                                    <span class="text-white font-medium">Supabase</span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs py-2 border-t border-white/5">
+                                    <span class="text-gray-400">Hosting</span>
+                                    <span class="text-white font-medium">Vercel Edge</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-6">
+                            <div class="text-[10px] tracking-[0.2em] uppercase text-gray-600">Same Offer. Same Creative. New Foundation.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative z-10 order-1 lg:order-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center">
+                            <i data-lucide="hammer" class="w-5 h-5 text-accent"></i>
+                        </div>
+                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent">Step 02</span>
+                    </div>
+
+                    <h3 class="font-display text-3xl md:text-4xl font-500 tracking-tight uppercase mb-4">
+                        We Rebuild It On<br>Real Infrastructure
+                    </h3>
+
+                    <p class="text-gray-400 font-light leading-relaxed mb-6">
+                        We rebuild your page from the ground up on static HTML, Tailwind CSS, and vanilla JavaScript — hosted on Vercel, backed by Supabase for lead capture. Your message and creative stay yours. <span class="text-white">The engine underneath changes entirely</span>.
+                    </p>
+
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                            <span class="text-gray-300 text-sm">Full rebuild — not a theme swap or a plugin removal pass</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                            <span class="text-gray-300 text-sm">Mobile-optimized layout, since that's where the spend lands</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                            <span class="text-gray-300 text-sm">Lead capture wired directly into your CRM or inbox</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                            <span class="text-gray-300 text-sm">Your tracking and analytics carried over, not lost in the switch</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 3: Deploy -->
+            <div class="fade-up grid lg:grid-cols-2 gap-12 items-center border border-white/5 rounded-sm p-8 md:p-12 bg-surfaceCard/30 relative overflow-hidden">
+                <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-accent/3 blur-[100px]"></div>
+
+                <div class="relative z-10">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center">
+                            <i data-lucide="rocket" class="w-5 h-5 text-accent"></i>
+                        </div>
+                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent">Step 03</span>
+                    </div>
+
+                    <h3 class="font-display text-3xl md:text-4xl font-500 tracking-tight uppercase mb-4">
+                        We Deploy It Behind<br>Your Live Campaigns
+                    </h3>
+
+                    <p class="text-gray-400 font-light leading-relaxed mb-6">
+                        We deploy the rebuilt page to your domain, verify every tracking pixel and conversion event fires correctly, and hand you a page that's ready to take traffic the same day. No downtime. No re-approval delays on your ad accounts.
+                    </p>
+
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                            <span class="text-gray-300 text-sm">Pixel and conversion-event verification before go-live</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                            <span class="text-gray-300 text-sm">Deployed to your existing domain — no new URL to re-approve</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                            <span class="text-gray-300 text-sm">Full source code handed to you — yours outright</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                            <span class="text-gray-300 text-sm">Optional ongoing oversight if you'd rather not touch it again</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="relative z-10 flex items-center justify-center">
+                    <div class="w-full max-w-sm space-y-4">
+                        <div class="border border-dashed border-accent/20 rounded-sm p-8 text-center bg-accent/5">
+                            <i data-lucide="check-circle-2" class="w-8 h-8 text-accent mx-auto mb-3"></i>
+                            <div class="text-sm text-white font-medium mb-1">Live & Taking Traffic</div>
+                            <div class="text-[10px] tracking-widest uppercase text-gray-500">Pixels Verified — Conversions Firing</div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="flex items-center gap-3 bg-black/30 border border-white/5 rounded-sm px-4 py-3">
+                                <i data-lucide="check" class="w-4 h-4 text-accent"></i>
+                                <span class="text-xs text-gray-300 flex-1">Meta Pixel — Firing</span>
+                            </div>
+                            <div class="flex items-center gap-3 bg-black/30 border border-white/5 rounded-sm px-4 py-3">
+                                <i data-lucide="check" class="w-4 h-4 text-accent"></i>
+                                <span class="text-xs text-gray-300 flex-1">Google Ads Conversion — Firing</span>
+                            </div>
+                            <div class="flex items-center gap-3 bg-black/30 border border-white/5 rounded-sm px-4 py-3">
+                                <i data-lucide="check" class="w-4 h-4 text-accent"></i>
+                                <span class="text-xs text-gray-300 flex-1">LinkedIn Insight Tag — Firing</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- BEFORE VS AFTER INFRASTRUCTURE COMPARISON   -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="relative py-24 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="fade-up text-center max-w-2xl mx-auto mb-16">
+                <div class="flex items-center justify-center gap-3 mb-6">
+                    <div class="h-px w-8 bg-accent"></div>
+                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Infrastructure Comparison</span>
+                    <div class="h-px w-8 bg-accent"></div>
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95]">
+                    Before vs After<br>
+                    <span class="text-accent">The Rebuild</span>
+                </h2>
+            </div>
+
+            <div class="fade-up max-w-4xl mx-auto overflow-hidden border border-white/5 rounded-sm">
+                <div class="grid grid-cols-3 text-xs md:text-sm">
+                    <!-- Header row -->
+                    <div class="bg-black/40 p-4 border-b border-white/5"></div>
+                    <div class="bg-black/40 p-4 border-b border-white/5 border-l border-white/5 text-center">
+                        <span class="text-gray-500 font-bold tracking-widest uppercase text-[10px]">Before</span>
+                    </div>
+                    <div class="bg-accent/5 p-4 border-b border-accent/10 border-l border-white/5 text-center">
+                        <span class="text-accent font-bold tracking-widest uppercase text-[10px]">After</span>
+                    </div>
+
+                    <!-- Row: Load time -->
+                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">Load Time</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-red-400/80">3–5s</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-accent font-medium">&lt;1s</div>
+
+                    <!-- Row: Stack -->
+                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">Frontend Stack</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-500">Page Builder + Plugins</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-300">Static HTML + Tailwind</div>
+
+                    <!-- Row: JS payload -->
+                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">JavaScript Payload</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-500">Heavy, Often Unused</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-300">Minimal, Vanilla JS Only</div>
+
+                    <!-- Row: Hosting -->
+                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">Hosting</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-500">Shared / Builder-Locked</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-300">Vercel Edge Network</div>
+
+                    <!-- Row: Lead capture -->
+                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">Lead Data</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-500">Locked Inside Builder</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-300">Yours, in Supabase</div>
+
+                    <!-- Row: Ongoing cost -->
+                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">Ongoing Software Cost</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-red-400/80">$50–$300/mo</div>
+                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-accent font-medium">~$0/mo</div>
+
+                    <!-- Row: Ownership -->
+                    <div class="p-4 text-gray-400 font-light">Code Ownership</div>
+                    <div class="p-4 border-l border-white/5 text-center text-gray-500">Locked to Platform</div>
+                    <div class="p-4 border-l border-white/5 text-center text-gray-300">100% Yours</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- OFFER BREAKDOWN                             -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section id="offer" class="relative py-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="fade-up text-center max-w-3xl mx-auto mb-16">
+                <div class="flex items-center justify-center gap-3 mb-6">
+                    <div class="h-px w-8 bg-accent"></div>
+                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">One Fixed Fee. No Retainers Required.</span>
+                    <div class="h-px w-8 bg-accent"></div>
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
+                    The Performance Rebuild.<br>
+                    <span class="text-accent">Everything Included.</span>
+                </h2>
+                <p class="text-gray-400 text-lg font-light leading-relaxed">
+                    One project. One price. Your existing landing page, rebuilt on infrastructure designed to convert paid traffic — not just exist on the internet.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-1 max-w-4xl mx-auto">
+
+                <!-- Core offer: Performance Rebuild -->
+                <div class="fade-up relative border border-accent/30 rounded-sm p-8 md:p-10 bg-surfaceCard/70 overflow-hidden group shadow-[0_0_60px_rgba(180,255,57,0.06)]">
+                    <div class="absolute top-0 right-0 bg-accent text-black text-[9px] font-bold tracking-[0.2em] uppercase px-4 py-1.5">
+                        Core Offer
+                    </div>
+                    <div class="absolute -bottom-20 -right-20 w-60 h-60 bg-accent/8 blur-[80px] group-hover:bg-accent/12 transition-all duration-700"></div>
+
+                    <div class="relative z-10">
+                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent block mb-4">The Rebuild</span>
+                        <h3 class="font-display text-3xl font-500 tracking-tight uppercase mb-2">Performance Rebuild</h3>
+
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="font-display text-5xl font-500 text-white">$1,500</span>
+                            <span class="text-gray-500 text-sm font-light">fixed fee</span>
+                        </div>
+
+                        <p class="text-gray-400 text-sm font-light leading-relaxed mb-8">
+                            We take your existing landing page and rebuild it from the ground up as fast, clean, static infrastructure — engineered specifically for paid traffic.
+                        </p>
+
+                        <ul class="space-y-3 mb-10">
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                                <span class="text-gray-300 text-sm">Full landing page audit</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                                <span class="text-gray-300 text-sm">Full rebuild on static HTML + Tailwind</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                                <span class="text-gray-300 text-sm">Mobile optimization, top to bottom</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                                <span class="text-gray-300 text-sm">Lead capture integration (CRM, inbox, or Supabase)</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                                <span class="text-gray-300 text-sm">Analytics & pixel preservation — nothing breaks</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
+                                <span class="text-gray-300 text-sm">Full deployment to your domain</span>
+                            </li>
+                        </ul>
+
+                        <a href="#audit" class="block w-full text-center bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-colors duration-300">
+                            Get a Free Landing Page Audit
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Add-on: SLA -->
+                <div class="fade-up relative border border-white/5 rounded-sm p-8 md:p-10 bg-surfaceCard/30 overflow-hidden group" style="animation-delay: 0.2s;">
+                    <div class="absolute -top-20 -left-20 w-40 h-40 bg-white/3 blur-[80px] group-hover:bg-white/5 transition-all duration-700"></div>
+
+                    <div class="relative z-10">
+                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-500 block mb-4">Optional Add-On</span>
+                        <h3 class="font-display text-3xl font-500 tracking-tight uppercase mb-2 text-white/80">Infrastructure SLA</h3>
+
+                        <div class="flex items-baseline gap-1 mb-6">
+                            <span class="font-display text-5xl font-500 text-white/80">$500</span>
+                            <span class="text-gray-500 text-sm font-light">/month</span>
+                        </div>
+
+                        <p class="text-gray-500 text-sm font-light leading-relaxed mb-8">
+                            For teams who'd rather never think about their landing page infrastructure again. We watch it, maintain it, and handle small changes as your campaigns evolve.
+                        </p>
+
+                        <ul class="space-y-3 mb-10">
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
+                                <span class="text-gray-400 text-sm">Hosting oversight on Vercel</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
+                                <span class="text-gray-400 text-sm">Uptime monitoring, 24/7</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
+                                <span class="text-gray-400 text-sm">Database maintenance (Supabase)</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
+                                <span class="text-gray-400 text-sm">Minor content and copy changes</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
+                                <span class="text-gray-400 text-sm">Direct technical support, no ticket queue</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
+                                <span class="text-gray-400 text-sm">Cancel anytime — no lock-in contract</span>
+                            </li>
+                        </ul>
+
+                        <a href="#audit" class="block w-full text-center border border-white/10 text-white text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:border-white/30 hover:bg-white/5 transition-all duration-300">
+                            Ask About the SLA
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Eligibility note -->
+            <div class="fade-up mt-12 max-w-4xl mx-auto">
+                <div class="border border-white/5 rounded-sm p-6 bg-surfaceCard/30 flex items-start gap-4">
+                    <i data-lucide="info" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
+                    <p class="text-gray-400 text-sm font-light leading-relaxed">
+                        The Performance Rebuild is built for businesses already running paid traffic — typically <span class="text-white">$5,000–$10,000+ per month</span> across Meta, Google, or LinkedIn. If that's not you yet, the audit is still free, but the rebuild pays off fastest when there's active spend behind it.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- WHY STATIC INFRASTRUCTURE WINS               -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="relative py-24 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+                <div class="fade-up">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="h-px w-8 bg-accent"></div>
+                        <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Why It Works</span>
+                    </div>
+                    <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
+                        Why Static<br>
+                        <span class="text-accent">Infrastructure Wins</span>
+                    </h2>
+                    <p class="text-gray-400 text-lg font-light leading-relaxed mb-10">
+                        Page builders are designed to be easy to edit. They were never designed to be fast. Every visual editor, plugin, and drag-and-drop block adds a layer your visitor has to download and render before they ever see your offer. Static infrastructure removes that layer entirely.
+                    </p>
+
+                    <ul class="space-y-5">
+                        <li class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <i data-lucide="zap" class="w-4 h-4 text-accent"></i>
+                            </div>
+                            <div>
+                                <div class="text-white text-sm font-medium mb-0.5">No Builder Runtime</div>
+                                <div class="text-gray-500 text-sm font-light">Static HTML ships exactly what the browser needs — nothing assembled client-side.</div>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <i data-lucide="git-branch" class="w-4 h-4 text-accent"></i>
+                            </div>
+                            <div>
+                                <div class="text-white text-sm font-medium mb-0.5">Vercel's Edge Network</div>
+                                <div class="text-gray-500 text-sm font-light">Your page is served from the location closest to each visitor, every time.</div>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <i data-lucide="database" class="w-4 h-4 text-accent"></i>
+                            </div>
+                            <div>
+                                <div class="text-white text-sm font-medium mb-0.5">Supabase for Lead Data</div>
+                                <div class="text-gray-500 text-sm font-light">Your leads land in a database you control — not locked inside a builder's export tool.</div>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <i data-lucide="dollar-sign" class="w-4 h-4 text-accent"></i>
+                            </div>
+                            <div>
+                                <div class="text-white text-sm font-medium mb-0.5">Near-Zero Hosting Cost</div>
+                                <div class="text-gray-500 text-sm font-light">No builder subscription, no plugin licenses — hosting alone costs next to nothing.</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Right: speed stat card -->
+                <div class="fade-up flex items-center justify-center" style="animation-delay: 0.2s;">
+                    <div class="w-full max-w-sm">
+                        <div class="border border-accent/20 rounded-sm p-10 bg-surfaceCard/50 text-center relative overflow-hidden">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-64 h-64 bg-accent/5 blur-[80px] rounded-full"></div>
+                            </div>
+
+                            <div class="relative z-10">
+                                <div class="w-14 h-14 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-6">
+                                    <i data-lucide="gauge-circle" class="w-6 h-6 text-accent"></i>
+                                </div>
+
+                                <div class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent mb-2">Every 1-Second Delay</div>
+                                <div class="font-display text-5xl font-500 text-white mb-2">Costs You</div>
+                                <div class="font-display text-2xl font-500 text-gray-500 uppercase tracking-wide">Conversions</div>
+
+                                <div class="mt-8 pt-8 border-t border-white/5">
+                                    <div class="text-gray-500 text-sm font-light">Speed isn't a technical detail. On paid traffic, it's a direct lever on your cost per acquisition.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- AUDIT CTA (mid-page)                        -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="relative py-24 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="fade-up max-w-3xl mx-auto text-center border border-accent/10 rounded-sm p-10 md:p-14 bg-surfaceCard/30 relative overflow-hidden">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="w-[400px] h-[400px] bg-accent/3 blur-[120px] rounded-full"></div>
+                </div>
+
+                <div class="relative z-10">
+                    <div class="w-16 h-16 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="search-check" class="w-7 h-7 text-accent"></i>
+                    </div>
+
+                    <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent block mb-4">No Cost. No Commitment.</span>
+
+                    <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
+                        See Exactly What's<br>Slowing You Down.
+                    </h2>
+
+                    <p class="text-gray-400 text-lg font-light leading-relaxed max-w-xl mx-auto mb-10">
+                        Send us your landing page URL. We'll show you your real load time, what's causing it, and what it's likely costing you in lost conversions on the traffic you're already paying for.
+                    </p>
+
+                    <a href="#audit" class="inline-flex items-center justify-center gap-2 bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-all duration-300">
+                        Get a Free Landing Page Audit
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- FAQ                                         -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section id="faq" class="relative py-32 overflow-hidden">
+        <div class="absolute inset-0 grid-bg opacity-20"></div>
+        <div class="relative z-10 max-w-4xl mx-auto px-6">
+            <div class="fade-up text-center mb-16">
+                <div class="flex items-center justify-center gap-3 mb-6">
+                    <div class="h-px w-8 bg-accent"></div>
+                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Frequently Asked</span>
+                    <div class="h-px w-8 bg-accent"></div>
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95]">
+                    Questions, <span class="text-accent">Answered</span>
+                </h2>
+            </div>
+
+            <div class="fade-up space-y-3">
+                <!-- FAQ item -->
+                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
+                        <span class="text-white font-medium text-sm md:text-base">Are you a web design agency?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-panel">
+                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
+                            No. We don't do branding, design exploration, or general web development. We rebuild the technical infrastructure behind landing pages that already exist and already run paid traffic. Your design and offer stay yours — we replace what's underneath it.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
+                        <span class="text-white font-medium text-sm md:text-base">Will my page look different after the rebuild?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-panel">
+                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
+                            It will look the same — or close to it. We rebuild the underlying code, not the design. If we spot a layout or copy change that would clearly help conversions, we'll flag it, but the rebuild itself is about performance, not a redesign.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
+                        <span class="text-white font-medium text-sm md:text-base">What happens to my existing tracking and pixels?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-panel">
+                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
+                            We preserve and re-verify every tracking script, pixel, and conversion event before the rebuilt page goes live — Meta, Google Ads, LinkedIn, GA4, or anything else you're running. Nothing goes live until we've confirmed it's firing correctly.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
+                        <span class="text-white font-medium text-sm md:text-base">Do I need to already be spending on ads?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-panel">
+                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
+                            The audit is free regardless. The Performance Rebuild pays off fastest for companies already spending $5,000–$10,000+ per month on Meta, Google, or LinkedIn, since every percentage point of speed improvement compounds against real, ongoing spend.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
+                        <span class="text-white font-medium text-sm md:text-base">Who owns the code after the rebuild?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-panel">
+                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
+                            You do, outright. There's no platform lock-in, no proprietary builder, and no dependency on us to keep the page running. If you choose the optional SLA, that's for convenience — not because the page needs us to function.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
+                        <span class="text-white font-medium text-sm md:text-base">How long does the rebuild take?</span>
+                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-panel">
+                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
+                            Most rebuilds are scoped, built, and deployed within days of kickoff, not weeks. Exact timing depends on the complexity of your current page and integrations — we'll give you a specific timeline after the audit.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- FINAL CTA — AUDIT FORM                      -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section id="audit" class="relative py-32 overflow-hidden">
+        <div class="absolute inset-0 grid-bg opacity-30"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/3 blur-[150px] rounded-full"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+                <!-- Left: CTA Copy -->
+                <div class="fade-up">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="h-px w-8 bg-accent"></div>
+                        <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Get Your Free Audit</span>
+                    </div>
+
+                    <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
+                        Stop Paying For Clicks<br>
+                        Your Page Is<br>
+                        <span class="text-accent">Wasting.</span>
+                    </h2>
+
+                    <p class="text-gray-400 text-lg font-light leading-relaxed mb-8">
+                        Send us your landing page URL. We'll send back exactly what's slowing it down, and what a rebuild would change — no sales call required to get the audit.
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="shield-check" class="w-4 h-4 text-accent"></i>
+                            <span class="text-gray-400 text-sm">Your data is never shared or sold</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="clock" class="w-4 h-4 text-accent"></i>
+                            <span class="text-gray-400 text-sm">Audits are typically returned within 48 hours</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="ban" class="w-4 h-4 text-accent"></i>
+                            <span class="text-gray-400 text-sm">No commitment, no pressure to buy the rebuild</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Audit Form -->
+                <div class="fade-up" style="animation-delay: 0.2s;">
+                    <div class="border border-white/10 rounded-sm p-8 md:p-10 bg-surfaceCard/50 backdrop-blur-sm">
+                        <div class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-500 mb-8">Free Landing Page Audit</div>
+
+                        <form id="audit-form" class="space-y-6">
+                            <!-- Name -->
+                            <div>
+                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Full Name</label>
+                                <input type="text" name="name" required placeholder="e.g. Sarah Whitfield"
+                                    class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white placeholder-gray-700 outline-none transition-all duration-300">
+                            </div>
+
+                            <!-- Email -->
+                            <div>
+                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Email Address</label>
+                                <input type="email" name="email" required placeholder="e.g. sarah@company.com"
+                                    class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white placeholder-gray-700 outline-none transition-all duration-300">
+                            </div>
+
+                            <!-- Company -->
+                            <div>
+                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Company</label>
+                                <input type="text" name="company" required placeholder="e.g. Company Name"
+                                    class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white placeholder-gray-700 outline-none transition-all duration-300">
+                            </div>
+
+                            <!-- Landing Page URL -->
+                            <div>
+                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Landing Page URL</label>
+                                <input type="url" name="landing_page_url" required placeholder="e.g. https://yoursite.com/landing"
+                                    class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white placeholder-gray-700 outline-none transition-all duration-300">
+                            </div>
+
+                            <!-- Monthly Ad Spend -->
+                            <div>
+                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Monthly Ad Spend</label>
+                                <select name="ad_spend" required
+                                    class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white outline-none transition-all duration-300 appearance-none">
+                                    <option value="" class="bg-black">Select a range</option>
+                                    <option value="under_5k" class="bg-black">Under $5,000/mo</option>
+                                    <option value="5k_10k" class="bg-black">$5,000–$10,000/mo</option>
+                                    <option value="10k_25k" class="bg-black">$10,000–$25,000/mo</option>
+                                    <option value="25k_plus" class="bg-black">$25,000+/mo</option>
+                                </select>
+                            </div>
+
+                            <!-- Error message container -->
+                            <div id="form-error" class="hidden text-red-400 text-xs tracking-wider text-center bg-red-500/5 border border-red-500/10 rounded-sm px-4 py-3">
+                                Submission failed. Please check your connection and try again.
+                            </div>
+
+                            <!-- Submit -->
+                            <button type="submit" id="submit-btn"
+                                class="w-full bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                                <span id="btn-text">Get a Free Landing Page Audit</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4" id="btn-icon"></i>
+                                <svg id="btn-spinner" class="hidden animate-spin w-4 h-4" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </button>
+                        </form>
+
+                        <!-- Success state -->
+                        <div id="form-success" class="hidden text-center py-8">
+                            <div class="w-16 h-16 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-4">
+                                <i data-lucide="check" class="w-7 h-7 text-accent"></i>
+                            </div>
+                            <div class="font-display text-2xl font-500 tracking-tight uppercase mb-2">Audit Requested</div>
+                            <p class="text-gray-400 text-sm font-light">We'll run your page through testing and send your results within 48 hours.</p>
+                        </div>
+
+                        <!-- Privacy indicators -->
+                        <div class="flex items-center justify-center gap-4 mt-6 pt-6 border-t border-white/5">
+                            <div class="flex items-center gap-1.5">
+                                <i data-lucide="lock" class="w-3 h-3 text-gray-700"></i>
+                                <span class="text-[9px] tracking-widest uppercase text-gray-700">Encrypted</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <i data-lucide="eye-off" class="w-3 h-3 text-gray-700"></i>
+                                <span class="text-[9px] tracking-widest uppercase text-gray-700">Never Shared</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- FOOTER                                     -->
+    <!-- ═══════════════════════════════════════════ -->
+    <footer class="border-t border-white/5 py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-1.5 h-1.5 bg-accent rounded-full"></div>
+                    <span class="font-display text-sm font-500 tracking-[0.2em] uppercase text-gray-600">Andrady</span>
+                </div>
+
+                <p class="text-gray-700 text-xs text-center">
+                    © 2026 Andrady. All rights reserved. Performance infrastructure for paid traffic.
+                </p>
+
+                <div class="flex items-center gap-6">
+                    <a href="#" class="text-[10px] tracking-widest uppercase text-gray-700 hover:text-gray-400 transition-colors">Privacy</a>
+                    <a href="#" class="text-[10px] tracking-widest uppercase text-gray-700 hover:text-gray-400 transition-colors">Terms</a>
+                </div>
+            </div>
+        </div>
     </footer>
-  );
-}
 
-/* ─── WHATSAPP ─── */
-function WA(){
-  return (
-    <motion.a href="https://wa.me/27715165243" target="_blank" rel="noopener noreferrer" data-h
-      initial={{opacity:0,scale:0}} animate={{opacity:1,scale:1}} transition={{delay:2,type:'spring',stiffness:160}}
-      whileHover={{scale:1.1}} whileTap={{scale:0.9}}
-      className="fixed bottom-5 right-5 rounded-full p-2.5"
-      style={{background:'#25d366',boxShadow:'0 0 22px rgba(37,211,102,0.16)',zIndex:40}}>
-      <svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-    </motion.a>
-  );
-}
 
-/* ─── APP ─── */
-function App(){
-  const [loading,setLoading]=useState(true);
-  const done=useCallback(()=>setLoading(false),[]);
-  const hero=useRef(null);
-  const problem=useRef(null);
-  const solution=useRef(null);
-  const proof=useRef(null);
-  const process=useRef(null);
-  const investment=useRef(null);
-  const cta=useRef(null);
-  const refs={hero,problem,solution,proof,process,investment,cta};
-  return (
-    <div style={{background:'var(--ink)',color:'#E2E2E8',minHeight:'100vh'}}>
-      <AnimatePresence>{loading&&<Preloader done={done}/>}</AnimatePresence>
-      <Cursor/>
-      <ProgressBar/>
-      <Nav refs={refs}/>
-      <Hero refs={refs}/>
-      <Marquee text="AI WORKFLOWS · CRM · CLIENT PORTAL · AUTOMATION · OPERATIONS DASHBOARD · ONBOARDING · INTELLIGENCE"/>
-      <InfraSection/>
-      <PainPoints sectionRef={problem}/>
-      <Systems sectionRef={solution}/>
-      <WhatItReplaces/>
-      <BeforeAfter/>
-      <Outcomes/>
-      <Proof sectionRef={proof}/>
-      <Process sectionRef={process}/>
-      <Investment sectionRef={investment}/>
-      <WhoThisIsFor/>
-      <FAQ/>
-      <FinalCTA sectionRef={cta}/>
-      <Footer/>
-      <WA/>
-    </div>
-  );
-}
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- JAVASCRIPT                                 -->
+    <!-- ═══════════════════════════════════════════ -->
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons({ attrs: { strokeWidth: 1.5 } });
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
-</script>
+        // ── Scroll-based fade-up animations ──
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // ── Navigation background on scroll ──
+        const nav = document.getElementById('nav');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 80) {
+                nav.classList.add('bg-black/80', 'backdrop-blur-xl');
+                nav.classList.remove('bg-transparent');
+            } else {
+                nav.classList.remove('bg-black/80', 'backdrop-blur-xl');
+                nav.classList.add('bg-transparent');
+            }
+        });
+
+        // ── Smooth scroll for anchor links ──
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ── FAQ accordion ──
+        document.querySelectorAll('.faq-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const panel = btn.nextElementSibling;
+                const isOpen = btn.classList.contains('open');
+
+                // Close all other panels
+                document.querySelectorAll('.faq-toggle').forEach(otherBtn => {
+                    if (otherBtn !== btn) {
+                        otherBtn.classList.remove('open');
+                        otherBtn.nextElementSibling.classList.remove('open');
+                    }
+                });
+
+                btn.classList.toggle('open', !isOpen);
+                panel.classList.toggle('open', !isOpen);
+            });
+        });
+
+        // ── Audit form handling ──
+        const SUBMIT_ENDPOINT = null; // e.g. 'https://your-api.example.com/audit-request'
+
+        const form = document.getElementById('audit-form');
+        const formSuccess = document.getElementById('form-success');
+        const formError = document.getElementById('form-error');
+        const submitBtn = document.getElementById('submit-btn');
+        const btnText = document.getElementById('btn-text');
+        const btnIcon = document.getElementById('btn-icon');
+        const btnSpinner = document.getElementById('btn-spinner');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            formError.classList.add('hidden');
+
+            submitBtn.disabled = true;
+            btnText.textContent = 'Submitting';
+            btnIcon.classList.add('hidden');
+            btnSpinner.classList.remove('hidden');
+
+            const formData = {
+                name: form.name.value.trim(),
+                email: form.email.value.trim(),
+                company: form.company.value.trim(),
+                landing_page_url: form.landing_page_url.value.trim(),
+                ad_spend: form.ad_spend.value
+            };
+
+            try {
+                if (SUBMIT_ENDPOINT) {
+                    const response = await fetch(SUBMIT_ENDPOINT, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new Error(errorData.message || `Server responded with status ${response.status}`);
+                    }
+                } else {
+                    await new Promise(resolve => setTimeout(resolve, 700));
+                }
+
+                form.classList.add('hidden');
+                formSuccess.classList.remove('hidden');
+                lucide.createIcons({ attrs: { strokeWidth: 1.5 } });
+
+            } catch (error) {
+                console.error('Form submission error:', error);
+                formError.textContent = error.message || 'Submission failed. Please check your connection and try again.';
+                formError.classList.remove('hidden');
+                submitBtn.disabled = false;
+                btnText.textContent = 'Get a Free Landing Page Audit';
+                btnIcon.classList.remove('hidden');
+                btnSpinner.classList.add('hidden');
+            }
+        });
+    </script>
 </body>
 </html>
