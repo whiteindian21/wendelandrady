@@ -1,1332 +1,655 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andrady — Performance Infrastructure for Paid Traffic</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Oswald', 'sans-serif'],
-                    },
-                    colors: {
-                        accent: '#b4ff39',
-                        surface: '#030303',
-                        surfaceAlt: '#0a0a0a',
-                        surfaceCard: '#111111',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { background: #030303; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
+<title>ANDRADY — Landing pages that convert. Built in 48 hours.</title>
+<meta name="description" content="Performance-driven landing pages built in 48 hours. Not a template. Not a six-week agency engagement. Custom-designed, conversion-architected, shipped fast.">
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        .fade-up.visible {
-            animation: fadeUp 0.8s ease-out forwards;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap">
 
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(180, 255, 57, 0.15); }
-            50% { box-shadow: 0 0 40px rgba(180, 255, 57, 0.3); }
-        }
-        .pulse-glow { animation: pulseGlow 3s ease-in-out infinite; }
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        display: ['Montserrat', 'sans-serif'],
+        body: ['Inter', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', 'monospace'],
+      },
+      colors: {
+        bg: '#111111',
+        ink: '#F2F2F2',
+        accent: '#FF2D8F',
+      }
+    }
+  }
+}
+</script>
 
-        @keyframes shimmer {
-            0% { background-position: -200% center; }
-            100% { background-position: 200% center; }
-        }
-        .shimmer-text {
-            background: linear-gradient(90deg, #b4ff39 0%, #ffffff 50%, #b4ff39 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: shimmer 6s linear infinite;
-        }
+<style>
+:root {
+  --color-bg: #111111;
+  --color-ink: #F2F2F2;
+  --color-accent: #FF2D8F;
+  --ease-quiet: cubic-bezier(.22, 1, .36, 1);
+  --ease-precise: cubic-bezier(.4, 0, .2, 1);
+  --ease-emphasis: cubic-bezier(.16, 1, .3, 1);
+}
+* { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; box-sizing: border-box; }
+html, body { background: #111111; color: #F2F2F2; font-family: 'Inter', sans-serif; }
+body { overflow-x: hidden; }
+::selection { background: #FF2D8F; color: #111111; }
 
-        .grid-bg {
-            background-image:
-                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 60px 60px;
-        }
+.font-display { font-family: 'Montserrat', sans-serif; font-weight: 900; letter-spacing: -0.025em; line-height: 0.9; }
+.font-mono { font-family: 'IBM Plex Mono', monospace; }
+.label { font-family: 'IBM Plex Mono', monospace; font-weight: 500; text-transform: uppercase; letter-spacing: 0.18em; font-size: 11px; }
 
-        .radar-sweep {
-            background: conic-gradient(from 0deg, transparent 0deg, rgba(180,255,57,0.08) 60deg, transparent 60deg);
-            animation: radarSpin 8s linear infinite;
-        }
-        @keyframes radarSpin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+#hero-grid { perspective: 1200px; }
+.tile-base { background: rgba(255,255,255,0.015); border: 1px solid rgba(242,242,242,0.05); }
+.tile-pink { background: #FF2D8F; border: 1px solid #FF2D8F; }
+.tile-light { background: #F2F2F2; border: 1px solid #F2F2F2; }
 
-        .dash-video-placeholder {
-            background: linear-gradient(135deg, #0a0a0a 0%, #111111 50%, #0a0a0a 100%);
-        }
+.fade-up { opacity: 0; transform: translateY(40px); transition: opacity 1s var(--ease-quiet), transform 1s var(--ease-quiet); will-change: transform, opacity; }
+.fade-up.is-in { opacity: 1; transform: none; }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-        .float-anim { animation: float 5s ease-in-out infinite; }
+.frame-card { transition: border-color 400ms var(--ease-emphasis); }
+.frame-card:hover { border-color: rgba(255, 45, 143, 0.6) !important; }
 
-        @keyframes countTick {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
-        .count-tick { animation: countTick 2.4s ease-in-out infinite; }
+.cta-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+  background: #FF2D8F; color: #111111;
+  font-family: 'IBM Plex Mono', monospace; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.1em; font-size: 12px;
+  padding: 1.1rem 1.6rem;
+  transition: transform 300ms var(--ease-precise), background-color 300ms var(--ease-precise), color 300ms var(--ease-precise), border-color 300ms var(--ease-precise);
+  cursor: pointer;
+  border: 1px solid #FF2D8F;
+}
+.cta-btn:hover { transform: translateY(-2px); background-color: #F2F2F2; border-color: #F2F2F2; }
+.cta-btn:disabled { opacity: 0.7; cursor: default; transform: none; }
 
-        @keyframes loadBar {
-            0% { width: 0%; }
-            100% { width: 92%; }
-        }
-        .load-bar-fast { animation: loadBar 1.4s ease-out forwards; }
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px; background-position: 0 100%; background-repeat: no-repeat;
+  transition: background-size 0.4s var(--ease-emphasis);
+  padding-bottom: 2px;
+}
+.link-underline:hover { background-size: 100% 1px; }
 
-        @keyframes loadBarSlow {
-            0% { width: 0%; }
-            100% { width: 38%; }
-        }
-        .load-bar-slow { animation: loadBarSlow 3.2s ease-out forwards; }
+.divider { height: 1px; background: rgba(242,242,242,0.08); width: 100%; }
 
-        .form-input:focus {
-            border-color: #b4ff39;
-            box-shadow: 0 0 0 1px rgba(180,255,57,0.3);
-        }
+input, textarea, select {
+  background: transparent; border: none; border-bottom: 1px solid rgba(242,242,242,0.15);
+  color: #F2F2F2; font-family: 'Inter', sans-serif; font-size: 15px;
+  padding: 0.85rem 0; width: 100%;
+  transition: border-color 300ms var(--ease-precise);
+}
+input:focus, textarea:focus, select:focus { outline: none; border-color: #FF2D8F; }
+::placeholder { color: rgba(242,242,242,0.3); }
+select option { background: #111111; color: #F2F2F2; }
+label.label { display: block; margin-bottom: 0.25rem; margin-top: 1.5rem; }
 
-        .faq-toggle .faq-icon { transition: transform 0.3s ease; }
-        .faq-toggle.open .faq-icon { transform: rotate(45deg); }
-        .faq-panel { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
-        .faq-panel.open { max-height: 300px; }
+#scroll-progress {
+  position: fixed; top: 0; left: 0; height: 2px; background: #FF2D8F; z-index: 60;
+  width: 0%; transform-origin: left; transition: width 100ms linear;
+}
 
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #030303; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #b4ff39; }
-    </style>
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #111111; }
+::-webkit-scrollbar-thumb { background: rgba(242,242,242,0.15); }
+::-webkit-scrollbar-thumb:hover { background: rgba(242,242,242,0.3); }
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up { opacity: 1 !important; transform: none !important; transition: none !important; }
+  #hero-grid { display: none !important; }
+}
+</style>
 </head>
-<body class="bg-surface text-white font-sans antialiased">
+<body class="bg-bg text-ink font-body">
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- NAVIGATION                                  -->
-    <!-- ═══════════════════════════════════════════ -->
-    <nav id="nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#" class="flex items-center gap-3 group">
-                <div class="w-2 h-2 bg-accent rounded-full group-hover:shadow-[0_0_10px_#b4ff39] transition-shadow duration-300"></div>
-                <span class="font-display text-lg font-500 tracking-[0.2em] uppercase text-white">Andrady</span>
-            </a>
+<div id="scroll-progress"></div>
 
-            <div class="hidden md:flex items-center gap-8">
-                <a href="#problem" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">Problem</a>
-                <a href="#how-it-works" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">How It Works</a>
-                <a href="#offer" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">The Rebuild</a>
-                <a href="#faq" class="text-xs font-medium tracking-widest uppercase text-gray-500 hover:text-white transition-colors duration-300">FAQ</a>
-            </div>
+<!-- NAV -->
+<header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#111111]/75 border-b border-white/5">
+  <nav class="max-w-[1400px] mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
+    <a href="#hero" class="font-display text-base tracking-tight">ANDRADY<span class="text-accent">.</span></a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#problem" class="label text-ink/50 hover:text-ink transition-colors">Why</a>
+      <a href="#offer" class="label text-ink/50 hover:text-ink transition-colors">Offer</a>
+      <a href="#process" class="label text-ink/50 hover:text-ink transition-colors">Process</a>
+      <a href="#book" class="label text-ink/50 hover:text-ink transition-colors">Book</a>
+    </div>
+    <a href="#book" class="font-mono text-[11px] uppercase tracking-[0.12em] border border-ink/20 px-3 py-2 hover:border-accent hover:text-accent transition-colors">Book sprint →</a>
+  </nav>
+</header>
 
-            <a href="#audit" class="bg-accent text-black text-xs font-bold tracking-widest uppercase px-6 py-3 rounded-sm hover:bg-white transition-colors duration-300">
-                Get a Free Audit
-            </a>
+<!-- HERO -->
+<section id="hero" class="relative h-screen min-h-[680px] w-full overflow-hidden">
+  <div id="hero-grid" class="absolute inset-0 grid z-0"
+       style="grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(6, 1fr);"></div>
+  <div class="hero-content relative z-10 h-full flex flex-col justify-center max-w-[1400px] mx-auto px-6 lg:px-10 pt-16">
+    <p class="label text-accent fade-up mb-6" data-hero-fade>● 48-Hour Landing Page Sprint</p>
+    <h1 class="font-display text-[clamp(2.4rem,8vw,7rem)] fade-up mb-8" data-hero-fade>
+      Landing pages<br>that convert.<br>
+      <span class="text-accent">Built in 48 hours.</span>
+    </h1>
+    <p class="font-body text-base md:text-lg text-ink/65 max-w-xl leading-relaxed fade-up mb-10" data-hero-fade>
+      Not a template. Not a six-week agency engagement. Performance-driven pages shipped fast — by someone who's spent years inside conversion teams.
+    </p>
+    <div class="fade-up flex flex-wrap items-center gap-6" data-hero-fade>
+      <a href="#book" class="cta-btn">
+        Book your 48-hour sprint
+        <span>→</span>
+      </a>
+      <a href="#offer" class="label text-ink/60 hover:text-ink link-underline transition-colors">See what's included</a>
+    </div>
+  </div>
+  <div class="hero-content absolute bottom-6 left-0 right-0 z-10">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 flex justify-between items-center">
+      <div class="label text-ink/30">SCROLL ↓</div>
+      <div class="label text-ink/30 hidden md:block">[ ANDRADY · EST. 2018 ]</div>
+      <div class="label text-ink/30">2 SLOTS / WEEK</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem" class="relative py-28 lg:py-40 border-t border-white/5">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16 lg:mb-20">
+      <div class="lg:col-span-4">
+        <p class="label text-ink/40 fade-up mb-4">01 / The Problem</p>
+      </div>
+      <div class="lg:col-span-8">
+        <h2 class="font-display text-[clamp(2rem,5.5vw,4.2rem)] fade-up mb-6">
+          Most landing pages<br>don't convert.<br>
+          <span class="text-ink/35">Here's why.</span>
+        </h2>
+        <p class="font-body text-lg text-ink/60 max-w-2xl leading-relaxed fade-up">
+          The page ships. The traffic comes. The conversions don't. Three reasons why.
+        </p>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5">
+      <div class="frame-card bg-bg p-8 lg:p-10 fade-up border border-transparent">
+        <div class="font-mono text-accent text-xs mb-8">/ 01</div>
+        <h3 class="font-display text-2xl lg:text-[1.7rem] mb-4 leading-tight">Templates don't convert.</h3>
+        <p class="text-ink/55 text-sm leading-relaxed">Squarespace themes look fine. They weren't built around your offer, your audience, or your funnel. Generic layouts kill conversion.</p>
+      </div>
+      <div class="frame-card bg-bg p-8 lg:p-10 fade-up border border-transparent">
+        <div class="font-mono text-accent text-xs mb-8">/ 02</div>
+        <h3 class="font-display text-2xl lg:text-[1.7rem] mb-4 leading-tight">Pretty isn't performance.</h3>
+        <p class="text-ink/55 text-sm leading-relaxed">Most developers ship pixels. They don't think about scroll depth, CTA placement, or friction. A page can be beautiful and still convert at 0.4%.</p>
+      </div>
+      <div class="frame-card bg-bg p-8 lg:p-10 fade-up border border-transparent">
+        <div class="font-mono text-accent text-xs mb-8">/ 03</div>
+        <h3 class="font-display text-2xl lg:text-[1.7rem] mb-4 leading-tight">Agencies are slow.</h3>
+        <p class="text-ink/55 text-sm leading-relaxed">Three-week discovery calls. Six-figure retainers. By the time the page ships, the campaign window has already closed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFER -->
+<section id="offer" class="relative py-28 lg:py-40 border-t border-white/5">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16 lg:mb-20">
+      <div class="lg:col-span-4">
+        <p class="label text-ink/40 fade-up mb-4">02 / The Offer</p>
+      </div>
+      <div class="lg:col-span-8">
+        <h2 class="font-display text-[clamp(2rem,5.5vw,4.2rem)] fade-up mb-6">
+          One sprint.<br>
+          One page.<br>
+          <span class="text-accent">Live in 48 hours.</span>
+        </h2>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+      <!-- Pricing card -->
+      <div class="lg:col-span-5 frame-card border border-white/10 p-8 lg:p-10 fade-up">
+        <div class="label text-ink/40 mb-6">Investment</div>
+        <div class="flex items-end justify-between mb-8">
+          <div class="font-display text-5xl lg:text-6xl">$350<span class="text-ink/30 text-3xl">–500</span></div>
+          <div class="text-right">
+            <div class="label text-ink/40 mb-1">Turnaround</div>
+            <div class="font-display text-2xl">48 hrs</div>
+          </div>
         </div>
-        <div class="h-px bg-white/5"></div>
-    </nav>
-
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- HERO                                        -->
-    <!-- ═══════════════════════════════════════════ -->
-    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
-        <div class="absolute inset-0 grid-bg opacity-60"></div>
-        <div class="absolute top-1/4 -left-40 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[150px]"></div>
-        <div class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-accent/3 rounded-full blur-[120px]"></div>
-
-        <div class="relative z-10 max-w-7xl mx-auto px-6 w-full">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-
-                <!-- Left: Copy -->
-                <div class="fade-up">
-                    <div class="flex items-center gap-3 mb-8">
-                        <div class="h-px w-12 bg-accent"></div>
-                        <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Performance Infrastructure for Paid Traffic</span>
-                    </div>
-
-                    <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-500 leading-[0.9] tracking-tight uppercase mb-8">
-                        Your Ads Are<br>
-                        <span class="shimmer-text">Fast.</span><br>
-                        Your Landing Page Isn't.
-                    </h1>
-
-                    <p class="text-gray-400 text-lg font-light leading-relaxed max-w-lg mb-6">
-                        We rebuild bloated landing pages into <span class="text-white font-medium">sub-second-loading acquisition infrastructure</span> — built for the traffic you're already paying for.
-                    </p>
-
-                    <p class="text-sm text-gray-600 font-light tracking-wide mb-10 flex items-center gap-2">
-                        <i data-lucide="ban" class="w-3.5 h-3.5 text-gray-700 flex-shrink-0"></i>
-                        No page builders. No bloat. No monthly software rent.
-                    </p>
-
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="#audit" class="inline-flex items-center justify-center gap-2 bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-all duration-300 pulse-glow">
-                            Get a Free Landing Page Audit
-                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        </a>
-                        <a href="#how-it-works" class="inline-flex items-center justify-center gap-2 border border-white/10 text-white text-sm font-medium tracking-wider uppercase px-8 py-4 rounded-sm hover:border-white/30 hover:bg-white/5 transition-all duration-300">
-                            See How The Rebuild Works
-                        </a>
-                    </div>
-
-                    <div class="flex items-center gap-6 mt-10 pt-8 border-t border-white/5">
-                        <div>
-                            <div class="font-display text-2xl font-500 text-accent tracking-tight">&lt;1s</div>
-                            <div class="text-[10px] tracking-widest uppercase text-gray-500 mt-1">Target Load Time</div>
-                        </div>
-                        <div class="w-px h-8 bg-white/10"></div>
-                        <div>
-                            <div class="font-display text-2xl font-500 text-accent tracking-tight">$1,500</div>
-                            <div class="text-[10px] tracking-widest uppercase text-gray-500 mt-1">Fixed Rebuild Fee</div>
-                        </div>
-                        <div class="w-px h-8 bg-white/10"></div>
-                        <div>
-                            <div class="font-display text-2xl font-500 text-accent tracking-tight">Zero</div>
-                            <div class="text-[10px] tracking-widest uppercase text-gray-500 mt-1">Page Builder Bloat</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right: Load-time comparison visual -->
-                <div class="fade-up relative" style="animation-delay: 0.3s;">
-                    <div class="relative">
-                        <div class="absolute -inset-4 bg-accent/5 blur-[60px] rounded-lg"></div>
-
-                        <div class="relative dash-video-placeholder rounded-lg border border-white/10 overflow-hidden">
-                            <div class="flex items-center justify-between px-5 py-3 border-b border-white/5 bg-black/50">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-2.5 h-2.5 rounded-full bg-red-500/60"></div>
-                                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/60"></div>
-                                    <div class="w-2.5 h-2.5 rounded-full bg-green-500/60"></div>
-                                </div>
-                                <div class="text-[10px] text-gray-600 tracking-wider">PageSpeed Comparison</div>
-                                <div class="w-16"></div>
-                            </div>
-
-                            <div class="p-6 space-y-5">
-                                <!-- Before -->
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-xs text-gray-500 tracking-wider uppercase">Typical Page Builder Site</span>
-                                        <span class="text-xs text-red-400/80 font-medium">4.8s</span>
-                                    </div>
-                                    <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
-                                        <div class="h-full bg-red-500/50 rounded-full load-bar-slow"></div>
-                                    </div>
-                                </div>
-
-                                <!-- After -->
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-xs text-white tracking-wider uppercase">Andrady Rebuild</span>
-                                        <span class="text-xs text-accent font-medium">0.6s</span>
-                                    </div>
-                                    <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
-                                        <div class="h-full bg-accent rounded-full load-bar-fast"></div>
-                                    </div>
-                                </div>
-
-                                <!-- Stack badges -->
-                                <div class="flex items-center gap-2 pt-4 flex-wrap">
-                                    <span class="text-[10px] tracking-wider text-gray-500 bg-black/30 border border-white/5 rounded-sm px-2.5 py-1.5">Static HTML</span>
-                                    <span class="text-[10px] tracking-wider text-gray-500 bg-black/30 border border-white/5 rounded-sm px-2.5 py-1.5">Tailwind</span>
-                                    <span class="text-[10px] tracking-wider text-gray-500 bg-black/30 border border-white/5 rounded-sm px-2.5 py-1.5">Vercel</span>
-                                    <span class="text-[10px] tracking-wider text-gray-500 bg-black/30 border border-white/5 rounded-sm px-2.5 py-1.5">Supabase</span>
-                                </div>
-
-                                <!-- KPI grid -->
-                                <div class="grid grid-cols-2 gap-3 pt-2">
-                                    <div class="bg-black/30 border border-white/5 rounded-sm p-3">
-                                        <div class="text-[10px] tracking-widest uppercase text-gray-500">Lighthouse</div>
-                                        <div class="text-base font-medium text-accent mt-1">98 / 100</div>
-                                    </div>
-                                    <div class="bg-black/30 border border-white/5 rounded-sm p-3">
-                                        <div class="text-[10px] tracking-widest uppercase text-gray-500">JS Payload</div>
-                                        <div class="text-base font-medium text-white mt-1">&minus;91%</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <p class="text-center text-[10px] tracking-[0.2em] uppercase text-gray-600 mt-4">
-                            Same Ad. Same Spend. Different Page.
-                        </p>
-                    </div>
-                </div>
-            </div>
+        <div class="divider mb-8"></div>
+        <p class="text-ink/60 text-sm leading-relaxed mb-8">Fixed scope. Fixed price. Fixed deadline. No retainer, no surprises. You get a page built to convert — shipped fast.</p>
+        <a href="#book" class="cta-btn w-full">
+          Book your sprint
+          <span>→</span>
+        </a>
+        <div class="mt-6 pt-6 border-t border-white/5 grid grid-cols-2 gap-4">
+          <div>
+            <div class="label text-ink/35 mb-1">Revisions</div>
+            <div class="text-sm text-ink/70">1 round, 24h</div>
+          </div>
+          <div>
+            <div class="label text-ink/35 mb-1">Capacity</div>
+            <div class="text-sm text-ink/70">2 sprints / week</div>
+          </div>
         </div>
-    </section>
+      </div>
 
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- PROBLEM                                     -->
-    <!-- ═══════════════════════════════════════════ -->
-    <section id="problem" class="relative py-32 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="fade-up max-w-3xl mx-auto text-center mb-20">
-                <div class="flex items-center justify-center gap-3 mb-6">
-                    <div class="h-px w-8 bg-accent"></div>
-                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">The Real Cost Problem</span>
-                    <div class="h-px w-8 bg-accent"></div>
-                </div>
-                <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
-                    Your CPC Isn't The Leak.<br>
-                    Your <span class="text-accent">Page Speed</span> Is.
-                </h2>
-                <p class="text-gray-400 text-lg font-light leading-relaxed">
-                    Most landing pages are built on page builders, stacked with plugins, tracking scripts, and chat widgets — and every one of those slows the page down. You're paying full price for clicks that land on a page engineered to lose them.
-                </p>
+      <!-- What's included -->
+      <div class="lg:col-span-7 frame-card border border-white/10 p-8 lg:p-10 fade-up">
+        <div class="label text-ink/40 mb-6">What's included</div>
+        <ul class="space-y-0">
+          <li class="flex gap-5 py-4 border-b border-white/5">
+            <div class="font-mono text-accent text-xs shrink-0 pt-1">/ 01</div>
+            <div>
+              <div class="font-display text-base mb-1">Conversion-architected design</div>
+              <div class="text-ink/50 text-sm leading-relaxed">Custom layout built around your offer, funnel, and audience — not a template.</div>
             </div>
-
-            <!-- Contrast grid -->
-            <div class="grid md:grid-cols-2 gap-1">
-                <!-- BEFORE -->
-                <div class="fade-up bg-surfaceCard border border-white/5 rounded-sm p-8 md:p-10 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-red-500/5 blur-[80px]"></div>
-
-                    <div class="relative z-10">
-                        <div class="flex items-center gap-3 mb-8">
-                            <div class="w-8 h-8 rounded-sm bg-red-500/10 border border-red-500/20 flex items-center justify-center">
-                                <i data-lucide="x" class="w-4 h-4 text-red-400"></i>
-                            </div>
-                            <span class="text-xs font-bold tracking-[0.2em] uppercase text-red-400/80">Before</span>
-                        </div>
-
-                        <h3 class="font-display text-2xl font-500 tracking-tight uppercase mb-6 text-white/80">The Bloat Stack</h3>
-
-                        <ul class="space-y-4">
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="puzzle" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-500 text-sm font-light">A page builder rendering layout with megabytes of unused CSS and JS</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="layers" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-500 text-sm font-light">A dozen plugins and embeds, each adding its own render-blocking script</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="gauge" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-500 text-sm font-light">A 3–5 second load time on mobile, where most paid traffic lands</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="trending-down" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-500 text-sm font-light">Visitors bouncing before the form even finishes rendering</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="receipt" class="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-500 text-sm font-light">Monthly software rent for a page builder, on top of your ad spend</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- AFTER -->
-                <div class="fade-up bg-surfaceCard border border-accent/10 rounded-sm p-8 md:p-10 relative overflow-hidden" style="animation-delay: 0.2s;">
-                    <div class="absolute top-0 right-0 w-40 h-40 bg-accent/5 blur-[80px]"></div>
-
-                    <div class="relative z-10">
-                        <div class="flex items-center gap-3 mb-8">
-                            <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center">
-                                <i data-lucide="check" class="w-4 h-4 text-accent"></i>
-                            </div>
-                            <span class="text-xs font-bold tracking-[0.2em] uppercase text-accent">After</span>
-                        </div>
-
-                        <h3 class="font-display text-2xl font-500 tracking-tight uppercase mb-6 text-white">Static Performance Infrastructure</h3>
-
-                        <ul class="space-y-4">
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm font-light">Hand-built static HTML and Tailwind — no builder runtime to drag it down</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm font-light">Only the scripts your page actually needs — nothing else ships</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm font-light">Sub-second loads on mobile, where the click actually lands</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm font-light">A form that's visible and usable before the visitor can change their mind</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <i data-lucide="check-circle" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm font-light">One fixed fee. No builder subscription. Hosting that costs pennies.</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+          </li>
+          <li class="flex gap-5 py-4 border-b border-white/5">
+            <div class="font-mono text-accent text-xs shrink-0 pt-1">/ 02</div>
+            <div>
+              <div class="font-display text-base mb-1">Copy guidance</div>
+              <div class="text-ink/50 text-sm leading-relaxed">Work from your copy, or get directional guidance on headlines, CTAs, and structure.</div>
             </div>
-
-            <div class="fade-up mt-12 border border-white/5 rounded-sm p-8 bg-surfaceCard/50">
-                <p class="text-center text-gray-400 text-base font-light leading-relaxed max-w-3xl mx-auto">
-                    You're already paying for the click. Andrady makes sure the page on the other end of it is built to convert that click — not lose it to a three-second spinner.
-                </p>
+          </li>
+          <li class="flex gap-5 py-4 border-b border-white/5">
+            <div class="font-mono text-accent text-xs shrink-0 pt-1">/ 03</div>
+            <div>
+              <div class="font-display text-base mb-1">Mobile-first responsive build</div>
+              <div class="text-ink/50 text-sm leading-relaxed">Hand-coded. Loads in under 2 seconds on 4G. No page-builders, no bloat.</div>
             </div>
+          </li>
+          <li class="flex gap-5 py-4 border-b border-white/5">
+            <div class="font-mono text-accent text-xs shrink-0 pt-1">/ 04</div>
+            <div>
+              <div class="font-display text-base mb-1">Analytics + event tracking</div>
+              <div class="text-ink/50 text-sm leading-relaxed">GA4, Meta Pixel, conversion events — set up and verified before launch.</div>
+            </div>
+          </li>
+          <li class="flex gap-5 py-4 border-b border-white/5">
+            <div class="font-mono text-accent text-xs shrink-0 pt-1">/ 05</div>
+            <div>
+              <div class="font-display text-base mb-1">One revision round</div>
+              <div class="text-ink/50 text-sm leading-relaxed">Within 24 hours of delivery. Copy tweaks, layout shifts, color adjustments.</div>
+            </div>
+          </li>
+          <li class="flex gap-5 py-4">
+            <div class="font-mono text-accent text-xs shrink-0 pt-1">/ 06</div>
+            <div>
+              <div class="font-display text-base mb-1">Deployed on your domain</div>
+              <div class="text-ink/50 text-sm leading-relaxed">Vercel, Netlify, or your hosting. SSL, DNS, the works.</div>
+            </div>
+          </li>
+        </ul>
+        <div class="divider my-6"></div>
+        <div class="grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <div class="label text-ink/35 mb-1">Tech stack</div>
+            <div class="text-ink/65 font-mono text-xs">Next.js / React / HTML + Tailwind</div>
+          </div>
+          <div>
+            <div class="label text-ink/35 mb-1">Hosting</div>
+            <div class="text-ink/65 font-mono text-xs">Vercel / Netlify / Your stack</div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- WHY ME -->
+<section id="why" class="relative py-28 lg:py-40 border-t border-white/5">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16 lg:mb-20">
+      <div class="lg:col-span-4">
+        <p class="label text-ink/40 fade-up mb-4">03 / Who's building it</p>
+      </div>
+      <div class="lg:col-span-8">
+        <h2 class="font-display text-[clamp(2rem,5.5vw,4.2rem)] fade-up mb-8">
+          I don't just code.<br>
+          <span class="text-accent">I architect for conversion.</span>
+        </h2>
+        <p class="font-body text-lg text-ink/65 max-w-2xl leading-relaxed fade-up mb-6">
+          I've worked inside performance marketing teams and agencies — not just dev shops. I've seen what makes a page convert and what kills it. That logic goes into every build, before a single line of code.
+        </p>
+        <p class="font-body text-lg text-ink/65 max-w-2xl leading-relaxed fade-up">
+          You're not hiring a developer. You're hiring someone who thinks about your funnel first and the typography second.
+        </p>
+      </div>
+    </div>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- HOW ANDRADY WORKS                           -->
-    <!-- ═══════════════════════════════════════════ -->
-    <section id="how-it-works" class="relative py-32 overflow-hidden">
-        <div class="absolute inset-0 grid-bg opacity-30"></div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5">
+      <div class="bg-bg p-6 lg:p-8 fade-up">
+        <div class="font-display text-4xl lg:text-5xl mb-3">120<span class="text-accent">+</span></div>
+        <div class="label text-ink/40">Pages shipped</div>
+      </div>
+      <div class="bg-bg p-6 lg:p-8 fade-up">
+        <div class="font-display text-4xl lg:text-5xl mb-3">3.4<span class="text-accent">%</span></div>
+        <div class="label text-ink/40">Avg. CVR</div>
+      </div>
+      <div class="bg-bg p-6 lg:p-8 fade-up">
+        <div class="font-display text-4xl lg:text-5xl mb-3">48<span class="text-ink/30 text-2xl">hrs</span></div>
+        <div class="label text-ink/40">Avg. turnaround</div>
+      </div>
+      <div class="bg-bg p-6 lg:p-8 fade-up">
+        <div class="font-display text-4xl lg:text-5xl mb-3">7<span class="text-ink/30 text-2xl">yrs</span></div>
+        <div class="label text-ink/40">In performance mktg</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <div class="relative z-10 max-w-7xl mx-auto px-6">
-            <div class="fade-up max-w-3xl mb-20">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="h-px w-8 bg-accent"></div>
-                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">How Andrady Works</span>
-                </div>
-                <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
-                    Three Steps.<br>
-                    One <span class="text-accent">Performance</span> Rebuild
-                </h2>
-                <p class="text-gray-400 text-lg font-light leading-relaxed max-w-xl">
-                    Not a redesign. Not a re-skin. We rebuild the page underneath your existing offer and creative — engineered specifically for the traffic hitting it.
-                </p>
-            </div>
+<!-- PROCESS -->
+<section id="process" class="relative py-28 lg:py-40 border-t border-white/5">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16 lg:mb-20">
+      <div class="lg:col-span-4">
+        <p class="label text-ink/40 fade-up mb-4">04 / Process</p>
+      </div>
+      <div class="lg:col-span-8">
+        <h2 class="font-display text-[clamp(2rem,5.5vw,4.2rem)] fade-up mb-6">
+          Three steps.<br>
+          <span class="text-ink/35">Forty-eight hours.</span>
+        </h2>
+      </div>
+    </div>
 
-            <!-- Step 1: Audit -->
-            <div class="fade-up grid lg:grid-cols-2 gap-12 items-center mb-24 border border-white/5 rounded-sm p-8 md:p-12 bg-surfaceCard/30 relative overflow-hidden">
-                <div class="absolute -bottom-20 -right-20 w-60 h-60 bg-accent/3 blur-[100px]"></div>
-
-                <div class="relative z-10">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center">
-                            <i data-lucide="search" class="w-5 h-5 text-accent"></i>
-                        </div>
-                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent">Step 01</span>
-                    </div>
-
-                    <h3 class="font-display text-3xl md:text-4xl font-500 tracking-tight uppercase mb-4">
-                        We Audit What's<br>Actually Slowing You Down
-                    </h3>
-
-                    <p class="text-gray-400 font-light leading-relaxed mb-6">
-                        We run your current page through real performance testing and trace exactly where the load time, render-blocking scripts, and conversion friction are coming from. You get a clear breakdown — <span class="text-white">not a sales pitch dressed up as an audit</span>.
-                    </p>
-
-                    <ul class="space-y-3">
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Full load-time and Core Web Vitals breakdown</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Bloat sources identified — builder runtime, scripts, plugins</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Mobile-first read, since that's where most paid clicks land</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="relative z-10 flex items-center justify-center">
-                    <div class="relative w-full max-w-sm">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-64 h-64 rounded-full border border-white/5 relative">
-                                <div class="absolute inset-0 radar-sweep rounded-full"></div>
-                                <div class="absolute inset-8 rounded-full border border-white/5"></div>
-                                <div class="absolute inset-16 rounded-full border border-white/5"></div>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <div class="w-12 h-12 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center">
-                                        <i data-lucide="activity" class="w-5 h-5 text-accent"></i>
-                                    </div>
-                                </div>
-                                <div class="absolute top-4 left-1/2 w-2 h-2 bg-accent rounded-full float-anim" style="animation-delay: 0s;"></div>
-                                <div class="absolute bottom-8 right-8 w-2 h-2 bg-white/30 rounded-full float-anim" style="animation-delay: 1.5s;"></div>
-                                <div class="absolute top-1/2 left-4 w-2 h-2 bg-white/20 rounded-full float-anim" style="animation-delay: 3s;"></div>
-                            </div>
-                        </div>
-                        <div class="text-center pt-72">
-                            <div class="text-[10px] tracking-[0.2em] uppercase text-gray-600">Scanning Render Path — Active</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Step 2: Rebuild -->
-            <div class="fade-up grid lg:grid-cols-2 gap-12 items-center mb-24 border border-white/5 rounded-sm p-8 md:p-12 bg-surfaceCard/30 relative overflow-hidden">
-                <div class="absolute -top-20 -left-20 w-60 h-60 bg-accent/3 blur-[100px]"></div>
-
-                <div class="relative z-10 flex items-center justify-center order-2 lg:order-1">
-                    <div class="w-full max-w-sm">
-                        <div class="border border-white/10 rounded-sm bg-black/30 overflow-hidden">
-                            <div class="flex items-center justify-between px-4 py-3 border-b border-white/5">
-                                <span class="text-xs text-white font-medium">Stack Comparison</span>
-                                <span class="text-[10px] text-accent tracking-wider uppercase flex items-center gap-1.5">
-                                    <span class="w-1.5 h-1.5 bg-accent rounded-full count-tick"></span>
-                                    Rebuilt
-                                </span>
-                            </div>
-                            <div class="p-4 space-y-3">
-                                <div class="flex items-center justify-between text-xs py-2">
-                                    <span class="text-gray-400">Page Builder Runtime</span>
-                                    <span class="text-red-400/80 font-medium">Removed</span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs py-2 border-t border-white/5">
-                                    <span class="text-gray-400">Frontend</span>
-                                    <span class="text-white font-medium">Static HTML + Tailwind</span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs py-2 border-t border-white/5">
-                                    <span class="text-gray-400">Interactivity</span>
-                                    <span class="text-white font-medium">Vanilla JS</span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs py-2 border-t border-white/5">
-                                    <span class="text-gray-400">Lead Data</span>
-                                    <span class="text-white font-medium">Supabase</span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs py-2 border-t border-white/5">
-                                    <span class="text-gray-400">Hosting</span>
-                                    <span class="text-white font-medium">Vercel Edge</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center mt-6">
-                            <div class="text-[10px] tracking-[0.2em] uppercase text-gray-600">Same Offer. Same Creative. New Foundation.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="relative z-10 order-1 lg:order-2">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center">
-                            <i data-lucide="hammer" class="w-5 h-5 text-accent"></i>
-                        </div>
-                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent">Step 02</span>
-                    </div>
-
-                    <h3 class="font-display text-3xl md:text-4xl font-500 tracking-tight uppercase mb-4">
-                        We Rebuild It On<br>Real Infrastructure
-                    </h3>
-
-                    <p class="text-gray-400 font-light leading-relaxed mb-6">
-                        We rebuild your page from the ground up on static HTML, Tailwind CSS, and vanilla JavaScript — hosted on Vercel, backed by Supabase for lead capture. Your message and creative stay yours. <span class="text-white">The engine underneath changes entirely</span>.
-                    </p>
-
-                    <ul class="space-y-3">
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Full rebuild — not a theme swap or a plugin removal pass</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Mobile-optimized layout, since that's where the spend lands</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Lead capture wired directly into your CRM or inbox</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Your tracking and analytics carried over, not lost in the switch</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Step 3: Deploy -->
-            <div class="fade-up grid lg:grid-cols-2 gap-12 items-center border border-white/5 rounded-sm p-8 md:p-12 bg-surfaceCard/30 relative overflow-hidden">
-                <div class="absolute -bottom-20 -left-20 w-60 h-60 bg-accent/3 blur-[100px]"></div>
-
-                <div class="relative z-10">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-10 h-10 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center">
-                            <i data-lucide="rocket" class="w-5 h-5 text-accent"></i>
-                        </div>
-                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent">Step 03</span>
-                    </div>
-
-                    <h3 class="font-display text-3xl md:text-4xl font-500 tracking-tight uppercase mb-4">
-                        We Deploy It Behind<br>Your Live Campaigns
-                    </h3>
-
-                    <p class="text-gray-400 font-light leading-relaxed mb-6">
-                        We deploy the rebuilt page to your domain, verify every tracking pixel and conversion event fires correctly, and hand you a page that's ready to take traffic the same day. No downtime. No re-approval delays on your ad accounts.
-                    </p>
-
-                    <ul class="space-y-3">
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Pixel and conversion-event verification before go-live</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Deployed to your existing domain — no new URL to re-approve</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Full source code handed to you — yours outright</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                            <span class="text-gray-300 text-sm">Optional ongoing oversight if you'd rather not touch it again</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="relative z-10 flex items-center justify-center">
-                    <div class="w-full max-w-sm space-y-4">
-                        <div class="border border-dashed border-accent/20 rounded-sm p-8 text-center bg-accent/5">
-                            <i data-lucide="check-circle-2" class="w-8 h-8 text-accent mx-auto mb-3"></i>
-                            <div class="text-sm text-white font-medium mb-1">Live & Taking Traffic</div>
-                            <div class="text-[10px] tracking-widest uppercase text-gray-500">Pixels Verified — Conversions Firing</div>
-                        </div>
-
-                        <div class="space-y-2">
-                            <div class="flex items-center gap-3 bg-black/30 border border-white/5 rounded-sm px-4 py-3">
-                                <i data-lucide="check" class="w-4 h-4 text-accent"></i>
-                                <span class="text-xs text-gray-300 flex-1">Meta Pixel — Firing</span>
-                            </div>
-                            <div class="flex items-center gap-3 bg-black/30 border border-white/5 rounded-sm px-4 py-3">
-                                <i data-lucide="check" class="w-4 h-4 text-accent"></i>
-                                <span class="text-xs text-gray-300 flex-1">Google Ads Conversion — Firing</span>
-                            </div>
-                            <div class="flex items-center gap-3 bg-black/30 border border-white/5 rounded-sm px-4 py-3">
-                                <i data-lucide="check" class="w-4 h-4 text-accent"></i>
-                                <span class="text-xs text-gray-300 flex-1">LinkedIn Insight Tag — Firing</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5">
+      <div class="frame-card bg-bg p-8 lg:p-10 fade-up border border-transparent">
+        <div class="flex items-center justify-between mb-10">
+          <div class="font-mono text-accent text-xs">STEP / 01</div>
+          <div class="font-display text-5xl text-ink/10">01</div>
         </div>
-    </section>
-
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- BEFORE VS AFTER INFRASTRUCTURE COMPARISON   -->
-    <!-- ═══════════════════════════════════════════ -->
-    <section class="relative py-24 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="fade-up text-center max-w-2xl mx-auto mb-16">
-                <div class="flex items-center justify-center gap-3 mb-6">
-                    <div class="h-px w-8 bg-accent"></div>
-                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Infrastructure Comparison</span>
-                    <div class="h-px w-8 bg-accent"></div>
-                </div>
-                <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95]">
-                    Before vs After<br>
-                    <span class="text-accent">The Rebuild</span>
-                </h2>
-            </div>
-
-            <div class="fade-up max-w-4xl mx-auto overflow-hidden border border-white/5 rounded-sm">
-                <div class="grid grid-cols-3 text-xs md:text-sm">
-                    <!-- Header row -->
-                    <div class="bg-black/40 p-4 border-b border-white/5"></div>
-                    <div class="bg-black/40 p-4 border-b border-white/5 border-l border-white/5 text-center">
-                        <span class="text-gray-500 font-bold tracking-widest uppercase text-[10px]">Before</span>
-                    </div>
-                    <div class="bg-accent/5 p-4 border-b border-accent/10 border-l border-white/5 text-center">
-                        <span class="text-accent font-bold tracking-widest uppercase text-[10px]">After</span>
-                    </div>
-
-                    <!-- Row: Load time -->
-                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">Load Time</div>
-                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-red-400/80">3–5s</div>
-                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-accent font-medium">&lt;1s</div>
-
-                    <!-- Row: Stack -->
-                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">Frontend Stack</div>
-                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-500">Page Builder + Plugins</div>
-                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-300">Static HTML + Tailwind</div>
-
-                    <!-- Row: JS payload -->
-                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">JavaScript Payload</div>
-                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-500">Heavy, Often Unused</div>
-                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-300">Minimal, Vanilla JS Only</div>
-
-                    <!-- Row: Hosting -->
-                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">Hosting</div>
-                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-500">Shared / Builder-Locked</div>
-                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-300">Vercel Edge Network</div>
-
-                    <!-- Row: Lead capture -->
-                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">Lead Data</div>
-                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-500">Locked Inside Builder</div>
-                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-gray-300">Yours, in Supabase</div>
-
-                    <!-- Row: Ongoing cost -->
-                    <div class="p-4 border-b border-white/5 text-gray-400 font-light">Ongoing Software Cost</div>
-                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-red-400/80">$50–$300/mo</div>
-                    <div class="p-4 border-b border-white/5 border-l border-white/5 text-center text-accent font-medium">~$0/mo</div>
-
-                    <!-- Row: Ownership -->
-                    <div class="p-4 text-gray-400 font-light">Code Ownership</div>
-                    <div class="p-4 border-l border-white/5 text-center text-gray-500">Locked to Platform</div>
-                    <div class="p-4 border-l border-white/5 text-center text-gray-300">100% Yours</div>
-                </div>
-            </div>
+        <h3 class="font-display text-3xl lg:text-[2rem] mb-4 leading-tight">Book.</h3>
+        <p class="text-ink/55 text-sm leading-relaxed mb-8">30-minute kickoff call. We lock the offer, audience, CTA, and conversion goal before any code is written.</p>
+        <div class="label text-ink/30">Day 0 · 30 min</div>
+      </div>
+      <div class="frame-card bg-bg p-8 lg:p-10 fade-up border border-transparent">
+        <div class="flex items-center justify-between mb-10">
+          <div class="font-mono text-accent text-xs">STEP / 02</div>
+          <div class="font-display text-5xl text-ink/10">02</div>
         </div>
-    </section>
-
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- OFFER BREAKDOWN                             -->
-    <!-- ═══════════════════════════════════════════ -->
-    <section id="offer" class="relative py-32 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="fade-up text-center max-w-3xl mx-auto mb-16">
-                <div class="flex items-center justify-center gap-3 mb-6">
-                    <div class="h-px w-8 bg-accent"></div>
-                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">One Fixed Fee. No Retainers Required.</span>
-                    <div class="h-px w-8 bg-accent"></div>
-                </div>
-                <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
-                    The Performance Rebuild.<br>
-                    <span class="text-accent">Everything Included.</span>
-                </h2>
-                <p class="text-gray-400 text-lg font-light leading-relaxed">
-                    One project. One price. Your existing landing page, rebuilt on infrastructure designed to convert paid traffic — not just exist on the internet.
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-1 max-w-4xl mx-auto">
-
-                <!-- Core offer: Performance Rebuild -->
-                <div class="fade-up relative border border-accent/30 rounded-sm p-8 md:p-10 bg-surfaceCard/70 overflow-hidden group shadow-[0_0_60px_rgba(180,255,57,0.06)]">
-                    <div class="absolute top-0 right-0 bg-accent text-black text-[9px] font-bold tracking-[0.2em] uppercase px-4 py-1.5">
-                        Core Offer
-                    </div>
-                    <div class="absolute -bottom-20 -right-20 w-60 h-60 bg-accent/8 blur-[80px] group-hover:bg-accent/12 transition-all duration-700"></div>
-
-                    <div class="relative z-10">
-                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent block mb-4">The Rebuild</span>
-                        <h3 class="font-display text-3xl font-500 tracking-tight uppercase mb-2">Performance Rebuild</h3>
-
-                        <div class="flex items-baseline gap-1 mb-6">
-                            <span class="font-display text-5xl font-500 text-white">$1,500</span>
-                            <span class="text-gray-500 text-sm font-light">fixed fee</span>
-                        </div>
-
-                        <p class="text-gray-400 text-sm font-light leading-relaxed mb-8">
-                            We take your existing landing page and rebuild it from the ground up as fast, clean, static infrastructure — engineered specifically for paid traffic.
-                        </p>
-
-                        <ul class="space-y-3 mb-10">
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm">Full landing page audit</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm">Full rebuild on static HTML + Tailwind</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm">Mobile optimization, top to bottom</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm">Lead capture integration (CRM, inbox, or Supabase)</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm">Analytics & pixel preservation — nothing breaks</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-accent flex-shrink-0"></i>
-                                <span class="text-gray-300 text-sm">Full deployment to your domain</span>
-                            </li>
-                        </ul>
-
-                        <a href="#audit" class="block w-full text-center bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-colors duration-300">
-                            Get a Free Landing Page Audit
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Add-on: SLA -->
-                <div class="fade-up relative border border-white/5 rounded-sm p-8 md:p-10 bg-surfaceCard/30 overflow-hidden group" style="animation-delay: 0.2s;">
-                    <div class="absolute -top-20 -left-20 w-40 h-40 bg-white/3 blur-[80px] group-hover:bg-white/5 transition-all duration-700"></div>
-
-                    <div class="relative z-10">
-                        <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-500 block mb-4">Optional Add-On</span>
-                        <h3 class="font-display text-3xl font-500 tracking-tight uppercase mb-2 text-white/80">Infrastructure SLA</h3>
-
-                        <div class="flex items-baseline gap-1 mb-6">
-                            <span class="font-display text-5xl font-500 text-white/80">$500</span>
-                            <span class="text-gray-500 text-sm font-light">/month</span>
-                        </div>
-
-                        <p class="text-gray-500 text-sm font-light leading-relaxed mb-8">
-                            For teams who'd rather never think about their landing page infrastructure again. We watch it, maintain it, and handle small changes as your campaigns evolve.
-                        </p>
-
-                        <ul class="space-y-3 mb-10">
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
-                                <span class="text-gray-400 text-sm">Hosting oversight on Vercel</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
-                                <span class="text-gray-400 text-sm">Uptime monitoring, 24/7</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
-                                <span class="text-gray-400 text-sm">Database maintenance (Supabase)</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
-                                <span class="text-gray-400 text-sm">Minor content and copy changes</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
-                                <span class="text-gray-400 text-sm">Direct technical support, no ticket queue</span>
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i data-lucide="check" class="w-3.5 h-3.5 text-gray-500 flex-shrink-0"></i>
-                                <span class="text-gray-400 text-sm">Cancel anytime — no lock-in contract</span>
-                            </li>
-                        </ul>
-
-                        <a href="#audit" class="block w-full text-center border border-white/10 text-white text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:border-white/30 hover:bg-white/5 transition-all duration-300">
-                            Ask About the SLA
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Eligibility note -->
-            <div class="fade-up mt-12 max-w-4xl mx-auto">
-                <div class="border border-white/5 rounded-sm p-6 bg-surfaceCard/30 flex items-start gap-4">
-                    <i data-lucide="info" class="w-4 h-4 text-accent mt-0.5 flex-shrink-0"></i>
-                    <p class="text-gray-400 text-sm font-light leading-relaxed">
-                        The Performance Rebuild is built for businesses already running paid traffic — typically <span class="text-white">$5,000–$10,000+ per month</span> across Meta, Google, or LinkedIn. If that's not you yet, the audit is still free, but the rebuild pays off fastest when there's active spend behind it.
-                    </p>
-                </div>
-            </div>
+        <h3 class="font-display text-3xl lg:text-[2rem] mb-4 leading-tight">Build.</h3>
+        <p class="text-ink/55 text-sm leading-relaxed mb-8">I design, write, and build. Progress updates at the 12-hour and 36-hour marks. You're never in the dark.</p>
+        <div class="label text-ink/30">Hour 0 → 48</div>
+      </div>
+      <div class="frame-card bg-bg p-8 lg:p-10 fade-up border border-transparent">
+        <div class="flex items-center justify-between mb-10">
+          <div class="font-mono text-accent text-xs">STEP / 03</div>
+          <div class="font-display text-5xl text-ink/10">03</div>
         </div>
-    </section>
+        <h3 class="font-display text-3xl lg:text-[2rem] mb-4 leading-tight">Live.</h3>
+        <p class="text-ink/55 text-sm leading-relaxed mb-8">Deployed on your domain. Analytics live. Conversion events verified. One revision round within 24 hours.</p>
+        <div class="label text-ink/30">Hour 48</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- WHY STATIC INFRASTRUCTURE WINS               -->
-    <!-- ═══════════════════════════════════════════ -->
-    <section class="relative py-24 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-
-                <div class="fade-up">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="h-px w-8 bg-accent"></div>
-                        <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Why It Works</span>
-                    </div>
-                    <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
-                        Why Static<br>
-                        <span class="text-accent">Infrastructure Wins</span>
-                    </h2>
-                    <p class="text-gray-400 text-lg font-light leading-relaxed mb-10">
-                        Page builders are designed to be easy to edit. They were never designed to be fast. Every visual editor, plugin, and drag-and-drop block adds a layer your visitor has to download and render before they ever see your offer. Static infrastructure removes that layer entirely.
-                    </p>
-
-                    <ul class="space-y-5">
-                        <li class="flex items-start gap-4">
-                            <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <i data-lucide="zap" class="w-4 h-4 text-accent"></i>
-                            </div>
-                            <div>
-                                <div class="text-white text-sm font-medium mb-0.5">No Builder Runtime</div>
-                                <div class="text-gray-500 text-sm font-light">Static HTML ships exactly what the browser needs — nothing assembled client-side.</div>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <i data-lucide="git-branch" class="w-4 h-4 text-accent"></i>
-                            </div>
-                            <div>
-                                <div class="text-white text-sm font-medium mb-0.5">Vercel's Edge Network</div>
-                                <div class="text-gray-500 text-sm font-light">Your page is served from the location closest to each visitor, every time.</div>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <i data-lucide="database" class="w-4 h-4 text-accent"></i>
-                            </div>
-                            <div>
-                                <div class="text-white text-sm font-medium mb-0.5">Supabase for Lead Data</div>
-                                <div class="text-gray-500 text-sm font-light">Your leads land in a database you control — not locked inside a builder's export tool.</div>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <div class="w-8 h-8 rounded-sm bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <i data-lucide="dollar-sign" class="w-4 h-4 text-accent"></i>
-                            </div>
-                            <div>
-                                <div class="text-white text-sm font-medium mb-0.5">Near-Zero Hosting Cost</div>
-                                <div class="text-gray-500 text-sm font-light">No builder subscription, no plugin licenses — hosting alone costs next to nothing.</div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Right: speed stat card -->
-                <div class="fade-up flex items-center justify-center" style="animation-delay: 0.2s;">
-                    <div class="w-full max-w-sm">
-                        <div class="border border-accent/20 rounded-sm p-10 bg-surfaceCard/50 text-center relative overflow-hidden">
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="w-64 h-64 bg-accent/5 blur-[80px] rounded-full"></div>
-                            </div>
-
-                            <div class="relative z-10">
-                                <div class="w-14 h-14 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-6">
-                                    <i data-lucide="gauge-circle" class="w-6 h-6 text-accent"></i>
-                                </div>
-
-                                <div class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent mb-2">Every 1-Second Delay</div>
-                                <div class="font-display text-5xl font-500 text-white mb-2">Costs You</div>
-                                <div class="font-display text-2xl font-500 text-gray-500 uppercase tracking-wide">Conversions</div>
-
-                                <div class="mt-8 pt-8 border-t border-white/5">
-                                    <div class="text-gray-500 text-sm font-light">Speed isn't a technical detail. On paid traffic, it's a direct lever on your cost per acquisition.</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+<!-- CTA / CONTACT -->
+<section id="book" class="relative py-28 lg:py-40 border-t border-white/5">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+      <div class="lg:col-span-5">
+        <p class="label text-accent fade-up mb-6">● 05 / Book your sprint</p>
+        <h2 class="font-display text-[clamp(2.2rem,6vw,5rem)] fade-up mb-8 leading-[0.95]">
+          Let's ship<br>
+          a page that<br>
+          <span class="text-accent">converts.</span>
+        </h2>
+        <p class="font-body text-lg text-ink/60 max-w-md leading-relaxed fade-up mb-10">
+          Limited to 2 sprints per week. Tell me about your project — I'll reply within 12 hours with availability and next steps.
+        </p>
+        <div class="fade-up">
+          <div class="flex items-start gap-4 py-3 border-b border-white/5">
+            <div class="label text-ink/40 w-28 shrink-0 pt-1">Email</div>
+            <div class="font-mono text-sm text-ink/80">hello@andrady.co</div>
+          </div>
+          <div class="flex items-start gap-4 py-3 border-b border-white/5">
+            <div class="label text-ink/40 w-28 shrink-0 pt-1">Next slot</div>
+            <div class="font-mono text-sm text-accent">Mon · [date placeholder]</div>
+          </div>
+          <div class="flex items-start gap-4 py-3 border-b border-white/5">
+            <div class="label text-ink/40 w-28 shrink-0 pt-1">Capacity</div>
+            <div class="font-mono text-sm text-ink/80">2 sprints / week</div>
+          </div>
+          <div class="flex items-start gap-4 py-3">
+            <div class="label text-ink/40 w-28 shrink-0 pt-1">Response</div>
+            <div class="font-mono text-sm text-ink/80">Within 12 hours</div>
+          </div>
         </div>
-    </section>
+      </div>
 
+      <div class="lg:col-span-6 lg:col-start-7">
+        <form id="sprint-form" class="frame-card border border-white/10 p-8 lg:p-10 fade-up">
+          <div class="label text-ink/40 mb-6">Project brief</div>
+          
+          <label class="label text-ink/40" for="name">Your name</label>
+          <input type="text" id="name" name="name" placeholder="John Andrade" required>
+          
+          <label class="label text-ink/40" for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="john@company.com" required>
+          
+          <label class="label text-ink/40" for="site">Current site (if any)</label>
+          <input type="url" id="site" name="site" placeholder="https://">
+          
+          <label class="label text-ink/40" for="brief">What are we building?</label>
+          <textarea id="brief" name="brief" rows="3" placeholder="SaaS landing page, waitlist, product launch, lead gen..."></textarea>
+          
+          <label class="label text-ink/40" for="budget">Budget range</label>
+          <select id="budget" name="budget">
+            <option value="">Select...</option>
+            <option value="350">$350 — Single page, no integrations</option>
+            <option value="500">$500 — Single page + analytics + CRM</option>
+            <option value="custom">Custom scope</option>
+          </select>
+          
+          <button type="submit" class="cta-btn w-full mt-8">
+            <span>Book sprint</span>
+            <span>→</span>
+          </button>
+          <p class="text-ink/40 text-xs mt-4 leading-relaxed">Reply within 12 hours. No retainer. No commitment. No discovery calls.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- AUDIT CTA (mid-page)                        -->
-    <!-- ═══════════════════════════════════════════ -->
-    <section class="relative py-24 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="fade-up max-w-3xl mx-auto text-center border border-accent/10 rounded-sm p-10 md:p-14 bg-surfaceCard/30 relative overflow-hidden">
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="w-[400px] h-[400px] bg-accent/3 blur-[120px] rounded-full"></div>
-                </div>
+<!-- FOOTER -->
+<footer class="border-t border-white/5 py-10">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div class="font-display text-base">ANDRADY<span class="text-accent">.</span></div>
+    <div class="label text-ink/30 text-center">Performance-driven landing pages · Built in 48 hours</div>
+    <div class="label text-ink/30">© 2025</div>
+  </div>
+</footer>
 
-                <div class="relative z-10">
-                    <div class="w-16 h-16 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-6">
-                        <i data-lucide="search-check" class="w-7 h-7 text-accent"></i>
-                    </div>
+<noscript>
+  <style>
+    .fade-up { opacity: 1 !important; transform: none !important; }
+    #hero-grid { display: none !important; }
+  </style>
+</noscript>
 
-                    <span class="text-[10px] font-bold tracking-[0.3em] uppercase text-accent block mb-4">No Cost. No Commitment.</span>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.13/dist/lenis.min.js"></script>
+<script>
+(function() {
+  'use strict';
 
-                    <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
-                        See Exactly What's<br>Slowing You Down.
-                    </h2>
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const gsap = window.gsap;
+  const ScrollTrigger = window.ScrollTrigger;
+  if (gsap && ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
 
-                    <p class="text-gray-400 text-lg font-light leading-relaxed max-w-xl mx-auto mb-10">
-                        Send us your landing page URL. We'll show you your real load time, what's causing it, and what it's likely costing you in lost conversions on the traffic you're already paying for.
-                    </p>
+  // ===== Lenis smooth scroll =====
+  let lenis = null;
+  if (window.Lenis && !reducedMotion) {
+    try {
+      lenis = new Lenis({
+        duration: 1.1,
+        easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+      });
+      if (ScrollTrigger) lenis.on('scroll', () => ScrollTrigger.update());
+      gsap.ticker.add(time => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+    } catch(e) {
+      console.warn('Lenis init failed', e);
+      lenis = null;
+    }
+  }
 
-                    <a href="#audit" class="inline-flex items-center justify-center gap-2 bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-all duration-300">
-                        Get a Free Landing Page Audit
-                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+  // ===== Scroll progress bar =====
+  const progressBar = document.getElementById('scroll-progress');
+  function updateProgress() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+    progressBar.style.width = pct + '%';
+  }
+  if (lenis) {
+    lenis.on('scroll', updateProgress);
+  } else {
+    window.addEventListener('scroll', updateProgress, { passive: true });
+  }
+  updateProgress();
 
+  // ===== Build hero tile grid =====
+  const grid = document.getElementById('hero-grid');
+  const rows = 6, cols = 8;
+  const pinkCells = [{r:0,c:7},{r:5,c:0},{r:5,c:7},{r:3,c:7},{r:2,c:5}];
+  const lightCells = [{r:1,c:7}];
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- FAQ                                         -->
-    <!-- ═══════════════════════════════════════════ -->
-    <section id="faq" class="relative py-32 overflow-hidden">
-        <div class="absolute inset-0 grid-bg opacity-20"></div>
-        <div class="relative z-10 max-w-4xl mx-auto px-6">
-            <div class="fade-up text-center mb-16">
-                <div class="flex items-center justify-center gap-3 mb-6">
-                    <div class="h-px w-8 bg-accent"></div>
-                    <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Frequently Asked</span>
-                    <div class="h-px w-8 bg-accent"></div>
-                </div>
-                <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95]">
-                    Questions, <span class="text-accent">Answered</span>
-                </h2>
-            </div>
+  const tiles = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'relative';
+      const isPink = pinkCells.some(p => p.r === r && p.c === c);
+      const isLight = lightCells.some(p => p.r === r && p.c === c);
+      if (isPink) cell.classList.add('tile-pink');
+      else if (isLight) cell.classList.add('tile-light');
+      else cell.classList.add('tile-base');
+      grid.appendChild(cell);
+      tiles.push(cell);
+    }
+  }
 
-            <div class="fade-up space-y-3">
-                <!-- FAQ item -->
-                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
-                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
-                        <span class="text-white font-medium text-sm md:text-base">Are you a web design agency?</span>
-                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
-                    </button>
-                    <div class="faq-panel">
-                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
-                            No. We don't do branding, design exploration, or general web development. We rebuild the technical infrastructure behind landing pages that already exist and already run paid traffic. Your design and offer stay yours — we replace what's underneath it.
-                        </p>
-                    </div>
-                </div>
+  if (gsap && !reducedMotion) {
+    // Tile flip-in
+    gsap.fromTo(tiles,
+      { rotateX: 90, y: -100, opacity: 0 },
+      {
+        rotateX: 0, y: 0, opacity: 1,
+        duration: 1.2,
+        stagger: { each: 0.04, from: 'random' },
+        ease: 'expo.out',
+        delay: 0.3,
+        onComplete: () => {
+          document.querySelectorAll('[data-hero-fade]').forEach((el, i) => {
+            setTimeout(() => el.classList.add('is-in'), i * 130);
+          });
+        }
+      }
+    );
 
-                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
-                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
-                        <span class="text-white font-medium text-sm md:text-base">Will my page look different after the rebuild?</span>
-                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
-                    </button>
-                    <div class="faq-panel">
-                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
-                            It will look the same — or close to it. We rebuild the underlying code, not the design. If we spot a layout or copy change that would clearly help conversions, we'll flag it, but the rebuild itself is about performance, not a redesign.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
-                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
-                        <span class="text-white font-medium text-sm md:text-base">What happens to my existing tracking and pixels?</span>
-                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
-                    </button>
-                    <div class="faq-panel">
-                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
-                            We preserve and re-verify every tracking script, pixel, and conversion event before the rebuilt page goes live — Meta, Google Ads, LinkedIn, GA4, or anything else you're running. Nothing goes live until we've confirmed it's firing correctly.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
-                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
-                        <span class="text-white font-medium text-sm md:text-base">Do I need to already be spending on ads?</span>
-                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
-                    </button>
-                    <div class="faq-panel">
-                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
-                            The audit is free regardless. The Performance Rebuild pays off fastest for companies already spending $5,000–$10,000+ per month on Meta, Google, or LinkedIn, since every percentage point of speed improvement compounds against real, ongoing spend.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
-                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
-                        <span class="text-white font-medium text-sm md:text-base">Who owns the code after the rebuild?</span>
-                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
-                    </button>
-                    <div class="faq-panel">
-                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
-                            You do, outright. There's no platform lock-in, no proprietary builder, and no dependency on us to keep the page running. If you choose the optional SLA, that's for convenience — not because the page needs us to function.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="faq-item border border-white/5 rounded-sm bg-surfaceCard/30 overflow-hidden">
-                    <button class="faq-toggle w-full flex items-center justify-between gap-4 p-6 text-left">
-                        <span class="text-white font-medium text-sm md:text-base">How long does the rebuild take?</span>
-                        <i data-lucide="plus" class="faq-icon w-5 h-5 text-accent flex-shrink-0"></i>
-                    </button>
-                    <div class="faq-panel">
-                        <p class="text-gray-400 text-sm font-light leading-relaxed px-6 pb-6">
-                            Most rebuilds are scoped, built, and deployed within days of kickoff, not weeks. Exact timing depends on the complexity of your current page and integrations — we'll give you a specific timeline after the audit.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- FINAL CTA — AUDIT FORM                      -->
-    <!-- ═══════════════════════════════════════════ -->
-    <section id="audit" class="relative py-32 overflow-hidden">
-        <div class="absolute inset-0 grid-bg opacity-30"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/3 blur-[150px] rounded-full"></div>
-
-        <div class="relative z-10 max-w-7xl mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-
-                <!-- Left: CTA Copy -->
-                <div class="fade-up">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="h-px w-8 bg-accent"></div>
-                        <span class="text-[10px] font-medium tracking-[0.3em] uppercase text-accent">Get Your Free Audit</span>
-                    </div>
-
-                    <h2 class="font-display text-4xl md:text-5xl font-500 tracking-tight uppercase leading-[0.95] mb-6">
-                        Stop Paying For Clicks<br>
-                        Your Page Is<br>
-                        <span class="text-accent">Wasting.</span>
-                    </h2>
-
-                    <p class="text-gray-400 text-lg font-light leading-relaxed mb-8">
-                        Send us your landing page URL. We'll send back exactly what's slowing it down, and what a rebuild would change — no sales call required to get the audit.
-                    </p>
-
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-3">
-                            <i data-lucide="shield-check" class="w-4 h-4 text-accent"></i>
-                            <span class="text-gray-400 text-sm">Your data is never shared or sold</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <i data-lucide="clock" class="w-4 h-4 text-accent"></i>
-                            <span class="text-gray-400 text-sm">Audits are typically returned within 48 hours</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <i data-lucide="ban" class="w-4 h-4 text-accent"></i>
-                            <span class="text-gray-400 text-sm">No commitment, no pressure to buy the rebuild</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right: Audit Form -->
-                <div class="fade-up" style="animation-delay: 0.2s;">
-                    <div class="border border-white/10 rounded-sm p-8 md:p-10 bg-surfaceCard/50 backdrop-blur-sm">
-                        <div class="text-[10px] font-bold tracking-[0.3em] uppercase text-gray-500 mb-8">Free Landing Page Audit</div>
-
-                        <form id="audit-form" class="space-y-6">
-                            <!-- Name -->
-                            <div>
-                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Full Name</label>
-                                <input type="text" name="name" required placeholder="e.g. Sarah Whitfield"
-                                    class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white placeholder-gray-700 outline-none transition-all duration-300">
-                            </div>
-
-                            <!-- Email -->
-                            <div>
-                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Email Address</label>
-                                <input type="email" name="email" required placeholder="e.g. sarah@company.com"
-                                    class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white placeholder-gray-700 outline-none transition-all duration-300">
-                            </div>
-
-                            <!-- Company -->
-                            <div>
-                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Company</label>
-                                <input type="text" name="company" required placeholder="e.g. Company Name"
-                                    class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white placeholder-gray-700 outline-none transition-all duration-300">
-                            </div>
-
-                            <!-- Landing Page URL -->
-                            <div>
-                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Landing Page URL</label>
-                                <input type="url" name="landing_page_url" required placeholder="e.g. https://yoursite.com/landing"
-                                    class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white placeholder-gray-700 outline-none transition-all duration-300">
-                            </div>
-
-                            <!-- Monthly Ad Spend -->
-                            <div>
-                                <label class="text-[10px] font-medium tracking-[0.2em] uppercase text-gray-500 block mb-2">Monthly Ad Spend</label>
-                                <select name="ad_spend" required
-                                    class="form-input w-full bg-black/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white outline-none transition-all duration-300 appearance-none">
-                                    <option value="" class="bg-black">Select a range</option>
-                                    <option value="under_5k" class="bg-black">Under $5,000/mo</option>
-                                    <option value="5k_10k" class="bg-black">$5,000–$10,000/mo</option>
-                                    <option value="10k_25k" class="bg-black">$10,000–$25,000/mo</option>
-                                    <option value="25k_plus" class="bg-black">$25,000+/mo</option>
-                                </select>
-                            </div>
-
-                            <!-- Error message container -->
-                            <div id="form-error" class="hidden text-red-400 text-xs tracking-wider text-center bg-red-500/5 border border-red-500/10 rounded-sm px-4 py-3">
-                                Submission failed. Please check your connection and try again.
-                            </div>
-
-                            <!-- Submit -->
-                            <button type="submit" id="submit-btn"
-                                class="w-full bg-accent text-black text-sm font-bold tracking-widest uppercase px-8 py-4 rounded-sm hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                                <span id="btn-text">Get a Free Landing Page Audit</span>
-                                <i data-lucide="arrow-right" class="w-4 h-4" id="btn-icon"></i>
-                                <svg id="btn-spinner" class="hidden animate-spin w-4 h-4" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                            </button>
-                        </form>
-
-                        <!-- Success state -->
-                        <div id="form-success" class="hidden text-center py-8">
-                            <div class="w-16 h-16 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto mb-4">
-                                <i data-lucide="check" class="w-7 h-7 text-accent"></i>
-                            </div>
-                            <div class="font-display text-2xl font-500 tracking-tight uppercase mb-2">Audit Requested</div>
-                            <p class="text-gray-400 text-sm font-light">We'll run your page through testing and send your results within 48 hours.</p>
-                        </div>
-
-                        <!-- Privacy indicators -->
-                        <div class="flex items-center justify-center gap-4 mt-6 pt-6 border-t border-white/5">
-                            <div class="flex items-center gap-1.5">
-                                <i data-lucide="lock" class="w-3 h-3 text-gray-700"></i>
-                                <span class="text-[9px] tracking-widest uppercase text-gray-700">Encrypted</span>
-                            </div>
-                            <div class="flex items-center gap-1.5">
-                                <i data-lucide="eye-off" class="w-3 h-3 text-gray-700"></i>
-                                <span class="text-[9px] tracking-widest uppercase text-gray-700">Never Shared</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- FOOTER                                     -->
-    <!-- ═══════════════════════════════════════════ -->
-    <footer class="border-t border-white/5 py-12">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-                <div class="flex items-center gap-3">
-                    <div class="w-1.5 h-1.5 bg-accent rounded-full"></div>
-                    <span class="font-display text-sm font-500 tracking-[0.2em] uppercase text-gray-600">Andrady</span>
-                </div>
-
-                <p class="text-gray-700 text-xs text-center">
-                    © 2026 Andrady. All rights reserved. Performance infrastructure for paid traffic.
-                </p>
-
-                <div class="flex items-center gap-6">
-                    <a href="#" class="text-[10px] tracking-widest uppercase text-gray-700 hover:text-gray-400 transition-colors">Privacy</a>
-                    <a href="#" class="text-[10px] tracking-widest uppercase text-gray-700 hover:text-gray-400 transition-colors">Terms</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- JAVASCRIPT                                 -->
-    <!-- ═══════════════════════════════════════════ -->
-    <script>
-        // Initialize Lucide icons
-        lucide.createIcons({ attrs: { strokeWidth: 1.5 } });
-
-        // ── Scroll-based fade-up animations ──
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-        // ── Navigation background on scroll ──
-        const nav = document.getElementById('nav');
-
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 80) {
-                nav.classList.add('bg-black/80', 'backdrop-blur-xl');
-                nav.classList.remove('bg-transparent');
-            } else {
-                nav.classList.remove('bg-black/80', 'backdrop-blur-xl');
-                nav.classList.add('bg-transparent');
-            }
+    // Tile scroll-disperse (no pin — keeps the page fast)
+    ScrollTrigger.create({
+      trigger: '#hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 0.8,
+      onUpdate: self => {
+        const p = self.progress;
+        tiles.forEach((tile, i) => {
+          const delay = (i / tiles.length) * 0.25;
+          const localP = Math.max(0, Math.min(1, (p - delay) / (0.85 - delay + 0.001)));
+          const dir = i % 3 === 0 ? 1 : i % 3 === 1 ? -1 : 0.6;
+          gsap.set(tile, {
+            x: dir * localP * 16 + 'vw',
+            y: -localP * 22 + 'vh',
+            opacity: 1 - localP
+          });
         });
+      },
+      onLeaveBack: () => {
+        tiles.forEach(tile => gsap.set(tile, { x: 0, y: 0, opacity: 1 }));
+      }
+    });
 
-        // ── Smooth scroll for anchor links ──
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
+    // Hero content parallax fade
+    gsap.to('.hero-content', {
+      scrollTrigger: {
+        trigger: '#hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.8,
+      },
+      y: -60,
+      opacity: 0,
+      ease: 'none'
+    });
+  } else {
+    // Reduced motion: show everything immediately
+    document.querySelectorAll('[data-hero-fade]').forEach(el => el.classList.add('is-in'));
+    tiles.forEach(tile => { tile.style.opacity = '1'; });
+  }
 
-        // ── FAQ accordion ──
-        document.querySelectorAll('.faq-toggle').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const panel = btn.nextElementSibling;
-                const isOpen = btn.classList.contains('open');
+  // ===== Fade-up observer for everything below hero =====
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
 
-                // Close all other panels
-                document.querySelectorAll('.faq-toggle').forEach(otherBtn => {
-                    if (otherBtn !== btn) {
-                        otherBtn.classList.remove('open');
-                        otherBtn.nextElementSibling.classList.remove('open');
-                    }
-                });
+  document.querySelectorAll('section:not(#hero) .fade-up').forEach(el => observer.observe(el));
 
-                btn.classList.toggle('open', !isOpen);
-                panel.classList.toggle('open', !isOpen);
-            });
-        });
+  // ===== Smooth scroll for anchor links =====
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const href = link.getAttribute('href');
+      if (href === '#' || !href) return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        if (lenis) {
+          lenis.scrollTo(target, { offset: -64 });
+        } else {
+          const top = target.getBoundingClientRect().top + window.scrollY - 64;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      }
+    });
+  });
 
-        // ── Audit form handling ──
-        // Replace YOUR_PROJECT_REF with your actual Supabase project ref
-        // (found in your Supabase project URL: https://YOUR_PROJECT_REF.supabase.co)
-        const SUBMIT_ENDPOINT = 'https://rsttirosnsfaortzugld.supabase.co/functions/v1/submit-brief';
-
-        const form = document.getElementById('audit-form');
-        const formSuccess = document.getElementById('form-success');
-        const formError = document.getElementById('form-error');
-        const submitBtn = document.getElementById('submit-btn');
-        const btnText = document.getElementById('btn-text');
-        const btnIcon = document.getElementById('btn-icon');
-        const btnSpinner = document.getElementById('btn-spinner');
-
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            formError.classList.add('hidden');
-
-            submitBtn.disabled = true;
-            btnText.textContent = 'Submitting';
-            btnIcon.classList.add('hidden');
-            btnSpinner.classList.remove('hidden');
-
-            const formData = {
-                name: form.name.value.trim(),
-                email: form.email.value.trim(),
-                company: form.company.value.trim(),
-                landing_page_url: form.landing_page_url.value.trim(),
-                ad_spend: form.ad_spend.value
-            };
-
-            try {
-                if (SUBMIT_ENDPOINT) {
-                    const response = await fetch(SUBMIT_ENDPOINT, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData)
-                    });
-
-                    if (!response.ok) {
-                        const errorData = await response.json().catch(() => ({}));
-                        throw new Error(errorData.message || `Server responded with status ${response.status}`);
-                    }
-                } else {
-                    await new Promise(resolve => setTimeout(resolve, 700));
-                }
-
-                form.classList.add('hidden');
-                formSuccess.classList.remove('hidden');
-                lucide.createIcons({ attrs: { strokeWidth: 1.5 } });
-
-            } catch (error) {
-                console.error('Form submission error:', error);
-                formError.textContent = error.message || 'Submission failed. Please check your connection and try again.';
-                formError.classList.remove('hidden');
-                submitBtn.disabled = false;
-                btnText.textContent = 'Get a Free Landing Page Audit';
-                btnIcon.classList.remove('hidden');
-                btnSpinner.classList.add('hidden');
-            }
-        });
-    </script>
+  // ===== Form submission handler (placeholder) =====
+  const form = document.getElementById('sprint-form');
+  if (form) {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      if (!btn) return;
+      const original = btn.innerHTML;
+      btn.innerHTML = '<span>Brief received — reply within 12h</span><span>✓</span>';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.innerHTML = original;
+        btn.disabled = false;
+        form.reset();
+      }, 4500);
+    });
+  }
+})();
+</script>
 </body>
 </html>
