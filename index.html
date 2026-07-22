@@ -103,6 +103,16 @@ label.label { display: block; margin-bottom: 0.25rem; margin-top: 1.5rem; }
 ::-webkit-scrollbar-thumb { background: rgba(242,242,242,0.15); }
 ::-webkit-scrollbar-thumb:hover { background: rgba(242,242,242,0.3); }
 
+/* Calendar Modal Styles */
+#cal-modal { transition: opacity 300ms var(--ease-precise); }
+.cal-day-btn { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 13px; border: 1px solid rgba(255,255,255,0.1); transition: all 200ms var(--ease-precise); }
+.cal-day-btn:hover:not(:disabled) { border-color: #FF2D8F; color: #FF2D8F; }
+.cal-day-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+.cal-day-btn.selected { background: #FF2D8F; color: #111111; border-color: #FF2D8F; }
+.slot-btn { padding: 0.75rem; font-family: 'IBM Plex Mono', monospace; font-size: 12px; border: 1px solid rgba(255,255,255,0.1); transition: all 200ms var(--ease-precise); }
+.slot-btn:hover:not(:disabled) { border-color: #FF2D8F; color: #FF2D8F; }
+.slot-btn.selected { background: #FF2D8F; color: #111111; border-color: #FF2D8F; }
+
 @media (prefers-reduced-motion: reduce) {
   .fade-up { opacity: 1 !important; transform: none !important; transition: none !important; }
   #hero-grid { display: none !important; }
@@ -212,7 +222,6 @@ label.label { display: block; margin-bottom: 0.25rem; margin-top: 1.5rem; }
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
-      <!-- Pricing card -->
       <div class="lg:col-span-5 frame-card border border-white/10 p-8 lg:p-10 fade-up">
         <div class="label text-ink/40 mb-6">Investment</div>
         <div class="flex items-end justify-between mb-8">
@@ -240,7 +249,6 @@ label.label { display: block; margin-bottom: 0.25rem; margin-top: 1.5rem; }
         </div>
       </div>
 
-      <!-- What's included -->
       <div class="lg:col-span-7 frame-card border border-white/10 p-8 lg:p-10 fade-up">
         <div class="label text-ink/40 mb-6">What's included</div>
         <ul class="space-y-0">
@@ -411,10 +419,16 @@ label.label { display: block; margin-bottom: 0.25rem; margin-top: 1.5rem; }
             <div class="label text-ink/40 w-28 shrink-0 pt-1">Email</div>
             <div class="font-mono text-sm text-ink/80">hello@andrady.co</div>
           </div>
-          <div class="flex items-start gap-4 py-3 border-b border-white/5">
+          
+          <!-- Clickable Calendar Slot -->
+          <div class="flex items-start gap-4 py-3 border-b border-white/5 cursor-pointer hover:bg-white/5 transition-colors -mx-4 px-4" id="open-cal-btn">
             <div class="label text-ink/40 w-28 shrink-0 pt-1">Next slot</div>
-            <div class="font-mono text-sm text-accent">Mon · [date placeholder]</div>
+            <div class="font-mono text-sm text-accent flex-1 flex justify-between items-center">
+              <span id="next-slot-text">Click to select →</span>
+              <span class="text-ink/30 text-xs hidden md:block" id="next-slot-meta"></span>
+            </div>
           </div>
+          
           <div class="flex items-start gap-4 py-3 border-b border-white/5">
             <div class="label text-ink/40 w-28 shrink-0 pt-1">Capacity</div>
             <div class="font-mono text-sm text-ink/80">2 sprints / week</div>
@@ -470,6 +484,40 @@ label.label { display: block; margin-bottom: 0.25rem; margin-top: 1.5rem; }
   </div>
 </footer>
 
+<!-- CALENDAR MODAL -->
+<div id="cal-modal" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 opacity-0">
+  <div class="bg-bg border border-white/15 max-w-md w-full p-6 md:p-8 relative">
+    <button id="close-cal" class="absolute top-4 right-4 text-ink/40 hover:text-accent text-xl">×</button>
+    <div class="label text-accent mb-2">SELECT YOUR SPRINT START</div>
+    <p class="text-ink/50 text-xs mb-6">Sprints begin at 10:00 AM. Build runs for 48 hours.</p>
+    
+    <div class="flex justify-between items-center mb-4">
+      <button id="prev-month" class="font-mono text-ink/60 hover:text-accent text-sm">← Prev</button>
+      <div id="cal-month-year" class="font-display text-lg"></div>
+      <button id="next-month" class="font-mono text-ink/60 hover:text-accent text-sm">Next →</button>
+    </div>
+    
+    <div class="grid grid-cols-7 gap-1 text-center mb-2">
+      <div class="label text-ink/30 text-[10px]">MON</div>
+      <div class="label text-ink/30 text-[10px]">TUE</div>
+      <div class="label text-ink/30 text-[10px]">WED</div>
+      <div class="label text-ink/30 text-[10px]">THU</div>
+      <div class="label text-ink/30 text-[10px]">FRI</div>
+      <div class="label text-ink/30 text-[10px]">SAT</div>
+      <div class="label text-ink/30 text-[10px]">SUN</div>
+    </div>
+    
+    <div id="cal-grid" class="grid grid-cols-7 gap-1 mb-6"></div>
+    
+    <div id="slot-container" class="hidden">
+      <div class="label text-ink/40 mb-3">Available start times</div>
+      <div id="slot-list" class="grid grid-cols-3 gap-2"></div>
+    </div>
+    
+    <div id="cal-status" class="text-center text-ink/40 text-xs mt-4 hidden"></div>
+  </div>
+</div>
+
 <noscript>
   <style>
     .fade-up { opacity: 1 !important; transform: none !important; }
@@ -477,6 +525,7 @@ label.label { display: block; margin-bottom: 0.25rem; margin-top: 1.5rem; }
   </style>
 </noscript>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.13/dist/lenis.min.js"></script>
@@ -484,41 +533,42 @@ label.label { display: block; margin-bottom: 0.25rem; margin-top: 1.5rem; }
 (function() {
   'use strict';
 
+  // ==========================================
+  // CONFIG: REPLACE THESE WITH YOUR DETAILS
+  // ==========================================
+  const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+  const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
+  // ==========================================
+
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const gsap = window.gsap;
   const ScrollTrigger = window.ScrollTrigger;
   if (gsap && ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
 
+  // ===== Supabase Client (for reading booked slots) =====
+  let supabaseClient = null;
+  if (window.supabase && SUPABASE_URL !== 'YOUR_SUPABASE_URL') {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  }
+
   // ===== Lenis smooth scroll =====
   let lenis = null;
   if (window.Lenis && !reducedMotion) {
     try {
-      lenis = new Lenis({
-        duration: 1.1,
-        easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true,
-      });
+      lenis = new Lenis({ duration: 1.1, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
       if (ScrollTrigger) lenis.on('scroll', () => ScrollTrigger.update());
       gsap.ticker.add(time => lenis.raf(time * 1000));
       gsap.ticker.lagSmoothing(0);
-    } catch(e) {
-      console.warn('Lenis init failed', e);
-      lenis = null;
-    }
+    } catch(e) { lenis = null; }
   }
 
   // ===== Scroll progress bar =====
   const progressBar = document.getElementById('scroll-progress');
   function updateProgress() {
     const max = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
-    progressBar.style.width = pct + '%';
+    progressBar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
   }
-  if (lenis) {
-    lenis.on('scroll', updateProgress);
-  } else {
-    window.addEventListener('scroll', updateProgress, { passive: true });
-  }
+  if (lenis) lenis.on('scroll', updateProgress); else window.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
 
   // ===== Build hero tile grid =====
@@ -526,8 +576,8 @@ label.label { display: block; margin-bottom: 0.25rem; margin-top: 1.5rem; }
   const rows = 6, cols = 8;
   const pinkCells = [{r:0,c:7},{r:5,c:0},{r:5,c:7},{r:3,c:7},{r:2,c:5}];
   const lightCells = [{r:1,c:7}];
-
   const tiles = [];
+
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
       const cell = document.createElement('div');
@@ -543,15 +593,9 @@ label.label { display: block; margin-bottom: 0.25rem; margin-top: 1.5rem; }
   }
 
   if (gsap && !reducedMotion) {
-    // Tile flip-in
     gsap.fromTo(tiles,
       { rotateX: 90, y: -100, opacity: 0 },
-      {
-        rotateX: 0, y: 0, opacity: 1,
-        duration: 1.2,
-        stagger: { each: 0.04, from: 'random' },
-        ease: 'expo.out',
-        delay: 0.3,
+      { rotateX: 0, y: 0, opacity: 1, duration: 1.2, stagger: { each: 0.04, from: 'random' }, ease: 'expo.out', delay: 0.3,
         onComplete: () => {
           document.querySelectorAll('[data-hero-fade]').forEach((el, i) => {
             setTimeout(() => el.classList.add('is-in'), i * 130);
@@ -560,49 +604,30 @@ label.label { display: block; margin-bottom: 0.25rem; margin-top: 1.5rem; }
       }
     );
 
-    // Tile scroll-disperse (no pin — keeps the page fast)
     ScrollTrigger.create({
-      trigger: '#hero',
-      start: 'top top',
-      end: 'bottom top',
-      scrub: 0.8,
+      trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 0.8,
       onUpdate: self => {
         const p = self.progress;
         tiles.forEach((tile, i) => {
           const delay = (i / tiles.length) * 0.25;
           const localP = Math.max(0, Math.min(1, (p - delay) / (0.85 - delay + 0.001)));
           const dir = i % 3 === 0 ? 1 : i % 3 === 1 ? -1 : 0.6;
-          gsap.set(tile, {
-            x: dir * localP * 16 + 'vw',
-            y: -localP * 22 + 'vh',
-            opacity: 1 - localP
-          });
+          gsap.set(tile, { x: dir * localP * 16 + 'vw', y: -localP * 22 + 'vh', opacity: 1 - localP });
         });
       },
-      onLeaveBack: () => {
-        tiles.forEach(tile => gsap.set(tile, { x: 0, y: 0, opacity: 1 }));
-      }
+      onLeaveBack: () => tiles.forEach(tile => gsap.set(tile, { x: 0, y: 0, opacity: 1 }))
     });
 
-    // Hero content parallax fade
     gsap.to('.hero-content', {
-      scrollTrigger: {
-        trigger: '#hero',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 0.8,
-      },
-      y: -60,
-      opacity: 0,
-      ease: 'none'
+      scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 0.8 },
+      y: -60, opacity: 0, ease: 'none'
     });
   } else {
-    // Reduced motion: show everything immediately
     document.querySelectorAll('[data-hero-fade]').forEach(el => el.classList.add('is-in'));
     tiles.forEach(tile => { tile.style.opacity = '1'; });
   }
 
-  // ===== Fade-up observer for everything below hero =====
+  // ===== Fade-up observer =====
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -611,7 +636,6 @@ label.label { display: block; margin-bottom: 0.25rem; margin-top: 1.5rem; }
       }
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-
   document.querySelectorAll('section:not(#hero) .fade-up').forEach(el => observer.observe(el));
 
   // ===== Smooth scroll for anchor links =====
@@ -622,9 +646,8 @@ label.label { display: block; margin-bottom: 0.25rem; margin-top: 1.5rem; }
       const target = document.querySelector(href);
       if (target) {
         e.preventDefault();
-        if (lenis) {
-          lenis.scrollTo(target, { offset: -64 });
-        } else {
+        if (lenis) lenis.scrollTo(target, { offset: -64 });
+        else {
           const top = target.getBoundingClientRect().top + window.scrollY - 64;
           window.scrollTo({ top, behavior: 'smooth' });
         }
@@ -632,23 +655,218 @@ label.label { display: block; margin-bottom: 0.25rem; margin-top: 1.5rem; }
     });
   });
 
-  // ===== Form submission handler (placeholder) =====
-  const form = document.getElementById('sprint-form');
-  if (form) {
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const btn = form.querySelector('button[type="submit"]');
-      if (!btn) return;
-      const original = btn.innerHTML;
-      btn.innerHTML = '<span>Brief received — reply within 12h</span><span>✓</span>';
-      btn.disabled = true;
-      setTimeout(() => {
-        btn.innerHTML = original;
-        btn.disabled = false;
-        form.reset();
-      }, 4500);
+  // ==========================================
+  // CALENDAR MODAL LOGIC
+  // ==========================================
+  const AVAILABLE_SLOTS = ['10:00', '14:00', '18:00'];
+  let calDate = new Date();
+  let selectedDateString = null;
+  let selectedSlot = null;
+
+  const calModal = document.getElementById('cal-modal');
+  const calGrid = document.getElementById('cal-grid');
+  const monthYearEl = document.getElementById('cal-month-year');
+  const slotContainer = document.getElementById('slot-container');
+  const slotList = document.getElementById('slot-list');
+  const nextSlotText = document.getElementById('next-slot-text');
+  const nextSlotMeta = document.getElementById('next-slot-meta');
+
+  document.getElementById('open-cal-btn').addEventListener('click', () => {
+    calModal.classList.remove('hidden');
+    calModal.classList.add('flex');
+    requestAnimationFrame(() => { calModal.style.opacity = '1'; });
+    renderCalendar();
+  });
+
+  function closeCalModal() {
+    calModal.style.opacity = '0';
+    setTimeout(() => {
+      calModal.classList.add('hidden');
+      calModal.classList.remove('flex');
+    }, 300);
+  }
+
+  document.getElementById('close-cal').addEventListener('click', closeCalModal);
+  calModal.addEventListener('click', (e) => {
+    if (e.target === calModal) closeCalModal();
+  });
+
+  document.getElementById('prev-month').addEventListener('click', () => {
+    calDate.setMonth(calDate.getMonth() - 1);
+    renderCalendar();
+  });
+  document.getElementById('next-month').addEventListener('click', () => {
+    calDate.setMonth(calDate.getMonth() + 1);
+    renderCalendar();
+  });
+
+  function formatDate(d) {
+    return d.toISOString().split('T')[0]; // YYYY-MM-DD
+  }
+
+  function renderCalendar() {
+    const year = calDate.getFullYear();
+    const month = calDate.getMonth();
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    monthYearEl.textContent = monthNames[month] + ' ' + year;
+
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    
+    let startDayIndex = firstDay.getDay() - 1;
+    if (startDayIndex < 0) startDayIndex = 6; // Sunday becomes 6
+
+    calGrid.innerHTML = '';
+    for (let i = 0; i < startDayIndex; i++) {
+      const empty = document.createElement('div');
+      calGrid.appendChild(empty);
+    }
+
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dayDate = new Date(year, month, d);
+      const dayEl = document.createElement('button');
+      dayEl.textContent = d;
+      dayEl.className = 'cal-day-btn';
+      
+      if (dayDate < today) {
+        dayEl.disabled = true;
+      }
+      
+      if (selectedDateString === formatDate(dayDate)) {
+        dayEl.classList.add('selected');
+      }
+
+      dayEl.addEventListener('click', () => loadSlots(dayDate));
+      calGrid.appendChild(dayEl);
+    }
+  }
+
+  async function loadSlots(date) {
+    selectedDateString = formatDate(date);
+    selectedSlot = null;
+    renderCalendar();
+    
+    slotContainer.classList.remove('hidden');
+    slotList.innerHTML = '<div class="text-ink/40 text-sm col-span-3 text-center py-2">Checking availability...</div>';
+    
+    let bookedSlots = [];
+    if (supabaseClient) {
+      const { data, error } = await supabaseClient
+        .from('bookings')
+        .select('time')
+        .eq('date', selectedDateString);
+        
+      if (!error && data) {
+        bookedSlots = data.map(b => b.time);
+      }
+    }
+
+    slotList.innerHTML = '';
+    const available = AVAILABLE_SLOTS.filter(s => !bookedSlots.includes(s));
+
+    if (available.length === 0) {
+      slotList.innerHTML = '<div class="text-ink/40 text-sm col-span-3 text-center py-2">Fully booked. Try another date.</div>';
+      return;
+    }
+
+    available.forEach(slot => {
+      const btn = document.createElement('button');
+      btn.textContent = slot;
+      btn.className = 'slot-btn';
+      btn.addEventListener('click', () => {
+        selectedSlot = slot;
+        document.querySelectorAll('#slot-list .slot-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        confirmSlot();
+      });
+      slotList.appendChild(btn);
     });
   }
+
+  function confirmSlot() {
+    if (!selectedDateString || !selectedSlot) return;
+    
+    const dateObj = new Date(selectedDateString + 'T00:00:00');
+    const options = { month: 'short', day: 'numeric' };
+    const displayDate = dateObj.toLocaleDateString('en-US', options);
+    
+    nextSlotText.textContent = displayDate + ' @ ' + selectedSlot;
+    nextSlotMeta.textContent = '48hr sprint →';
+    
+    closeCalModal();
+  }
+
+  // ==========================================
+  // FORM SUBMISSION VIA EDGE FUNCTION
+  // ==========================================
+  const form = document.getElementById('sprint-form');
+  if (form) {
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      
+      if (!selectedDateString || !selectedSlot) {
+        document.getElementById('open-cal-btn').click();
+        return;
+      }
+      
+      const btn = form.querySelector('button[type="submit"]');
+      const original = btn.innerHTML;
+      btn.innerHTML = '<span>Saving booking...</span>';
+      btn.disabled = true;
+
+      const formData = {
+        name: form.name.value,
+        email: form.email.value,
+        site: form.site.value,
+        brief: form.brief.value,
+        budget: form.budget.value,
+        date: selectedDateString,
+        time: selectedSlot
+      };
+
+      try {
+        const response = await fetch(`${SUPABASE_URL}/functions/v1/submit-booking`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'apikey': SUPABASE_KEY,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.error || 'Failed to book sprint');
+        }
+
+        btn.innerHTML = '<span>Sprint booked! Reply within 12h</span><span>✓</span>';
+        setTimeout(() => {
+          btn.innerHTML = original;
+          btn.disabled = false;
+          form.reset();
+          nextSlotText.textContent = 'Click to select →';
+          nextSlotMeta.textContent = '';
+          selectedDateString = null;
+          selectedSlot = null;
+        }, 4500);
+
+      } catch (error) {
+        console.error('Booking error:', error);
+        btn.innerHTML = '<span>Error. Try again.</span>';
+        setTimeout(() => {
+          btn.innerHTML = original;
+          btn.disabled = false;
+        }, 3000);
+      }
+    });
+  }
+
 })();
 </script>
 </body>
