@@ -1,873 +1,1024 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
-<title>ANDRADY — Landing pages that convert. Built in 48 hours.</title>
-<meta name="description" content="Performance-driven landing pages built in 48 hours. Not a template. Not a six-week agency engagement. Custom-designed, conversion-architected, shipped fast.">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClientPortal OS — The Ultimate Agency Boilerplate</title>
+    <meta name="description" content="A production-ready, multi-tenant agency portal boilerplate. Complete with self-healing auth, row-level security, optimistic Kanban task tracking, and zero stale-read cache bugs.">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap">
-
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      fontFamily: {
-        display: ['Montserrat', 'sans-serif'],
-        body: ['Inter', 'sans-serif'],
-        mono: ['"IBM Plex Mono"', 'monospace'],
-      },
-      colors: {
-        bg: '#111111',
-        ink: '#F2F2F2',
-        accent: '#FF2D8F',
-      }
-    }
-  }
-}
-</script>
-
-<style>
-:root {
-  --color-bg: #111111;
-  --color-ink: #F2F2F2;
-  --color-accent: #FF2D8F;
-  --ease-quiet: cubic-bezier(.22, 1, .36, 1);
-  --ease-precise: cubic-bezier(.4, 0, .2, 1);
-  --ease-emphasis: cubic-bezier(.16, 1, .3, 1);
-}
-* { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; box-sizing: border-box; }
-html, body { background: #111111; color: #F2F2F2; font-family: 'Inter', sans-serif; }
-body { overflow-x: hidden; }
-::selection { background: #FF2D8F; color: #111111; }
-
-.font-display { font-family: 'Montserrat', sans-serif; font-weight: 900; letter-spacing: -0.025em; line-height: 0.9; }
-.font-mono { font-family: 'IBM Plex Mono', monospace; }
-.label { font-family: 'IBM Plex Mono', monospace; font-weight: 500; text-transform: uppercase; letter-spacing: 0.18em; font-size: 11px; }
-
-#hero-grid { perspective: 1200px; }
-.tile-base { background: rgba(255,255,255,0.015); border: 1px solid rgba(242,242,242,0.05); }
-.tile-pink { background: #FF2D8F; border: 1px solid #FF2D8F; }
-.tile-light { background: #F2F2F2; border: 1px solid #F2F2F2; }
-
-.fade-up { opacity: 0; transform: translateY(40px); transition: opacity 1s var(--ease-quiet), transform 1s var(--ease-quiet); will-change: transform, opacity; }
-.fade-up.is-in { opacity: 1; transform: none; }
-
-.frame-card { transition: border-color 400ms var(--ease-emphasis); }
-.frame-card:hover { border-color: rgba(255, 45, 143, 0.6) !important; }
-
-.cta-btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
-  background: #FF2D8F; color: #111111;
-  font-family: 'IBM Plex Mono', monospace; font-weight: 500;
-  text-transform: uppercase; letter-spacing: 0.1em; font-size: 12px;
-  padding: 1.1rem 1.6rem;
-  transition: transform 300ms var(--ease-precise), background-color 300ms var(--ease-precise), color 300ms var(--ease-precise), border-color 300ms var(--ease-precise);
-  cursor: pointer;
-  border: 1px solid #FF2D8F;
-}
-.cta-btn:hover { transform: translateY(-2px); background-color: #F2F2F2; border-color: #F2F2F2; }
-.cta-btn:disabled { opacity: 0.7; cursor: default; transform: none; }
-
-.link-underline {
-  background-image: linear-gradient(currentColor, currentColor);
-  background-size: 0% 1px; background-position: 0 100%; background-repeat: no-repeat;
-  transition: background-size 0.4s var(--ease-emphasis);
-  padding-bottom: 2px;
-}
-.link-underline:hover { background-size: 100% 1px; }
-
-.divider { height: 1px; background: rgba(242,242,242,0.08); width: 100%; }
-
-input, textarea, select {
-  background: transparent; border: none; border-bottom: 1px solid rgba(242,242,242,0.15);
-  color: #F2F2F2; font-family: 'Inter', sans-serif; font-size: 15px;
-  padding: 0.85rem 0; width: 100%;
-  transition: border-color 300ms var(--ease-precise);
-}
-input:focus, textarea:focus, select:focus { outline: none; border-color: #FF2D8F; }
-::placeholder { color: rgba(242,242,242,0.3); }
-select option { background: #111111; color: #F2F2F2; }
-label.label { display: block; margin-bottom: 0.25rem; margin-top: 1.5rem; }
-
-#scroll-progress {
-  position: fixed; top: 0; left: 0; height: 2px; background: #FF2D8F; z-index: 60;
-  width: 0%; transform-origin: left; transition: width 100ms linear;
-}
-
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: #111111; }
-::-webkit-scrollbar-thumb { background: rgba(242,242,242,0.15); }
-::-webkit-scrollbar-thumb:hover { background: rgba(242,242,242,0.3); }
-
-/* Calendar Modal Styles */
-#cal-modal { transition: opacity 300ms var(--ease-precise); }
-.cal-day-btn { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 13px; border: 1px solid rgba(255,255,255,0.1); transition: all 200ms var(--ease-precise); }
-.cal-day-btn:hover:not(:disabled) { border-color: #FF2D8F; color: #FF2D8F; }
-.cal-day-btn:disabled { opacity: 0.2; cursor: not-allowed; }
-.cal-day-btn.selected { background: #FF2D8F; color: #111111; border-color: #FF2D8F; }
-.slot-btn { padding: 0.75rem; font-family: 'IBM Plex Mono', monospace; font-size: 12px; border: 1px solid rgba(255,255,255,0.1); transition: all 200ms var(--ease-precise); }
-.slot-btn:hover:not(:disabled) { border-color: #FF2D8F; color: #FF2D8F; }
-.slot-btn.selected { background: #FF2D8F; color: #111111; border-color: #FF2D8F; }
-
-@media (prefers-reduced-motion: reduce) {
-  .fade-up { opacity: 1 !important; transform: none !important; transition: none !important; }
-  #hero-grid { display: none !important; }
-}
-</style>
-</head>
-<body class="bg-bg text-ink font-body">
-
-<div id="scroll-progress"></div>
-
-<!-- NAV -->
-<header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#111111]/75 border-b border-white/5">
-  <nav class="max-w-[1400px] mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
-    <a href="#hero" class="font-display text-base tracking-tight">ANDRADY<span class="text-accent">.</span></a>
-    <div class="hidden md:flex items-center gap-8">
-      <a href="#problem" class="label text-ink/50 hover:text-ink transition-colors">Why</a>
-      <a href="#offer" class="label text-ink/50 hover:text-ink transition-colors">Offer</a>
-      <a href="#process" class="label text-ink/50 hover:text-ink transition-colors">Process</a>
-      <a href="#book" class="label text-ink/50 hover:text-ink transition-colors">Book</a>
-    </div>
-    <a href="#book" class="font-mono text-[11px] uppercase tracking-[0.12em] border border-ink/20 px-3 py-2 hover:border-accent hover:text-accent transition-colors">Book sprint →</a>
-  </nav>
-</header>
-
-<!-- HERO -->
-<section id="hero" class="relative h-screen min-h-[680px] w-full overflow-hidden">
-  <div id="hero-grid" class="absolute inset-0 grid z-0"
-       style="grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(6, 1fr);"></div>
-  <div class="hero-content relative z-10 h-full flex flex-col justify-center max-w-[1400px] mx-auto px-6 lg:px-10 pt-16">
-    <p class="label text-accent fade-up mb-6" data-hero-fade>● 48-Hour Landing Page Sprint</p>
-    <h1 class="font-display text-[clamp(2.4rem,8vw,7rem)] fade-up mb-8" data-hero-fade>
-      Landing pages<br>that convert.<br>
-      <span class="text-accent">Built in 48 hours.</span>
-    </h1>
-    <p class="font-body text-base md:text-lg text-ink/65 max-w-xl leading-relaxed fade-up mb-10" data-hero-fade>
-      Not a template. Not a six-week agency engagement. Performance-driven pages shipped fast — by someone who's spent years inside conversion teams.
-    </p>
-    <div class="fade-up flex flex-wrap items-center gap-6" data-hero-fade>
-      <a href="#book" class="cta-btn">
-        Book your 48-hour sprint
-        <span>→</span>
-      </a>
-      <a href="#offer" class="label text-ink/60 hover:text-ink link-underline transition-colors">See what's included</a>
-    </div>
-  </div>
-  <div class="hero-content absolute bottom-6 left-0 right-0 z-10">
-    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 flex justify-between items-center">
-      <div class="label text-ink/30">SCROLL ↓</div>
-      <div class="label text-ink/30 hidden md:block">[ ANDRADY · EST. 2018 ]</div>
-      <div class="label text-ink/30">2 SLOTS / WEEK</div>
-    </div>
-  </div>
-</section>
-
-<!-- PROBLEM -->
-<section id="problem" class="relative py-28 lg:py-40 border-t border-white/5">
-  <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16 lg:mb-20">
-      <div class="lg:col-span-4">
-        <p class="label text-ink/40 fade-up mb-4">01 / The Problem</p>
-      </div>
-      <div class="lg:col-span-8">
-        <h2 class="font-display text-[clamp(2rem,5.5vw,4.2rem)] fade-up mb-6">
-          Most landing pages<br>don't convert.<br>
-          <span class="text-ink/35">Here's why.</span>
-        </h2>
-        <p class="font-body text-lg text-ink/60 max-w-2xl leading-relaxed fade-up">
-          The page ships. The traffic comes. The conversions don't. Three reasons why.
-        </p>
-      </div>
-    </div>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5">
-      <div class="frame-card bg-bg p-8 lg:p-10 fade-up border border-transparent">
-        <div class="font-mono text-accent text-xs mb-8">/ 01</div>
-        <h3 class="font-display text-2xl lg:text-[1.7rem] mb-4 leading-tight">Templates don't convert.</h3>
-        <p class="text-ink/55 text-sm leading-relaxed">Squarespace themes look fine. They weren't built around your offer, your audience, or your funnel. Generic layouts kill conversion.</p>
-      </div>
-      <div class="frame-card bg-bg p-8 lg:p-10 fade-up border border-transparent">
-        <div class="font-mono text-accent text-xs mb-8">/ 02</div>
-        <h3 class="font-display text-2xl lg:text-[1.7rem] mb-4 leading-tight">Pretty isn't performance.</h3>
-        <p class="text-ink/55 text-sm leading-relaxed">Most developers ship pixels. They don't think about scroll depth, CTA placement, or friction. A page can be beautiful and still convert at 0.4%.</p>
-      </div>
-      <div class="frame-card bg-bg p-8 lg:p-10 fade-up border border-transparent">
-        <div class="font-mono text-accent text-xs mb-8">/ 03</div>
-        <h3 class="font-display text-2xl lg:text-[1.7rem] mb-4 leading-tight">Agencies are slow.</h3>
-        <p class="text-ink/55 text-sm leading-relaxed">Three-week discovery calls. Six-figure retainers. By the time the page ships, the campaign window has already closed.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    <!-- React & Babel -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-<!-- OFFER -->
-<section id="offer" class="relative py-28 lg:py-40 border-t border-white/5">
-  <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16 lg:mb-20">
-      <div class="lg:col-span-4">
-        <p class="label text-ink/40 fade-up mb-4">02 / The Offer</p>
-      </div>
-      <div class="lg:col-span-8">
-        <h2 class="font-display text-[clamp(2rem,5.5vw,4.2rem)] fade-up mb-6">
-          One sprint.<br>
-          One page.<br>
-          <span class="text-accent">Live in 48 hours.</span>
-        </h2>
-      </div>
-    </div>
+    <!-- Gumroad Overlay Script -->
+    <script src="https://gumroad.com/js/gumroad.js"></script>
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
-      <div class="lg:col-span-5 frame-card border border-white/10 p-8 lg:p-10 fade-up">
-        <div class="label text-ink/40 mb-6">Investment</div>
-        <div class="flex items-end justify-between mb-8">
-          <div class="font-display text-5xl lg:text-6xl">$350<span class="text-ink/30 text-3xl">–500</span></div>
-          <div class="text-right">
-            <div class="label text-ink/40 mb-1">Turnaround</div>
-            <div class="font-display text-2xl">48 hrs</div>
-          </div>
-        </div>
-        <div class="divider mb-8"></div>
-        <p class="text-ink/60 text-sm leading-relaxed mb-8">Fixed scope. Fixed price. Fixed deadline. No retainer, no surprises. You get a page built to convert — shipped fast.</p>
-        <a href="#book" class="cta-btn w-full">
-          Book your sprint
-          <span>→</span>
-        </a>
-        <div class="mt-6 pt-6 border-t border-white/5 grid grid-cols-2 gap-4">
-          <div>
-            <div class="label text-ink/35 mb-1">Revisions</div>
-            <div class="text-sm text-ink/70">1 round, 24h</div>
-          </div>
-          <div>
-            <div class="label text-ink/35 mb-1">Capacity</div>
-            <div class="text-sm text-ink/70">2 sprints / week</div>
-          </div>
-        </div>
-      </div>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-      <div class="lg:col-span-7 frame-card border border-white/10 p-8 lg:p-10 fade-up">
-        <div class="label text-ink/40 mb-6">What's included</div>
-        <ul class="space-y-0">
-          <li class="flex gap-5 py-4 border-b border-white/5">
-            <div class="font-mono text-accent text-xs shrink-0 pt-1">/ 01</div>
-            <div>
-              <div class="font-display text-base mb-1">Conversion-architected design</div>
-              <div class="text-ink/50 text-sm leading-relaxed">Custom layout built around your offer, funnel, and audience — not a template.</div>
-            </div>
-          </li>
-          <li class="flex gap-5 py-4 border-b border-white/5">
-            <div class="font-mono text-accent text-xs shrink-0 pt-1">/ 02</div>
-            <div>
-              <div class="font-display text-base mb-1">Copy guidance</div>
-              <div class="text-ink/50 text-sm leading-relaxed">Work from your copy, or get directional guidance on headlines, CTAs, and structure.</div>
-            </div>
-          </li>
-          <li class="flex gap-5 py-4 border-b border-white/5">
-            <div class="font-mono text-accent text-xs shrink-0 pt-1">/ 03</div>
-            <div>
-              <div class="font-display text-base mb-1">Mobile-first responsive build</div>
-              <div class="text-ink/50 text-sm leading-relaxed">Hand-coded. Loads in under 2 seconds on 4G. No page-builders, no bloat.</div>
-            </div>
-          </li>
-          <li class="flex gap-5 py-4 border-b border-white/5">
-            <div class="font-mono text-accent text-xs shrink-0 pt-1">/ 04</div>
-            <div>
-              <div class="font-display text-base mb-1">Analytics + event tracking</div>
-              <div class="text-ink/50 text-sm leading-relaxed">GA4, Meta Pixel, conversion events — set up and verified before launch.</div>
-            </div>
-          </li>
-          <li class="flex gap-5 py-4 border-b border-white/5">
-            <div class="font-mono text-accent text-xs shrink-0 pt-1">/ 05</div>
-            <div>
-              <div class="font-display text-base mb-1">One revision round</div>
-              <div class="text-ink/50 text-sm leading-relaxed">Within 24 hours of delivery. Copy tweaks, layout shifts, color adjustments.</div>
-            </div>
-          </li>
-          <li class="flex gap-5 py-4">
-            <div class="font-mono text-accent text-xs shrink-0 pt-1">/ 06</div>
-            <div>
-              <div class="font-display text-base mb-1">Deployed on your domain</div>
-              <div class="text-ink/50 text-sm leading-relaxed">Vercel, Netlify, or your hosting. SSL, DNS, the works.</div>
-            </div>
-          </li>
-        </ul>
-        <div class="divider my-6"></div>
-        <div class="grid grid-cols-2 gap-4 text-sm">
-          <div>
-            <div class="label text-ink/35 mb-1">Tech stack</div>
-            <div class="text-ink/65 font-mono text-xs">Next.js / React / HTML + Tailwind</div>
-          </div>
-          <div>
-            <div class="label text-ink/35 mb-1">Hosting</div>
-            <div class="text-ink/65 font-mono text-xs">Vercel / Netlify / Your stack</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WHY ME -->
-<section id="why" class="relative py-28 lg:py-40 border-t border-white/5">
-  <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16 lg:mb-20">
-      <div class="lg:col-span-4">
-        <p class="label text-ink/40 fade-up mb-4">03 / Who's building it</p>
-      </div>
-      <div class="lg:col-span-8">
-        <h2 class="font-display text-[clamp(2rem,5.5vw,4.2rem)] fade-up mb-8">
-          I don't just code.<br>
-          <span class="text-accent">I architect for conversion.</span>
-        </h2>
-        <p class="font-body text-lg text-ink/65 max-w-2xl leading-relaxed fade-up mb-6">
-          I've worked inside performance marketing teams and agencies — not just dev shops. I've seen what makes a page convert and what kills it. That logic goes into every build, before a single line of code.
-        </p>
-        <p class="font-body text-lg text-ink/65 max-w-2xl leading-relaxed fade-up">
-          You're not hiring a developer. You're hiring someone who thinks about your funnel first and the typography second.
-        </p>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5">
-      <div class="bg-bg p-6 lg:p-8 fade-up">
-        <div class="font-display text-4xl lg:text-5xl mb-3">120<span class="text-accent">+</span></div>
-        <div class="label text-ink/40">Pages shipped</div>
-      </div>
-      <div class="bg-bg p-6 lg:p-8 fade-up">
-        <div class="font-display text-4xl lg:text-5xl mb-3">3.4<span class="text-accent">%</span></div>
-        <div class="label text-ink/40">Avg. CVR</div>
-      </div>
-      <div class="bg-bg p-6 lg:p-8 fade-up">
-        <div class="font-display text-4xl lg:text-5xl mb-3">48<span class="text-ink/30 text-2xl">hrs</span></div>
-        <div class="label text-ink/40">Avg. turnaround</div>
-      </div>
-      <div class="bg-bg p-6 lg:p-8 fade-up">
-        <div class="font-display text-4xl lg:text-5xl mb-3">7<span class="text-ink/30 text-2xl">yrs</span></div>
-        <div class="label text-ink/40">In performance mktg</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROCESS -->
-<section id="process" class="relative py-28 lg:py-40 border-t border-white/5">
-  <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16 lg:mb-20">
-      <div class="lg:col-span-4">
-        <p class="label text-ink/40 fade-up mb-4">04 / Process</p>
-      </div>
-      <div class="lg:col-span-8">
-        <h2 class="font-display text-[clamp(2rem,5.5vw,4.2rem)] fade-up mb-6">
-          Three steps.<br>
-          <span class="text-ink/35">Forty-eight hours.</span>
-        </h2>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/5">
-      <div class="frame-card bg-bg p-8 lg:p-10 fade-up border border-transparent">
-        <div class="flex items-center justify-between mb-10">
-          <div class="font-mono text-accent text-xs">STEP / 01</div>
-          <div class="font-display text-5xl text-ink/10">01</div>
-        </div>
-        <h3 class="font-display text-3xl lg:text-[2rem] mb-4 leading-tight">Book.</h3>
-        <p class="text-ink/55 text-sm leading-relaxed mb-8">30-minute kickoff call. We lock the offer, audience, CTA, and conversion goal before any code is written.</p>
-        <div class="label text-ink/30">Day 0 · 30 min</div>
-      </div>
-      <div class="frame-card bg-bg p-8 lg:p-10 fade-up border border-transparent">
-        <div class="flex items-center justify-between mb-10">
-          <div class="font-mono text-accent text-xs">STEP / 02</div>
-          <div class="font-display text-5xl text-ink/10">02</div>
-        </div>
-        <h3 class="font-display text-3xl lg:text-[2rem] mb-4 leading-tight">Build.</h3>
-        <p class="text-ink/55 text-sm leading-relaxed mb-8">I design, write, and build. Progress updates at the 12-hour and 36-hour marks. You're never in the dark.</p>
-        <div class="label text-ink/30">Hour 0 → 48</div>
-      </div>
-      <div class="frame-card bg-bg p-8 lg:p-10 fade-up border border-transparent">
-        <div class="flex items-center justify-between mb-10">
-          <div class="font-mono text-accent text-xs">STEP / 03</div>
-          <div class="font-display text-5xl text-ink/10">03</div>
-        </div>
-        <h3 class="font-display text-3xl lg:text-[2rem] mb-4 leading-tight">Live.</h3>
-        <p class="text-ink/55 text-sm leading-relaxed mb-8">Deployed on your domain. Analytics live. Conversion events verified. One revision round within 24 hours.</p>
-        <div class="label text-ink/30">Hour 48</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA / CONTACT -->
-<section id="book" class="relative py-28 lg:py-40 border-t border-white/5">
-  <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-      <div class="lg:col-span-5">
-        <p class="label text-accent fade-up mb-6">● 05 / Book your sprint</p>
-        <h2 class="font-display text-[clamp(2.2rem,6vw,5rem)] fade-up mb-8 leading-[0.95]">
-          Let's ship<br>
-          a page that<br>
-          <span class="text-accent">converts.</span>
-        </h2>
-        <p class="font-body text-lg text-ink/60 max-w-md leading-relaxed fade-up mb-10">
-          Limited to 4 sprints per week. Tell me about your project — I'll reply within 12 hours with availability and next steps.
-        </p>
-        <div class="fade-up">
-          <div class="flex items-start gap-4 py-3 border-b border-white/5">
-            <div class="label text-ink/40 w-28 shrink-0 pt-1">Email</div>
-            <div class="font-mono text-sm text-ink/80">wendelandrady30@gmail.com</div>
-          </div>
-          
-          <!-- Clickable Calendar Slot -->
-          <div class="flex items-start gap-4 py-3 border-b border-white/5 cursor-pointer hover:bg-white/5 transition-colors -mx-4 px-4" id="open-cal-btn">
-            <div class="label text-ink/40 w-28 shrink-0 pt-1">Next slot</div>
-            <div class="font-mono text-sm text-accent flex-1 flex justify-between items-center">
-              <span id="next-slot-text">Click to select →</span>
-              <span class="text-ink/30 text-xs hidden md:block" id="next-slot-meta"></span>
-            </div>
-          </div>
-          
-          <div class="flex items-start gap-4 py-3 border-b border-white/5">
-            <div class="label text-ink/40 w-28 shrink-0 pt-1">Capacity</div>
-            <div class="font-mono text-sm text-ink/80">2 sprints / week</div>
-          </div>
-          <div class="flex items-start gap-4 py-3">
-            <div class="label text-ink/40 w-28 shrink-0 pt-1">Response</div>
-            <div class="font-mono text-sm text-ink/80">Within 12 hours</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="lg:col-span-6 lg:col-start-7">
-        <form id="sprint-form" class="frame-card border border-white/10 p-8 lg:p-10 fade-up">
-          <div class="label text-ink/40 mb-6">Project brief</div>
-          
-          <label class="label text-ink/40" for="name">Your name</label>
-          <input type="text" id="name" name="name" placeholder="John Andrade" required>
-          
-          <label class="label text-ink/40" for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="john@company.com" required>
-          
-          <label class="label text-ink/40" for="site">Current site (if any)</label>
-          <input type="url" id="site" name="site" placeholder="https://">
-          
-          <label class="label text-ink/40" for="brief">What are we building?</label>
-          <textarea id="brief" name="brief" rows="3" placeholder="SaaS landing page, waitlist, product launch, lead gen..."></textarea>
-          
-          <label class="label text-ink/40" for="budget">Budget range</label>
-          <select id="budget" name="budget">
-            <option value="">Select...</option>
-            <option value="350">$350 — Single page, no integrations</option>
-            <option value="500">$500 — Single page + analytics + CRM</option>
-            <option value="custom">Custom scope</option>
-          </select>
-          
-          <button type="submit" class="cta-btn w-full mt-8">
-            <span>Book sprint</span>
-            <span>→</span>
-          </button>
-          <p class="text-ink/40 text-xs mt-4 leading-relaxed">Reply within 12 hours. No retainer. No commitment. No discovery calls.</p>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="border-t border-white/5 py-10">
-  <div class="max-w-[1400px] mx-auto px-6 lg:px-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-    <div class="font-display text-base">ANDRADY<span class="text-accent">.</span></div>
-    <div class="label text-ink/30 text-center">Performance-driven landing pages · Built in 48 hours</div>
-    <div class="label text-ink/30">© 2025</div>
-  </div>
-</footer>
-
-<!-- CALENDAR MODAL -->
-<div id="cal-modal" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4 opacity-0">
-  <div class="bg-bg border border-white/15 max-w-md w-full p-6 md:p-8 relative">
-    <button id="close-cal" class="absolute top-4 right-4 text-ink/40 hover:text-accent text-xl">×</button>
-    <div class="label text-accent mb-2">SELECT YOUR SPRINT START</div>
-    <p class="text-ink/50 text-xs mb-6">Sprints begin at 10:00 AM. Build runs for 48 hours.</p>
-    
-    <div class="flex justify-between items-center mb-4">
-      <button id="prev-month" class="font-mono text-ink/60 hover:text-accent text-sm">← Prev</button>
-      <div id="cal-month-year" class="font-display text-lg"></div>
-      <button id="next-month" class="font-mono text-ink/60 hover:text-accent text-sm">Next →</button>
-    </div>
-    
-    <div class="grid grid-cols-7 gap-1 text-center mb-2">
-      <div class="label text-ink/30 text-[10px]">MON</div>
-      <div class="label text-ink/30 text-[10px]">TUE</div>
-      <div class="label text-ink/30 text-[10px]">WED</div>
-      <div class="label text-ink/30 text-[10px]">THU</div>
-      <div class="label text-ink/30 text-[10px]">FRI</div>
-      <div class="label text-ink/30 text-[10px]">SAT</div>
-      <div class="label text-ink/30 text-[10px]">SUN</div>
-    </div>
-    
-    <div id="cal-grid" class="grid grid-cols-7 gap-1 mb-6"></div>
-    
-    <div id="slot-container" class="hidden">
-      <div class="label text-ink/40 mb-3">Available start times</div>
-      <div id="slot-list" class="grid grid-cols-3 gap-2"></div>
-    </div>
-    
-    <div id="cal-status" class="text-center text-ink/40 text-xs mt-4 hidden"></div>
-  </div>
-</div>
-
-<noscript>
-  <style>
-    .fade-up { opacity: 1 !important; transform: none !important; }
-    #hero-grid { display: none !important; }
-  </style>
-</noscript>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.13/dist/lenis.min.js"></script>
-<script>
-(function() {
-  'use strict';
-
-  // ==========================================
-  // CONFIG: REPLACE THESE WITH YOUR DETAILS
-  // ==========================================
-  const SUPABASE_URL = 'https://wobboiuiusxywidueghi.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvYmJvaXVpdXN4eXdpZHVlZ2hpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM0NjMwMzgsImV4cCI6MjA5OTAzOTAzOH0.jN4b265vuGMKeJyLvs0VZ49XfWA4pAVE1RqsefwvWqk';
-  // ==========================================
-
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const gsap = window.gsap;
-  const ScrollTrigger = window.ScrollTrigger;
-  if (gsap && ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
-
-  // ===== Supabase Client (for reading booked slots) =====
-  let supabaseClient = null;
-  if (window.supabase && SUPABASE_URL !== 'YOUR_SUPABASE_URL') {
-    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  }
-
-  // ===== Lenis smooth scroll =====
-  let lenis = null;
-  if (window.Lenis && !reducedMotion) {
-    try {
-      lenis = new Lenis({ duration: 1.1, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
-      if (ScrollTrigger) lenis.on('scroll', () => ScrollTrigger.update());
-      gsap.ticker.add(time => lenis.raf(time * 1000));
-      gsap.ticker.lagSmoothing(0);
-    } catch(e) { lenis = null; }
-  }
-
-  // ===== Scroll progress bar =====
-  const progressBar = document.getElementById('scroll-progress');
-  function updateProgress() {
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    progressBar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
-  }
-  if (lenis) lenis.on('scroll', updateProgress); else window.addEventListener('scroll', updateProgress, { passive: true });
-  updateProgress();
-
-  // ===== Build hero tile grid =====
-  const grid = document.getElementById('hero-grid');
-  const rows = 6, cols = 8;
-  const pinkCells = [{r:0,c:7},{r:5,c:0},{r:5,c:7},{r:3,c:7},{r:2,c:5}];
-  const lightCells = [{r:1,c:7}];
-  const tiles = [];
-
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const cell = document.createElement('div');
-      cell.className = 'relative';
-      const isPink = pinkCells.some(p => p.r === r && p.c === c);
-      const isLight = lightCells.some(p => p.r === r && p.c === c);
-      if (isPink) cell.classList.add('tile-pink');
-      else if (isLight) cell.classList.add('tile-light');
-      else cell.classList.add('tile-base');
-      grid.appendChild(cell);
-      tiles.push(cell);
-    }
-  }
-
-  if (gsap && !reducedMotion) {
-    gsap.fromTo(tiles,
-      { rotateX: 90, y: -100, opacity: 0 },
-      { rotateX: 0, y: 0, opacity: 1, duration: 1.2, stagger: { each: 0.04, from: 'random' }, ease: 'expo.out', delay: 0.3,
-        onComplete: () => {
-          document.querySelectorAll('[data-hero-fade]').forEach((el, i) => {
-            setTimeout(() => el.classList.add('is-in'), i * 130);
-          });
+    <style>
+        :root {
+            --bg: #050507; /* Near absolute black */
+            --bg-elevated: #0a0a0f;
+            --border: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(255, 255, 255, 0.12);
+            --text-primary: #f4f4f5;
+            --text-secondary: #a1a1aa;
+            --text-tertiary: #71717a;
+            --accent: #6366f1;
         }
-      }
-    );
-
-    ScrollTrigger.create({
-      trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 0.8,
-      onUpdate: self => {
-        const p = self.progress;
-        tiles.forEach((tile, i) => {
-          const delay = (i / tiles.length) * 0.25;
-          const localP = Math.max(0, Math.min(1, (p - delay) / (0.85 - delay + 0.001)));
-          const dir = i % 3 === 0 ? 1 : i % 3 === 1 ? -1 : 0.6;
-          gsap.set(tile, { x: dir * localP * 16 + 'vw', y: -localP * 22 + 'vh', opacity: 1 - localP });
-        });
-      },
-      onLeaveBack: () => tiles.forEach(tile => gsap.set(tile, { x: 0, y: 0, opacity: 1 }))
-    });
-
-    gsap.to('.hero-content', {
-      scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 0.8 },
-      y: -60, opacity: 0, ease: 'none'
-    });
-  } else {
-    document.querySelectorAll('[data-hero-fade]').forEach(el => el.classList.add('is-in'));
-    tiles.forEach(tile => { tile.style.opacity = '1'; });
-  }
-
-  // ===== Fade-up observer =====
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-in');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('section:not(#hero) .fade-up').forEach(el => observer.observe(el));
-
-  // ===== Smooth scroll for anchor links =====
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', e => {
-      const href = link.getAttribute('href');
-      if (href === '#' || !href) return;
-      const target = document.querySelector(href);
-      if (target) {
-        e.preventDefault();
-        if (lenis) lenis.scrollTo(target, { offset: -64 });
-        else {
-          const top = target.getBoundingClientRect().top + window.scrollY - 64;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }
-      }
-    });
-  });
-
-  // ==========================================
-  // CALENDAR MODAL LOGIC
-  // ==========================================
-  const AVAILABLE_SLOTS = ['10:00', '14:00', '18:00'];
-  let calDate = new Date();
-  let selectedDateString = null;
-  let selectedSlot = null;
-
-  const calModal = document.getElementById('cal-modal');
-  const calGrid = document.getElementById('cal-grid');
-  const monthYearEl = document.getElementById('cal-month-year');
-  const slotContainer = document.getElementById('slot-container');
-  const slotList = document.getElementById('slot-list');
-  const nextSlotText = document.getElementById('next-slot-text');
-  const nextSlotMeta = document.getElementById('next-slot-meta');
-
-  document.getElementById('open-cal-btn').addEventListener('click', () => {
-    calModal.classList.remove('hidden');
-    calModal.classList.add('flex');
-    requestAnimationFrame(() => { calModal.style.opacity = '1'; });
-    renderCalendar();
-  });
-
-  function closeCalModal() {
-    calModal.style.opacity = '0';
-    setTimeout(() => {
-      calModal.classList.add('hidden');
-      calModal.classList.remove('flex');
-    }, 300);
-  }
-
-  document.getElementById('close-cal').addEventListener('click', closeCalModal);
-  calModal.addEventListener('click', (e) => {
-    if (e.target === calModal) closeCalModal();
-  });
-
-  document.getElementById('prev-month').addEventListener('click', () => {
-    calDate.setMonth(calDate.getMonth() - 1);
-    renderCalendar();
-  });
-  document.getElementById('next-month').addEventListener('click', () => {
-    calDate.setMonth(calDate.getMonth() + 1);
-    renderCalendar();
-  });
-
-  function formatDate(d) {
-    return d.toISOString().split('T')[0]; // YYYY-MM-DD
-  }
-
-  function renderCalendar() {
-    const year = calDate.getFullYear();
-    const month = calDate.getMonth();
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    monthYearEl.textContent = monthNames[month] + ' ' + year;
-
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const daysInMonth = lastDay.getDate();
-    
-    let startDayIndex = firstDay.getDay() - 1;
-    if (startDayIndex < 0) startDayIndex = 6; // Sunday becomes 6
-
-    calGrid.innerHTML = '';
-    for (let i = 0; i < startDayIndex; i++) {
-      const empty = document.createElement('div');
-      calGrid.appendChild(empty);
-    }
-
-    const today = new Date();
-    today.setHours(0,0,0,0);
-
-    for (let d = 1; d <= daysInMonth; d++) {
-      const dayDate = new Date(year, month, d);
-      const dayEl = document.createElement('button');
-      dayEl.textContent = d;
-      dayEl.className = 'cal-day-btn';
-      
-      if (dayDate < today) {
-        dayEl.disabled = true;
-      }
-      
-      if (selectedDateString === formatDate(dayDate)) {
-        dayEl.classList.add('selected');
-      }
-
-      dayEl.addEventListener('click', () => loadSlots(dayDate));
-      calGrid.appendChild(dayEl);
-    }
-  }
-
-  async function loadSlots(date) {
-    selectedDateString = formatDate(date);
-    selectedSlot = null;
-    renderCalendar();
-    
-    slotContainer.classList.remove('hidden');
-    slotList.innerHTML = '<div class="text-ink/40 text-sm col-span-3 text-center py-2">Checking availability...</div>';
-    
-    let bookedSlots = [];
-    if (supabaseClient) {
-      const { data, error } = await supabaseClient
-        .from('bookings')
-        .select('time')
-        .eq('date', selectedDateString);
         
-      if (!error && data) {
-        bookedSlots = data.map(b => b.time);
-      }
-    }
-
-    slotList.innerHTML = '';
-    const available = AVAILABLE_SLOTS.filter(s => !bookedSlots.includes(s));
-
-    if (available.length === 0) {
-      slotList.innerHTML = '<div class="text-ink/40 text-sm col-span-3 text-center py-2">Fully booked. Try another date.</div>';
-      return;
-    }
-
-    available.forEach(slot => {
-      const btn = document.createElement('button');
-      btn.textContent = slot;
-      btn.className = 'slot-btn';
-      btn.addEventListener('click', () => {
-        selectedSlot = slot;
-        document.querySelectorAll('#slot-list .slot-btn').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
-        confirmSlot();
-      });
-      slotList.appendChild(btn);
-    });
-  }
-
-  function confirmSlot() {
-    if (!selectedDateString || !selectedSlot) return;
-    
-    const dateObj = new Date(selectedDateString + 'T00:00:00');
-    const options = { month: 'short', day: 'numeric' };
-    const displayDate = dateObj.toLocaleDateString('en-US', options);
-    
-    nextSlotText.textContent = displayDate + ' @ ' + selectedSlot;
-    nextSlotMeta.textContent = '48hr sprint →';
-    
-    closeCalModal();
-  }
-
-  // ==========================================
-  // FORM SUBMISSION VIA EDGE FUNCTION
-  // ==========================================
-  const form = document.getElementById('sprint-form');
-  if (form) {
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      
-      if (!selectedDateString || !selectedSlot) {
-        document.getElementById('open-cal-btn').click();
-        return;
-      }
-      
-      const btn = form.querySelector('button[type="submit"]');
-      const original = btn.innerHTML;
-      btn.innerHTML = '<span>Saving booking...</span>';
-      btn.disabled = true;
-
-      const formData = {
-        name: form.name.value,
-        email: form.email.value,
-        site: form.site.value,
-        brief: form.brief.value,
-        budget: form.budget.value,
-        date: selectedDateString,
-        time: selectedSlot
-      };
-
-      try {
-        const response = await fetch(`${SUPABASE_URL}/functions/v1/submit-booking`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${SUPABASE_KEY}`,
-            'apikey': SUPABASE_KEY,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
-        });
-
-        const result = await response.json();
-
-        if (!response.ok) {
-          throw new Error(result.error || 'Failed to book sprint');
+        * { box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg);
+            color: var(--text-secondary);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        btn.innerHTML = '<span>Sprint booked! Reply within 12h</span><span>✓</span>';
-        setTimeout(() => {
-          btn.innerHTML = original;
-          btn.disabled = false;
-          form.reset();
-          nextSlotText.textContent = 'Click to select →';
-          nextSlotMeta.textContent = '';
-          selectedDateString = null;
-          selectedSlot = null;
-        }, 4500);
+        /* Global Mouse Spotlight */
+        .spotlight {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(168, 85, 247, 0.06), transparent 40%);
+            pointer-events: none;
+            z-index: 1;
+            transition: background 0.1s;
+        }
 
-      } catch (error) {
-        console.error('Booking error:', error);
-        btn.innerHTML = '<span>Error. Try again.</span>';
-        setTimeout(() => {
-          btn.innerHTML = original;
-          btn.disabled = false;
-        }, 3000);
-      }
-    });
-  }
+        /* Animated Mesh Backgrounds */
+        .mesh-hero {
+            background: 
+                radial-gradient(circle at 10% 10%, rgba(99, 102, 241, 0.12), transparent 40%),
+                radial-gradient(circle at 90% 20%, rgba(168, 85, 247, 0.10), transparent 40%),
+                radial-gradient(circle at 50% 100%, rgba(16, 185, 129, 0.08), transparent 40%);
+        }
+        .mesh-pricing {
+            background: 
+                radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15), transparent 50%),
+                radial-gradient(circle at 0% 100%, rgba(16, 185, 129, 0.08), transparent 40%);
+        }
 
-})();
-</script>
+        /* Noise Texture */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 100; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* Grid Background Pattern */
+        .grid-bg {
+            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
+        }
+
+        /* Typography & Gradients */
+        .text-gradient {
+            background: linear-gradient(to bottom right, #ffffff, #a1a1aa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .text-shine {
+            background: linear-gradient(110deg, #e4e4e7 45%, #ffffff 50%, #e4e4e7 55%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shine 6s linear infinite;
+        }
+        @keyframes shine { to { background-position: -200% center; } }
+
+        /* Scroll Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Glassmorphism & Premium Borders */
+        .glass {
+            background: rgba(10, 10, 15, 0.5);
+            backdrop-filter: blur(20px) saturate(150%);
+            -webkit-backdrop-filter: blur(20px) saturate(150%);
+            border: 1px solid var(--border);
+            box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.03), 0 20px 40px -20px rgba(0,0,0,0.5);
+            transition: border-color 0.3s ease;
+        }
+        .glass-hover:hover {
+            border-color: var(--border-hover);
+        }
+
+        /* Mouse Tracking Glow for Cards */
+        .card-glow {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .card-glow::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: radial-gradient(300px circle at var(--mx) var(--my), rgba(168, 85, 247, 0.6), transparent 40%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .card-glow:hover::before { opacity: 1; }
+
+        /* Premium Button Shine */
+        .btn-premium { position: relative; overflow: hidden; isolation: isolate; }
+        .btn-premium::after {
+            content: ''; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-20deg);
+            transition: 0.7s;
+            z-index: 1;
+        }
+        .btn-premium:hover::after { left: 150%; }
+
+        /* Rotating Conic Gradient */
+        @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+        .conic-border { position: relative; z-index: 10; }
+        .conic-border::before {
+            content: ''; position: absolute; inset: -2px; border-radius: inherit; padding: 2px;
+            background: conic-gradient(from var(--angle), transparent 0%, #6366f1 20%, #3b82f6 40%, transparent 60%, #10b981 80%, transparent 100%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+            animation: rotate-conic 6s linear infinite;
+            z-index: -1;
+        }
+        @keyframes rotate-conic { to { --angle: 360deg; } }
+
+        /* Chat Typing Animation */
+        .typing-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--text-secondary); margin: 0 2px; animation: bounce 1.4s infinite ease-in-out both; }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); opacity: 0.5; } 40% { transform: scale(1); opacity: 1; } }
+
+        /* Custom Scrollbar */
+        .pretty-scroll::-webkit-scrollbar { width: 4px; height: 4px; }
+        .pretty-scroll::-webkit-scrollbar-track { background: transparent; }
+        .pretty-scroll::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
+        .pretty-scroll::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+
+        /* Kanban Card Slide Animation */
+        @keyframes slide-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .task-card { animation: slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-300 antialiased selection:bg-indigo-500/30">
+
+    <div class="noise-overlay"></div>
+    <div id="root" class="relative z-10"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const GUMROAD_URL = "https://andradyy.gumroad.com/l/clientportal";
+        const DEMO_URL = "https://andrady.co";
+
+        // --- Inline SVG Icons ---
+        const Icon = ({ path, className = "h-5 w-5", stroke = true }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke={stroke ? "currentColor" : "none"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} dangerouslySetInnerHTML={{ __html: path }} />
+        );
+        
+        const ICONS = {
+            rocket: '<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-3.16-.1z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>',
+            shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
+            check: '<polyline points="20 6 9 17 4 12"/>',
+            x: '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
+            arrowRight: '<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>',
+            chevronDown: '<polyline points="6 9 12 15 18 9"/>',
+            chevronLeft: '<polyline points="15 18 9 12 15 6"/>',
+            chevronRight: '<polyline points="9 18 15 12 9 6"/>',
+            lock: '<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+            zap: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+            palette: '<circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>',
+            package: '<path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>',
+            folder: '<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>',
+            chat: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+            menu: '<line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/>',
+            terminal: '<polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/>',
+            code: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
+            database: '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/>',
+            sparkle: '<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>',
+            star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>'
+        };
+
+        // --- Global Mouse Tracking Hook ---
+        const useMousePosition = () => {
+            const [pos, setPos] = useState({ x: 0, y: 0 });
+            useEffect(() => {
+                const handler = (e) => setPos({ x: e.clientX, y: e.clientY });
+                window.addEventListener('mousemove', handler);
+                return () => window.removeEventListener('mousemove', handler);
+            }, []);
+            return pos;
+        };
+
+        // --- Scroll Reveal Hook ---
+        const useReveal = (delay = 0) => {
+            const ref = useRef(null);
+            useEffect(() => {
+                const observer = new IntersectionObserver(
+                    ([entry]) => {
+                        if (entry.isIntersecting) {
+                            setTimeout(() => entry.target.classList.add('visible'), delay);
+                        }
+                    },
+                    { threshold: 0.1 }
+                );
+                if (ref.current) observer.observe(ref.current);
+                return () => observer.disconnect();
+            }, [delay]);
+            return ref;
+        };
+
+        // --- Card Component with 3D Tilt ---
+        const TiltCard = ({ children, className = "", glow = true }) => {
+            const ref = useRef(null);
+            const handleMouseMove = (e) => {
+                if (!ref.current) return;
+                const rect = ref.current.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const cx = rect.width / 2;
+                const cy = rect.height / 2;
+                const rx = (y - cy) / 25;
+                const ry = (cx - x) / 25;
+                
+                ref.current.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.02)`;
+                ref.current.style.setProperty('--mx', `${x}px`);
+                ref.current.style.setProperty('--my', `${y}px`);
+            };
+            const handleMouseLeave = () => {
+                if (!ref.current) return;
+                ref.current.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            };
+            return (
+                <div 
+                    ref={ref} 
+                    onMouseMove={handleMouseMove} 
+                    onMouseLeave={handleMouseLeave}
+                    className={`transition-transform duration-300 ease-out ${glow ? 'card-glow' : ''} ${className}`}
+                    style={{ transformStyle: 'preserve-3d' }}
+                >
+                    {children}
+                </div>
+            );
+        };
+
+        // --- Interactive Live Demo Component ---
+        const LiveDemo = () => {
+            const [activeTab, setActiveTab] = useState('kanban');
+            const tabs = [
+                { id: 'kanban', label: 'Kanban', icon: ICONS.package },
+                { id: 'files', label: 'Files', icon: ICONS.folder },
+                { id: 'chat', label: 'Chat', icon: ICONS.chat },
+            ];
+
+            return (
+                // Applied purple glow border and gradient background to make it pop
+                <div className="mt-16 max-w-6xl mx-auto rounded-2xl border border-zinc-800 bg-gradient-to-b from-zinc-900/50 to-zinc-950 shadow-2xl shadow-purple-500/10 overflow-hidden backdrop-blur-xl relative">
+                    <div className="flex items-center gap-2 border-b border-zinc-800 bg-zinc-950/80 px-4 py-3">
+                        <div className="h-3 w-3 rounded-full bg-red-500/80"></div>
+                        <div className="h-3 w-3 rounded-full bg-yellow-500/80"></div>
+                        <div className="h-3 w-3 rounded-full bg-green-500/80"></div>
+                        <div className="ml-4 text-xs text-zinc-500 hidden sm:block font-mono">app.youragency.com/projects/1</div>
+                        <div className="ml-auto text-xs text-emerald-400 font-medium flex items-center gap-1.5">
+                            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span> Live Demo
+                        </div>
+                    </div>
+                    
+                    <div className="flex border-b border-zinc-800 bg-zinc-950/50">
+                        {tabs.map(tab => (
+                            <button 
+                                key={tab.id} 
+                                onClick={() => setActiveTab(tab.id)}
+                                className={`px-6 py-3 text-sm font-medium transition-colors relative flex items-center gap-2 ${activeTab === tab.id ? 'text-white' : 'text-zinc-500 hover:text-zinc-300'}`}
+                            >
+                                <Icon path={tab.icon} className="h-4 w-4" />
+                                {tab.label}
+                                {activeTab === tab.id && <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.7)]"></div>}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="p-6 bg-zinc-950/50 min-h-[500px]">
+                        {activeTab === 'kanban' && <KanbanTab />}
+                        {activeTab === 'files' && <FilesTab />}
+                        {activeTab === 'chat' && <ChatTab />}
+                    </div>
+                </div>
+            );
+        };
+
+        // --- Tab 1: Kanban ---
+        const KanbanTab = () => {
+            const initialTasks = [
+                { id: 1, title: 'Design Homepage Hero', priority: 'high', status: 'done' },
+                { id: 2, title: 'Supabase RLS Policies', priority: 'high', status: 'in_review' },
+                { id: 3, title: 'API Route Handlers', priority: 'medium', status: 'in_progress' },
+                { id: 4, title: 'Client Invite Emails', priority: 'medium', status: 'in_progress' },
+                { id: 5, title: 'Optimistic Kanban UI', priority: 'low', status: 'backlog' },
+                { id: 6, title: 'Deploy to Vercel', priority: 'high', status: 'backlog' },
+            ];
+            const [tasks, setTasks] = useState(initialTasks);
+
+            const columns = [
+                { id: 'backlog', title: 'Backlog', dot: 'bg-zinc-500' },
+                { id: 'in_progress', title: 'In Progress', dot: 'bg-blue-500' },
+                { id: 'in_review', title: 'In Review', dot: 'bg-yellow-500' },
+                { id: 'done', title: 'Done', dot: 'bg-emerald-500' },
+            ];
+
+            const moveTask = (id, dir) => {
+                setTasks(prev => prev.map(t => {
+                    if (t.id === id) {
+                        const currentIdx = columns.findIndex(c => c.id === t.status);
+                        const nextIdx = Math.min(Math.max(currentIdx + dir, 0), columns.length - 1);
+                        return { ...t, status: columns[nextIdx].id, moved: true };
+                    }
+                    return t;
+                }));
+            };
+
+            const priorityStyles = {
+                high: 'bg-red-500/10 text-red-400 border-red-500/20',
+                medium: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+                low: 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20',
+            };
+
+            return (
+                <div>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        {columns.map(col => {
+                            const colTasks = tasks.filter(t => t.status === col.id);
+                            return (
+                                <div key={col.id} className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-3 min-h-[300px]">
+                                    <div className="flex items-center gap-2 mb-4 px-1">
+                                        <span className={`h-2 w-2 rounded-full ${col.dot}`}></span>
+                                        <span className="text-xs font-medium text-zinc-300">{col.title}</span>
+                                        <span className="ml-auto text-xs text-zinc-600">{colTasks.length}</span>
+                                    </div>
+                                    <div className="space-y-2">
+                                        {colTasks.map(task => (
+                                            <div key={task.id} className="task-card bg-zinc-900 border border-zinc-800 rounded-lg p-3 group hover:border-purple-500/30 transition-all duration-300">
+                                                <div className="flex justify-between items-start mb-2">
+                                                    <p className="text-sm text-zinc-100 break-words">{task.title}</p>
+                                                    <span className={`text-[9px] font-medium px-1.5 py-0.5 rounded border ${priorityStyles[task.priority]}`}>
+                                                        {task.priority}
+                                                    </span>
+                                                </div>
+                                                <div className="flex justify-between items-center mt-3">
+                                                    <span className="text-[10px] text-zinc-600 font-mono">CP-OS</span>
+                                                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                        <button onClick={() => moveTask(task.id, -1)} className="h-6 w-6 flex items-center justify-center border border-zinc-800 rounded hover:bg-white/10 text-zinc-400 hover:text-white transition">
+                                                            <Icon path={ICONS.chevronLeft} className="h-3 w-3" />
+                                                        </button>
+                                                        <button onClick={() => moveTask(task.id, 1)} className="h-6 w-6 flex items-center justify-center border border-zinc-800 rounded hover:bg-white/10 text-zinc-400 hover:text-white transition">
+                                                            <Icon path={ICONS.chevronRight} className="h-3 w-3" />
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        {colTasks.length === 0 && (
+                                            <div className="text-center py-8 text-zinc-700 text-xs">No tasks</div>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                    <p className="text-center text-xs text-zinc-400 mt-6">
+                        Hover over a task card and click the arrows. State updates instantly with React 19 Optimistic UI.
+                    </p>
+                </div>
+            );
+        };
+
+        // --- Tab 2: Files ---
+        const FilesTab = () => {
+            const [isDragging, setIsDragging] = useState(false);
+            const [uploadProgress, setUploadProgress] = useState(0);
+            const files = [
+                { name: 'Brand_Guidelines.pdf', size: '2.4 MB', date: 'Oct 24' },
+                { name: 'Homepage_Design.fig', size: '8.1 MB', date: 'Oct 22' },
+                { name: 'API_Schema_v2.json', size: '124 KB', date: 'Oct 18' },
+            ];
+
+            useEffect(() => {
+                if (isDragging) {
+                    setUploadProgress(0);
+                    const interval = setInterval(() => {
+                        setUploadProgress(prev => Math.min(prev + 10, 100));
+                    }, 100);
+                    return () => clearInterval(interval);
+                } else {
+                    setUploadProgress(0);
+                }
+            }, [isDragging]);
+
+            return (
+                <div className="max-w-2xl mx-auto">
+                    <div 
+                        className={`border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300 ${isDragging ? 'border-purple-500 scale-[1.02] bg-purple-500/5' : 'border-zinc-700 hover:border-zinc-600'}`}
+                        onMouseEnter={() => setIsDragging(true)}
+                        onMouseLeave={() => setIsDragging(false)}
+                    >
+                        <div className={`h-12 w-12 mx-auto rounded-full border flex items-center justify-center mb-4 transition-colors ${isDragging ? 'bg-purple-500/20 border-purple-500/30' : 'bg-white/5 border-white/10'}`}>
+                            <Icon path={ICONS.folder} className={`h-6 w-6 transition-colors ${isDragging ? 'text-purple-400' : 'text-zinc-400'}`} />
+                        </div>
+                        <p className="text-white font-medium">{isDragging && uploadProgress < 100 ? `Uploading... ${uploadProgress}%` : 'Drag & drop files here'}</p>
+                        <p className="text-xs text-zinc-500 mt-1">Secure bucket storage with RLS policies enabled</p>
+                        {isDragging && (
+                            <div className="mt-4 w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
+                                <div className="bg-purple-500 h-full transition-all duration-100" style={{ width: `${uploadProgress}%` }}></div>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="mt-8 space-y-2">
+                        {files.map(file => (
+                            <div key={file.name} className="flex items-center justify-between p-3 bg-white/[0.02] border border-zinc-800 rounded-lg hover:border-zinc-700 transition group">
+                                <div className="flex items-center gap-3">
+                                    <Icon path={ICONS.package} className="h-5 w-5 text-zinc-500 group-hover:text-purple-400 transition-colors" />
+                                    <div>
+                                        <p className="text-sm text-zinc-200">{file.name}</p>
+                                        <p className="text-xs text-zinc-500">{file.size}</p>
+                                    </div>
+                                </div>
+                                <span className="text-xs text-zinc-400">{file.date}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        // --- Tab 3: Chat ---
+        const ChatTab = () => {
+            const [messages, setMessages] = useState([{ id: 1, sender: 'client', text: 'Hey! Just reviewed the new Kanban UI. Looks amazing!' }]);
+            const [typing, setTyping] = useState(false);
+            const [currentText, setCurrentText] = useState("");
+            const scrollRef = useRef(null);
+
+            const script = [
+                { sender: 'agency', text: 'Glad you like it! We used the new React 19 useOptimistic hook for instant updates.' },
+                { sender: 'client', text: 'Perfect. When can we deploy to production?' },
+                { sender: 'agency', text: 'Right now. Just merged to main, waiting on Vercel build.' },
+                { sender: 'client', text: 'Awesome. Send over the invoice when you get a chance.' },
+                { sender: 'agency', text: 'Sent! Thanks for the smooth collab.' }
+            ];
+
+            useEffect(() => {
+                let stepIndex = 0;
+                let charIndex = 0;
+                let isMounted = true;
+
+                const startTyping = () => {
+                    if (!isMounted) return;
+                    if (stepIndex >= script.length) {
+                        setTimeout(() => {
+                            if (!isMounted) return;
+                            setMessages([{ id: 1, sender: 'client', text: 'Hey! Just reviewed the new Kanban UI. Looks amazing!' }]);
+                            stepIndex = 0;
+                            startTyping();
+                        }, 4000);
+                        return;
+                    }
+
+                    const currentScript = script[stepIndex];
+                    setTyping(true);
+                    
+                    setTimeout(() => {
+                        if (!isMounted) return;
+                        setTyping(false);
+                        const typeChar = () => {
+                            if (!isMounted) return;
+                            if (charIndex <= currentScript.text.length) {
+                                setCurrentText(currentScript.text.substring(0, charIndex));
+                                charIndex++;
+                                setTimeout(typeChar, 30);
+                            } else {
+                                setMessages(prev => [...prev, { id: Date.now(), sender: currentScript.sender, text: currentScript.text }]);
+                                setCurrentText("");
+                                charIndex = 0;
+                                stepIndex++;
+                                setTimeout(startTyping, 1500);
+                            }
+                        };
+                        typeChar();
+                    }, 1500);
+                };
+
+                const timer = setTimeout(startTyping, 2000);
+                return () => { isMounted = false; clearTimeout(timer); };
+            }, []);
+
+            useEffect(() => {
+                if (scrollRef.current) {
+                    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+                }
+            }, [messages, currentText]);
+
+            return (
+                <div className="max-w-2xl mx-auto space-y-4 min-h-[400px] flex flex-col">
+                    <div ref={scrollRef} className="flex-1 space-y-4 pretty-scroll overflow-y-auto pr-2 pb-4">
+                        {messages.map(msg => (
+                            <div key={msg.id} className={`flex ${msg.sender === 'agency' ? 'justify-end' : 'justify-start'}`}>
+                                <div className={`max-w-[70%] p-3 rounded-2xl ${msg.sender === 'agency' ? 'bg-purple-600 text-white rounded-br-sm shadow-lg shadow-purple-600/20' : 'bg-zinc-800 text-zinc-100 rounded-bl-sm border border-zinc-700'}`}>
+                                    <p className="text-sm">{msg.text}</p>
+                                </div>
+                            </div>
+                        ))}
+                        {typing && (
+                            <div className="flex justify-start">
+                                <div className="bg-zinc-800 p-3 rounded-2xl rounded-bl-sm border border-zinc-700">
+                                    <div className="flex"><span className="typing-dot"></span><span className="typing-dot"></span><span className="typing-dot"></span></div>
+                                </div>
+                            </div>
+                        )}
+                        {currentText && (
+                            <div className="flex justify-end">
+                                <div className="max-w-[70%] p-3 rounded-2xl bg-purple-600 text-white rounded-br-sm">
+                                    <p className="text-sm">{currentText}<span className="animate-pulse">|</span></p>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                    <div className="border-t border-zinc-800 pt-4 flex items-center gap-2">
+                        <input type="text" placeholder="Type a message..." className="flex-1 bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-2 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-purple-500/50" />
+                        <button className="bg-purple-600 text-white p-2 rounded-lg hover:bg-purple-500 transition shadow-lg shadow-purple-600/20">
+                            <Icon path={ICONS.arrowRight} className="h-5 w-5" />
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        // --- Layout Components ---
+        const Nav = () => {
+            const [mobileOpen, setMobileOpen] = useState(false);
+            const [scrolled, setScrolled] = useState(false);
+
+            useEffect(() => {
+                const onScroll = () => setScrolled(window.scrollY > 10);
+                window.addEventListener('scroll', onScroll);
+                return () => window.removeEventListener('scroll', onScroll);
+            }, []);
+
+            return (
+                <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'backdrop-blur-xl bg-black/70 border-b border-white/5' : 'bg-transparent'}`}>
+                    <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+                        <a href="#" className="flex items-center gap-2 group">
+                            <div className="h-8 w-8 bg-purple-600 rounded-lg flex items-center justify-center font-bold text-sm text-white shadow-lg shadow-purple-600/30 transition-transform group-hover:scale-110">C</div>
+                            <span className="font-semibold tracking-tight text-white">ClientPortal OS</span>
+                        </a>
+                        <nav className="hidden md:flex items-center gap-8 text-sm text-zinc-400">
+                            <a href="#features" className="hover:text-white transition">Features</a>
+                            <a href="#demo" className="hover:text-white transition">Live Demo</a>
+                            <a href="#code" className="hover:text-white transition">Code</a>
+                            <a href="#pricing" className="hover:text-white transition">Pricing</a>
+                            <a href="#faq" className="hover:text-white transition">FAQ</a>
+                        </nav>
+                        <div className="hidden md:block">
+                            <a href={GUMROAD_URL} target="_blank" rel="noreferrer" className="gumroad-button btn-premium text-sm px-4 py-2 rounded-lg bg-white text-black font-medium hover:bg-zinc-200 transition flex items-center gap-2 shadow-lg shadow-black/20 hover:scale-105 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]">
+                                Buy Now <Icon path={ICONS.arrowRight} className="h-4 w-4 relative z-10" />
+                            </a>
+                        </div>
+                        <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-zinc-400 z-50">
+                            <Icon path={mobileOpen ? ICONS.x : ICONS.menu} className="h-6 w-6" />
+                        </button>
+                    </div>
+                    <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out absolute top-full left-0 right-0 bg-black/95 backdrop-blur-xl ${mobileOpen ? 'max-h-96 border-b border-white/5' : 'max-h-0'}`}>
+                        <div className="px-6 py-4 flex flex-col gap-4">
+                            <a href="#features" onClick={() => setMobileOpen(false)} className="text-zinc-400 hover:text-white transition">Features</a>
+                            <a href="#demo" onClick={() => setMobileOpen(false)} className="text-zinc-400 hover:text-white transition">Live Demo</a>
+                            <a href="#code" onClick={() => setMobileOpen(false)} className="text-zinc-400 hover:text-white transition">Code</a>
+                            <a href="#pricing" onClick={() => setMobileOpen(false)} className="text-zinc-400 hover:text-white transition">Pricing</a>
+                            <a href={GUMROAD_URL} className="gumroad-button text-center text-sm px-4 py-2 rounded-lg bg-purple-600 text-white font-medium">Buy Now</a>
+                        </div>
+                    </div>
+                </header>
+            );
+        };
+
+        const Hero = () => {
+            const ref = useReveal();
+            return (
+                <section className="relative overflow-hidden mesh-hero pt-20 pb-32">
+                    <div className="absolute inset-0 grid-bg pointer-events-none"></div>
+                    <div className="relative max-w-7xl mx-auto px-6 text-center">
+                        <div ref={ref} className="reveal max-w-4xl mx-auto">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-zinc-300 mb-8 backdrop-blur-sm shadow-lg">
+                                <Icon path={ICONS.rocket} className="h-3.5 w-3.5 text-purple-400" />
+                                Built for Next.js 15 App Router & Supabase RLS
+                            </div>
+                            
+                            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter mb-6 leading-[1.1]">
+                                <span className="text-gradient">Stop Building</span><br/>
+                                <span className="text-shine">Client Portals From Scratch.</span>
+                            </h1>
+                            
+                            <p className="max-w-2xl mx-auto text-lg text-zinc-400 mb-10 leading-relaxed">
+                                A production-ready, multi-tenant agency portal boilerplate. Complete with self-healing auth, row-level security, optimistic Kanban task tracking, and zero stale-read cache bugs.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+                                <a href={GUMROAD_URL} target="_blank" rel="noreferrer" className="gumroad-button btn-premium group relative px-6 py-3 rounded-xl bg-purple-600 text-white font-medium hover:bg-purple-500 transition-all shadow-[0_10px_30px_-10px_rgba(168,85,247,0.5)] overflow-hidden hover:scale-105 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]">
+                                    <span className="relative z-10 flex items-center gap-2">Get ClientPortal OS ($249) <Icon path={ICONS.arrowRight} className="h-4 w-4"/></span>
+                                </a>
+                                <a href={DEMO_URL} target="_blank" rel="noreferrer" className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-medium hover:bg-white/10 transition-all backdrop-blur-sm hover:scale-105">
+                                    Try Live Demo
+                                </a>
+                            </div>
+                            
+                            <p className="text-xs text-zinc-500 flex items-center justify-center gap-2">
+                                <Icon path={ICONS.shield} className="h-4 w-4" />
+                                Includes lifetime updates • Single & Unlimited Agency License
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const MetricsBar = () => {
+            const stats = [
+                { val: '10-Min', label: 'Average Setup Time' },
+                { val: '0', label: 'Stale-Read Auth Bugs' },
+                { val: '100%', label: 'Type-Safe & Production-Ready' },
+                { val: '∞', label: 'Infinite Scalability' }
+            ];
+            return (
+                <section className="max-w-7xl mx-auto px-6 py-16 border-y border-zinc-800 bg-white/[0.01] backdrop-blur-sm">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                        {stats.map((stat, i) => (
+                            <div key={i} className="text-center border-r border-zinc-800 last:border-r-0">
+                                <h3 className="text-4xl md:text-5xl font-extrabold text-white tracking-tighter bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-transparent">{stat.val}</h3>
+                                {/* High Contrast, Bold Microcopy */}
+                                <p className="text-sm text-zinc-300 mt-2 font-semibold uppercase tracking-wider">{stat.label}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+
+        const BentoFeatures = () => {
+            const ref = useReveal();
+            return (
+                <section id="features" className="max-w-7xl mx-auto px-6 py-32">
+                    <div ref={ref} className="reveal text-center mb-20">
+                        {/* Updated Subheader Color */}
+                        <p className="text-sm font-semibold text-purple-400 mb-2 tracking-widest uppercase">Core Features</p>
+                        <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Everything you need, nothing you don't.</h2>
+                        <p className="text-zinc-400 mt-4 max-w-2xl mx-auto">Battle-tested architecture designed for scale and developer experience.</p>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {/* Large Feature */}
+                        <TiltCard className="glass glass-hover md:col-span-2 md:row-span-2 rounded-3xl p-8 flex flex-col justify-between min-h-[400px]">
+                            <div>
+                                <div className="h-12 w-12 bg-purple-500/10 border border-purple-500/20 rounded-xl flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(168,85,247,0.1)]">
+                                    <Icon path={ICONS.lock} className="h-6 w-6 text-purple-400" />
+                                </div>
+                                <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">Multi-Tenant RLS Engine</h3>
+                                <p className="text-zinc-400 max-w-md leading-relaxed">Pre-configured org isolation for tasks, projects, and assets. Say goodbye to accidental data leaks between clients.</p>
+                            </div>
+                            <div className="mt-8 bg-black/40 rounded-xl p-4 border border-zinc-800 font-mono text-sm text-zinc-400 backdrop-blur-sm">
+                                <span className="text-emerald-400">policy</span> <span className="text-blue-400">"Client isolation"</span> on tasks<br/>
+                                <span className="text-red-400">using</span> (auth.uid() = org.user_id)<br/>
+                                <span className="text-zinc-500 mt-2 block"># 100% isolation guaranteed at database layer</span>
+                            </div>
+                        </TiltCard>
+
+                        {/* Small Features */}
+                        <TiltCard className="glass glass-hover rounded-3xl p-6 flex flex-col justify-between">
+                            <div>
+                                <div className="h-10 w-10 bg-emerald-500/10 border border-emerald-500/20 rounded-lg flex items-center justify-center mb-4">
+                                    <Icon path={ICONS.zap} className="h-5 w-5 text-emerald-400" />
+                                </div>
+                                <h3 className="text-lg font-bold text-white mb-2 tracking-tight">Sub-10 Minute Setup</h3>
+                                <p className="text-sm text-zinc-400">Copy .env.example, run schema.sql, and deploy to Vercel.</p>
+                            </div>
+                        </TiltCard>
+
+                        <TiltCard className="glass glass-hover rounded-3xl p-6 flex flex-col justify-between">
+                            <div>
+                                <div className="h-10 w-10 bg-blue-500/10 border border-blue-500/20 rounded-lg flex items-center justify-center mb-4">
+                                    <Icon path={ICONS.sparkle} className="h-5 w-5 text-blue-400" />
+                                </div>
+                                <h3 className="text-lg font-bold text-white mb-2 tracking-tight">1-File White-Labeling</h3>
+                                <p className="text-sm text-zinc-400">Change config/brand.ts to update branding, logos, and accent colors instantly.</p>
+                            </div>
+                        </TiltCard>
+
+                        {/* Bottom Row */}
+                        <TiltCard className="glass glass-hover rounded-3xl p-6">
+                            <div className="h-10 w-10 bg-purple-500/10 border border-purple-500/20 rounded-lg flex items-center justify-center mb-4">
+                                <Icon path={ICONS.rocket} className="h-5 w-5 text-purple-400" />
+                            </div>
+                            <h3 className="text-lg font-bold text-white mb-2 tracking-tight">Optimistic Kanban UI</h3>
+                            <p className="text-sm text-zinc-400">Drag-and-drop task tracking powered by React 19 useOptimistic.</p>
+                        </TiltCard>
+
+                        <TiltCard className="glass glass-hover rounded-3xl p-6">
+                            <div className="h-10 w-10 bg-pink-500/10 border border-pink-500/20 rounded-lg flex items-center justify-center mb-4">
+                                <Icon path={ICONS.package} className="h-5 w-5 text-pink-400" />
+                            </div>
+                            <h3 className="text-lg font-bold text-white mb-2 tracking-tight">Secure File Vault</h3>
+                            <p className="text-sm text-zinc-400">Bucket-level RLS policies preventing unauthorized path access.</p>
+                        </TiltCard>
+
+                        <TiltCard className="glass glass-hover rounded-3xl p-6">
+                            <div className="h-10 w-10 bg-indigo-500/10 border border-indigo-500/20 rounded-lg flex items-center justify-center mb-4">
+                                <Icon path={ICONS.shield} className="h-5 w-5 text-indigo-400" />
+                            </div>
+                            <h3 className="text-lg font-bold text-white mb-2 tracking-tight">Type-Safe Architecture</h3>
+                            <p className="text-sm text-zinc-400">Clean TypeScript, Server Actions with ownership checks, and 0 linting errors.</p>
+                        </TiltCard>
+                    </div>
+                </section>
+            );
+        };
+
+        const CodeSnippet = () => {
+            const ref = useReveal();
+            return (
+                <section id="code" className="max-w-7xl mx-auto px-6 py-32 border-t border-zinc-800">
+                    <div ref={ref} className="reveal grid md:grid-cols-2 gap-16 items-center">
+                        <div>
+                            {/* Updated Subheader Color */}
+                            <p className="text-sm font-semibold text-purple-400 mb-2 tracking-widest uppercase">Faster Workflow</p>
+                            <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">Live in 3 commands.</h2>
+                            <p className="text-zinc-400 mb-8 leading-relaxed">
+                                No complex setup. No endless configuration. Just clone, install, and run the SQL schema. You'll be inviting clients before your coffee gets cold.
+                            </p>
+                            <ul className="space-y-4">
+                                <li className="flex items-start gap-4 text-zinc-300">
+                                    <span className="h-8 w-8 flex-shrink-0 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-xs font-bold text-purple-400">1</span>
+                                    <div><strong className="text-white">Clone the repo</strong> <br/>and run npm install</div>
+                                </li>
+                                <li className="flex items-start gap-4 text-zinc-300">
+                                    <span className="h-8 w-8 flex-shrink-0 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-xs font-bold text-purple-400">2</span>
+                                    <div><strong className="text-white">Paste schema.sql</strong> <br/>into Supabase SQL Editor</div>
+                                </li>
+                                <li className="flex items-start gap-4 text-zinc-300">
+                                    <span className="h-8 w-8 flex-shrink-0 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-xs font-bold text-purple-400">3</span>
+                                    <div><strong className="text-white">Run npm run dev</strong> <br/>and invite your first client</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <TiltCard className="glass rounded-2xl overflow-hidden shadow-2xl shadow-purple-500/10" glow={false}>
+                            <div className="flex items-center gap-2 bg-zinc-950/80 px-4 py-3 border-b border-zinc-800">
+                                <div className="h-3 w-3 rounded-full bg-red-500/80"></div>
+                                <div className="h-3 w-3 rounded-full bg-yellow-500/80"></div>
+                                <div className="h-3 w-3 rounded-full bg-green-500/80"></div>
+                                <span className="ml-2 text-xs text-zinc-500 font-mono">bash — zsh</span>
+                            </div>
+                            <div className="p-8 font-mono text-sm bg-black/40 backdrop-blur-sm leading-relaxed">
+                                <p className="text-zinc-600"># Clone the boilerplate</p>
+                                <p><span className="text-emerald-400">$</span> <span className="text-white">npx create-next-app</span> client-portal</p>
+                                <p><span className="text-emerald-400">$</span> <span className="text-white">cd</span> client-portal</p>
+                                <br/>
+                                <p className="text-zinc-600"># Install dependencies</p>
+                                <p><span className="text-emerald-400">$</span> <span className="text-white">npm install</span></p>
+                                <br/>
+                                <p className="text-zinc-600"># Start the dev server</p>
+                                <p><span className="text-emerald-400">$</span> <span className="text-white">npm run dev</span></p>
+                                <p className="text-blue-400 mt-2">› Ready on <span className="underline">http://localhost:3000</span></p>
+                            </div>
+                        </TiltCard>
+                    </div>
+                </section>
+            );
+        };
+
+        // --- Founder's Note ---
+        const FoundersNote = () => {
+            const ref = useReveal();
+            return (
+                <section className="relative overflow-hidden py-32 border-t border-zinc-800">
+                    <div className="absolute inset-0 mesh-hero opacity-30 pointer-events-none"></div>
+                    <div className="relative max-w-4xl mx-auto px-6">
+                        <div ref={ref} className="reveal glass rounded-3xl p-8 md:p-12 text-center relative overflow-hidden">
+                            {/* Decorative quote mark */}
+                            <div className="absolute top-6 left-8 text-7xl font-serif text-white/5 select-none">“</div>
+                            
+                            <div className="relative z-10">
+                                {/* Updated Subheader Color */}
+                                <p className="text-sm font-semibold text-purple-400 mb-2 tracking-widest uppercase">A Note from the Creator</p>
+                                <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-8">Built out of sheer frustration.</h2>
+                                
+                                <div className="space-y-6 text-left md:text-center max-w-2xl mx-auto text-zinc-300 leading-relaxed">
+                                    <p>
+                                        I built ClientPortal OS because I was tired of spending 40 hours setting up auth, debugging Supabase Row Level Security policies, and fixing stale-read cache bugs every single time I onboarded a new agency client.
+                                    </p>
+                                    <p>
+                                        This isn't a bloated SaaS framework. It's a highly curated, production-ready boilerplate. It’s the exact codebase I use to deploy client portals in under 10 minutes. I guarantee it will save you dozens of hours, or I'll give you your money back.
+                                    </p>
+                                </div>
+
+                                <div className="mt-10 flex flex-col md:flex-row items-center justify-center gap-4 border-t border-zinc-800 pt-8">
+                                    <div className="flex items-center gap-3">
+                                        <div className="h-12 w-12 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                                            A
+                                        </div>
+                                        <div className="text-left">
+                                            <p className="text-sm font-semibold text-white">Andrady</p>
+                                            <p className="text-xs text-zinc-400">Creator, ClientPortal OS</p>
+                                        </div>
+                                    </div>
+                                    <a href={GUMROAD_URL} target="_blank" rel="noreferrer" className="gumroad-button btn-premium px-6 py-2.5 rounded-xl bg-white text-black font-medium hover:bg-zinc-200 transition-all text-sm shadow-lg shadow-black/20 relative overflow-hidden hover:scale-105 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]">
+                                        <span className="relative z-10">Be an Early Adopter</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const Pricing = () => {
+            const ref = useReveal();
+            const includes = [
+                "Full TypeScript & Next.js 15 Source Code",
+                "Automated Supabase Database Schema & RLS Scripts",
+                "Single-file White-Label Configuration (config/brand.ts)",
+                "Client & Agency Admin Access Roles",
+                "Clean, zero-dependency ZIP release (100% build pass guarantee)",
+                "Unlimited commercial projects & client invites",
+                "Lifetime access to repository updates"
+            ];
+
+            return (
+                <section id="pricing" className="relative overflow-hidden mesh-pricing py-32">
+                    <div ref={ref} className="reveal max-w-md mx-auto relative z-10">
+                        <div className="text-center mb-16">
+                            {/* Updated Subheader Color */}
+                            <p className="text-sm font-semibold text-purple-400 mb-2 tracking-widest uppercase">Simple Pricing</p>
+                            <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">One-time payment. Lifetime access.</h2>
+                        </div>
+                        <div className="conic-border p-8 rounded-3xl backdrop-blur-xl bg-black/60">
+                            <div className="flex justify-between items-start mb-6">
+                                <div>
+                                    <h3 className="text-xl font-semibold text-white">Developer License</h3>
+                                    <p className="text-zinc-400 text-sm mt-1">ClientPortal OS</p>
+                                </div>
+                                <div className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
+                                    Best Value
+                                </div>
+                            </div>
+                            <div className="flex items-baseline gap-2 mb-8">
+                                <span className="text-6xl font-extrabold text-white tracking-tighter">$249</span>
+                                <span className="text-zinc-400 text-sm">One-time</span>
+                            </div>
+                            <ul className="space-y-4 mb-8">
+                                {includes.map(item => (
+                                    <li key={item} className="flex items-start gap-3 text-sm text-zinc-300">
+                                        <div className="h-5 w-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                            <Icon path={ICONS.check} className="h-3 w-3 text-emerald-400" />
+                                        </div>
+                                        <span>{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                            <a href={GUMROAD_URL} target="_blank" rel="noreferrer" className="gumroad-button btn-premium block w-full text-center py-3 rounded-xl bg-white text-black font-bold hover:bg-zinc-200 transition-all shadow-lg shadow-black/20 relative overflow-hidden hover:scale-105 hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]">
+                                <span className="relative z-10">Get Instant Access</span>
+                            </a>
+                            <p className="text-center text-xs text-zinc-500 mt-4">Secure checkout via Gumroad</p>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const FAQ = () => {
+            const [open, setOpen] = useState(null);
+            const ref = useReveal();
+            
+            const faqs = [
+                { q: "What stack does ClientPortal OS use?", a: "Next.js 15 (App Router), React 19, Supabase (Auth, Postgres, Storage), Tailwind CSS, and TypeScript." },
+                { q: "Can I use this for multiple agency clients?", a: "Yes! The license covers unlimited commercial agency projects and client instances." },
+                { q: "How long does setup take?", a: "Under 10 minutes. You just run schema.sql in your Supabase project, set 3 environment variables, and deploy to Vercel." },
+                { q: "Do I need a paid Supabase plan?", a: "No, it runs seamlessly on Supabase's generous free tier." }
+            ];
+
+            return (
+                <section id="faq" className="max-w-3xl mx-auto px-6 py-32 border-t border-zinc-800">
+                    <div ref={ref} className="reveal text-center mb-16">
+                        {/* Updated Subheader Color */}
+                        <p className="text-sm font-semibold text-purple-400 mb-2 tracking-widest uppercase">FAQ</p>
+                        <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Frequently Asked Questions</h2>
+                    </div>
+                    <div className="space-y-4">
+                        {faqs.map((faq, i) => (
+                            <div key={i} className="glass glass-hover rounded-2xl overflow-hidden">
+                                <button 
+                                    className="w-full flex items-center justify-between p-6 text-left"
+                                    onClick={() => setOpen(open === i ? null : i)}
+                                >
+                                    <span className="font-medium text-white">{faq.q}</span>
+                                    <div className={`h-8 w-8 rounded-full bg-white/5 border border-zinc-800 flex items-center justify-center transition-transform duration-300 ${open === i ? 'rotate-180 bg-purple-500/20 border-purple-500/30' : ''}`}>
+                                        <Icon path={ICONS.chevronDown} className="h-4 w-4 text-zinc-400" />
+                                    </div>
+                                </button>
+                                <div className={`grid transition-all duration-300 ease-in-out ${open === i ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+                                    <div className="overflow-hidden">
+                                        <p className="px-6 pb-6 text-zinc-400 text-sm leading-relaxed">{faq.a}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            );
+        };
+
+        const Footer = () => (
+            <footer className="border-t border-zinc-800 bg-black">
+                <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div className="flex items-center gap-2">
+                        <div className="h-6 w-6 bg-purple-600 rounded-md flex items-center justify-center font-bold text-xs text-white">C</div>
+                        <span className="font-semibold text-white">ClientPortal OS</span>
+                    </div>
+                    <p className="text-xs text-zinc-500">© {new Date().getFullYear()} ClientPortal OS. Built by Andrady.</p>
+                    <div className="flex items-center gap-6 text-sm text-zinc-400">
+                        <a href={DEMO_URL} target="_blank" rel="noreferrer" className="hover:text-white transition flex items-center gap-2">
+                            <Icon path={ICONS.rocket} className="h-4 w-4" /> Live Demo
+                        </a>
+                        <a href="mailto:wendelandrady8@gmail.com" className="hover:text-white transition flex items-center gap-2">
+                            <Icon path={ICONS.chat} className="h-4 w-4" /> Support
+                        </a>
+                    </div>
+                </div>
+            </footer>
+        );
+
+        const App = () => {
+            const mousePos = useMousePosition();
+            
+            useEffect(() => {
+                document.documentElement.style.setProperty('--mouse-x', `${mousePos.x}px`);
+                document.documentElement.style.setProperty('--mouse-y', `${mousePos.y}px`);
+            }, [mousePos]);
+
+            return (
+                <div className="min-h-screen relative">
+                    <div className="spotlight"></div>
+                    <Nav />
+                    <Hero />
+                    <MetricsBar />
+                    <BentoFeatures />
+                    
+                    <section id="demo" className="max-w-7xl mx-auto px-6 py-32 border-t border-zinc-800">
+                        <div className="text-center mb-16">
+                            {/* Updated Subheader Color */}
+                            <p className="text-sm font-semibold text-purple-400 mb-2 tracking-widest uppercase">Optimistic UI</p>
+                            <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Experience the Workspace.</h2>
+                            <p className="text-zinc-400 mt-4 max-w-2xl mx-auto">No page reloads. No loading spinners. Just instant state updates powered by React 19 Server Actions.</p>
+                        </div>
+                        <LiveDemo />
+                    </section>
+
+                    <CodeSnippet />
+                    
+                    {/* Founder's Note */}
+                    <FoundersNote /> 
+                    
+                    <Pricing />
+                    <FAQ />
+                    <Footer />
+                </div>
+            );
+        };
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
 </body>
 </html>
