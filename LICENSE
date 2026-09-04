@@ -1,0 +1,30 @@
+B2B SaaS OS Commercial License Agreement
+
+Version 1.0.0
+
+Copyright (c) [Your Name / andrady.co] (the "Licensor")
+
+All rights reserved.
+
+By downloading, accessing, or using the B2B SaaS OS source code (the "Software"), you agree to the terms of this License Agreement.
+
+1. Grant of License
+Subject to your compliance with this Agreement, the Licensor grants you a perpetual, worldwide, non-exclusive, non-transferable license to:
+  a. Use, modify, and distribute the Software for the purpose of creating commercial or non-commercial SaaS applications ("Customer Applications").
+  b. Use the Software for client projects and agency work.
+
+2. Restrictions
+You may NOT:
+  a. Resell, sublicense, or redistribute the original, unmodified Software source code as a boilerplate, starter kit, or template.
+  b. Publish or share the source code of the Software in any public repository or format.
+  c. Sell a competing product that is substantially based on the Software.
+  d. Share the Software with unlicensed users.
+
+3. Ownership
+The Licensor retains all intellectual property rights to the original Software. This Agreement does not grant you any rights to the Licensor's trademarks, trade names, or branding. Customer Applications you build using the Software are owned by you.
+
+4. Disclaimer of Warranty
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. IN NO EVENT SHALL THE LICENSOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THE SOFTWARE.
+
+5. Third-Party Licenses
+The Software includes third-party libraries and components (e.g., Next.js, Supabase, Stripe) which are licensed under their respective open-source or commercial agreements. You must comply with those licenses.
