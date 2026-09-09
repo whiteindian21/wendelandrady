@@ -1,14 +1,12 @@
 export const siteConfig = {
   name: "B2B SaaS OS",
-  tagline: "Build B2B SaaS. Not SaaS infrastructure.",
+  tagline: "Build your B2B SaaS. Not the infrastructure behind it.",
   description:
-    "The production-ready Next.js + Supabase foundation for developers and agencies building secure, multi-tenant B2B SaaS applications.",
+    "Production-ready Next.js + Supabase infrastructure for authentication, multi-tenancy, RBAC, billing, API keys, usage limits, and more.",
   price: 249,
   priceDisplay: "$249",
   paymentModel: "One-time payment",
   url: "https://andrady.co",
-  // Replace with your real checkout URL (Gumroad, Lemon Squeezy, Stripe payment link…)
-  // when checkout goes live. Every CTA in the app reads from this single value.
   checkoutUrl: "https://andradyy.gumroad.com/l/b2b-saas-os",
   author: "Andrady",
   keywords: [
