@@ -281,8 +281,8 @@ export default function HomePage() {
               One-time purchase · {siteConfig.priceDisplay} · Full source code
             </p>
             <h1 className="mt-6 text-balance text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
-              Build B2B SaaS.{" "}
-              <span className="text-muted-foreground">Not SaaS infrastructure.</span>
+              Build your B2B SaaS.{" "}
+              <span className="text-muted-foreground">Not the infrastructure behind it.</span>
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-pretty text-base text-muted-foreground sm:text-lg">
               {siteConfig.description}
@@ -299,6 +299,9 @@ export default function HomePage() {
             </div>
             <p className="mt-4 font-mono text-xs text-muted-foreground">
               Next.js 15 · React 19 · Supabase · Stripe · TypeScript
+            </p>
+            <p className="mt-1 font-mono text-xs text-brand">
+              26/26 production checks passing · Full source code · One-time purchase
             </p>
           </div>
           <ProductFrame />
