@@ -63,6 +63,12 @@ body{
   background:var(--bg);color:var(--text);
   font:400 15.5px/1.6 var(--font-sans);
   min-height:100vh;-webkit-font-smoothing:antialiased;
+  /* mobile-overflow guards: clip (not hidden) never creates a scroll
+     container, so position:sticky on the quiz progress bar keeps
+     working; break-word is inherited and only activates when a token
+     cannot fit its line — no effect on desktop layout */
+  overflow-x:clip;
+  overflow-wrap:break-word;
 }
 /* faint blueprint grid, fading out below the fold */
 body::before{
@@ -185,6 +191,14 @@ h1{font-size:clamp(34px,5vw,58px);font-weight:600;letter-spacing:-.028em;line-he
 .anim-back{animation:qBack .26s cubic-bezier(.2,.7,.3,1) both}
 @keyframes qFwd{from{opacity:0;transform:translateX(22px)}}
 @keyframes qBack{from{opacity:0;transform:translateX(-22px)}}
+/* mobile: 12px slide stays inside the 18px page gutter at 320px,
+   so question transitions can never flash the horizontal scrollbar */
+@media (max-width:640px){
+  .anim-fwd{animation-name:qFwdM}
+  .anim-back{animation-name:qBackM}
+}
+@keyframes qFwdM{from{opacity:0;transform:translateX(12px)}}
+@keyframes qBackM{from{opacity:0;transform:translateX(-12px)}}
 .q-eyebrow{font:600 10.5px var(--font-mono);letter-spacing:.18em;color:var(--faint)}
 .q-title{font-size:clamp(21px,2.4vw,27px);font-weight:600;letter-spacing:-.012em;line-height:1.32;margin-top:12px}
 .answers{display:flex;flex-direction:column;gap:10px;margin-top:28px}
@@ -197,7 +211,7 @@ h1{font-size:clamp(34px,5vw,58px);font-weight:600;letter-spacing:-.028em;line-he
 .answer.selected{border-color:rgba(237,238,240,.55);background:rgba(255,255,255,.045)}
 .ans-letter{flex:none;display:grid;place-items:center;width:26px;height:26px;margin-top:1px;border:1px solid var(--border-strong);border-radius:6px;font:600 11px var(--font-mono);color:var(--dim);transition:background .15s,border-color .15s,color .15s}
 .answer.selected .ans-letter{background:var(--text);border-color:var(--text);color:#0b0c0e}
-.ans-text{font-size:15px;line-height:1.55;padding-top:3px}
+.ans-text{font-size:15px;line-height:1.55;padding-top:3px;min-width:0}
 .ans-check{margin-left:auto;margin-top:5px;color:var(--text);opacity:0;transform:scale(.7);transition:opacity .18s,transform .18s;flex:none}
 .ans-check svg{width:15px;height:15px}
 .answer.selected .ans-check{opacity:1;transform:scale(1)}
@@ -340,6 +354,7 @@ h1{font-size:clamp(34px,5vw,58px);font-weight:600;letter-spacing:-.028em;line-he
   .wrap{padding:0 18px}
   .hero{padding-top:36px}
   .sub{font-size:16px}
+  .hero-meta{font-size:10px;letter-spacing:.08em}
   .term-body{font-size:11.5px;line-height:1.62}
   .term-tag{display:none}
   .quiz-top{flex-direction:column;align-items:stretch;gap:10px}
@@ -464,9 +479,9 @@ h1{font-size:clamp(34px,5vw,58px);font-weight:600;letter-spacing:-.028em;line-he
   <!-- EDIT: social profile URLs — replace the handles below with your exact profiles if different -->
   <div class="wrap foot-social">
     <span class="fs-label">CONNECT</span>
-    <a href="https://www.linkedin.com/in/wendel-andrady-b63108261/" target="_blank" rel="noopener noreferrer" data-cta="social" data-network="linkedin">LinkedIn ↗</a>
-    <a href="https://x.com/wendelandrady" target="_blank" rel="noopener noreferrer" data-cta="social" data-network="x">X ↗</a>
-    <a href="https://www.reddit.com/user/Pale_Ferret_8241/" target="_blank" rel="noopener noreferrer" data-cta="social" data-network="reddit">Reddit ↗</a>
+    <a href="https://www.linkedin.com/in/andrady" target="_blank" rel="noopener noreferrer" data-cta="social" data-network="linkedin">LinkedIn ↗</a>
+    <a href="https://x.com/andrady" target="_blank" rel="noopener noreferrer" data-cta="social" data-network="x">X ↗</a>
+    <a href="https://www.reddit.com/user/andrady" target="_blank" rel="noopener noreferrer" data-cta="social" data-network="reddit">Reddit ↗</a>
   </div>
   <div class="wrap foot-note">This tool does not inspect your code. It is a self-assessment, not a security certification — classifications describe declared practices only.</div>
 </footer>
