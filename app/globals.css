@@ -132,3 +132,48 @@
 .tok-s { color: oklch(0.62 0.1 75); }
 .dark .tok-s { color: oklch(0.76 0.11 80); }
 .tok-c { color: var(--muted-foreground); font-style: italic; }
+
+/* ==================================================================
+   Gumroad embed — sizing overrides (mobile CTA clipping fix)
+   gumroad.js injects its own stylesheet for every .gumroad-button.
+   Tailwind v4 puts utilities in cascade layers; Gumroad's rules are
+   unlayered, so they beat Tailwind on every tie — and their fixed
+   min-width (~261px) is wider than our CTA containers on phones
+   (~240px at a 320px viewport). That is the right-side clip.
+   !important is required: it beats the injected stylesheet AND any
+   inline styles the script sets. The overlay checkout is JavaScript
+   and is completely unaffected by these rules.
+   ================================================================== */
+.gumroad-button {
+  min-width: min-content !important; /* never wider than its own text */
+  min-height: 0 !important;          /* height belongs to h-10 / h-11  */
+}
+
+/* Full-width CTAs (pricing card, hero below sm) must stay 100% */
+a.gumroad-button.w-full {
+  width: 100% !important;
+}
+
+/* ==================================================================
+   Mobile overflow safety net — site-wide, applied after all real
+   fixes are in place.
+   - overflow-x: clip on body guarantees the page itself can never
+     scroll horizontally. "clip" (not "hidden") is deliberate:
+     hidden turns body into a scroll container and breaks
+     position:sticky on the site header; clip does not. Fixed-position
+     elements (Sheet, dialogs) are also unaffected by clip.
+   - overflow-wrap is inherited and only activates on unbreakable
+     tokens (long URLs, dotted event names) that would otherwise push
+     past the viewport.
+   - Media hardening for future content.
+   ================================================================== */
+body {
+  overflow-x: clip;
+  overflow-wrap: break-word;
+}
+img, video, svg, iframe {
+  max-width: 100%;
+}
+img {
+  height: auto;
+}
