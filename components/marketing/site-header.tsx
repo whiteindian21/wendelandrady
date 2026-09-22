@@ -21,9 +21,8 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
-      {/* MOBILE FIX: gap-3 below sm (was gap-6) gives the logo room at 320px;
-          the action group is shrink-0 so the buttons can never be squeezed —
-          the logo absorbs all shrinking instead of the toggle/menu breaking */}
+      {/* MOBILE FIX: gap-3 below sm gives the logo room at 320px; the action
+          group is shrink-0 so the toggle/menu can never be squeezed */}
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4 sm:gap-6 sm:px-6">
         <Logo />
         <nav className="hidden items-center gap-5 md:flex" aria-label="Main navigation">
@@ -40,10 +39,25 @@ export function SiteHeader() {
         <div className="ml-auto flex shrink-0 items-center gap-2">
           <ThemeToggle />
 
-          {/* Desktop Buy Button */}
-          <Button size="sm" asChild className="hidden sm:inline-flex">
-            <a className="gumroad-button" href={siteConfig.checkoutUrl}>Get it — {siteConfig.priceDisplay}</a>
-          </Button>
+          {/* GUMROAD FIX: the responsive hiding now lives on this plain span.
+              Gumroad's injected stylesheet is unlayered, so in Tailwind v4 it
+              beats the layered `hidden` utility on a .gumroad-button anchor —
+              forcing the CTA visible on mobile at ~261px min-width, which
+              pushed the whole header (and page) past the viewport. Gumroad's
+              CSS cannot touch this span, so `hidden sm:inline-flex` is
+              bulletproof again. */}
+          <span className="hidden sm:inline-flex">
+            <Button size="sm" asChild>
+              <a
+                className="gumroad-button"
+                href={siteConfig.checkoutUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Get it — {siteConfig.priceDisplay}
+              </a>
+            </Button>
+          </span>
 
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
@@ -71,7 +85,13 @@ export function SiteHeader() {
 
                 {/* Mobile Buy Button */}
                 <Button size="sm" asChild className="mt-4">
-                  <a className="gumroad-button" href={siteConfig.checkoutUrl} onClick={() => setOpen(false)}>
+                  <a
+                    className="gumroad-button"
+                    href={siteConfig.checkoutUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setOpen(false)}
+                  >
                     Get it — {siteConfig.priceDisplay}
                   </a>
                 </Button>
