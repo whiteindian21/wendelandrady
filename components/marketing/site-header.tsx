@@ -21,7 +21,10 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
-      <div className="mx-auto flex h-14 max-w-6xl items-center gap-6 px-4 sm:px-6">
+      {/* MOBILE FIX: gap-3 below sm (was gap-6) gives the logo room at 320px;
+          the action group is shrink-0 so the buttons can never be squeezed —
+          the logo absorbs all shrinking instead of the toggle/menu breaking */}
+      <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4 sm:gap-6 sm:px-6">
         <Logo />
         <nav className="hidden items-center gap-5 md:flex" aria-label="Main navigation">
           {marketingNav.map((item) => (
@@ -34,9 +37,9 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex shrink-0 items-center gap-2">
           <ThemeToggle />
-          
+
           {/* Desktop Buy Button */}
           <Button size="sm" asChild className="hidden sm:inline-flex">
             <a className="gumroad-button" href={siteConfig.checkoutUrl}>Get it — {siteConfig.priceDisplay}</a>
@@ -65,7 +68,7 @@ export function SiteHeader() {
                     {item.title}
                   </Link>
                 ))}
-                
+
                 {/* Mobile Buy Button */}
                 <Button size="sm" asChild className="mt-4">
                   <a className="gumroad-button" href={siteConfig.checkoutUrl} onClick={() => setOpen(false)}>
