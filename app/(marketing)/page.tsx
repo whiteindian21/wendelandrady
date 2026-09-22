@@ -347,7 +347,10 @@ export default function HomePage() {
               ))}
             </ul>
           </div>
-          <div className="lg:pt-14">
+          {/* MOBILE FIX: scroll container + min-w-0 so the directory tree
+              can never inflate the grid track or bleed past the viewport —
+              it scrolls inside itself on phones, unchanged on desktop */}
+          <div className="min-w-0 overflow-x-auto lg:pt-14">
             <CodeBlock filename="b2b-saas-os/" lang="what you download">
               {`├── app/                  # routes: marketing, auth, dashboard
 ├── components/           # ui, dashboard, marketing, shared
@@ -438,25 +441,28 @@ export default function HomePage() {
             title="Policies live in SQL, not in your React code."
             description="Authorization that lives only in application code is one refactor away from a leak. B2B SaaS OS ships deny-by-default Postgres policies per table, so even a buggy query can't cross tenant boundaries."
           />
+          {/* MOBILE FIX: same containment for the SQL block */}
+          <div className="min-w-0 overflow-x-auto">
           <CodeBlock filename="supabase/policies/projects.sql" lang="sql">
-            <span className="tok-c">{"-- deny by default: only org members read org rows"}</span>
-            {"\n"}
-            <span className="tok-k">create policy</span> &quot;members_read_org_projects&quot;{"\n"}
-            <span className="tok-k">on</span> projects <span className="tok-k">for select</span>
-            {"\n"}
-            <span className="tok-k">using</span> ({"\n"}
-            {"  "}
-            <span className="tok-k">exists</span> ({"\n"}
-            {"    "}
-            <span className="tok-k">select</span> 1 <span className="tok-k">from</span> organization_members m
-            {"\n"}
-            {"    "}
-            <span className="tok-k">where</span> m.organization_id = projects.organization_id{"\n"}
-            {"      "}
-            <span className="tok-k">and</span> m.user_id = <span className="tok-s">auth.uid()</span>
-            {"\n"}
-            {"  )"}{"\n"});
-          </CodeBlock>
+              <span className="tok-c">{"-- deny by default: only org members read org rows"}</span>
+              {"\n"}
+              <span className="tok-k">create policy</span> &quot;members_read_org_projects&quot;{"\n"}
+              <span className="tok-k">on</span> projects <span className="tok-k">for select</span>
+              {"\n"}
+              <span className="tok-k">using</span> ({"\n"}
+              {"  "}
+              <span className="tok-k">exists</span> ({"\n"}
+              {"    "}
+              <span className="tok-k">select</span> 1 <span className="tok-k">from</span> organization_members m
+              {"\n"}
+              {"    "}
+              <span className="tok-k">where</span> m.organization_id = projects.organization_id{"\n"}
+              {"      "}
+              <span className="tok-k">and</span> m.user_id = <span className="tok-s">auth.uid()</span>
+              {"\n"}
+              {"  )"}{"\n"});
+            </CodeBlock>
+          </div>
         </div>
       </Section>
 
@@ -467,7 +473,11 @@ export default function HomePage() {
           title="Four roles. One permission map. Zero guesswork."
           description="Owner, Admin, Billing and Member — declared once in config/permissions.ts, enforced by RLS policies, and checked in-app through a single hasPermission() helper."
         />
-        <div className="mt-10 overflow-hidden rounded-xl border">
+        {/* MOBILE FIX: overflow-hidden clipped the right-side columns on
+            phones (the matrix has ~490px of minimum width). overflow-x-auto
+            keeps the rounded corners but scrolls inside itself on mobile;
+            on desktop the table fits and nothing changes */}
+        <div className="mt-10 overflow-x-auto rounded-xl border">
           <table className="w-full text-sm">
             <caption className="sr-only">Role-based access control matrix</caption>
             <thead>
