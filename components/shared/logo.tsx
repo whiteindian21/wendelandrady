@@ -29,7 +29,15 @@ export function Logo({
   return (
     <Link
       href={href}
-      className={cn("inline-flex items-center gap-2 font-semibold tracking-tight", className)}
+      // MOBILE FIX: whitespace-nowrap — a logo must never break across
+      // lines. Without it, flex pressure wraps "B2B SaaS / OS" onto two
+      // lines. whitespace is inherited, so both text spans are covered.
+      // With nowrap, the text's minimum width becomes the full single
+      // line, which also stops flexbox from squeezing it at all.
+      className={cn(
+        "inline-flex items-center gap-2 font-semibold tracking-tight whitespace-nowrap",
+        className
+      )}
       aria-label="B2B SaaS OS home"
     >
       <LogoMark />
