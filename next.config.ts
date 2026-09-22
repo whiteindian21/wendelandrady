@@ -16,6 +16,14 @@ const nextConfig = {
       },
     ];
   },
+
+  async rewrites() {
+    return [
+      // SaaS Production Readiness Check — standalone HTML in public/,
+      // served at /check with the URL unchanged (rewrite, not redirect).
+      { source: '/check', destination: '/readiness-check.html' },
+    ];
+  },
 };
 
 export default nextConfig;
